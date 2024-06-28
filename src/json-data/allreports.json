@@ -1,0 +1,29 @@
+{
+      "Aspirational district programme": [
+        {
+            "id": 4001,
+            "report_name": "Transition Rate",
+            "tags": "Aspirational",
+            "url":"aspirational-reports-4001"
+        },
+        {
+            "id": 4002,
+            "report_name": "Percentage of elementary schools having PTR less than equal to 30.",
+            "tags": "Aspirational",
+            "url":"aspirational-reports-4002"
+        },
+        {
+            "id": 4003,
+            "report_name": "Percentage Schools with Teachers trained for teaching CWSN.",
+            "tags": "Aspirational",
+            "url":"aspirational-reports-4003"
+        },
+        {
+            "id": 4004,
+            "report_name": "Percentange of Schools having adequate Functional Girls Toilets.",
+            "tags": "Aspirational",
+            "url":"aspirational-reports-4004"
+        }
+    ]
+
+}
