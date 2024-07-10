@@ -8,4 +8,4 @@ export default function Themes(){
         <div>Home</div>
         </>
     )
-}
+}   

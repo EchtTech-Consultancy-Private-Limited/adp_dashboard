@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@mui/icons-material": "^5.15.21",
+    "@mui/icons-material": "^5.16.0",
     "@mui/material": "^5.15.21",
     "@reduxjs/toolkit": "^2.2.5",
     "@testing-library/jest-dom": "^5.17.0",
@@ -12,7 +12,7 @@
     "ag-grid-community": "^31.3.2",
     "ag-grid-enterprise": "^31.3.2",
     "ag-grid-react": "^31.3.2",
-    "antd": "^5.18.3",
+    "antd": "^5.19.1",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.3",
     "esri-loader": "^3.7.0",
@@ -20,6 +20,7 @@
     "highcharts-exporting": "^0.1.7",
     "highcharts-more": "^0.1.7",
     "highcharts-react-official": "^3.2.1",
+    "material-icons": "^1.13.12",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.3",
     "react-dom": "^18.3.1",
@@ -27,6 +28,7 @@
     "react-router-dom": "^6.24.0",
     "react-scripts": "5.0.1",
     "react-toastify": "^10.0.5",
+    "sass": "^1.77.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
