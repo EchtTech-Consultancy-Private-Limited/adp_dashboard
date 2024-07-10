@@ -8,9 +8,9 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
+import BlankPage from './BlankPage'
 
 export default function TransitionRateReport() {
-
 
     const [rowData, setRowData] = useState([
         { Districts: 'Agra', Boys: '56.80%', Girls: "24.20%", Total: "89%" },
@@ -37,6 +37,9 @@ export default function TransitionRateReport() {
             <div className="container">
                 <div className="row mt-5">
                     <div className="col-md-12">
+                        <BlankPage/>
+                    </div>
+                    <div className="col-md-12">
                         <div className="card-box">
                             <div className="row align-items-end">
                                 <div className="col-md-5">
@@ -47,7 +50,7 @@ export default function TransitionRateReport() {
                                         </div>
                                         <div className="tab-box">
                                             <button className='tab-button active'><img src={table} alt="Table" /> Table View</button>
-                                            <button className='tab-button'><img src={chart} alt="chart" /> Chart View</button>
+                                            <button className='tab-button'><img src={chart} alt="chart" /> Chart View</button>                                           
                                         </div>
                                     </div>
                                 </div>
@@ -64,7 +67,14 @@ export default function TransitionRateReport() {
                                                 <label htmlFor="radio5">Secondary to Higher Secondary</label>
                                             </div>
                                         </div>
-                                        <button className='download-button'><img src={download} alt="download" /> Download Report 2023-24</button>
+                                        <div className="">
+                                            {/* <img src={download} alt="download" /> */}
+                                            <select id="export_data" className="form-select download-button" defaultValue={""}>
+                                                <option className="option-hide"> Download Report 2023-24 </option>
+                                                <option value="export_pdf">Download as PDF </option>
+                                                <option value="export_excel">Download as Excel</option>
+                                            </select>
+                                        </div>
                                     </div>
 
                                 </div>
