@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import BannerReport from './BannerReport'
+import BannerReportFilter from './BannerReportFilter'
 import download from '../../assets/images/download.svg'
 import table from '../../assets/images/table_cells.png' 
 import chart from '../../assets/images/bar-chart.png'
@@ -33,7 +33,7 @@ export default function Report() {
 
     return (
         <section>
-            <BannerReport />
+            <BannerReportFilter />
             <div className="container">
                 <div className="row mt-5">
                     <div className="col-md-12">

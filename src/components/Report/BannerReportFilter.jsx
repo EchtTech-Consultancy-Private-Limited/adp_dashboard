@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../Header/Header'
 
-export default function BannerReport() {
+export default function BannerReportFilter() {
   return (
     <section className='internal-banner-bg'>
       <div className="devider-image">
