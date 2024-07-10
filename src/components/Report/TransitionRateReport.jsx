@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import BannerReportFilter from './BannerReportFilter'
 import download from '../../assets/images/download.svg'
-import table from '../../assets/images/table_cells.png' 
-import chart from '../../assets/images/bar-chart.png'
+import table from '../../assets/images/table.svg' 
+import chart from '../../assets/images/bar-chart.svg'
 import './report.scss'
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
