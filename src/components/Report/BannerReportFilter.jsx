@@ -143,8 +143,7 @@ export default function BannerReportFilter() {
     dispatch(setUpdateReportType(event.target.value));
   };
   return (
-    <section className='internal-banner-bg'>
-      <div className="devider-image">
+    <section className='internal-banner-bg'>      
         <div className="container">
           <Header />
           <div className="content-box">
@@ -240,7 +239,7 @@ export default function BannerReportFilter() {
             </div>
           </div>
         </div>
-      </div>
+      
     </section >
   )
 }
