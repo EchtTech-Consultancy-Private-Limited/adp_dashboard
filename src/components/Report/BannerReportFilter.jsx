@@ -150,8 +150,7 @@ const handleOptionChange = (event) => {
 
   
   return (
-    <section className='internal-banner-bg'>
-      <div className="devider-image">
+    <section className='internal-banner-bg'>      
         <div className="container">
           <Header />
           <div className="content-box">
@@ -303,7 +302,7 @@ const handleOptionChange = (event) => {
             </div>
           </div>
         </div>
-      </div>
+      
     </section >
   )
 }

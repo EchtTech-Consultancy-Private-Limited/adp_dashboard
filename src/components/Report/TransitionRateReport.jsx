@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import BannerReportFilter from './BannerReportFilter'
 import download from '../../assets/images/download.svg'
-import table from '../../assets/images/table.svg' 
+import table from '../../assets/images/table.svg'
 import chart from '../../assets/images/bar-chart.svg'
 import './report.scss'
 import { AgGridReact } from "ag-grid-react";
@@ -549,7 +549,7 @@ export default function TransitionRateReport() {
                                     <div className="">
                                         {/* <img src={download} alt="download" /> */}
                                         <select id="export_data" className="form-select download-button" defaultValue={""}>
-                                            <option className="option-hide"> Download Report 2023-24 </option>
+                                            <option className="option-hide"> Download Report</option>
                                             <option value="export_pdf">Download as PDF </option>
                                             <option value="export_excel">Download as Excel</option>
                                         </select>
