@@ -36,7 +36,12 @@ export default function BannerReportFilter() {
   const selectedOption = useSelector((state) => state.reportAdpAbpType.updateReportType)
   const [selectedReport, setSelectedReport] = useState(null);
 
-
+  useEffect(() => {
+    const savedReportName = localStorage.getItem('selectedReport');
+    if (savedReportName) {
+      setSelectedReport(savedReportName);
+    }
+  }, []);
   const handleReportChange = (value) => {
     console.log(value, "value")
     localStorage.setItem('selectedReport', value);
@@ -64,6 +69,7 @@ export default function BannerReportFilter() {
 
   useEffect(() => {
     dispatch(setUpdateReportType('ADP_Report'));
+    setAspirationalData(aspirationalAdpData)
   }, [dispatch]);
   useEffect(() => {
     if (selectedOption === "ADP_Report") {
@@ -123,7 +129,9 @@ export default function BannerReportFilter() {
       dispatch(setStates(structuredData));
     }
   }, [aspirationalData, dispatch]);
-
+const handleOptionChange = (event) => {
+    dispatch(setUpdateReportType(event.target.value));
+  };
   const handleStateChange = (value) => {
     dispatch(selectState(value));
   };
@@ -140,9 +148,7 @@ export default function BannerReportFilter() {
 
 
 
-  const handleOptionChange = (event) => {
-    dispatch(setUpdateReportType(event.target.value));
-  };
+  
   return (
     <section className='internal-banner-bg'>
       <div className="devider-image">

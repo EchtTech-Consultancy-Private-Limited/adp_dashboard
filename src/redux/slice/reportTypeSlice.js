@@ -4,7 +4,7 @@ const reportTypeSlice = createSlice({
     name: 'reportTypeSlice',
     initialState:{
         updateReportType:"ADP_Report",
-        loadingStatus:true
+        loadingStatus:false
     },
     reducers: {
       setUpdateReportType(state,action) {

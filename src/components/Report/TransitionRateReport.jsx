@@ -42,7 +42,11 @@ export default function TransitionRateReport() {
     const [arrowData, setArrowData] = useState([])
     const selectedOptions = useSelector((state) => state.reportAdpAbpType.updateReportType)
     const updateLoading = useSelector((state) => state.reportAdpAbpType.loadingStatus)
-    console.log(updateLoading, "updateLoading")
+    const savedReportName = localStorage.getItem('selectedReport');
+    const states = useSelector((state) => state.locationAdp.states);
+    const districts = useSelector((state) => state.locationAdp.districts);
+    const blocks = useSelector((state) => state.locationAdp.blocks);
+    console.log(selectedState,districts,blocks, "updateLoading")
     const [data, setData] = useState([]);
     console.log(data, "selectedState")
     function dispatchingData() {
@@ -58,12 +62,12 @@ export default function TransitionRateReport() {
 
     useEffect(() => {
         if (selectedOptions === "ADP_Report") {
-            dispatchingData()
             setAspirationalData(aspirationalAdpData)
+            dispatchingData()
         }
         else {
-            dispatchingData()
             setAspirationalData(aspirationalAbpData)
+            dispatchingData()
         }
     }, [selectedOptions])
     useEffect(() => {
@@ -94,7 +98,7 @@ export default function TransitionRateReport() {
         setData(filteredData);
         // setLoading(false)
         
-    dispatch(setUpdateStatus(false))
+   // dispatch(setUpdateStatus(false))
     }, [selectedState, selectedDistrict, selectedBlock]);
     const getLocationName = (item) => {
         if (selectedOptions === "ABP_Report") {
@@ -506,68 +510,70 @@ export default function TransitionRateReport() {
             {updateLoading && <GlobalLoading />}
             <div className="container">
                 <div className="row mt-5">
+                  
+                   {selectedState !== "Select State" ?
                     <div className="col-md-12">
-                        <BlankPage/>
-                    </div>
-                    <div className="col-md-12">
-                        <div className="card-box">
-                            <div className="row align-items-end">
-                                <div className="col-md-5">
-                                    <div className="d-flex align-items-end">
-                                        <div className="title-box">
-                                            <h5 className='sub-title'>Uttar Pradesh District's</h5>
-                                            <h3 className='heading-sm'>Transition Rate</h3>
-                                        </div>
-                                        <div className="tab-box">
-                                            <button className='tab-button active'><img src={table} alt="Table" /> Table View</button>
-                                            <button className='tab-button'><img src={chart} alt="chart" /> Chart View</button>                                           
-                                        </div>
+                    <div className="card-box">
+                        <div className="row align-items-end">
+                            <div className="col-md-5">
+                                <div className="d-flex align-items-end">
+                                    <div className="title-box">
+                                        <h5 className='sub-title'>{selectedState} District's</h5>
+                                        <h3 className='heading-sm'>Transition Rate</h3>
                                     </div>
-                                </div>
-                                <div className="col-md-7">
-                                    <div className="d-flex w-100">
-                                        <div className="radio-button">
-                                            <div className="box-radio">
-                                                <input type="radio"
-                                                    value="upper_primary_to_secondary"
-                                                    checked={selectedOption === "upper_primary_to_secondary"}
-                                                    onChange={handleOptionChange} />
-                                                <label htmlFor="radio4">Upper Primary to Secondary  </label>
-                                            </div>
-
-                                            <div className="box-radio">
-                                                <input type="radio"
-                                                    value="secondary_to_higher_secondary"
-                                                    checked={selectedOption === "secondary_to_higher_secondary"}
-                                                    onChange={handleOptionChange} />
-                                                <label htmlFor="radio5">Secondary to Higher Secondary</label>
-                                            </div>
-                                        </div>
-                                        <div className="">
-                                            {/* <img src={download} alt="download" /> */}
-                                            <select id="export_data" className="form-select download-button" defaultValue={""}>
-                                                <option className="option-hide"> Download Report 2023-24 </option>
-                                                <option value="export_pdf">Download as PDF </option>
-                                                <option value="export_excel">Download as Excel</option>
-                                            </select>
-                                        </div>
+                                    <div className="tab-box">
+                                        <button className='tab-button active'><img src={table} alt="Table" /> Table View</button>
+                                        <button className='tab-button'><img src={chart} alt="chart" /> Chart View</button>                                           
                                     </div>
-
                                 </div>
                             </div>
-
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <div className="table-box mt-4">
-                                        <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
-                                            style={{ width: "100%", height: 200 }} >
-                                            <AgGridReact columnDefs={columns} rowData={compressedData} defaultColDef={defColumnDefs} onGridReady={onGridReady} />
+                            <div className="col-md-7">
+                                <div className="d-flex w-100">
+                                    <div className="radio-button">
+                                        <div className="box-radio">
+                                            <input type="radio"
+                                                value="upper_primary_to_secondary"
+                                                checked={selectedOption === "upper_primary_to_secondary"}
+                                                onChange={handleOptionChange} />
+                                            <label htmlFor="radio4">Upper Primary to Secondary  </label>
                                         </div>
+
+                                        <div className="box-radio">
+                                            <input type="radio"
+                                                value="secondary_to_higher_secondary"
+                                                checked={selectedOption === "secondary_to_higher_secondary"}
+                                                onChange={handleOptionChange} />
+                                            <label htmlFor="radio5">Secondary to Higher Secondary</label>
+                                        </div>
+                                    </div>
+                                    <div className="">
+                                        {/* <img src={download} alt="download" /> */}
+                                        <select id="export_data" className="form-select download-button" defaultValue={""}>
+                                            <option className="option-hide"> Download Report 2023-24 </option>
+                                            <option value="export_pdf">Download as PDF </option>
+                                            <option value="export_excel">Download as Excel</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-12">
+                                <div className="table-box mt-4">
+                                    <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
+                                        style={{ width: "100%", height: 200 }} >
+                                        <AgGridReact columnDefs={columns} rowData={compressedData} defaultColDef={defColumnDefs} onGridReady={onGridReady} />
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>:  <div className="col-md-12">
+                        <BlankPage/>
+                    </div>
+                }
                 </div>
             </div>
         </section>
