@@ -178,20 +178,13 @@ export default function BannerReportFilter() {
                   </div>
 
                   <div className="col-md-8">
-                    <div className="d-flex justify-content-between text-aligns-center">
+                    <div className="d-flex justify-content-between text-aligns-center antd-select">
 
-                      <Select
-                        onChange={handleStateChange}
-                        style={{ width: "100%" }}
-                        placeholder="Select State"
-                        mode="single"
-                        showSearch
-                        value={selectedState || "Select State"}
-                        className="form-select">
+                      <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="Select State" mode="single" showSearch
+                        value={selectedState || "Select State"} className="form-select">
                         <Select.Option key="Select State" value={"Select State"}>
                           Select State
                         </Select.Option>
-
 
                         {states.map((state) => (
                           <Select.Option
@@ -202,15 +195,39 @@ export default function BannerReportFilter() {
                           </Select.Option>
                         ))}
                       </Select>
-                      <select className="form-select bg-grey2" defaultValue={""}>
-                        <option value="">Select District </option>
-                        <option value="">District </option>
-                      </select>
 
-                      <select className="form-select bg-grey2" defaultValue={""}>
-                        <option value="">Select KPI </option>
-                        <option value="">KPI</option>
-                      </select>
+                      <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="Select State" mode="single" showSearch
+                        value={selectedState || "Select State"} className="form-select">
+                        <Select.Option key="Select State" value={"Select State"}>
+                          Select District
+                        </Select.Option>
+
+                        {states.map((state) => (
+                          <Select.Option
+                            key={state.lgd_state_id}
+                            value={state.lgd_state_name}
+                          >
+                            {state.lgd_state_name}
+                          </Select.Option>
+                        ))}
+                      </Select>
+
+                      <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="Select State" mode="single" showSearch
+                        value={selectedState || "Select State"} className="form-select">
+                        <Select.Option key="Select State" value={"Select State"}>
+                          Select KPI
+                        </Select.Option>
+
+                        {states.map((state) => (
+                          <Select.Option
+                            key={state.lgd_state_id}
+                            value={state.lgd_state_name}
+                          >
+                            {state.lgd_state_name}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    
 
 
                     </div>
