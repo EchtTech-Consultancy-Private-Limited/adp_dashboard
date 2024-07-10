@@ -121,7 +121,7 @@
             color: #fff;
 
             img{
-                filter: invert(1);
+                filter: brightness(100);
             }
         }
 
@@ -150,15 +150,15 @@
 
     img {
         width: 20px;
-        margin-right: 10px;
+        margin-right: 5px;
     }
 }
 
 
 .multi-header-table {
     .ag-header-row.ag-header-row-column, .ag-header-row.ag-header-row-column-group {
-        background: #2B9C9F;
-        border-color: #2B9C9F;
+        background: #2B9C9F !important;
+        border-color: #2B9C9F !important;
         color: #fff !important;
         font-size: 13px !important;
         font-weight: 500 !important;
