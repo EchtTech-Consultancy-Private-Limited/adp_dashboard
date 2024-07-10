@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from '../pages/Home';
-import Report from '../components/Report/Report';
+import TransitionRateReport from '../components/Report/TransitionRateReport';
 
 export const routes = (
    
@@ -12,6 +12,6 @@ export const routes = (
         <Route exact path="/aspirational-reports-4003" element={<AspirationalReport4003 />} />
         <Route exact path="/aspirational-reports-4004" element={<AspirationalReport4004 />} /> */}
         <Route path="/*" element={<Navigate to="/" />} />
-        <Route path="/report" element={<Report/>} />
+        <Route path="/report" element={<TransitionRateReport/>} />
     </Routes>
 )  
