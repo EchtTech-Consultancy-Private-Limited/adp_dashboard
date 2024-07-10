@@ -3,7 +3,7 @@ import Header from '../Header/Header'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { selectBlock, selectDistrict, selectState, setStates } from '../../redux/slice/filterServicesSlice';
-import { setUpdateReportType } from '../../redux/slice/reportTypeSlice';
+import { setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTypeSlice';
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
 import { Select } from 'antd';
@@ -179,6 +179,7 @@ export default function BannerReportFilter() {
 
                   <div className="col-md-8">
                     <div className="d-flex justify-content-between text-aligns-center antd-select">
+                      {/* State select option */}
 
                       <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="Select State" mode="single" showSearch
                         value={selectedState || "Select State"} className="form-select">
@@ -195,39 +196,74 @@ export default function BannerReportFilter() {
                           </Select.Option>
                         ))}
                       </Select>
-
-                      <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="Select State" mode="single" showSearch
-                        value={selectedState || "Select State"} className="form-select">
-                        <Select.Option key="Select State" value={"Select State"}>
-                          Select District
+                      {/* District select option */}
+                      <Select
+                        onChange={handleDistrictChange}
+                        style={{ width: "100%" }}
+                        placeholder="All District"
+                        mode="single"
+                        showSearch
+                        value={selectedDistrict || "Select District"}
+                        className="form-select"
+                        
+                      >
+                        <Select.Option
+                          key="All District"
+                          value="All District"
+                          disabled={disableSelectedState}
+                        >
+                          All District
                         </Select.Option>
-
-                        {states.map((state) => (
+                        {districts.map((district) => (
                           <Select.Option
-                            key={state.lgd_state_id}
-                            value={state.lgd_state_name}
+                            key={district.lgd_district_id}
+                            value={district.lgd_district_name}
                           >
-                            {state.lgd_state_name}
+                            {district.lgd_district_name}
                           </Select.Option>
                         ))}
                       </Select>
 
-                      <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="Select State" mode="single" showSearch
-                        value={selectedState || "Select State"} className="form-select">
-                        <Select.Option key="Select State" value={"Select State"}>
+                      {/* Block select option */}
+                      {selectedOption === "ADP_Report" ? "" :
+
+                        <Select
+                          onChange={handleBlockChange}
+                          style={{ width: "100%" }}
+                          placeholder="All Block"
+                          mode="single"
+                          showSearch
+                          value={selectedBlock || "Select Block"}
+                          className="form-select"
+                         
+                        >
+                          <Select.Option
+                            key="All Block"
+                            value="All Block"
+                            disabled={disableSelectedDistrict || disableSelectedState}
+                          >
+                            All Block
+                          </Select.Option>
+                          {blocks.map((block) => (
+                            <Select.Option
+                              key={block.lgd_block_id}
+                              value={block.lgd_block_name}
+                            >
+                              {block.lgd_block_name}
+                            </Select.Option>
+                          ))}
+                        </Select>
+
+                      }
+                      <Select style={{ width: "100%" }} placeholder="Select State" mode="single" showSearch
+                        className="form-select">
+                        <Select.Option key="Select State" >
                           Select KPI
                         </Select.Option>
 
-                        {states.map((state) => (
-                          <Select.Option
-                            key={state.lgd_state_id}
-                            value={state.lgd_state_name}
-                          >
-                            {state.lgd_state_name}
-                          </Select.Option>
-                        ))}
+
                       </Select>
-                    
+
 
 
                     </div>

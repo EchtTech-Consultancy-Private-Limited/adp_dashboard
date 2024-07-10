@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import BannerReportFilter from './BannerReportFilter'
 import download from '../../assets/images/download.svg'
-import table from '../../assets/images/table_cells.png'
-import chart from '../../assets/images/bar-chart.png'
+import table from '../../assets/images/table.svg' 
+import chart from '../../assets/images/bar-chart.svg'
 import './report.scss'
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
@@ -18,6 +18,8 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { useTranslation } from "react-i18next";
 import { jsPDF } from "jspdf";
 import 'jspdf-autotable';
+import { GlobalLoading } from '../GlobalLoading/GlobalLoading'
+import { setUpdateStatus } from '../../redux/slice/reportTypeSlice'
 export default function TransitionRateReport() {
     const dispatch = useDispatch()
     const { t, i18n } = useTranslation();
@@ -38,13 +40,14 @@ export default function TransitionRateReport() {
     const [aspirationalData, setAspirationalData] = useState([])
     const [arrowData, setArrowData] = useState([])
     const selectedOptions = useSelector((state) => state.reportAdpAbpType.updateReportType)
-
+    const updateLoading = useSelector((state) => state.reportAdpAbpType.loadingStatus)
+    console.log(updateLoading, "updateLoading")
     const [data, setData] = useState([]);
     console.log(data, "selectedState")
     function dispatchingData() {
         dispatch(selectState("Select State"));
-        dispatch(selectDistrict("District"));
-        dispatch(selectBlock("Block"));
+        dispatch(selectDistrict("Select District"));
+        dispatch(selectBlock("Select Block"));
     }
     useEffect(() => {
         dispatchingData()
@@ -71,13 +74,13 @@ export default function TransitionRateReport() {
             );
         }
 
-        if (selectedDistrict && selectedDistrict !== "All District" && selectedDistrict !== "District") {
+        if (selectedDistrict && selectedDistrict !== "All District" && selectedDistrict !== "Select District") {
             filteredData = filteredData.filter(
                 (item) => item.lgd_district_name === selectedDistrict
             );
         }
 
-        if (selectedBlock && selectedBlock !== "All Block" && selectedBlock !== "Block") {
+        if (selectedBlock && selectedBlock !== "All Block" && selectedBlock !== "Select Block") {
             filteredData = filteredData.filter(
                 (item) => item.lgd_block_name === selectedBlock
             );
@@ -88,14 +91,16 @@ export default function TransitionRateReport() {
         }));
         console.log(filteredData, "filteredData")
         setData(filteredData);
-        setLoading(false)
+        // setLoading(false)
+        
+    dispatch(setUpdateStatus(false))
     }, [selectedState, selectedDistrict, selectedBlock]);
     const getLocationName = (item) => {
         if (selectedOptions === "ABP_Report") {
-            if (selectedBlock && selectedBlock !== "All Block" && selectedBlock !== "Block") {
+            if (selectedBlock && selectedBlock !== "All Block" && selectedBlock !== "Select Block") {
 
                 return `${item.lgd_block_name}`;
-            } else if (selectedDistrict && selectedDistrict !== "All District" && selectedDistrict !== "District") {
+            } else if (selectedDistrict && selectedDistrict !== "All District" && selectedDistrict !== "Select District") {
 
                 return `${item.lgd_block_name}`;
             } else if (selectedState && selectedState !== "Select State") {
@@ -497,6 +502,7 @@ export default function TransitionRateReport() {
     return (
         <section>
             <BannerReportFilter />
+            {updateLoading && <GlobalLoading />}
             <div className="container">
                 <div className="row mt-5">
                     <div className="col-md-12">

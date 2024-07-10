@@ -47,11 +47,27 @@
             .form-select:focus {
                 box-shadow: none;
             }
+
+            .antd-select{
+                .form-select{
+                    appearance: none;
+                    --bs-form-select-bg-img: none;
+                    height: 45px;
+                    margin-left: 15px;                }
+            }
+
+            :where(.css-dev-only-do-not-override-98ntnt).ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector{
+                border: none !important;
+                height: 32px;
+            }
+
         }
 
 
     }
 }
+
+
 
 .radio-button {
     background: #fff;
@@ -121,7 +137,7 @@
             color: #fff;
 
             img{
-                filter: invert(1);
+                filter: brightness(100);
             }
         }
 
@@ -150,15 +166,15 @@
 
     img {
         width: 20px;
-        margin-right: 10px;
+        margin-right: 5px;
     }
 }
 
 
 .multi-header-table {
     .ag-header-row.ag-header-row-column, .ag-header-row.ag-header-row-column-group {
-        background: #2B9C9F;
-        border-color: #2B9C9F;
+        background: #2B9C9F !important;
+        border-color: #2B9C9F !important;
         color: #fff !important;
         font-size: 13px !important;
         font-weight: 500 !important;

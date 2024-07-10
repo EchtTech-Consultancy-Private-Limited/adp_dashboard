@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import BannerReportFilter from './BannerReportFilter'
 import download from '../../assets/images/download.svg'
-import table from '../../assets/images/table_cells.png' 
-import chart from '../../assets/images/bar-chart.png'
+import table from '../../assets/images/table.svg' 
+import chart from '../../assets/images/bar-chart.svg'
 import './report.scss'
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
+import BannerReportFilter from './BannerReportFilter'
 
 export default function Report() {
 
@@ -33,7 +33,7 @@ export default function Report() {
 
     return (
         <section>
-            <BannerReportFilter />
+            <BannerReportFilter/>
             <div className="container">
                 <div className="row mt-5">
                     <div className="col-md-12">
@@ -66,7 +66,6 @@ export default function Report() {
                                         </div>
                                         <button className='download-button'><img src={download} alt="download" /> Download Report 2023-24</button>
                                     </div>
-
                                 </div>
                             </div>
 
