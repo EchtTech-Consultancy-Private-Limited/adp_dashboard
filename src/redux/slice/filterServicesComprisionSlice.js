@@ -4,8 +4,8 @@ const initialState = {
 name: "district/comprision",
   states: [],
   districts: [],
-  selectedState: "All India/National",
-  selectedDistrict: "District Wise",
+  selectedState: "Select State",
+  selectedDistrict: "All District",
   
 };
 
@@ -22,7 +22,7 @@ const filterServicesComprisionSlice = createSlice({
    
     selectState: (state, action) => {
       state.selectedState = action.payload;
-      state.selectedDistrict = "District"; 
+      state.selectedDistrict = "Select District"; 
       state.districts = state.states.find(st => st.lgd_state_name === action.payload)?.districts || []; 
      
     },
