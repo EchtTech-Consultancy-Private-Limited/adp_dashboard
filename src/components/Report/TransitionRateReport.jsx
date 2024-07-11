@@ -71,9 +71,6 @@ export default function TransitionRateReport() {
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption)
     const updateLoading = useSelector((state) => state.reportAdpAbpType.loadingStatus)
     const savedReportName = localStorage.getItem('selectedReport');
-    const states = useSelector((state) => state.locationAdp.states);
-    const districts = useSelector((state) => state.locationAdp.districts);
-    const blocks = useSelector((state) => state.locationAdp.blocks);
     const report_name = savedReportName
     const [data, setData] = useState([]);
     function resteData() {
@@ -408,7 +405,7 @@ export default function TransitionRateReport() {
             doc.setFontSize(25);
             doc.setTextColor("blue");
             doc.setFont("bold");
-            doc.text("UDISE+", 0.6, 0.5);
+            doc.text("Aspirational District Programme", 0.6, 0.5);
             doc.setFontSize(20);
             doc.setTextColor("blue");
             doc.text(`Report Name: ${report_name}`, 0.6, 1.0);
@@ -490,7 +487,7 @@ export default function TransitionRateReport() {
                 },
                 rowData: allData,
                 fileName: report_name,
-                sheetName: "Udise+",
+                sheetName: "Aspirational District Programme",
                 columnKeys: columnKeys,
                 columnNames: columnNames,
             });
@@ -550,7 +547,7 @@ export default function TransitionRateReport() {
                                         </div>
                                     </div>
                                     <div className="col-md-7">
-                                        <div className="d-flex w-100">
+                                        <div className="d-flex w-m-100">
                                             <div className="radio-button">
                                                 <div className="box-radio">
                                                     <input type="radio"
@@ -571,7 +568,7 @@ export default function TransitionRateReport() {
                                             <div className="">
                                                 {/* <img src={download} alt="download" /> */}
                                                 <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
-                                                    <option className="option-hide"> Download Report</option>
+                                                    <option className="option-hide"> Download Report 2023-24</option>
                                                     <option value="export_pdf">Download as PDF </option>
                                                     <option value="export_excel">Download as Excel</option>
                                                 </select>
@@ -585,7 +582,7 @@ export default function TransitionRateReport() {
                                     <div className="col-md-12">
                                         <div className="table-box mt-4">
                                             <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
-                                                style={{ width: "100%", height: 300 }} >
+                                                style={{ width: "100%", height: 200 }} >
                                                 <AgGridReact columnDefs={columns} rowData={compressedData} defaultColDef={defColumnDefs} onGridReady={onGridReady} />
                                             </div>
                                         </div>
@@ -593,13 +590,14 @@ export default function TransitionRateReport() {
                                 </div>
                             </div>
 
-                          <TransitionRateCompare/>
+                        
 
 
                         </div> : <div className="col-md-12">
                             <BlankPage />
                         </div>
                     }
+                      <TransitionRateCompare/>
                 </div>
             </div>
         </section>
