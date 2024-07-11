@@ -32,7 +32,7 @@ export default function BannerReportFilter() {
     selectedState === "All India/National";
   const disableSelectedDistrict =
     selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict;
-  
+
 
   const selectedOption = useSelector((state) => state.reportAdpAbpType.updateReportType)
   const [selectedReport, setSelectedReport] = useState(null);
@@ -128,7 +128,7 @@ export default function BannerReportFilter() {
       dispatch(setStates(structuredData));
     }
   }, [aspirationalData, dispatch]);
-const handleOptionChange = (event) => {
+  const handleOptionChange = (event) => {
     dispatch(setUpdateReportType(event.target.value));
   };
   const handleStateChange = (value) => {
@@ -147,118 +147,119 @@ const handleOptionChange = (event) => {
 
 
 
-  
+
   return (
-    <section className='internal-banner-bg'>      
-        <div className="container">
-          <Header />
-          <div className="content-box">
-            <div className="row align-items-center">
-              <div className="col-md-3">
-                <div className='main-title'>Reports </div>
-                <div className="brudcrumb-text">Home / <span>Report</span></div>
-              </div>
-              <div className="col-md-9">
-                <div className="row select-infra Comparison-select-group">
-                  <div className="col-md-4">
-                    <div className="radio-button">
-                      <div className="box-radio">
-                        <input type="radio"
-                          value="ADP_Report"
-                          checked={selectedOption === "ADP_Report"}
-                          onChange={handleOptionChange} />
-                        <label htmlFor="radio1">ADP Report</label>
-                      </div>
+    <section className='internal-banner-bg'>
+      <div className="container">
+        <Header />
+        <div className="content-box">
+          <div className="row align-items-center">
+            <div className="col-md-3">
+              <div className='main-title'>Reports </div>
+              <div className="brudcrumb-text">Home / <span>Report</span></div>
+            </div>
+            <div className="col-md-9">
+              <div className="row select-infra Comparison-select-group">
+                <div className="col-md-3 pe-0">
+                  <div className="radio-button">
+                    <div className="box-radio">
+                      <input type="radio"
+                        value="ADP_Report"
+                        checked={selectedOption === "ADP_Report"}
+                        onChange={handleOptionChange} />
+                      <label htmlFor="radio1">ADP Report</label>
+                    </div>
 
-                      <div className="box-radio">
-                        <input type="radio"
-                          value="ABP_Report"
-                          checked={selectedOption === "ABP_Report"}
-                          onChange={handleOptionChange} />
-                        <label htmlFor="radio2">ABP Report</label>
-                      </div>
-
+                    <div className="box-radio">
+                      <input type="radio"
+                        value="ABP_Report"
+                        checked={selectedOption === "ABP_Report"}
+                        onChange={handleOptionChange} />
+                      <label htmlFor="radio2">ABP Report</label>
                     </div>
 
                   </div>
 
-                  <div className="col-md-8">
-                    <div className="d-flex justify-content-between text-aligns-center antd-select">
-                      {/* State select option */}
-                      <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="Select State" mode="single" showSearch
-                        value={selectedState || "Select State"} className="form-select">
-                        <Select.Option key="Select State" value={SelectState}>
-                          Select State
-                        </Select.Option>
+                </div>
 
-                        {states.map((state) => (
-                          <Select.Option
-                            key={state.lgd_state_id}
-                            value={state.lgd_state_name}
-                          >
-                            {state.lgd_state_name}
-                          </Select.Option>
-                        ))}
-                      </Select>
-                      {/* District select option */}
+                <div className="col-md-9">
+                  <div className="d-flex justify-content-between text-aligns-center antd-select">
+                    {/* State select option */}
+
+                    <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="Select State" mode="single" showSearch
+                      value={selectedState || "Select State"} className="form-select">
+                      <Select.Option key="Select State" value={SelectState}>
+                        Select State
+                      </Select.Option>
+
+                      {states.map((state) => (
+                        <Select.Option
+                          key={state.lgd_state_id}
+                          value={state.lgd_state_name}
+                        >
+                          {state.lgd_state_name}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                    {/* District select option */}
+                    <Select
+                      onChange={handleDistrictChange}
+                      style={{ width: "100%" }}
+                      placeholder="All District"
+                      mode="single"
+                      showSearch
+                      value={selectedDistrict || SelectDistrict}
+                      className="form-select"
+
+                    >
+                      <Select.Option
+                        key="All District"
+                        value={AllDistrict}
+                        disabled={disableSelectedState}
+                      >
+                        All District
+                      </Select.Option>
+                      {districts.map((district) => (
+                        <Select.Option
+                          key={district.lgd_district_id}
+                          value={district.lgd_district_name}
+                        >
+                          {district.lgd_district_name}
+                        </Select.Option>
+                      ))}
+                    </Select>
+
+                    {/* Block select option */}
+                    {selectedOption === "ADP_Report" ? "" :
+
                       <Select
-                        onChange={handleDistrictChange}
+                        onChange={handleBlockChange}
                         style={{ width: "100%" }}
-                        placeholder="All District"
+                        placeholder="All Block"
                         mode="single"
                         showSearch
-                        value={selectedDistrict || SelectDistrict}
+                        value={selectedBlock || SelectBlock}
                         className="form-select"
 
                       >
                         <Select.Option
-                          key="All District"
-                          value={AllDistrict}
-                          disabled={disableSelectedState}
+                          key="All Block"
+                          value="All Block"
+                          disabled={disableSelectedDistrict || disableSelectedState}
                         >
-                          All District
+                          All Block
                         </Select.Option>
-                        {districts.map((district) => (
+                        {blocks.map((block) => (
                           <Select.Option
-                            key={district.lgd_district_id}
-                            value={district.lgd_district_name}
+                            key={block.lgd_block_id}
+                            value={block.lgd_block_name}
                           >
-                            {district.lgd_district_name}
+                            {block.lgd_block_name}
                           </Select.Option>
                         ))}
                       </Select>
 
-                      {/* Block select option */}
-                      {selectedOption === "ADP_Report" ? "" :
-
-                        <Select
-                          onChange={handleBlockChange}
-                          style={{ width: "100%" }}
-                          placeholder="All Block"
-                          mode="single"
-                          showSearch
-                          value={selectedBlock || SelectBlock}
-                          className="form-select"
-
-                        >
-                          <Select.Option
-                            key="All Block"
-                            value="All Block"
-                            disabled={disableSelectedDistrict || disableSelectedState}
-                          >
-                            All Block
-                          </Select.Option>
-                          {blocks.map((block) => (
-                            <Select.Option
-                              key={block.lgd_block_id}
-                              value={block.lgd_block_name}
-                            >
-                              {block.lgd_block_name}
-                            </Select.Option>
-                          ))}
-                        </Select>
-
-                      }
+                    }
 
 
                       <Select
@@ -290,17 +291,17 @@ const handleOptionChange = (event) => {
 
 
 
-                    </div>
                   </div>
-
-
-
                 </div>
+
+
+
               </div>
             </div>
           </div>
         </div>
-      
+      </div>
+
     </section >
   )
 }

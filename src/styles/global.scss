@@ -963,8 +963,19 @@ ul {
 .bg-grey2 {
     background:#F2F0F0;
 }
+@media (min-width: 1200px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl {
+        max-width: 1200px !important;
+    }
+}
 
-@media (min-width: 1600px) {
+@media (min-width: 1400px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+        max-width: 1450px !important;
+    }
+}
+
+@media (min-width: 1650px) {
 
     .container,
     .container-lg,
@@ -972,7 +983,7 @@ ul {
     .container-sm,
     .container-xl,
     .container-xxl {
-        max-width: 1500px !important;
+        max-width: 1600px !important;
     }
 
     .site-header {
@@ -983,6 +994,7 @@ ul {
         margin-right: 5%;
     }
 }
+
 
 @media (max-width:1699px) and (min-width: 1400px) {
     body {
