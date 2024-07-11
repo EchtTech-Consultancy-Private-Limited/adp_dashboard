@@ -181,6 +181,11 @@ ul {
     font-size: 17px;
     font-weight: 500;
     margin-bottom: 2px;
+
+   
+    @media (max-width:1499px) and (min-width: 1024px) {
+        font-size: 14px;
+    }
 }
 
 .heading-blue {
@@ -1193,7 +1198,7 @@ g#bmap_graphics_layer {
     }
 
     .heading-sm {
-        font-size: 26px;
+        font-size: 24px;
     }
 
     .right-card-sec .card-box-impact .impact-box-content img.card-img-impact {

@@ -189,7 +189,8 @@
 }
 
 .header-top {
-    position: sticky;
+    // position: sticky;
+    position: static;
     top: 0;
     left: 0;
     right: 0;
@@ -201,7 +202,8 @@
     // box-shadow: 0px 4px 10px #00000030;
     background: $white;
     transition: all 0.2s ease;
-    position: sticky;
+    // position: sticky;
+    position: static;
     top: 34px;
     left: 0;
     right: 0;
