@@ -7,6 +7,7 @@ import { setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTy
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
 import { Select } from 'antd';
+import { AllDistrict, SelectBlock, SelectDistrict, SelectKpi, SelectState } from '../../constant/Constant';
 
 export default function BannerReportFilter() {
 
@@ -30,8 +31,8 @@ export default function BannerReportFilter() {
     selectedState === "Select State" ||
     selectedState === "All India/National";
   const disableSelectedDistrict =
-    selectedDistrict === "District" || selectedDistrict === "All District";
-  const [is3016btnDisabled, setIs3016btnDisabled] = useState(true);
+    selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict;
+  
 
   const selectedOption = useSelector((state) => state.reportAdpAbpType.updateReportType)
   const [selectedReport, setSelectedReport] = useState(null);
@@ -189,7 +190,7 @@ const handleOptionChange = (event) => {
 
                       <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="Select State" mode="single" showSearch
                         value={selectedState || "Select State"} className="form-select">
-                        <Select.Option key="Select State" value={"Select State"}>
+                        <Select.Option key="Select State" value={SelectState}>
                           Select State
                         </Select.Option>
 
@@ -209,13 +210,13 @@ const handleOptionChange = (event) => {
                         placeholder="All District"
                         mode="single"
                         showSearch
-                        value={selectedDistrict || "Select District"}
+                        value={selectedDistrict || SelectDistrict}
                         className="form-select"
 
                       >
                         <Select.Option
                           key="All District"
-                          value="All District"
+                          value={AllDistrict}
                           disabled={disableSelectedState}
                         >
                           All District
@@ -239,7 +240,7 @@ const handleOptionChange = (event) => {
                           placeholder="All Block"
                           mode="single"
                           showSearch
-                          value={selectedBlock || "Select Block"}
+                          value={selectedBlock || SelectBlock}
                           className="form-select"
 
                         >
@@ -269,7 +270,7 @@ const handleOptionChange = (event) => {
                         mode="single"
                         showSearch
                         className="form-select"
-                        value={selectedReport || "Select KPI" }
+                        value={selectedReport || SelectKpi }
                         onChange={handleReportChange}
                       >
                         <Select.Option key="Transition Rate" value="Transition Rate">

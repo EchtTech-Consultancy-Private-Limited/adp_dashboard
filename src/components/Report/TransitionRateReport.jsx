@@ -21,6 +21,7 @@ import 'jspdf-autotable';
 import { GlobalLoading } from '../GlobalLoading/GlobalLoading'
 import { setUpdateStatus } from '../../redux/slice/reportTypeSlice'
 import BlankPage from './BlankPage'
+import { AllBlock, AllDistrict, SelectBlock, SelectDistrict, SelectState } from '../../constant/Constant'
 export default function TransitionRateReport() {
     const dispatch = useDispatch()
     const { t, i18n } = useTranslation();
@@ -50,9 +51,9 @@ export default function TransitionRateReport() {
     const [data, setData] = useState([]);
     console.log(data, "selectedState")
     function dispatchingData() {
-        dispatch(selectState("Select State"));
-        dispatch(selectDistrict("Select District"));
-        dispatch(selectBlock("Select Block"));
+        dispatch(selectState(SelectState));
+        dispatch(selectDistrict(SelectDistrict));
+        dispatch(selectBlock(SelectBlock));
     }
     useEffect(() => {
         dispatchingData()
@@ -73,19 +74,19 @@ export default function TransitionRateReport() {
     useEffect(() => {
         let filteredData = aspirationalData;
 
-        if (selectedState && selectedState !== "Select State") {
+        if (selectedState && selectedState !== SelectState) {
             filteredData = filteredData.filter(
                 (item) => item.lgd_state_name === selectedState
             );
         }
 
-        if (selectedDistrict && selectedDistrict !== "All District" && selectedDistrict !== "Select District") {
+        if (selectedDistrict && selectedDistrict !== AllDistrict && selectedDistrict !== SelectDistrict) {
             filteredData = filteredData.filter(
                 (item) => item.lgd_district_name === selectedDistrict
             );
         }
 
-        if (selectedBlock && selectedBlock !== "All Block" && selectedBlock !== "Select Block") {
+        if (selectedBlock && selectedBlock !== AllBlock && selectedBlock !== SelectBlock) {
             filteredData = filteredData.filter(
                 (item) => item.lgd_block_name === selectedBlock
             );
@@ -102,28 +103,28 @@ export default function TransitionRateReport() {
     }, [selectedState, selectedDistrict, selectedBlock]);
     const getLocationName = (item) => {
         if (selectedOptions === "ABP_Report") {
-            if (selectedBlock && selectedBlock !== "All Block" && selectedBlock !== "Select Block") {
+            if (selectedBlock && selectedBlock !== AllBlock && selectedBlock !== SelectBlock) {
 
                 return `${item.lgd_block_name}`;
-            } else if (selectedDistrict && selectedDistrict !== "All District" && selectedDistrict !== "Select District") {
+            } else if (selectedDistrict && selectedDistrict !== AllDistrict && selectedDistrict !== SelectDistrict) {
 
                 return `${item.lgd_block_name}`;
-            } else if (selectedState && selectedState !== "Select State") {
+            } else if (selectedState && selectedState !== SelectState) {
 
                 return `${item.lgd_district_name}`;
-            } else if (selectedState === "Select State") {
+            } else if (selectedState === SelectState) {
                 return `${item.lgd_state_name}`;
             }
         } else if (selectedOptions === "ADP_Report") {
-            if (selectedState && selectedState !== "Select State") {
+            if (selectedState && selectedState !== SelectState) {
 
                 return `${item.lgd_district_name}`;
             }
-            else if (selectedState !== "Select State" && selectedState !== "All District") {
+            else if (selectedState !== SelectState && selectedState !== AllDistrict) {
 
                 return `${item.lgd_district_name}`;
             }
-            else if (selectedState === "Select State") {
+            else if (selectedState === SelectState) {
                 return `${item.lgd_state_name}`;
             }
         }
@@ -318,8 +319,8 @@ export default function TransitionRateReport() {
     }, []);
 
     const compressedData = useMemo(() => {
-        if (selectedState && selectedState !== "Select State") {
-            if (selectedDistrict && selectedDistrict !== "All District" && selectedDistrict !== "District") {
+        if (selectedState && selectedState !== SelectState) {
+            if (selectedDistrict && selectedDistrict !== AllDistrict && selectedDistrict !== SelectDistrict) {
                 return compressData(data, "lgd_block_name");
             }
             return compressData(data, "lgd_district_name");
@@ -511,7 +512,7 @@ export default function TransitionRateReport() {
             <div className="container">
                 <div className="row mt-5">
                   
-                   {selectedState !== "Select State" ?
+                   {selectedState !== SelectState ?
                     <div className="col-md-12">
                     <div className="card-box">
                         <div className="row align-items-end">
