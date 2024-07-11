@@ -44,7 +44,6 @@ export default function BannerReportFilter() {
     }
   }, []);
   const handleReportChange = (value) => {
-    console.log(value, "value")
     localStorage.setItem('selectedReport', value);
     setSelectedReport(value);
     switch (value) {
@@ -80,7 +79,6 @@ export default function BannerReportFilter() {
       setAspirationalData(aspirationalAbpData)
     }
   }, [selectedOption])
-  console.log(aspirationalData, "aspirationalData")
   useEffect(() => {
     if (aspirationalData.length > 0) {
       const structuredData = aspirationalData.reduce((acc, curr) => {
@@ -187,7 +185,6 @@ const handleOptionChange = (event) => {
                   <div className="col-md-8">
                     <div className="d-flex justify-content-between text-aligns-center antd-select">
                       {/* State select option */}
-
                       <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="Select State" mode="single" showSearch
                         value={selectedState || "Select State"} className="form-select">
                         <Select.Option key="Select State" value={SelectState}>
@@ -274,7 +271,7 @@ const handleOptionChange = (event) => {
                         onChange={handleReportChange}
                       >
                         <Select.Option key="Transition Rate" value="Transition Rate">
-                          Transition Rate (Boys/Girls)
+                          Transition Rate
                         </Select.Option>
                         <Select.Option key="Teacher and School Resources" value="Teacher and School Resources">
                           Teacher and School Resources

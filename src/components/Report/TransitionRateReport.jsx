@@ -21,34 +21,37 @@ import 'jspdf-autotable';
 import { GlobalLoading } from '../GlobalLoading/GlobalLoading'
 import { setselectedOption, setUpdateStatus } from '../../redux/slice/reportTypeSlice'
 import BlankPage from './BlankPage'
-import { AllBlock, AllDistrict, SelectBlock, SelectDistrict, SelectState } from '../../constant/Constant'
-
+import { AllBlock, AllDistrict, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
 
 const ArrowRenderer = ({ data, value }) => {
-    const selectedOption= useSelector((state) => state.reportAdpAbpType.selectedOption)
-    const [arrowData, setArrowData] = useState(data.upri_t);
-console.log(arrowData,value,selectedOption, "arrowData")
+    const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
+    const [arrowData, setArrowData] = useState([]);
+
     useEffect(() => {
         if (selectedOption === "upper_primary_to_secondary") {
-            console.log("fddfdfdf")
             setArrowData(data.upri_t);
         } else {
-            console.log("fddfdfdf")
             setArrowData(data.sec_t);
         }
     }, [selectedOption, data]);
 
+    const renderArrow = () => {
+        if (selectedOption === "upper_primary_to_secondary" && arrowData >= 70 && arrowData <= 100) {
+            return <ArrowUpwardIcon style={{ color: 'green', marginLeft: '5px', fontSize: "14px" }} />;
+        } else if (selectedOption !== "upper_primary_to_secondary" && arrowData >= 40 && arrowData <= 100) {
+            return <ArrowUpwardIcon style={{ color: 'green', marginLeft: '5px', fontSize: "14px" }} />;
+        } else {
+            return <ArrowDownwardIcon style={{ color: 'red', marginLeft: '5px', fontSize: "14px" }} />;
+        }
+    };
+
     return (
         <span>
             {value}
-            {70>= arrowData <= 100  ? (
-                <ArrowUpwardIcon style={{ color: 'green', marginLeft: '5px', fontSize: "14px" }} />
-            ) : (
-                <ArrowDownwardIcon style={{ color: 'red', marginLeft: '5px', fontSize: "14px" }} />
-            )}
+            {renderArrow()}
         </span>
     );
-}
+};
 export default function TransitionRateReport() {
     const dispatch = useDispatch()
     const { t, i18n } = useTranslation();
@@ -59,21 +62,20 @@ export default function TransitionRateReport() {
     const [gridApi, setGridApi] = useState();
     const [loading, setLoading] = useState(true);
     const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
-
     const [aspirationalData, setAspirationalData] = useState([])
-    // const [arrowData, setArrowData] = useState([])
     const [locationHeader, SetLocationHeader] = useState()
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType)
-    const selectedOption= useSelector((state) => state.reportAdpAbpType.selectedOption)
+    const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption)
     const updateLoading = useSelector((state) => state.reportAdpAbpType.loadingStatus)
     const savedReportName = localStorage.getItem('selectedReport');
     const report_name = savedReportName
     const [data, setData] = useState([]);
-    console.log(locationHeader, "locationHeader")
     function dispatchingData() {
         dispatch(selectState(SelectState));
         dispatch(selectDistrict(SelectDistrict));
         dispatch(selectBlock(SelectBlock));
+        dispatch(setselectedOption(selectedOptionConst));
+        
     }
     useEffect(() => {
         dispatchingData()
@@ -126,9 +128,8 @@ export default function TransitionRateReport() {
             ...item,
             Location: getLocationName(item),
         }));
-        console.log(filteredData, "filteredData")
         setData(filteredData);
-        // setLoading(false)
+        setLoading(false)
 
         // dispatch(setUpdateStatus(false))
     }, [selectedState, selectedDistrict, selectedBlock]);
@@ -165,25 +166,6 @@ export default function TransitionRateReport() {
     const percentageRenderer = (params) => {
         return `${params.value} %`;
     };
-    // const ArrowRenderer = (props) => {
-    //     const upri_t = props.data.upri_t;
-    //     if (selectedOption === "upper_primary_to_secondary") {
-    //         setArrowData(props.data.upri_t)
-    //     }
-    //     else {
-    //         setArrowData(props.data.sec_t)
-    //     }
-    //     return (
-    //         <span>
-    //             {props.value}
-    //             {arrowData > 70 ? (
-    //                 <ArrowUpwardIcon style={{ color: 'green', marginLeft: '5px', fontSize: "14px" }} />
-    //             ) : (
-    //                 <ArrowDownwardIcon style={{ color: 'red', marginLeft: '5px', fontSize: "14px" }} />
-    //             )}
-    //         </span>
-    //     );
-    // };
 
     const [columns, setColumn] = useState([
         {
@@ -219,7 +201,6 @@ export default function TransitionRateReport() {
         },
 
     ]);
-    console.log(columns, "columns")
     const handleOptionChange = (event) => {
         dispatch(setselectedOption(event.target.value));
     };
@@ -269,7 +250,7 @@ export default function TransitionRateReport() {
                 },
                 {
                     headerName: locationHeader,
-                    cellRenderer: 'ArrowRenderer',
+                    cellRenderer: ArrowRenderer,
                     field: "Location",
                 },
                 {
@@ -430,9 +411,9 @@ export default function TransitionRateReport() {
             doc.text(`Report type : ${selectedState}`, 0.6, 1.5);
             doc.setTextColor("blue");
             doc.setFont("bold");
-            doc.text(`Report Id : ${id}`, doc.internal.pageSize.width - 2, 0.5, {
-                align: "right",
-            });
+            // doc.text(`Report Id : ${id}`, doc.internal.pageSize.width - 2, 0.5, {
+            //     align: "right",
+            // });
 
             doc.setFontSize(20);
             doc.text(`Report generated on: ${formattedDate}`, doc.internal.pageSize.width - 2, 1.5, { align: "right" });
@@ -524,12 +505,14 @@ export default function TransitionRateReport() {
     return (
         <section>
             <BannerReportFilter />
-            {updateLoading && <GlobalLoading />}
+           
             <div className="container">
                 <div className="row mt-5">
 
                     {selectedState !== SelectState ?
+                   
                         <div className="col-md-12">
+                              {loading && <GlobalLoading />}
                             <div className="card-box">
                                 <div className="row align-items-end">
                                     <div className="col-md-5">
@@ -596,7 +579,7 @@ export default function TransitionRateReport() {
                                     <div className="col-md-12">
                                         <div className="table-box mt-4">
                                             <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
-                                                style={{ width: "100%", height: 200 }} >
+                                                style={{ width: "100%", height: 400 }} >
                                                 <AgGridReact columnDefs={columns} rowData={compressedData} defaultColDef={defColumnDefs} onGridReady={onGridReady} />
                                             </div>
                                         </div>
