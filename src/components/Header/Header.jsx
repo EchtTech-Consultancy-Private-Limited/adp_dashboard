@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import "./Header.scss";
 import ministry from '../../assets/images/education_ministry.png';
 import search from '../../assets/images/search.png';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 
 
 const Header = () => {
@@ -11,7 +11,9 @@ const Header = () => {
     // navigate("/");
     window.location.href = window.location.origin;
   }
-
+  const location = useLocation()
+  const pathName = location.pathname;
+  console.log(location.pathname, "pathname")
   const [showNavbar, setShowNavbar] = React.useState(false);
 
   const handleShowNavbar = () => {
@@ -132,35 +134,35 @@ const Header = () => {
                     <li>
                       <div className="theme-toggle">
                         <label className="switch">
-                          <input type="checkbox" className="switch-input" id="mode"/>
-                            <span data-on="On" data-off="Off" className="switch-label"></span>
-                            <span className="switch-handle" title="Change Contrast"></span>
+                          <input type="checkbox" className="switch-input" id="mode" />
+                          <span data-on="On" data-off="Off" className="switch-label"></span>
+                          <span className="switch-handle" title="Change Contrast"></span>
                         </label>
                       </div>
                     </li>
 
                     <li>
-                      <div className='select-right'>                      
-                          <div className="select-wrap">
-                            <select className="form-select Langchange">
-                              <option value="en">Eng</option>
-                              <option value="hi">हिन्दी</option>
-                            </select>                            
-                          </div>                       
+                      <div className='select-right'>
+                        <div className="select-wrap">
+                          <select className="form-select Langchange">
+                            <option value="en">Eng</option>
+                            <option value="hi">हिन्दी</option>
+                          </select>
+                        </div>
                       </div>
                     </li>
 
                     <li>
-                      <div>                                          
-                          <div className='select-right'>
-                            <select className="form-select Langchange">
-                              <option value="">A+</option>
-                              <option value="">A</option>
-                              <option value="">A-</option>
-                            </select>
-                            
-                          </div>
-                       
+                      <div>
+                        <div className='select-right'>
+                          <select className="form-select Langchange">
+                            <option value="">A+</option>
+                            <option value="">A</option>
+                            <option value="">A-</option>
+                          </select>
+
+                        </div>
+
                       </div>
                     </li>
                   </ul>
@@ -193,8 +195,21 @@ const Header = () => {
                         <NavLink to="/about">ABOUT US</NavLink>
                       </li>
                       <li>
-                        <NavLink to="/transition-rate">REPORTS</NavLink>
+                        {pathName === "/" ? (
+                          <NavLink to="/transition-rate">REPORTS</NavLink>
+                        ) : pathName === "/transition-rate" ? (
+                          <NavLink to="/transition-rate">REPORTS</NavLink>
+                        ) : pathName === "/teacher-and-school-resources" ? (
+                          <NavLink to="/teacher-and-school-resources">REPORTS</NavLink>
+                        ) : pathName === "/student-performance" ? (
+                          <NavLink to="/student-performance">REPORTS</NavLink>
+                        ) : pathName === "/school-infrastructure" ? (
+                          <NavLink to="/school-infrastructure">REPORTS</NavLink>
+                        ) : pathName === "/enrollment-retention" ? (
+                          <NavLink to="/enrollment-retention">REPORTS</NavLink>
+                        ) : null}
                       </li>
+
                       <li>
                         <NavLink to="/news">NEWS & ARTICLES</NavLink>
                       </li>
@@ -205,9 +220,9 @@ const Header = () => {
                         <NavLink to="/contact">CONTACT US</NavLink>
                       </li>
                       <li>
-                         <div className='search-icon'>
-                         <img src={search} alt="search" />
-                         </div>
+                        <div className='search-icon'>
+                          <img src={search} alt="search" />
+                        </div>
                       </li>
                     </ul>
                   </div>

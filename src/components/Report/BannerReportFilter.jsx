@@ -44,7 +44,6 @@ export default function BannerReportFilter() {
     }
   }, []);
   const handleReportChange = (value) => {
-    console.log(value, "value")
     localStorage.setItem('selectedReport', value);
     setSelectedReport(value);
     switch (value) {
@@ -80,7 +79,6 @@ export default function BannerReportFilter() {
       setAspirationalData(aspirationalAbpData)
     }
   }, [selectedOption])
-  console.log(aspirationalData, "aspirationalData")
   useEffect(() => {
     if (aspirationalData.length > 0) {
       const structuredData = aspirationalData.reduce((acc, curr) => {
@@ -264,32 +262,32 @@ export default function BannerReportFilter() {
                     }
 
 
-                    <Select
-                      style={{ width: '100%' }}
-                      placeholder="Select KPI"
-                      mode="single"
-                      showSearch
-                      className="form-select"
-                      value={selectedReport || SelectKpi}
-                      onChange={handleReportChange}
-                    >
-                      <Select.Option key="Transition Rate" value="Transition Rate">
-                        Transition Rate (Boys/Girls)
-                      </Select.Option>
-                      <Select.Option key="Teacher and School Resources" value="Teacher and School Resources">
-                        Teacher and School Resources
-                      </Select.Option>
-                      <Select.Option key="Student Performance" value="Student Performance">
-                        Student Performance
-                      </Select.Option>
-                      <Select.Option key="School Infrastructure" value="School Infrastructure">
-                        School Infrastructure
-                      </Select.Option>
-                      <Select.Option key="Enrollment and Retention" value="Enrollment and Retention">
-                        Enrollment and Retention
-                      </Select.Option>
-
-                    </Select>
+                      <Select
+                        style={{ width: '100%' }}
+                        placeholder="Select KPI"
+                        mode="single"
+                        showSearch
+                        className="form-select"
+                        value={selectedReport || SelectKpi }
+                        onChange={handleReportChange}
+                      >
+                        <Select.Option key="Transition Rate" value="Transition Rate">
+                          Transition Rate
+                        </Select.Option>
+                        <Select.Option key="Teacher and School Resources" value="Teacher and School Resources">
+                          Teacher and School Resources
+                        </Select.Option>
+                        <Select.Option key="Student Performance" value="Student Performance">
+                          Student Performance
+                        </Select.Option>
+                        <Select.Option key="School Infrastructure" value="School Infrastructure">
+                          School Infrastructure
+                        </Select.Option>
+                        <Select.Option key="Enrollment and Retention" value="Enrollment and Retention">
+                          Enrollment and Retention
+                        </Select.Option>
+                       
+                      </Select>
 
 
 

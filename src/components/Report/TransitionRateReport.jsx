@@ -21,9 +21,39 @@ import { jsPDF } from "jspdf";
 import { Select } from 'antd';
 import 'jspdf-autotable';
 import { GlobalLoading } from '../GlobalLoading/GlobalLoading'
-import { setUpdateStatus } from '../../redux/slice/reportTypeSlice'
+import { setselectedOption, setUpdateStatus } from '../../redux/slice/reportTypeSlice'
 import BlankPage from './BlankPage'
-import { AllBlock, AllDistrict, SelectBlock, SelectDistrict, SelectState } from '../../constant/Constant'
+import { AllBlock, AllDistrict, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
+
+const ArrowRenderer = ({ data, value }) => {
+    const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
+    const [arrowData, setArrowData] = useState([]);
+
+    useEffect(() => {
+        if (selectedOption === "upper_primary_to_secondary") {
+            setArrowData(data.upri_t);
+        } else {
+            setArrowData(data.sec_t);
+        }
+    }, [selectedOption, data]);
+
+    const renderArrow = () => {
+        if (selectedOption === "upper_primary_to_secondary" && arrowData >= 70 && arrowData <= 100) {
+            return <ArrowUpwardIcon style={{ color: 'green', marginLeft: '5px', fontSize: "14px" }} />;
+        } else if (selectedOption !== "upper_primary_to_secondary" && arrowData >= 40 && arrowData <= 100) {
+            return <ArrowUpwardIcon style={{ color: 'green', marginLeft: '5px', fontSize: "14px" }} />;
+        } else {
+            return <ArrowDownwardIcon style={{ color: 'red', marginLeft: '5px', fontSize: "14px" }} />;
+        }
+    };
+
+    return (
+        <span>
+            {value}
+            {renderArrow()}
+        </span>
+    );
+};
 export default function TransitionRateReport() {
     const dispatch = useDispatch()
     const { t, i18n } = useTranslation();
@@ -31,31 +61,26 @@ export default function TransitionRateReport() {
     const id = queryParameters.get('id');
     const type = queryParameters.get('type');
     const [report, setReport] = useState(null);
-    // const [activeTab, setActiveTab] = useState(type);
     const [gridApi, setGridApi] = useState();
     const [loading, setLoading] = useState(true);
-    // const headerData = useSelector((state) => state.header);
-    const { selectedState, selectedDistrict, selectedBlock } = useSelector(
-        (state) => state.locationAdp
-    );
-    const [selectedOption, setSelectedOption] = useState(
-        "upper_primary_to_secondary"
-    );
+    const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
     const [aspirationalData, setAspirationalData] = useState([])
-    const [arrowData, setArrowData] = useState([])
-    const selectedOptions = useSelector((state) => state.reportAdpAbpType.updateReportType)
+    const [locationHeader, SetLocationHeader] = useState()
+    const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType)
+    const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption)
     const updateLoading = useSelector((state) => state.reportAdpAbpType.loadingStatus)
     const savedReportName = localStorage.getItem('selectedReport');
     const states = useSelector((state) => state.locationAdp.states);
     const districts = useSelector((state) => state.locationAdp.districts);
     const blocks = useSelector((state) => state.locationAdp.blocks);
-    console.log(selectedState, districts, blocks, "updateLoading")
+    const report_name = savedReportName
     const [data, setData] = useState([]);
-    console.log(data, "selectedState")
     function dispatchingData() {
         dispatch(selectState(SelectState));
         dispatch(selectDistrict(SelectDistrict));
         dispatch(selectBlock(SelectBlock));
+        dispatch(setselectedOption(selectedOptionConst));
+        
     }
     useEffect(() => {
         dispatchingData()
@@ -63,8 +88,19 @@ export default function TransitionRateReport() {
 
     // dispatch(handleActiveTabs(activeTab))
 
+    {/*...............update Location Header..............*/ }
     useEffect(() => {
-        if (selectedOptions === "ADP_Report") {
+        if (selectedState !== SelectState && selectedDistrict === SelectDistrict) {
+            SetLocationHeader("District")
+        }
+        else if (selectedState !== SelectState && selectedDistrict !== SelectDistrict) {
+            SetLocationHeader("Block")
+        }
+    }, [selectedState, SelectState, selectedDistrict, SelectDistrict])
+
+    {/*...............Take data report wise..............*/ }
+    useEffect(() => {
+        if (selectReportType === "ADP_Report") {
             setAspirationalData(aspirationalAdpData)
             dispatchingData()
         }
@@ -72,7 +108,7 @@ export default function TransitionRateReport() {
             setAspirationalData(aspirationalAbpData)
             dispatchingData()
         }
-    }, [selectedOptions])
+    }, [selectReportType])
     useEffect(() => {
         let filteredData = aspirationalData;
 
@@ -97,14 +133,13 @@ export default function TransitionRateReport() {
             ...item,
             Location: getLocationName(item),
         }));
-        console.log(filteredData, "filteredData")
         setData(filteredData);
-        // setLoading(false)
+        setLoading(false)
 
         // dispatch(setUpdateStatus(false))
     }, [selectedState, selectedDistrict, selectedBlock]);
     const getLocationName = (item) => {
-        if (selectedOptions === "ABP_Report") {
+        if (selectReportType === "ABP_Report") {
             if (selectedBlock && selectedBlock !== AllBlock && selectedBlock !== SelectBlock) {
 
                 return `${item.lgd_block_name}`;
@@ -117,7 +152,7 @@ export default function TransitionRateReport() {
             } else if (selectedState === SelectState) {
                 return `${item.lgd_state_name}`;
             }
-        } else if (selectedOptions === "ADP_Report") {
+        } else if (selectReportType === "ADP_Report") {
             if (selectedState && selectedState !== SelectState) {
 
                 return `${item.lgd_district_name}`;
@@ -133,42 +168,8 @@ export default function TransitionRateReport() {
         return '';
     };
 
-
-    // useEffect(() => {
-    //     for (const category in allreportsdata) {
-    //         const foundReport = allreportsdata[category].find(
-    //             (report) => report.id === parseInt(id)
-    //         );
-    //         if (foundReport) {
-    //             setReport(foundReport);
-    //             break;
-    //         }
-    //     }
-    // }, [id]);
-
-
     const percentageRenderer = (params) => {
         return `${params.value} %`;
-    };
-    const ArrowRenderer = (props) => {
-        const upri_t = props.data.upri_t;
-
-        if (selectedOption === "upper_primary_to_secondary") {
-            setArrowData(props.data.upri_t)
-        }
-        else {
-            setArrowData(props.data.sec_t)
-        }
-        return (
-            <span>
-                {props.value}
-                {arrowData > 70 ? (
-                    <ArrowUpwardIcon style={{ color: 'green', marginLeft: '5px', fontSize: "14px" }} />
-                ) : (
-                    <ArrowDownwardIcon style={{ color: 'red', marginLeft: '5px', fontSize: "14px" }} />
-                )}
-            </span>
-        );
     };
 
     const [columns, setColumn] = useState([
@@ -180,7 +181,7 @@ export default function TransitionRateReport() {
             suppressFiltersToolPanel: true,
         },
         {
-            headerName: "Location",
+            headerName: locationHeader,
             cellRenderer: ArrowRenderer,
             field: "Location",
         },
@@ -205,9 +206,8 @@ export default function TransitionRateReport() {
         },
 
     ]);
-    console.log(columns, "columns")
     const handleOptionChange = (event) => {
-        setSelectedOption(event.target.value);
+        dispatch(setselectedOption(event.target.value));
     };
 
     useEffect(() => {
@@ -221,7 +221,7 @@ export default function TransitionRateReport() {
                     suppressFiltersToolPanel: true,
                 },
                 {
-                    headerName: "Location",
+                    headerName: locationHeader,
                     cellRenderer: ArrowRenderer,
                     field: "Location",
                 },
@@ -254,8 +254,8 @@ export default function TransitionRateReport() {
                     suppressFiltersToolPanel: true,
                 },
                 {
-                    headerName: "Location",
-                    cellRenderer: 'ArrowRenderer',
+                    headerName: locationHeader,
+                    cellRenderer: ArrowRenderer,
                     field: "Location",
                 },
                 {
@@ -278,7 +278,7 @@ export default function TransitionRateReport() {
                 },
             ]);
         }
-    }, [selectedOption]);
+    }, [locationHeader, selectedOption]);
     const compressData = useCallback((data, groupBy) => {
         return data.reduce((acc, curr) => {
             let groupKey = curr[groupBy];
@@ -410,15 +410,15 @@ export default function TransitionRateReport() {
             doc.text("UDISE+", 0.6, 0.5);
             doc.setFontSize(20);
             doc.setTextColor("blue");
-            doc.text(`Report Name: ${report.report_name}`, 0.6, 1.0);
+            doc.text(`Report Name: ${report_name}`, 0.6, 1.0);
             doc.setFontSize(20);
             doc.setTextColor("blue");
             doc.text(`Report type : ${selectedState}`, 0.6, 1.5);
             doc.setTextColor("blue");
             doc.setFont("bold");
-            doc.text(`Report Id : ${id}`, doc.internal.pageSize.width - 2, 0.5, {
-                align: "right",
-            });
+            // doc.text(`Report Id : ${id}`, doc.internal.pageSize.width - 2, 0.5, {
+            //     align: "right",
+            // });
 
             doc.setFontSize(20);
             doc.text(`Report generated on: ${formattedDate}`, doc.internal.pageSize.width - 2, 1.5, { align: "right" });
@@ -462,7 +462,7 @@ export default function TransitionRateReport() {
     };
     const exportToPDF = () => {
         const doc = getDocument(gridApi);
-        doc.save(`${report.report_name}.pdf`);
+        doc.save(`${report_name}.pdf`);
     };
     const exportToExcel = () => {
         if (gridApi) {
@@ -488,7 +488,7 @@ export default function TransitionRateReport() {
                     return params.value;
                 },
                 rowData: allData,
-                fileName: report.report_name,
+                fileName: report_name,
                 sheetName: "Udise+",
                 columnKeys: columnKeys,
                 columnNames: columnNames,
@@ -510,18 +510,36 @@ export default function TransitionRateReport() {
     return (
         <section>
             <BannerReportFilter />
-            {updateLoading && <GlobalLoading />}
+           
             <div className="container">
                 <div className="row mt-5">
 
                     {selectedState !== SelectState ?
+                   
                         <div className="col-md-12">
+                              {loading && <GlobalLoading />}
                             <div className="card-box">
                                 <div className="row align-items-end">
                                     <div className="col-md-5">
                                         <div className="d-flex align-items-end">
                                             <div className="title-box">
-                                                <h5 className='sub-title'>{selectedState} District's</h5>
+                                                <h5 className='sub-title'>
+                                                    {selectReportType === "ADP_Report" ? (
+                                                        selectedDistrict !== SelectDistrict ?
+                                                            `${selectedDistrict}` :
+                                                            `${selectedState} District's`
+                                                    ) : (
+                                                        selectReportType === "ABP_Report" ? (
+                                                            selectedState !== SelectState ? (
+                                                                selectedDistrict === SelectDistrict ?
+                                                                    `${selectedState} District's` :
+                                                                    selectedBlock !== SelectBlock ?
+                                                                        `${selectedBlock}` :
+                                                                        `${selectedDistrict} Block's`
+                                                            ) : selectedBlock
+                                                        ) : selectedBlock
+                                                    )}
+                                                </h5>
                                                 <h3 className='heading-sm'>Transition Rate</h3>
                                             </div>
                                             <div className="tab-box">
@@ -551,8 +569,8 @@ export default function TransitionRateReport() {
                                             </div>
                                             <div className="">
                                                 {/* <img src={download} alt="download" /> */}
-                                                <select id="export_data" className="form-select download-button" defaultValue={""}>
-                                                    <option className="option-hide"> Download Report 2023-24</option>
+                                                <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
+                                                    <option className="option-hide"> Download Report</option>
                                                     <option value="export_pdf">Download as PDF </option>
                                                     <option value="export_excel">Download as Excel</option>
                                                 </select>
@@ -566,7 +584,7 @@ export default function TransitionRateReport() {
                                     <div className="col-md-12">
                                         <div className="table-box mt-4">
                                             <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
-                                                style={{ width: "100%", height: 200 }} >
+                                                style={{ width: "100%", height: 400 }} >
                                                 <AgGridReact columnDefs={columns} rowData={compressedData} defaultColDef={defColumnDefs} onGridReady={onGridReady} />
                                             </div>
                                         </div>
