@@ -14,7 +14,7 @@ export default function BannerReportFilter() {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate()
-
+  const savedReportName = localStorage.getItem('selectedReport');
   const stateMap = useSelector((state) => state.locationAdp.districts);
   const states = useSelector((state) => state.locationAdp.states);
   const districts = useSelector((state) => state.locationAdp.districts);
@@ -156,7 +156,7 @@ export default function BannerReportFilter() {
           <div className="row align-items-center">
             <div className="col-md-3">
               <div className='main-title'>Reports </div>
-              <div className="brudcrumb-text">Home / <span>Report</span></div>
+              <div className="brudcrumb-text">Home / <span>Report</span> / <span>{savedReportName}</span></div>
             </div>
             <div className="col-md-9">
               <div className="row select-infra Comparison-select-group">
