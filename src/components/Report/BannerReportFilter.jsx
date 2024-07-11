@@ -28,8 +28,7 @@ export default function BannerReportFilter() {
   const selectedBlock = useSelector((state) => state.locationAdp.selectedBlock);
   const headerData = useSelector((state) => state.header);
   const disableSelectedState =
-    selectedState === "Select State" ||
-    selectedState === "All India/National";
+    selectedState === "Select State"
   const disableSelectedDistrict =
     selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict;
 

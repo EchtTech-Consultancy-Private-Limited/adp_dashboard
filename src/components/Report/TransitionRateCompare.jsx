@@ -49,7 +49,6 @@ export default function TransitionRateCompare() {
     const states = useSelector((state) => state.comprisionAdp.states);
     const districts = useSelector((state) => state.comprisionAdp.districts);
     const selectedState = useSelector((state) => state.comprisionAdp.selectedState);
-    console.log(selectedState, selectedDistricts, "selectedState")
     function resteData() {
         dispatch(selectState(SelectState));
         dispatch(setselectedCompareOption("upper_primary_to_secondary"));
