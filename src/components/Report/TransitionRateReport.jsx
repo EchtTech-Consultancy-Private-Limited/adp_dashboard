@@ -76,7 +76,7 @@ export default function TransitionRateReport() {
     const blocks = useSelector((state) => state.locationAdp.blocks);
     const report_name = savedReportName
     const [data, setData] = useState([]);
-    function dispatchingData() {
+    function resteData() {
         dispatch(selectState(SelectState));
         dispatch(selectDistrict(SelectDistrict));
         dispatch(selectBlock(SelectBlock));
@@ -84,7 +84,7 @@ export default function TransitionRateReport() {
         
     }
     useEffect(() => {
-        dispatchingData()
+        resteData()
     }, [dispatch]);
 
     // dispatch(handleActiveTabs(activeTab))
@@ -103,11 +103,11 @@ export default function TransitionRateReport() {
     useEffect(() => {
         if (selectReportType === "ADP_Report") {
             setAspirationalData(aspirationalAdpData)
-            dispatchingData()
+            resteData()
         }
         else {
             setAspirationalData(aspirationalAbpData)
-            dispatchingData()
+            resteData()
         }
     }, [selectReportType])
     useEffect(() => {
@@ -585,7 +585,7 @@ export default function TransitionRateReport() {
                                     <div className="col-md-12">
                                         <div className="table-box mt-4">
                                             <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
-                                                style={{ width: "100%", height: 400 }} >
+                                                style={{ width: "100%", height: 300 }} >
                                                 <AgGridReact columnDefs={columns} rowData={compressedData} defaultColDef={defColumnDefs} onGridReady={onGridReady} />
                                             </div>
                                         </div>

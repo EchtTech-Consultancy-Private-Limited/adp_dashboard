@@ -7,7 +7,39 @@ import aspirationalAbpData from "../../aspirational-reports-data/aspirational.js
 import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
 import table from '../../assets/images/table.svg'
 import card from '../../assets/images/card-list.svg'
-import { Select } from 'antd';
+import { Card, Select } from 'antd';
+import { SelectState } from "../../constant/Constant";
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import BlankPage from "./BlankPage";
+const ArrowRenderer = ({ data }) => {
+    const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
+    const [arrowData, setArrowData] = useState(null);
+
+    useEffect(() => {
+        if (selectedOption === "upper_primary_to_secondary") {
+            setArrowData(data.upri_t);
+        } else {
+            setArrowData(data.sec_t);
+        }
+    }, [selectedOption, data]);
+
+    const renderArrow = () => {
+        if (selectedOption === "upper_primary_to_secondary" && arrowData >= 70 && arrowData <= 100) {
+            return <ArrowUpwardIcon style={{ color: 'green', marginLeft: '5px', fontSize: "14px" }} />;
+        } else if (selectedOption !== "upper_primary_to_secondary" && arrowData >= 40 && arrowData < 100) {
+            return <ArrowUpwardIcon style={{ color: 'green', marginLeft: '5px', fontSize: "14px" }} />;
+        } else {
+            return <ArrowDownwardIcon style={{ color: 'red', marginLeft: '5px', fontSize: "14px" }} />;
+        }
+    };
+
+    return (
+        <span>
+            {renderArrow()}
+        </span>
+    );
+};
 export default function TransitionRateCompare() {
 
     const dispatch = useDispatch();
@@ -17,9 +49,14 @@ export default function TransitionRateCompare() {
     const states = useSelector((state) => state.comprisionAdp.states);
     const districts = useSelector((state) => state.comprisionAdp.districts);
     const selectedState = useSelector((state) => state.comprisionAdp.selectedState);
-
-
-
+    console.log(selectedState, selectedDistricts, "selectedState")
+    function resteData() {
+        dispatch(selectState(SelectState));
+        dispatch(setselectedCompareOption("upper_primary_to_secondary"));
+    }
+    useEffect(() => {
+        resteData()
+    }, [dispatch]);
     // Initialize states and districts from JSON data
     useEffect(() => {
         const structuredData = aspirationalAdpData.reduce((acc, curr) => {
@@ -117,12 +154,14 @@ export default function TransitionRateCompare() {
                                         className='state-select'
                                         onChange={handleStateChange}
                                         style={{ width: "50%" }}
-                                        placeholder="State Wise"
+                                        placeholder="Select State"
                                         mode="single"
                                         showSearch
-                                        value={selectedState || "State Wise"}
+                                        value={selectedState || SelectState}
                                     >
-
+                                        <Select.Option key="Select State" value={SelectState}>
+                                            Select State
+                                        </Select.Option>
                                         {states.map((state) => (
                                             <Select.Option
                                                 key={state.lgd_state_id}
@@ -213,12 +252,12 @@ export default function TransitionRateCompare() {
                         </div>
                     </div>
 
-                    <div className="col-md-12 mt-4">
+                    {selectedState !== SelectState ? (<div className="col-md-12 mt-4">
                         <div className="row">
                             {selectedDistricts.map((district, index) => (
-                                <div className=" col-sm-12 col-20">
+                                <div className={`col-sm-12 col-20 ${selectedDistricts.length===1?"m-auto":""}`}>
 
-                                    <div className="comp-card" key={index}>
+                                   {selectedDistricts.length===1? (<Card ><b>Please select one more district for comparison to enhance the analysis.</b></Card>):<> <div className="comp-card" key={index}>
                                         <div className="upper-card">
                                             <div>
                                                 <div className={`number-card card-color-${index + 1}`} >
@@ -230,7 +269,9 @@ export default function TransitionRateCompare() {
                                                 <h6 className='sub-title'>
                                                     {district.lgd_district_name}
                                                 </h6>
+
                                             </div>
+                                                <span> <ArrowRenderer data={district} /></span>
                                         </div>
 
                                         <div className="lower-card">
@@ -253,14 +294,14 @@ export default function TransitionRateCompare() {
                                                 </h6>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div></> }
 
 
                                 </div>
                             ))}
 
                         </div>
-                    </div>
+                    </div>) : <BlankPage />}
                 </div>
             </div>
         </>
