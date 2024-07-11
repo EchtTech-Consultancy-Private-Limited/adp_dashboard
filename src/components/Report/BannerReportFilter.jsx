@@ -3,10 +3,11 @@ import Header from '../Header/Header'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { selectBlock, selectDistrict, selectState, setStates } from '../../redux/slice/filterServicesSlice';
-import { setUpdateReportType } from '../../redux/slice/reportTypeSlice';
+import { setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTypeSlice';
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
 import { Select } from 'antd';
+import { AllDistrict, SelectBlock, SelectDistrict, SelectKpi, SelectState } from '../../constant/Constant';
 
 export default function BannerReportFilter() {
 
@@ -30,22 +31,28 @@ export default function BannerReportFilter() {
     selectedState === "Select State" ||
     selectedState === "All India/National";
   const disableSelectedDistrict =
-    selectedDistrict === "District" || selectedDistrict === "All District";
-  const [is3016btnDisabled, setIs3016btnDisabled] = useState(true);
+    selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict;
+  
 
   const selectedOption = useSelector((state) => state.reportAdpAbpType.updateReportType)
   const [selectedReport, setSelectedReport] = useState(null);
 
-
+  useEffect(() => {
+    const savedReportName = localStorage.getItem('selectedReport');
+    if (savedReportName) {
+      setSelectedReport(savedReportName);
+    }
+  }, []);
   const handleReportChange = (value) => {
-    setSelectedReport(value);
+    console.log(value, "value")
     localStorage.setItem('selectedReport', value);
+    setSelectedReport(value);
     switch (value) {
       case 'Transition Rate':
-        navigate('/aspirational-reports-4001');
+        navigate('/transition-rate');
         break;
       case 'Teacher and School Resources':
-        navigate('/aspirational-reports-4002');
+        navigate('/teacher-and-school-resources');
         break;
       case 'Student Performance':
         navigate('/student-performance');
@@ -63,6 +70,7 @@ export default function BannerReportFilter() {
 
   useEffect(() => {
     dispatch(setUpdateReportType('ADP_Report'));
+    setAspirationalData(aspirationalAdpData)
   }, [dispatch]);
   useEffect(() => {
     if (selectedOption === "ADP_Report") {
@@ -122,7 +130,9 @@ export default function BannerReportFilter() {
       dispatch(setStates(structuredData));
     }
   }, [aspirationalData, dispatch]);
-
+const handleOptionChange = (event) => {
+    dispatch(setUpdateReportType(event.target.value));
+  };
   const handleStateChange = (value) => {
     dispatch(selectState(value));
   };
@@ -139,9 +149,7 @@ export default function BannerReportFilter() {
 
 
 
-  const handleOptionChange = (event) => {
-    dispatch(setUpdateReportType(event.target.value));
-  };
+  
   return (
     <section className='internal-banner-bg'>      
         <div className="container">
@@ -178,10 +186,11 @@ export default function BannerReportFilter() {
 
                   <div className="col-md-8">
                     <div className="d-flex justify-content-between text-aligns-center antd-select">
+                      {/* State select option */}
 
                       <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="Select State" mode="single" showSearch
                         value={selectedState || "Select State"} className="form-select">
-                        <Select.Option key="Select State" value={"Select State"}>
+                        <Select.Option key="Select State" value={SelectState}>
                           Select State
                         </Select.Option>
 
@@ -194,39 +203,94 @@ export default function BannerReportFilter() {
                           </Select.Option>
                         ))}
                       </Select>
+                      {/* District select option */}
+                      <Select
+                        onChange={handleDistrictChange}
+                        style={{ width: "100%" }}
+                        placeholder="All District"
+                        mode="single"
+                        showSearch
+                        value={selectedDistrict || SelectDistrict}
+                        className="form-select"
 
-                      <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="Select State" mode="single" showSearch
-                        value={selectedState || "Select State"} className="form-select">
-                        <Select.Option key="Select State" value={"Select State"}>
-                          Select District
+                      >
+                        <Select.Option
+                          key="All District"
+                          value={AllDistrict}
+                          disabled={disableSelectedState}
+                        >
+                          All District
                         </Select.Option>
-
-                        {states.map((state) => (
+                        {districts.map((district) => (
                           <Select.Option
-                            key={state.lgd_state_id}
-                            value={state.lgd_state_name}
+                            key={district.lgd_district_id}
+                            value={district.lgd_district_name}
                           >
-                            {state.lgd_state_name}
+                            {district.lgd_district_name}
                           </Select.Option>
                         ))}
                       </Select>
 
-                      <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="Select State" mode="single" showSearch
-                        value={selectedState || "Select State"} className="form-select">
-                        <Select.Option key="Select State" value={"Select State"}>
-                          Select KPI
-                        </Select.Option>
+                      {/* Block select option */}
+                      {selectedOption === "ADP_Report" ? "" :
 
-                        {states.map((state) => (
+                        <Select
+                          onChange={handleBlockChange}
+                          style={{ width: "100%" }}
+                          placeholder="All Block"
+                          mode="single"
+                          showSearch
+                          value={selectedBlock || SelectBlock}
+                          className="form-select"
+
+                        >
                           <Select.Option
-                            key={state.lgd_state_id}
-                            value={state.lgd_state_name}
+                            key="All Block"
+                            value="All Block"
+                            disabled={disableSelectedDistrict || disableSelectedState}
                           >
-                            {state.lgd_state_name}
+                            All Block
                           </Select.Option>
-                        ))}
+                          {blocks.map((block) => (
+                            <Select.Option
+                              key={block.lgd_block_id}
+                              value={block.lgd_block_name}
+                            >
+                              {block.lgd_block_name}
+                            </Select.Option>
+                          ))}
+                        </Select>
+
+                      }
+
+
+                      <Select
+                        style={{ width: '100%' }}
+                        placeholder="Select KPI"
+                        mode="single"
+                        showSearch
+                        className="form-select"
+                        value={selectedReport || SelectKpi }
+                        onChange={handleReportChange}
+                      >
+                        <Select.Option key="Transition Rate" value="Transition Rate">
+                          Transition Rate (Boys/Girls)
+                        </Select.Option>
+                        <Select.Option key="Teacher and School Resources" value="Teacher and School Resources">
+                          Teacher and School Resources
+                        </Select.Option>
+                        <Select.Option key="Student Performance" value="Student Performance">
+                          Student Performance
+                        </Select.Option>
+                        <Select.Option key="School Infrastructure" value="School Infrastructure">
+                          School Infrastructure
+                        </Select.Option>
+                        <Select.Option key="Enrollment and Retention" value="Enrollment and Retention">
+                          Enrollment and Retention
+                        </Select.Option>
+                       
                       </Select>
-                    
+
 
 
                     </div>

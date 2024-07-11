@@ -25,14 +25,14 @@ const filterServicesSlice = createSlice({
     },
     selectState: (state, action) => {
       state.selectedState = action.payload;
-      state.selectedDistrict = "District"; 
-      state.selectedBlock = "Block"; 
+      state.selectedDistrict = "Select District"; 
+      state.selectedBlock = "Select Block"; 
       state.districts = state.states.find(st => st.lgd_state_name === action.payload)?.districts || []; 
       state.blocks = []; 
     },
     selectDistrict: (state, action) => {
       state.selectedDistrict = action.payload;
-      state.selectedBlock = "Block"; 
+      state.selectedBlock = "Select Block"; 
       state.blocks = state.districts.find(dist => dist.lgd_district_name === action.payload)?.blocks || []; 
     },
     selectBlock: (state, action) => {

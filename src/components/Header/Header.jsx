@@ -193,7 +193,7 @@ const Header = () => {
                         <NavLink to="/about">ABOUT US</NavLink>
                       </li>
                       <li>
-                        <NavLink to="/report">REPORTS</NavLink>
+                        <NavLink to="/transition-rate">REPORTS</NavLink>
                       </li>
                       <li>
                         <NavLink to="/news">NEWS & ARTICLES</NavLink>

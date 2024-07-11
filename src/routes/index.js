@@ -1,17 +1,22 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from '../pages/Home';
 import TransitionRateReport from '../components/Report/TransitionRateReport';
+import TeacherAndSchResourcesReport from '../components/Report/TeacherAndSchResourcesReport';
+import StudentsPerformanceReport from '../components/Report/StudentsPerformanceReport';
+import SchoolInfraStructureReport from '../components/Report/SchoolInfraStructureReport';
+import EnrollmentAndRetentionReport from '../components/Report/EnrollmentAndRetentionReport';
 
 export const routes = (
    
     <Routes>
 
         <Route exact path="/" element={<Home />} />
-        {/* <Route exact path="/aspirational-reports-4001" element={<AspirationalReport4001/>} />
-        <Route exact path="/aspirational-reports-4002" element={<AspirationalReport4002/>} />
-        <Route exact path="/aspirational-reports-4003" element={<AspirationalReport4003 />} />
-        <Route exact path="/aspirational-reports-4004" element={<AspirationalReport4004 />} /> */}
+        <Route exact path="/transition-rate" element={<TransitionRateReport/>} />
+        <Route exact path="/teacher-and-school-resources" element={<TeacherAndSchResourcesReport/>} />
+        <Route exact path="/student-performance" element={<StudentsPerformanceReport />} />
+        <Route exact path="/school-infrastructure" element={<SchoolInfraStructureReport />} />
+        <Route exact path="/enrollment-retention" element={<EnrollmentAndRetentionReport />} />
         <Route path="/*" element={<Navigate to="/" />} />
-        <Route path="/report" element={<TransitionRateReport/>} />
+        {/* <Route path="/report" element={<TransitionRateReport/>} /> */}
     </Routes>
 )  
