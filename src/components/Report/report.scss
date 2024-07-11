@@ -68,7 +68,7 @@
         }
         :where(.css-dev-only-do-not-override-98ntnt).ant-select .ant-select-selection-item{
             width: 90px !important;
-            padding-inline-end: 6px;
+            padding-inline-end: 10px;
         }
     }
 
@@ -153,16 +153,22 @@
         }
 
         @media (max-width:1399px) and (min-width: 1024px) {
-            font-size: 13px;
+            font-size: 12px;
         }
     }
 
-    select.state-select {
+    .state-select {
         color: #FF9461;
         margin-left: 5px;
         border: none;
         font-weight: 500;
         font-size: 17px;
+
+        &:where(.css-dev-only-do-not-override-98ntnt).ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
+            border: 1px solid #FF9461 !important;
+            background: #ffffff;
+            color: #FF9461 !important;
+        }
     }
 }
 
@@ -358,6 +364,14 @@
     border-radius: 6px;
     padding: 12px 15px;
 
+    @media (max-width:1599px) and (min-width: 1400px) {
+        padding: 12px 12px;
+    }
+
+    @media (max-width:1399px) and (min-width: 1024px) {
+        padding: 12px 10px;
+    }
+
     .upper-card {
         display: flex;
         align-items: center;
@@ -392,15 +406,36 @@
 
     .text-card {
         margin-left: 15px;
+
+        @media (max-width:1599px) and (min-width: 1200px) {
+            margin-left: 10px;
+        }    
+        
         p {
             margin-bottom: 0;
             font-size: 14px;
             font-weight: 500;
+
+            @media (max-width:1599px) and (min-width: 1400px) {
+                font-size: 14px;
+            }
+        
+            @media (max-width:1399px) and (min-width: 1024px) {
+                font-size: 12px !important;
+            }
         }
 
         .sub-title{
             font-size: 18px;
             font-weight: 700;
+
+            @media (max-width:1599px) and (min-width: 1400px) {
+                font-size: 16px;
+            }
+        
+            @media (max-width:1399px) and (min-width: 1024px) {
+                font-size: 14px !important;
+            }
         }
 
     }
@@ -418,11 +453,25 @@
                 margin-bottom: 0;
                 font-size: 14px;
                 font-weight: 500;
+                @media (max-width:1599px) and (min-width: 1400px) {
+                    font-size: 14px;
+                }
+            
+                @media (max-width:1399px) and (min-width: 1024px) {
+                    font-size: 12px !important;
+                }
             }
     
             .sub-title{
                 font-size: 18px;
                 font-weight: 700;
+                @media (max-width:1599px) and (min-width: 1400px) {
+                    font-size: 16px;
+                }
+            
+                @media (max-width:1399px) and (min-width: 1024px) {
+                    font-size: 14px !important;
+                }
             }
 
             &:last-child{
@@ -432,4 +481,17 @@
         }
     }
 
+}
+
+.w-m-100{
+    width: 90%;
+    float: right;
+
+    @media (max-width:1599px) and (min-width: 1400px) {
+        width: 90%;
+    }
+
+    @media (max-width:1399px) and (min-width: 1024px) {
+        width: 100%;
+    }
 }

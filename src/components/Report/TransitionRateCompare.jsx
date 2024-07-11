@@ -112,7 +112,7 @@ export default function TransitionRateCompare() {
                     <div className="col-md-7">
                         <div className="d-flex align-items-end">
                             <div className="title-box">
-                                <h5 className='sub-title'>State:
+                                <h5 className='sub-title'>State :
                                     <Select
                                         className='state-select'
                                         onChange={handleStateChange}
@@ -133,12 +133,12 @@ export default function TransitionRateCompare() {
                                         ))}
                                     </Select>
                                 </h5>
-                                <h3 className='heading-sm'>Comparison by Transition Rate</h3>
+                                <h3 className='heading-sm mt-2'>Comparison by Transition Rate</h3>
                             </div>
                         </div>
                     </div>
                     <div className="col-md-5">
-                        <div className="d-flex w-100">
+                        <div className="d-flex w-m-100">
                             <div className="radio-button">
                                 <div className="box-radio">
                                     <input type="radio"
@@ -220,8 +220,10 @@ export default function TransitionRateCompare() {
 
                                     <div className="comp-card" key={index}>
                                         <div className="upper-card">
-                                            <div className={`number-card card-color-${index + 1}`} >
-                                                {index + 1}
+                                            <div>
+                                                <div className={`number-card card-color-${index + 1}`} >
+                                                    {index + 1}
+                                                </div>
                                             </div>
                                             <div className="text-card">
                                                 <p>District</p>

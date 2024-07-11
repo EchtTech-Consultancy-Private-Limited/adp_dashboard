@@ -550,7 +550,7 @@ export default function TransitionRateReport() {
                                         </div>
                                     </div>
                                     <div className="col-md-7">
-                                        <div className="d-flex w-100">
+                                        <div className="d-flex w-m-100">
                                             <div className="radio-button">
                                                 <div className="box-radio">
                                                     <input type="radio"
@@ -571,7 +571,7 @@ export default function TransitionRateReport() {
                                             <div className="">
                                                 {/* <img src={download} alt="download" /> */}
                                                 <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
-                                                    <option className="option-hide"> Download Report</option>
+                                                    <option className="option-hide"> Download Report 2023-24</option>
                                                     <option value="export_pdf">Download as PDF </option>
                                                     <option value="export_excel">Download as Excel</option>
                                                 </select>
