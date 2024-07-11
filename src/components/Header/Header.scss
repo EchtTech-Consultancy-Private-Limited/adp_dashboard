@@ -30,6 +30,7 @@
 
                 &:last-child {
                     border: none;
+                    padding-right: 0;
                 }
 
                 &:first-child {
@@ -51,7 +52,7 @@
                     color: $white !important;
                     font-weight: 400;
                     text-decoration: none;
-                    min-height: 20px;
+                    // min-height: 20px;
 
                     &.textplus {
                         margin: 0 5px;
