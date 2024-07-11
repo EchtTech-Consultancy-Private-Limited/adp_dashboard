@@ -513,7 +513,7 @@ export default function TransitionRateReport() {
             <BannerReportFilter />
            
             <div className="container">
-                <div className="row mt-5">
+                <div className="row mt-4">
 
                     {selectedState !== SelectState ?
                    
@@ -585,7 +585,7 @@ export default function TransitionRateReport() {
                                     <div className="col-md-12">
                                         <div className="table-box mt-4">
                                             <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
-                                                style={{ width: "100%", height: 300 }} >
+                                                style={{ width: "100%", height: 200 }} >
                                                 <AgGridReact columnDefs={columns} rowData={compressedData} defaultColDef={defColumnDefs} onGridReady={onGridReady} />
                                             </div>
                                         </div>
