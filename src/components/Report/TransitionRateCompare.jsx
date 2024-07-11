@@ -255,23 +255,27 @@ export default function TransitionRateCompare() {
                     {selectedState !== SelectState ? (<div className="col-md-12 mt-4">
                         <div className="row">
                             {selectedDistricts.map((district, index) => (
-                                <div className={`col-sm-12 col-20 ${selectedDistricts.length===1?"m-auto":""}`}>
+                                <div className={`col-sm-12 col-20 ${selectedDistricts.length === 1 ? "m-auto" : ""}`}>
 
-                                   {selectedDistricts.length===1? (<Card ><b>Please select one more district for comparison to enhance the analysis.</b></Card>):<> <div className="comp-card" key={index}>
+                                    {selectedDistricts.length === 1 ? (<Card ><b>Please select one more district for comparison to enhance the analysis.</b></Card>) : <> <div className="comp-card" key={index}>
                                         <div className="upper-card">
-                                            <div>
-                                                <div className={`number-card card-color-${index + 1}`} >
-                                                    {index + 1}
-                                                </div>
-                                            </div>
-                                            <div className="text-card">
-                                                <p>District</p>
-                                                <h6 className='sub-title'>
-                                                    {district.lgd_district_name}
-                                                </h6>
+                                            <div className="d-flex align-items-center justify-content-between w-100">
+                                                <div className="d-flex">
+                                                    <div>
+                                                        <div className={`number-card card-color-${index + 1}`} >
+                                                            {index + 1}
+                                                        </div>
+                                                    </div>
+                                                    <div className="text-card">
+                                                        <p>District</p>
+                                                        <h6 className='sub-title'>
+                                                            {district.lgd_district_name}
+                                                        </h6>
 
+                                                    </div>
+                                                </div>
+                                                <div className="arrow-d"> <ArrowRenderer data={district} /></div>
                                             </div>
-                                                <span> <ArrowRenderer data={district} /></span>
                                         </div>
 
                                         <div className="lower-card">
@@ -294,7 +298,7 @@ export default function TransitionRateCompare() {
                                                 </h6>
                                             </div>
                                         </div>
-                                    </div></> }
+                                    </div></>}
 
 
                                 </div>
