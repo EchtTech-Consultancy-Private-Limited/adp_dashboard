@@ -3,6 +3,7 @@ import BannerReportFilter from './BannerReportFilter'
 import download from '../../assets/images/download.svg'
 import table from '../../assets/images/table.svg'
 import chart from '../../assets/images/bar-chart.svg'
+import card from '../../assets/images/card-list.svg'
 import './report.scss'
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
@@ -17,6 +18,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { useTranslation } from "react-i18next";
 import { jsPDF } from "jspdf";
+import { Select } from 'antd';
 import 'jspdf-autotable';
 import { GlobalLoading } from '../GlobalLoading/GlobalLoading'
 import { setUpdateStatus } from '../../redux/slice/reportTypeSlice'
@@ -47,7 +49,7 @@ export default function TransitionRateReport() {
     const states = useSelector((state) => state.locationAdp.states);
     const districts = useSelector((state) => state.locationAdp.districts);
     const blocks = useSelector((state) => state.locationAdp.blocks);
-    console.log(selectedState,districts,blocks, "updateLoading")
+    console.log(selectedState, districts, blocks, "updateLoading")
     const [data, setData] = useState([]);
     console.log(data, "selectedState")
     function dispatchingData() {
@@ -98,8 +100,8 @@ export default function TransitionRateReport() {
         console.log(filteredData, "filteredData")
         setData(filteredData);
         // setLoading(false)
-        
-   // dispatch(setUpdateStatus(false))
+
+        // dispatch(setUpdateStatus(false))
     }, [selectedState, selectedDistrict, selectedBlock]);
     const getLocationName = (item) => {
         if (selectedOptions === "ABP_Report") {
@@ -511,70 +513,420 @@ export default function TransitionRateReport() {
             {updateLoading && <GlobalLoading />}
             <div className="container">
                 <div className="row mt-5">
-                  
-                   {selectedState !== SelectState ?
-                    <div className="col-md-12">
-                    <div className="card-box">
-                        <div className="row align-items-end">
-                            <div className="col-md-5">
-                                <div className="d-flex align-items-end">
-                                    <div className="title-box">
-                                        <h5 className='sub-title'>{selectedState} District's</h5>
-                                        <h3 className='heading-sm'>Transition Rate</h3>
-                                    </div>
-                                    <div className="tab-box">
-                                        <button className='tab-button active'><img src={table} alt="Table" /> Table View</button>
-                                        <button className='tab-button'><img src={chart} alt="chart" /> Chart View</button>                                           
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-md-7">
-                                <div className="d-flex w-100">
-                                    <div className="radio-button">
-                                        <div className="box-radio">
-                                            <input type="radio"
-                                                value="upper_primary_to_secondary"
-                                                checked={selectedOption === "upper_primary_to_secondary"}
-                                                onChange={handleOptionChange} />
-                                            <label htmlFor="radio4">Upper Primary to Secondary  </label>
-                                        </div>
 
-                                        <div className="box-radio">
-                                            <input type="radio"
-                                                value="secondary_to_higher_secondary"
-                                                checked={selectedOption === "secondary_to_higher_secondary"}
-                                                onChange={handleOptionChange} />
-                                            <label htmlFor="radio5">Secondary to Higher Secondary</label>
+                    {selectedState !== SelectState ?
+                        <div className="col-md-12">
+                            <div className="card-box">
+                                <div className="row align-items-end">
+                                    <div className="col-md-5">
+                                        <div className="d-flex align-items-end">
+                                            <div className="title-box">
+                                                <h5 className='sub-title'>{selectedState} District's</h5>
+                                                <h3 className='heading-sm'>Transition Rate</h3>
+                                            </div>
+                                            <div className="tab-box">
+                                                <button className='tab-button active'><img src={table} alt="Table" /> Table View</button>
+                                                <button className='tab-button'><img src={chart} alt="chart" /> Chart View</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="">
-                                        {/* <img src={download} alt="download" /> */}
-                                        <select id="export_data" className="form-select download-button" defaultValue={""}>
-                                            <option className="option-hide"> Download Report</option>
-                                            <option value="export_pdf">Download as PDF </option>
-                                            <option value="export_excel">Download as Excel</option>
-                                        </select>
+                                    <div className="col-md-7">
+                                        <div className="d-flex w-100">
+                                            <div className="radio-button">
+                                                <div className="box-radio">
+                                                    <input type="radio"
+                                                        value="upper_primary_to_secondary"
+                                                        checked={selectedOption === "upper_primary_to_secondary"}
+                                                        onChange={handleOptionChange} />
+                                                    <label htmlFor="radio4">Upper Primary to Secondary  </label>
+                                                </div>
+
+                                                <div className="box-radio">
+                                                    <input type="radio"
+                                                        value="secondary_to_higher_secondary"
+                                                        checked={selectedOption === "secondary_to_higher_secondary"}
+                                                        onChange={handleOptionChange} />
+                                                    <label htmlFor="radio5">Secondary to Higher Secondary</label>
+                                                </div>
+                                            </div>
+                                            <div className="">
+                                                {/* <img src={download} alt="download" /> */}
+                                                <select id="export_data" className="form-select download-button" defaultValue={""}>
+                                                    <option className="option-hide"> Download Report 2023-24</option>
+                                                    <option value="export_pdf">Download as PDF </option>
+                                                    <option value="export_excel">Download as Excel</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
 
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="col-md-12">
-                                <div className="table-box mt-4">
-                                    <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
-                                        style={{ width: "100%", height: 200 }} >
-                                        <AgGridReact columnDefs={columns} rowData={compressedData} defaultColDef={defColumnDefs} onGridReady={onGridReady} />
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <div className="table-box mt-4">
+                                            <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
+                                                style={{ width: "100%", height: 200 }} >
+                                                <AgGridReact columnDefs={columns} rowData={compressedData} defaultColDef={defColumnDefs} onGridReady={onGridReady} />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <div className="card-box">
+                                <div className="row align-items-end">
+                                    <div className="col-md-7">
+                                        <div className="d-flex align-items-end">
+                                            <div className="title-box">
+                                                <h5 className='sub-title'>State:
+                                                    <select name="" id="" className='state-select'>
+                                                        <option value="">Uttar Pradesh</option>
+                                                        <option value="">Uttar Pradesh</option>
+                                                        <option value="">Uttar Pradesh</option>
+                                                    </select>
+                                                </h5>
+                                                <h3 className='heading-sm'>Comparison by Transition Rate</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-5">
+                                        <div className="d-flex w-100">
+                                            <div className="radio-button">
+                                                <div className="box-radio">
+                                                    <input type="radio" name="comparison" id="radio11" value="" checked />
+                                                    <label htmlFor="radio11">Upper Primary to Secondary  </label>
+                                                </div>
+
+                                                <div className="box-radio">
+                                                    <input type="radio" name="comparison" id="radio22" value="" />
+                                                    <label htmlFor="radio22">Secondary to Higher Secondary</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <div className="comparison-box">
+                                            <div className="row align-items-center">
+                                                <div className="col-md-3">
+                                                    <h5 className='sub-title'>
+                                                        Select District to Compare
+                                                    </h5>
+                                                </div>
+                                                <div className="col-md-6 Comparison-select-group">
+                                                    <div className="d-flex justify-content-between text-aligns-center antd-select">
+
+                                                        <Select
+                                                            // onChange={handleStateChange}
+                                                            style={{ width: "100%" }}
+                                                            placeholder="Select a District"
+                                                            mode="single"
+                                                            showSearch
+                                                            value={"Select a District"}
+                                                            className="form-select">
+                                                            <Select.Option key="Select a District" value={"Select a District"}>
+                                                                Select a District
+                                                            </Select.Option>
+                                                            {states.map((state) => (
+                                                                <Select.Option
+                                                                    key={state.lgd_state_id}
+                                                                    value={state.lgd_state_name}
+                                                                >
+                                                                    {state.lgd_state_name}
+                                                                </Select.Option>
+                                                            ))}
+                                                        </Select>
+                                                        <Select
+                                                            // onChange={handleStateChange}
+                                                            style={{ width: "100%" }}
+                                                            placeholder="Select a District"
+                                                            mode="single"
+                                                            showSearch
+                                                            value={"Select a District"}
+                                                            className="form-select">
+                                                            <Select.Option key="Select a District" value={"Select a District"}>
+                                                                Select a District
+                                                            </Select.Option>
+                                                            {states.map((state) => (
+                                                                <Select.Option
+                                                                    key={state.lgd_state_id}
+                                                                    value={state.lgd_state_name}
+                                                                >
+                                                                    {state.lgd_state_name}
+                                                                </Select.Option>
+                                                            ))}
+                                                        </Select>
+                                                        <Select
+                                                            // onChange={handleStateChange}
+                                                            style={{ width: "100%" }}
+                                                            placeholder="Select a District"
+                                                            mode="single"
+                                                            showSearch
+                                                            value={"Select a District"}
+                                                            className="form-select">
+                                                            <Select.Option key="Select a District" value={"Select a District"}>
+                                                                Select a District
+                                                            </Select.Option>
+                                                            {states.map((state) => (
+                                                                <Select.Option
+                                                                    key={state.lgd_state_id}
+                                                                    value={state.lgd_state_name}
+                                                                >
+                                                                    {state.lgd_state_name}
+                                                                </Select.Option>
+                                                            ))}
+                                                        </Select>
+                                                        <Select
+                                                            // onChange={handleStateChange}
+                                                            style={{ width: "100%" }}
+                                                            placeholder="Select a District"
+                                                            mode="single"
+                                                            showSearch
+                                                            value={"Select a District"}
+                                                            className="form-select">
+                                                            <Select.Option key="Select a District" value={"Select a District"}>
+                                                                Select a District
+                                                            </Select.Option>
+                                                            {states.map((state) => (
+                                                                <Select.Option
+                                                                    key={state.lgd_state_id}
+                                                                    value={state.lgd_state_name}
+                                                                >
+                                                                    {state.lgd_state_name}
+                                                                </Select.Option>
+                                                            ))}
+                                                        </Select>
+                                                        <Select
+                                                            // onChange={handleStateChange}
+                                                            style={{ width: "100%" }}
+                                                            placeholder="Select a District"
+                                                            mode="single"
+                                                            showSearch
+                                                            value={"Select a District"}
+                                                            className="form-select">
+                                                            <Select.Option key="Select a District" value={"Select a District"}>
+                                                                Select a District
+                                                            </Select.Option>
+                                                            {states.map((state) => (
+                                                                <Select.Option
+                                                                    key={state.lgd_state_id}
+                                                                    value={state.lgd_state_name}
+                                                                >
+                                                                    {state.lgd_state_name}
+                                                                </Select.Option>
+                                                            ))}
+                                                        </Select>
+
+
+
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <div className="tab-box float-end">
+                                                        <button className='tab-button active'><img src={card} alt="card" /> Card View</button>
+                                                        <button className='tab-button'><img src={table} alt="Table" /> Table View</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-12 mt-4">
+                                        <div className="row">
+                                            <div className="col-lg col-sm-12 col-20">
+                                                <div className="comp-card">
+                                                    <div className="upper-card">
+                                                        <div className="number-card">
+                                                            1
+                                                        </div>
+                                                        <div className="text-card">
+                                                            <p>District</p>
+                                                            <h6 className='sub-title'>
+                                                                Agra
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="lower-card">
+                                                        <div className="text-card">
+                                                            <p>Boys</p>
+                                                            <h6 className='sub-title'>
+                                                                56.80%
+                                                            </h6>
+                                                        </div>
+                                                        <div className="text-card">
+                                                            <p>Girls</p>
+                                                            <h6 className='sub-title'>
+                                                                24.20%
+                                                            </h6>
+                                                        </div>
+                                                        <div className="text-card">
+                                                            <p>Total</p>
+                                                            <h6 className='sub-title'>
+                                                                89%
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-lg col-sm-12 col-20">
+                                                <div className="comp-card">
+                                                    <div className="upper-card">
+                                                        <div className="number-card card-color-2">
+                                                            2
+                                                        </div>
+                                                        <div className="text-card">
+                                                            <p>District</p>
+                                                            <h6 className='sub-title'>
+                                                            Allahabad
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="lower-card">
+                                                        <div className="text-card">
+                                                            <p>Boys</p>
+                                                            <h6 className='sub-title'>
+                                                                56.80%
+                                                            </h6>
+                                                        </div>
+                                                        <div className="text-card">
+                                                            <p>Girls</p>
+                                                            <h6 className='sub-title'>
+                                                                24.20%
+                                                            </h6>
+                                                        </div>
+                                                        <div className="text-card">
+                                                            <p>Total</p>
+                                                            <h6 className='sub-title'>
+                                                                89%
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-lg col-sm-12 col-20">
+                                                <div className="comp-card">
+                                                    <div className="upper-card">
+                                                        <div className="number-card card-color-3">
+                                                            3
+                                                        </div>
+                                                        <div className="text-card">
+                                                            <p>District</p>
+                                                            <h6 className='sub-title'>
+                                                            Amethi-CSM Nagar
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="lower-card">
+                                                        <div className="text-card">
+                                                            <p>Boys</p>
+                                                            <h6 className='sub-title'>
+                                                                56.80%
+                                                            </h6>
+                                                        </div>
+                                                        <div className="text-card">
+                                                            <p>Girls</p>
+                                                            <h6 className='sub-title'>
+                                                                24.20%
+                                                            </h6>
+                                                        </div>
+                                                        <div className="text-card">
+                                                            <p>Total</p>
+                                                            <h6 className='sub-title'>
+                                                                89%
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-lg col-sm-12 col-20">
+                                                <div className="comp-card">
+                                                    <div className="upper-card">
+                                                        <div className="number-card card-color-4">
+                                                            4
+                                                        </div>
+                                                        <div className="text-card">
+                                                            <p>District</p>
+                                                            <h6 className='sub-title'>
+                                                            Bahraich
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="lower-card">
+                                                        <div className="text-card">
+                                                            <p>Boys</p>
+                                                            <h6 className='sub-title'>
+                                                                56.80%
+                                                            </h6>
+                                                        </div>
+                                                        <div className="text-card">
+                                                            <p>Girls</p>
+                                                            <h6 className='sub-title'>
+                                                                24.20%
+                                                            </h6>
+                                                        </div>
+                                                        <div className="text-card">
+                                                            <p>Total</p>
+                                                            <h6 className='sub-title'>
+                                                                89%
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-lg col-sm-12 col-20">
+                                                <div className="comp-card">
+                                                    <div className="upper-card">
+                                                        <div className="number-card card-color-5">
+                                                            5
+                                                        </div>
+                                                        <div className="text-card">
+                                                            <p>District</p>
+                                                            <h6 className='sub-title'>
+                                                            Ambedkar Nagar
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="lower-card">
+                                                        <div className="text-card">
+                                                            <p>Boys</p>
+                                                            <h6 className='sub-title'>
+                                                                56.80%
+                                                            </h6>
+                                                        </div>
+                                                        <div className="text-card">
+                                                            <p>Girls</p>
+                                                            <h6 className='sub-title'>
+                                                                24.20%
+                                                            </h6>
+                                                        </div>
+                                                        <div className="text-card">
+                                                            <p>Total</p>
+                                                            <h6 className='sub-title'>
+                                                                89%
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div> : <div className="col-md-12">
+                            <BlankPage />
                         </div>
-                    </div>
-                </div>:  <div className="col-md-12">
-                        <BlankPage/>
-                    </div>
-                }
+                    }
                 </div>
             </div>
         </section>
