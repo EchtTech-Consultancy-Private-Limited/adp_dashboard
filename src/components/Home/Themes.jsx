@@ -39,6 +39,21 @@ export default function Themes() {
                                         </div>
                                     </div>
 
+                                    <div className="theme-shadow-box">
+                                        <div className="content">
+                                        
+                                            <p>KPI's of Basic Infrastructure</p>
+                                            <ul>
+                                                <li>Percentage of Schools having Adequate Functional Girls' Toilets</li>
+                                            </ul>
+                                        </div>
+
+                                        <div className="link-box">
+                                            <Link to="/" className="link">See ABP Report <span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/" className="link">See ADP Report <span className="material-icons-round">arrow_forward_ios</span></Link>
+                                        </div>
+                                    </div>
+
                                     <img src={Transition} alt="Transition" className='img-1' />
                                 </div>
                             </div>
@@ -54,6 +69,21 @@ export default function Themes() {
                                         </div>
                                         <div className="theme-subtext mb-2">
                                             All States
+                                        </div>
+                                    </div>
+
+                                    <div className="theme-shadow-box">
+                                        <div className="content">
+                                        
+                                            <p>KPI's of Basic Infrastructure</p>
+                                            <ul>
+                                                <li>Percentage of Schools having Adequate Functional Girls' Toilets</li>
+                                            </ul>
+                                        </div>
+
+                                        <div className="link-box">
+                                            <Link to="/" className="link">See ABP Report <span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/" className="link">See ADP Report <span className="material-icons-round">arrow_forward_ios</span></Link>
                                         </div>
                                     </div>
 
@@ -80,7 +110,7 @@ export default function Themes() {
                                         </div>
                                     </div>
 
-                                    {/* <div className="theme-shadow-box">
+                                    <div className="theme-shadow-box">
                                         <div className="content">
                                         
                                             <p>KPI's of Basic Infrastructure</p>
@@ -88,7 +118,12 @@ export default function Themes() {
                                                 <li>Percentage of Schools having Adequate Functional Girls' Toilets</li>
                                             </ul>
                                         </div>
-                                    </div> */}
+
+                                        <div className="link-box">
+                                            <Link to="/" className="link">See ABP Report <span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/" className="link">See ADP Report <span className="material-icons-round">arrow_forward_ios</span></Link>
+                                        </div>
+                                    </div>
 
                                     <img src={Student} alt="Student" className='img-3' />
                                 </div>
@@ -108,6 +143,21 @@ export default function Themes() {
                                         </div>
                                     </div>
 
+                                    <div className="theme-shadow-box">
+                                        <div className="content">
+                                        
+                                            <p>KPI's of Basic Infrastructure</p>
+                                            <ul>
+                                                <li>Percentage of Schools having Adequate Functional Girls' Toilets</li>
+                                            </ul>
+                                        </div>
+
+                                        <div className="link-box">
+                                            <Link to="/" className="link">See ABP Report <span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/" className="link">See ADP Report <span className="material-icons-round">arrow_forward_ios</span></Link>
+                                        </div>
+                                    </div>
+
                                     <img src={Infrastructure} alt="Infrastructure" className='img-4' />
                                 </div>
                             </div>
@@ -123,6 +173,21 @@ export default function Themes() {
                                         </div>
                                         <div className="theme-subtext mb-2">
                                             All States
+                                        </div>
+                                    </div>
+
+                                    <div className="theme-shadow-box">
+                                        <div className="content">
+                                        
+                                            <p>KPI's of Basic Infrastructure</p>
+                                            <ul>
+                                                <li>Percentage of Schools having Adequate Functional Girls' Toilets</li>
+                                            </ul>
+                                        </div>
+
+                                        <div className="link-box">
+                                            <Link to="/" className="link">See ABP Report <span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/" className="link">See ADP Report <span className="material-icons-round">arrow_forward_ios</span></Link>
                                         </div>
                                     </div>
 
