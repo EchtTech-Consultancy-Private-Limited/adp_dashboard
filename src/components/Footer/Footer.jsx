@@ -1,12 +1,10 @@
-
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import './footer.scss'
 
 
 const Footer = () => {
   return (
-    <>
+   
       <footer className="footer">
         <div className="container">
           <div className="row">
@@ -32,14 +30,14 @@ const Footer = () => {
               </div>
               <div className="col-md-6">
                 <p className="visitor-counter">
-                Visitor Counter : <span>2</span> <span>6</span> <span>4</span> <span>6</span> <span>8</span> <span>2</span>
+                Visitor Counter : <span>0</span> <span>0</span> <span>0</span> <span>0</span> <span>0</span> <span>0</span>
                 </p>
               </div>
             </div>
           </div>
         </div>
       </footer>
-    </>
+   
   );
 };
 
