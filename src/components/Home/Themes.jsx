@@ -199,6 +199,8 @@ export default function Themes() {
                 </div>
 
             </div>
+
+            {/* <div className="devider-theme"></div> */}
         </section>
     )
 }

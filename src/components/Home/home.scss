@@ -9,6 +9,10 @@
     padding: 50px 0;
 }
 
+// .devider-theme{
+//     background: url('../../assets/images/devider.svg');
+// }
+
 .banner-text {
     display: flex;
     align-items: center;
@@ -268,12 +272,15 @@
             padding: 14px 20px;
             min-height: 170px;
             border-radius: 20px;
-
+           
             @media (max-width:1599px) and (min-width: 1400px) {
                
             }
             @media (max-width:1399px) and (min-width: 1024px) {
-                
+                margin-top: 30px;
+                padding: 5px 15px;
+                min-height: 130px;
+                border-radius: 20px;
             }
 
             p {
@@ -285,6 +292,7 @@
             ul {
                 list-style: disc;
                 padding-left: 18px;
+                margin-bottom: 0;
 
                 li {
                     font-size: 14px;
@@ -299,6 +307,10 @@
             align-items: center;
             padding: 0 5px;
 
+            @media (max-width:1399px) and (min-width: 1024px) {
+                padding: 0;
+            }
+
             a {
                 color: #2B9C9F;
                 display: flex;
@@ -306,9 +318,19 @@
                 font-size: 16px;
                 align-items: center;
 
+                @media (max-width:1399px) and (min-width: 1024px) {
+                    font-size: 12px;
+                }
+
                 span {
                     font-size: 17px;
                     margin-left: 5px;
+                    
+                    @media (max-width:1399px) and (min-width: 1024px) {
+                        font-size: 12px;
+                        margin-top: 2px;
+                        margin-left: 3px;
+                    }
                 }
             }
         }
