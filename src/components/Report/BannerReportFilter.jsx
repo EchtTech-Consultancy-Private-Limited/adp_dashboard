@@ -3,7 +3,7 @@ import Header from '../Header/Header'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { selectBlock, selectDistrict, selectState, setStates } from '../../redux/slice/filterServicesSlice';
-import { setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTypeSlice';
+import { setselectedReport, setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTypeSlice';
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
 import { Select } from 'antd';
@@ -25,17 +25,17 @@ export default function BannerReportFilter() {
   const disableSelectedState = selectedState === "Select State"
   const disableSelectedDistrict =selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict;
   const selectedOption = useSelector((state) => state.reportAdpAbpType.updateReportType)
-  const [selectedReport, setSelectedReport] = useState(null);
-
+  const selectedReport=useSelector((state)=>state.reportAdpAbpType.selectedReport)
   useEffect(() => {
     const savedReportName = localStorage.getItem('selectedReport');
     if (savedReportName) {
-      setSelectedReport(savedReportName);
+      setselectedReport(savedReportName);
     }
   }, []);
   const handleReportChange = (value) => {
+    dispatch(setUpdateReportType('ADP_Report'));
     localStorage.setItem('selectedReport', value);
-    setSelectedReport(value);
+    dispatch(setselectedReport(value));
     switch (value) {
       case 'Transition Rate':
         navigate('/transition-rate');
@@ -58,7 +58,7 @@ export default function BannerReportFilter() {
   };
 
   useEffect(() => {
-    dispatch(setUpdateReportType('ADP_Report'));
+   // dispatch(setUpdateReportType('ADP_Report'));
     setAspirationalData(aspirationalAdpData)
   }, [dispatch]);
   useEffect(() => {
@@ -155,14 +155,17 @@ export default function BannerReportFilter() {
                     <div className="box-radio">
                       <input type="radio"
                         value="ADP_Report"
+                        id="radio1"
                         checked={selectedOption === "ADP_Report"}
                         onChange={handleOptionChange} />
+                        
                       <label htmlFor="radio1">ADP Report</label>
                     </div>
 
                     <div className="box-radio">
                       <input type="radio"
                         value="ABP_Report"
+                        id="radio2"
                         checked={selectedOption === "ABP_Report"}
                         onChange={handleOptionChange} />
                       <label htmlFor="radio2">ABP Report</label>
@@ -264,7 +267,7 @@ export default function BannerReportFilter() {
                         <Select.Option key="Transition Rate" value="Transition Rate">
                           Transition Rate
                         </Select.Option>
-                        {/* <Select.Option key="Teacher and School Resources" value="Teacher and School Resources">
+                        <Select.Option key="Teacher and School Resources" value="Teacher and School Resources">
                           Teacher and School Resources
                         </Select.Option>
                         <Select.Option key="Student Performance" value="Student Performance">
@@ -275,7 +278,7 @@ export default function BannerReportFilter() {
                         </Select.Option>
                         <Select.Option key="Enrollment and Retention" value="Enrollment and Retention">
                           Enrollment and Retention
-                        </Select.Option> */}
+                        </Select.Option>
                       </Select>
                   </div>
                 </div>

@@ -77,31 +77,28 @@ export default function TransitionRateReport() {
         dispatch(selectDistrict(SelectDistrict));
         dispatch(selectBlock(SelectBlock));
         dispatch(setselectedOption(selectedOptionConst));
-        
     }
     useEffect(() => {
         resteData()
     }, [dispatch]);
-
     {/*...............update Location Header..............*/ }
     useEffect(() => {
-        
-        if(selectReportType ==="ADP_Report"){
+        if (selectReportType === "ADP_Report") {
             if (selectedState !== SelectState && selectedDistrict === SelectDistrict) {
                 SetLocationHeader("District")
             }
         }
-        else if((selectReportType ==="ABP_Report")){
+        else if ((selectReportType === "ABP_Report")) {
             if (selectedState !== SelectState && (selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict)) {
                 SetLocationHeader("District")
             }
-            else   if (selectedState !== SelectState && selectedDistrict !== SelectDistrict) {
+            else if (selectedState !== SelectState && selectedDistrict !== SelectDistrict) {
                 SetLocationHeader("Block")
             }
-           
+
         }
-        
-    }, [selectedState, SelectState, selectedDistrict, SelectDistrict,selectedOption])
+
+    }, [selectedState, SelectState, selectedDistrict, SelectDistrict, selectedOption])
 
     {/*...............Take data report wise..............*/ }
     useEffect(() => {
@@ -515,14 +512,14 @@ export default function TransitionRateReport() {
     return (
         <section>
             <BannerReportFilter />
-           
+
             <div className="container">
                 <div className="row mt-4">
 
                     {selectedState !== SelectState ?
-                   
+
                         <div className="col-md-12">
-                              {loading && <GlobalLoading />}
+                            {loading && <GlobalLoading />}
                             <div className="card-box">
                                 <div className="row align-items-end">
                                     <div className="col-md-5">
@@ -530,16 +527,16 @@ export default function TransitionRateReport() {
                                             <div className="title-box">
                                                 <h5 className='sub-title'>
                                                     {selectReportType === "ADP_Report" ? (
-                                                        selectedDistrict !== SelectDistrict &&  selectedDistrict !== AllDistrict?
+                                                        selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict ?
                                                             `${selectedDistrict}` :
                                                             selectedDistrict === AllDistrict ?
-                                                            `${selectedState} District's`:`${selectedState} District's`
+                                                                `${selectedState} District's` : `${selectedState} District's`
                                                     ) : (
                                                         selectReportType === "ABP_Report" ? (
                                                             selectedState !== SelectState ? (
                                                                 selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict ?
                                                                     `${selectedState} District's` :
-                                                                    selectedBlock !== SelectBlock && selectedBlock !== AllBlock   ?
+                                                                    selectedBlock !== SelectBlock && selectedBlock !== AllBlock ?
                                                                         `${selectedBlock}` :
                                                                         `${selectedDistrict} Block's`
                                                             ) : selectedBlock
@@ -559,6 +556,7 @@ export default function TransitionRateReport() {
                                             <div className="radio-button">
                                                 <div className="box-radio">
                                                     <input type="radio"
+                                                        id="radio4"
                                                         value="upper_primary_to_secondary"
                                                         checked={selectedOption === "upper_primary_to_secondary"}
                                                         onChange={handleOptionChange} />
@@ -567,6 +565,7 @@ export default function TransitionRateReport() {
 
                                                 <div className="box-radio">
                                                     <input type="radio"
+                                                        id="radio5"
                                                         value="secondary_to_higher_secondary"
                                                         checked={selectedOption === "secondary_to_higher_secondary"}
                                                         onChange={handleOptionChange} />
@@ -598,14 +597,14 @@ export default function TransitionRateReport() {
                                 </div>
                             </div>
 
-                        
+
 
 
                         </div> : <div className="col-md-12">
                             <BlankPage />
                         </div>
                     }
-                      <TransitionRateCompare/>
+                    <TransitionRateCompare />
                 </div>
             </div>
         </section>

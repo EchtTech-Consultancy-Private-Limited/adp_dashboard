@@ -13,7 +13,6 @@ const Header = () => {
   }
   const location = useLocation()
   const pathName = location.pathname;
-  console.log(location.pathname, "pathname")
   const [showNavbar, setShowNavbar] = React.useState(false);
 
   const handleShowNavbar = () => {
