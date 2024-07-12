@@ -276,11 +276,7 @@ export default function BannerReportFilter() {
                         <Select.Option key="Enrollment and Retention" value="Enrollment and Retention">
                           Enrollment and Retention
                         </Select.Option> */}
-                       
                       </Select>
-
-
-
                   </div>
                 </div>
 
