@@ -25,6 +25,7 @@ import { setselectedOption, setUpdateStatus } from '../../redux/slice/reportType
 import BlankPage from './BlankPage'
 import { AllBlock, AllDistrict, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
 import TransitionRateCompare from './TransitionRateCompare'
+import { ScrollToTopOnMount } from '../../Scroll/ScrollToTopOnMount'
 
 const ArrowRenderer = ({ data, value }) => {
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
@@ -510,6 +511,8 @@ export default function TransitionRateReport() {
 
 
     return (
+       <>
+        <ScrollToTopOnMount />
         <section>
             <BannerReportFilter />
 
@@ -608,5 +611,6 @@ export default function TransitionRateReport() {
                 </div>
             </div>
         </section>
+       </>
     )
 }
