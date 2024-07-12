@@ -2,8 +2,15 @@ import React from 'react'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { Link } from 'react-router-dom';
+import { setselectedReport, setUpdateReportType } from '../../redux/slice/reportTypeSlice';
+import { useDispatch } from 'react-redux';
 
 export default function AboutUs() {
+    const dispatch = useDispatch()
+    const handleClick = (reportType) => {
+        dispatch(setUpdateReportType(reportType));
+        dispatch(setselectedReport("Transition Rate"));
+    };
     return (
         <section className='about-us ptb-70 bg-white'>
             <div className="container">
@@ -24,7 +31,7 @@ export default function AboutUs() {
                                             We aim to educate you broadly: high-achieving, future-ready, and equipped with the skills and confidence to succeed in your ambitions.
                                         </p>
                                     </div>
-                                    <div className="d-flex justify-content-center">
+                                    <div className="d-flex justify-content-center" onClick={() => handleClick("ADP_Report")}>
                                         <Link to="/transition-rate" className='btn-banner'>See Report  <span className="material-icons-round">arrow_forward</span></Link>
                                     </div>
                                 </Tab>
@@ -40,7 +47,7 @@ export default function AboutUs() {
                                             We aim to educate you broadly: high-achieving, future-ready, and equipped with the skills and confidence to succeed in your ambitions.
                                         </p>
                                     </div>
-                                    <div className="d-flex justify-content-center">
+                                    <div className="d-flex justify-content-center" onClick={() => handleClick("ABP_Report")}>
                                         <Link to="/transition-rate" className='btn-banner'>See Report  <span className="material-icons-round">arrow_forward</span></Link>
                                     </div>
                                 </Tab>

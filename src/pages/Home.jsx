@@ -17,3 +17,17 @@ export default function Home() {
 
     )
 }
+
+
+  
+//   const handleClick = (reportType) => {
+//     dispatch(setUpdateReportType(reportType));
+//     dispatch(setselectedReport("Transition Rate"));
+//   };
+
+//   const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
+
+{/* <span onClick={() => handleClick("ABP_Report")}>
+              <NavLink to="/transition-rate">ABP</NavLink>
+           </span> */}
+
