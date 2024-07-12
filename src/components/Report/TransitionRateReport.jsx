@@ -61,7 +61,6 @@ export default function TransitionRateReport() {
     const [queryParameters] = useSearchParams();
     const id = queryParameters.get('id');
     const type = queryParameters.get('type');
-    const [report, setReport] = useState(null);
     const [gridApi, setGridApi] = useState();
     const [loading, setLoading] = useState(true);
     const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
@@ -84,17 +83,25 @@ export default function TransitionRateReport() {
         resteData()
     }, [dispatch]);
 
-    // dispatch(handleActiveTabs(activeTab))
-
     {/*...............update Location Header..............*/ }
     useEffect(() => {
-        if (selectedState !== SelectState && selectedDistrict === SelectDistrict) {
-            SetLocationHeader("District")
+        
+        if(selectReportType ==="ADP_Report"){
+            if (selectedState !== SelectState && selectedDistrict === SelectDistrict) {
+                SetLocationHeader("District")
+            }
         }
-        else if (selectedState !== SelectState && selectedDistrict !== SelectDistrict) {
-            SetLocationHeader("Block")
+        else if((selectReportType ==="ABP_Report")){
+            if (selectedState !== SelectState && (selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict)) {
+                SetLocationHeader("District")
+            }
+            else   if (selectedState !== SelectState && selectedDistrict !== SelectDistrict) {
+                SetLocationHeader("Block")
+            }
+           
         }
-    }, [selectedState, SelectState, selectedDistrict, SelectDistrict])
+        
+    }, [selectedState, SelectState, selectedDistrict, SelectDistrict,selectedOption])
 
     {/*...............Take data report wise..............*/ }
     useEffect(() => {
@@ -510,7 +517,7 @@ export default function TransitionRateReport() {
             <BannerReportFilter />
            
             <div className="container">
-                <div className="row mt-5">
+                <div className="row mt-4">
 
                     {selectedState !== SelectState ?
                    
@@ -523,15 +530,16 @@ export default function TransitionRateReport() {
                                             <div className="title-box">
                                                 <h5 className='sub-title'>
                                                     {selectReportType === "ADP_Report" ? (
-                                                        selectedDistrict !== SelectDistrict ?
+                                                        selectedDistrict !== SelectDistrict &&  selectedDistrict !== AllDistrict?
                                                             `${selectedDistrict}` :
-                                                            `${selectedState} District's`
+                                                            selectedDistrict === AllDistrict ?
+                                                            `${selectedState} District's`:`${selectedState} District's`
                                                     ) : (
                                                         selectReportType === "ABP_Report" ? (
                                                             selectedState !== SelectState ? (
-                                                                selectedDistrict === SelectDistrict ?
+                                                                selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict ?
                                                                     `${selectedState} District's` :
-                                                                    selectedBlock !== SelectBlock ?
+                                                                    selectedBlock !== SelectBlock && selectedBlock !== AllBlock   ?
                                                                         `${selectedBlock}` :
                                                                         `${selectedDistrict} Block's`
                                                             ) : selectedBlock
