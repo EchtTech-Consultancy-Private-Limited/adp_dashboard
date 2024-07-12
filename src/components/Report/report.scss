@@ -70,6 +70,11 @@
             width: 90px !important;
             padding-inline-end: 10px;
         }
+        
+    }
+
+    .ant-select-show-search:where(.css-98ntnt).ant-select:not(.ant-select-customize-input) .ant-select-selector{
+        border: none;
     }
 
     :where(.css-dev-only-do-not-override-98ntnt).ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
@@ -129,9 +134,7 @@
     }
 }
 
-:where(.css-98ntnt).ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector{
-    border: none;
-}
+
 
 .card-box {
     background: #fff;
