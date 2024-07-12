@@ -26,6 +26,8 @@ export default function BannerReportFilter() {
   const disableSelectedDistrict =selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict;
   const selectedOption = useSelector((state) => state.reportAdpAbpType.updateReportType)
   const selectedReport=useSelector((state)=>state.reportAdpAbpType.selectedReport)
+  const [showBreadcomeAdpAbp, setShowBreadcomeAdpAbp]=useState()
+
   useEffect(() => {
     const savedReportName = localStorage.getItem('selectedReport');
     if (savedReportName) {
@@ -64,9 +66,11 @@ export default function BannerReportFilter() {
   useEffect(() => {
     if (selectedOption === "ADP_Report") {
       setAspirationalData(aspirationalAdpData)
+      setShowBreadcomeAdpAbp("ADP Report")
     }
     else {
       setAspirationalData(aspirationalAbpData)
+      setShowBreadcomeAdpAbp("ABP Report")
     }
   }, [selectedOption])
   useEffect(() => {
@@ -146,7 +150,7 @@ export default function BannerReportFilter() {
           <div className="row align-items-center">
             <div className="col-md-3">
               <div className='main-title'>Reports </div>
-              <div className="brudcrumb-text">Home / <span>Report</span> / <span>{savedReportName}</span></div>
+              <div className="brudcrumb-text">Home / <span>{showBreadcomeAdpAbp}</span> / <span>{savedReportName}</span></div>
             </div>
             <div className="col-md-9">
               <div className="row select-infra Comparison-select-group">
@@ -267,7 +271,7 @@ export default function BannerReportFilter() {
                         <Select.Option key="Transition Rate" value="Transition Rate">
                           Transition Rate
                         </Select.Option>
-                        <Select.Option key="Teacher and School Resources" value="Teacher and School Resources">
+                        {/* <Select.Option key="Teacher and School Resources" value="Teacher and School Resources">
                           Teacher and School Resources
                         </Select.Option>
                         <Select.Option key="Student Performance" value="Student Performance">
@@ -278,7 +282,7 @@ export default function BannerReportFilter() {
                         </Select.Option>
                         <Select.Option key="Enrollment and Retention" value="Enrollment and Retention">
                           Enrollment and Retention
-                        </Select.Option>
+                        </Select.Option> */}
                       </Select>
                   </div>
                 </div>
