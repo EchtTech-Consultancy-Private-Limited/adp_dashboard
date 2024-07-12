@@ -64,6 +64,7 @@ export default function TransitionRateReport() {
     const type = queryParameters.get('type');
     const [gridApi, setGridApi] = useState();
     const [loading, setLoading] = useState(true);
+    localStorage.setItem('selectedReport', "Transition Rate");
     const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
     const [aspirationalData, setAspirationalData] = useState([])
     const [locationHeader, SetLocationHeader] = useState()
