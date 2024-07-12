@@ -180,6 +180,7 @@ export default function TransitionRateCompare() {
                             <div className="radio-button">
                                 <div className="box-radio">
                                     <input type="radio"
+                                        id="radio11"
                                         value="upper_primary_to_secondary"
                                         checked={selectedOption === "upper_primary_to_secondary"}
                                         onChange={handleOptionChange} />
@@ -188,6 +189,7 @@ export default function TransitionRateCompare() {
 
                                 <div className="box-radio">
                                     <input type="radio"
+                                        id="radio22"
                                         value="secondary_to_higher_secondary"
                                         checked={selectedOption === "secondary_to_higher_secondary"}
                                         onChange={handleOptionChange} />
@@ -256,7 +258,9 @@ export default function TransitionRateCompare() {
                             {selectedDistricts.map((district, index) => (
                                 <div className={`col-sm-12 col-20 ${selectedDistricts.length === 1 ? "m-auto" : ""}`}>
 
-                                    {selectedDistricts.length === 1 ? (<Card ><b>Please select one more district for comparison to enhance the analysis.</b></Card>) : <> <div className="comp-card" key={index}>
+                                    {selectedDistricts.length === 1 ? (<Card style={{
+                                        width: 300,
+                                    }}><b>Please select one more district for comparison to enhance the analysis.</b></Card>) : <> <div className="comp-card" key={index}>
                                         <div className="upper-card">
                                             <div className="d-flex align-items-center justify-content-between w-100">
                                                 <div className="d-flex">
