@@ -71,9 +71,6 @@ export default function TransitionRateReport() {
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption)
     const updateLoading = useSelector((state) => state.reportAdpAbpType.loadingStatus)
     const savedReportName = localStorage.getItem('selectedReport');
-    const states = useSelector((state) => state.locationAdp.states);
-    const districts = useSelector((state) => state.locationAdp.districts);
-    const blocks = useSelector((state) => state.locationAdp.blocks);
     const report_name = savedReportName
     const [data, setData] = useState([]);
     function resteData() {
@@ -408,7 +405,7 @@ export default function TransitionRateReport() {
             doc.setFontSize(25);
             doc.setTextColor("blue");
             doc.setFont("bold");
-            doc.text("UDISE+", 0.6, 0.5);
+            doc.text("Aspirational District Programme", 0.6, 0.5);
             doc.setFontSize(20);
             doc.setTextColor("blue");
             doc.text(`Report Name: ${report_name}`, 0.6, 1.0);
@@ -490,7 +487,7 @@ export default function TransitionRateReport() {
                 },
                 rowData: allData,
                 fileName: report_name,
-                sheetName: "Udise+",
+                sheetName: "Aspirational District Programme",
                 columnKeys: columnKeys,
                 columnNames: columnNames,
             });
@@ -593,13 +590,14 @@ export default function TransitionRateReport() {
                                 </div>
                             </div>
 
-                          <TransitionRateCompare/>
+                        
 
 
                         </div> : <div className="col-md-12">
                             <BlankPage />
                         </div>
                     }
+                      <TransitionRateCompare/>
                 </div>
             </div>
         </section>

@@ -6,7 +6,8 @@ const reportTypeSlice = createSlice({
         updateReportType:"ADP_Report",
         loadingStatus:false,
         selectedOption:"upper_primary_to_secondary",
-        selectedCompareOption:"upper_primary_to_secondary"
+        selectedCompareOption:"upper_primary_to_secondary",
+        selectedStateShow:"Select State"
     },
     reducers: {
       setUpdateReportType(state,action) {
@@ -21,8 +22,11 @@ const reportTypeSlice = createSlice({
       setselectedCompareOption(state,action) {
         state.selectedCompareOption=action.payload;
       },
+      setselectedStateShow(state,action) {
+        state.selectedStateShow=action.payload;
+      },
     },
   })
   
-  export const { setUpdateReportType,setUpdateStatus, setselectedOption,setselectedCompareOption } = reportTypeSlice.actions
+  export const { setUpdateReportType,setUpdateStatus, setselectedOption,setselectedCompareOption,setselectedStateShow } = reportTypeSlice.actions
   export default reportTypeSlice.reducer
