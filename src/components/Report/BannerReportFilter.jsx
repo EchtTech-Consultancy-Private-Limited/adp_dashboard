@@ -35,6 +35,7 @@ export default function BannerReportFilter() {
     }
   }, []);
   const handleReportChange = (value) => {
+    console.log()
     dispatch(setUpdateReportType('ADP_Report'));
     localStorage.setItem('selectedReport', value);
     dispatch(setselectedReport(value));
