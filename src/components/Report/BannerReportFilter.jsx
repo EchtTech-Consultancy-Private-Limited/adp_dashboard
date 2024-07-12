@@ -3,7 +3,7 @@ import Header from '../Header/Header'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { selectBlock, selectDistrict, selectState, setStates } from '../../redux/slice/filterServicesSlice';
-import { setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTypeSlice';
+import { setselectedReport, setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTypeSlice';
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
 import { Select } from 'antd';
@@ -25,17 +25,20 @@ export default function BannerReportFilter() {
   const disableSelectedState = selectedState === "Select State"
   const disableSelectedDistrict =selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict;
   const selectedOption = useSelector((state) => state.reportAdpAbpType.updateReportType)
-  const [selectedReport, setSelectedReport] = useState(null);
+  const selectedReport=useSelector((state)=>state.reportAdpAbpType.selectedReport)
+  const [showBreadcomeAdpAbp, setShowBreadcomeAdpAbp]=useState()
 
   useEffect(() => {
     const savedReportName = localStorage.getItem('selectedReport');
     if (savedReportName) {
-      setSelectedReport(savedReportName);
+      setselectedReport(savedReportName);
     }
   }, []);
   const handleReportChange = (value) => {
+    console.log()
+    dispatch(setUpdateReportType('ADP_Report'));
     localStorage.setItem('selectedReport', value);
-    setSelectedReport(value);
+    dispatch(setselectedReport(value));
     switch (value) {
       case 'Transition Rate':
         navigate('/transition-rate');
@@ -58,15 +61,17 @@ export default function BannerReportFilter() {
   };
 
   useEffect(() => {
-    dispatch(setUpdateReportType('ADP_Report'));
+   // dispatch(setUpdateReportType('ADP_Report'));
     setAspirationalData(aspirationalAdpData)
   }, [dispatch]);
   useEffect(() => {
     if (selectedOption === "ADP_Report") {
       setAspirationalData(aspirationalAdpData)
+      setShowBreadcomeAdpAbp("ADP Report")
     }
     else {
       setAspirationalData(aspirationalAbpData)
+      setShowBreadcomeAdpAbp("ABP Report")
     }
   }, [selectedOption])
   useEffect(() => {
@@ -146,7 +151,7 @@ export default function BannerReportFilter() {
           <div className="row align-items-center">
             <div className="col-md-3">
               <div className='main-title'>Reports </div>
-              <div className="brudcrumb-text">Home / <span>Report</span> / <span>{savedReportName}</span></div>
+              <div className="brudcrumb-text">Home / <span>{showBreadcomeAdpAbp}</span> / <span>{savedReportName}</span></div>
             </div>
             <div className="col-md-9">
               <div className="row select-infra Comparison-select-group">
@@ -155,14 +160,17 @@ export default function BannerReportFilter() {
                     <div className="box-radio">
                       <input type="radio"
                         value="ADP_Report"
+                        id="radio1"
                         checked={selectedOption === "ADP_Report"}
                         onChange={handleOptionChange} />
+                        
                       <label htmlFor="radio1">ADP Report</label>
                     </div>
 
                     <div className="box-radio">
                       <input type="radio"
                         value="ABP_Report"
+                        id="radio2"
                         checked={selectedOption === "ABP_Report"}
                         onChange={handleOptionChange} />
                       <label htmlFor="radio2">ABP Report</label>

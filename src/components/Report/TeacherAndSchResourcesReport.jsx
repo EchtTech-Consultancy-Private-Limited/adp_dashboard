@@ -61,6 +61,7 @@ export default function TeacherAndSchResourcesReport() {
     const [report, setReport] = useState(null);
     const [gridApi, setGridApi] = useState();
     const [loading, setLoading] = useState(true);
+    localStorage.setItem('selectedReport', "Teacher and School Resources");
     const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
     const [aspirationalData, setAspirationalData] = useState([])
     const [locationHeader, SetLocationHeader] = useState()

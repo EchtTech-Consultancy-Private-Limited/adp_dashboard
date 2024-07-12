@@ -4,16 +4,19 @@ import "./Header.scss";
 import ministry from '../../assets/images/education_ministry.png';
 import search from '../../assets/images/search.png';
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateToggleDark } from '../../redux/slice/darkLightModeSlice';
 
 
 const Header = () => {
+const dispatch=useDispatch()
+  const toggleDarkMode = useSelector((state) => state.toggle.toggleDarkLight);
   const goToPageOnClick = () => {
     // navigate("/");
     window.location.href = window.location.origin;
   }
   const location = useLocation()
   const pathName = location.pathname;
-  console.log(location.pathname, "pathname")
   const [showNavbar, setShowNavbar] = React.useState(false);
 
   const handleShowNavbar = () => {
@@ -75,7 +78,9 @@ const Header = () => {
       return "th";
     }
   };
-
+  const toggleDarkTheme = () => {
+    dispatch(updateToggleDark(!toggleDarkMode));
+  };
   return (
 
     <>
@@ -133,8 +138,11 @@ const Header = () => {
 
                     <li>
                       <div className="theme-toggle">
-                        <label className="switch">
-                          <input type="checkbox" className="switch-input" id="mode" />
+                        <label className="switch" title="Dark Mode">
+                          <input className="switch-input"   type="checkbox"
+                            id="mode"
+                            checked={toggleDarkMode}
+                            onClick={toggleDarkTheme}/>
                           <span data-on="On" data-off="Off" className="switch-label"></span>
                           <span className="switch-handle" title="Change Contrast"></span>
                         </label>
