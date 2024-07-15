@@ -3,11 +3,12 @@ import Header from '../Header/Header'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { selectBlock, selectDistrict, selectState, setStates } from '../../redux/slice/filterServicesSlice';
-import { setselectedReport, setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTypeSlice';
+import { setselectedCompareDistricts, setselectedReport, setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTypeSlice';
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
 import { Select } from 'antd';
 import { AllDistrict, SelectBlock, SelectDistrict, SelectKpi, SelectState } from '../../constant/Constant';
+import { selectComparisionDistrict } from '../../redux/slice/filterServicesComprisionSlice';
 
 export default function BannerReportFilter() {
 
@@ -23,10 +24,10 @@ export default function BannerReportFilter() {
   const selectedDistrict = useSelector((state) => state.locationAdp.selectedDistrict);
   const selectedBlock = useSelector((state) => state.locationAdp.selectedBlock);
   const disableSelectedState = selectedState === "Select State"
-  const disableSelectedDistrict =selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict;
+  const disableSelectedDistrict = selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict;
   const selectedOption = useSelector((state) => state.reportAdpAbpType.updateReportType)
-  const selectedReport=useSelector((state)=>state.reportAdpAbpType.selectedReport)
-  const [showBreadcomeAdpAbp, setShowBreadcomeAdpAbp]=useState()
+  const selectedReport = useSelector((state) => state.reportAdpAbpType.selectedReport)
+  const [showBreadcomeAdpAbp, setShowBreadcomeAdpAbp] = useState()
 
   useEffect(() => {
     const savedReportName = localStorage.getItem('selectedReport');
@@ -35,7 +36,6 @@ export default function BannerReportFilter() {
     }
   }, []);
   const handleReportChange = (value) => {
-    console.log()
     dispatch(setUpdateReportType('ADP_Report'));
     localStorage.setItem('selectedReport', value);
     dispatch(setselectedReport(value));
@@ -61,7 +61,7 @@ export default function BannerReportFilter() {
   };
 
   useEffect(() => {
-   // dispatch(setUpdateReportType('ADP_Report'));
+    // dispatch(setUpdateReportType('ADP_Report'));
     setAspirationalData(aspirationalAdpData)
   }, [dispatch]);
   useEffect(() => {
@@ -128,6 +128,7 @@ export default function BannerReportFilter() {
   };
   const handleStateChange = (value) => {
     dispatch(selectState(value));
+    dispatch(setselectedCompareDistricts([]));
   };
 
   const handleDistrictChange = (value) => {
@@ -163,7 +164,7 @@ export default function BannerReportFilter() {
                         id="radio1"
                         checked={selectedOption === "ADP_Report"}
                         onChange={handleOptionChange} />
-                        
+
                       <label htmlFor="radio1">ADP Report</label>
                     </div>
 
@@ -184,6 +185,15 @@ export default function BannerReportFilter() {
                   <div className="d-flex justify-content-between text-aligns-center antd-select">
                     {/* State select option */}
 
+                    <Select style={{ width: "100%" }} placeholder="Academic Year" mode="single" showSearch
+                      className="form-select">
+                      {/* <Select.Option key="Select Year">
+                        Academic Year
+                      </Select.Option> */}
+                      <Select.Option key={2023 - 2024} value={2023 - 2024} >
+                        2023-2024
+                      </Select.Option>
+                    </Select>
                     <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="Select State" mode="single" showSearch
                       value={selectedState || "Select State"} className="form-select">
                       <Select.Option key="Select State" value={SelectState}>
@@ -260,19 +270,19 @@ export default function BannerReportFilter() {
                     }
 
 
-                      <Select
-                        style={{ width: '100%' }}
-                        placeholder="Select KPI"
-                        mode="single"
-                        showSearch
-                        className="form-select"
-                        value={selectedReport || SelectKpi }
-                        onChange={handleReportChange}
-                      >
-                        <Select.Option key="Transition Rate" value="Transition Rate">
-                          Transition Rate
-                        </Select.Option>
-                        {/* <Select.Option key="Teacher and School Resources" value="Teacher and School Resources">
+                    <Select
+                      style={{ width: '100%' }}
+                      placeholder="Select KPI"
+                      mode="single"
+                      showSearch
+                      className="form-select"
+                      value={selectedReport || SelectKpi}
+                      onChange={handleReportChange}
+                    >
+                      <Select.Option key="Transition Rate" value="Transition Rate">
+                        Transition Rate
+                      </Select.Option>
+                      <Select.Option key="Teacher and School Resources" value="Teacher and School Resources">
                           Teacher and School Resources
                         </Select.Option>
                         <Select.Option key="Student Performance" value="Student Performance">
@@ -283,8 +293,8 @@ export default function BannerReportFilter() {
                         </Select.Option>
                         <Select.Option key="Enrollment and Retention" value="Enrollment and Retention">
                           Enrollment and Retention
-                        </Select.Option> */}
-                      </Select>
+                        </Select.Option>
+                    </Select>
                   </div>
                 </div>
 

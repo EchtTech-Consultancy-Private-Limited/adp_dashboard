@@ -9,9 +9,12 @@
     padding: 50px 0;
 }
 
-// .devider-theme{
-//     background: url('../../assets/images/devider.svg');
-// }
+.devider-theme {
+    position: absolute;
+    bottom: 0%;
+}
+
+img{width: 100%;}
 
 .banner-text {
     display: flex;
@@ -262,7 +265,7 @@
             height: 78%;
             padding: 60px 18px;
             border-radius: 0px 0px 12px 12px;
-            transition: all .5s ease-in-out;          
+            transition: all .5s ease-in-out;
 
         }
 
@@ -272,10 +275,9 @@
             padding: 14px 20px;
             min-height: 170px;
             border-radius: 20px;
-           
-            @media (max-width:1599px) and (min-width: 1400px) {
-               
-            }
+
+            @media (max-width:1599px) and (min-width: 1400px) {}
+
             @media (max-width:1399px) and (min-width: 1024px) {
                 margin-top: 30px;
                 padding: 5px 15px;
@@ -325,7 +327,7 @@
                 span {
                     font-size: 17px;
                     margin-left: 5px;
-                    
+
                     @media (max-width:1399px) and (min-width: 1024px) {
                         font-size: 12px;
                         margin-top: 2px;
