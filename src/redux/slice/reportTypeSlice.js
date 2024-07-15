@@ -8,7 +8,8 @@ const reportTypeSlice = createSlice({
         selectedOption:"upper_primary_to_secondary",
         selectedCompareOption:"upper_primary_to_secondary",
         selectedStateShow:"Select State",
-        selectedReport:"Transition Rate"
+        selectedReport:"Transition Rate",
+        selectedCompareDistricts:[]
     },
     reducers: {
       setUpdateReportType(state,action) {
@@ -29,8 +30,11 @@ const reportTypeSlice = createSlice({
       setselectedReport(state,action) {
         state.selectedReport=action.payload;
       },
+      setselectedCompareDistricts(state,action) {
+        state.selectedCompareDistricts=action.payload;
+      },
     },
   })
   
-  export const { setUpdateReportType,setUpdateStatus, setselectedOption,setselectedCompareOption,setselectedStateShow,setselectedReport } = reportTypeSlice.actions
+  export const { setUpdateReportType,setUpdateStatus, setselectedOption,setselectedCompareOption,setselectedStateShow,setselectedReport,setselectedCompareDistricts } = reportTypeSlice.actions
   export default reportTypeSlice.reducer

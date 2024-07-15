@@ -8,8 +8,11 @@ import Enrollment from '../../assets/images/Enrollment_retention.png'
 import devider from '../../assets/images/devider.svg'
 import { useDispatch } from 'react-redux'
 import { setselectedReport, setUpdateReportType } from '../../redux/slice/reportTypeSlice'
+import { useTranslation } from "react-i18next";
+
 
 export default function Themes() {
+    const { t, i18n } = useTranslation();
     const dispatch = useDispatch()
     const handleTransitionClick = (reportType) => {
         dispatch(setUpdateReportType(reportType));
@@ -24,11 +27,11 @@ export default function Themes() {
                     <div className="col-md-1"></div>
                     <div className="col-md-4">
                         <div className="themes-text">
-                            <h3 className='heading-blue mb-3'>Socio-Economic <br /> Themes </h3>
+                            <h3 className='heading-blue mb-3'>{t('socioEconomic')} <br /> {t('themes')}</h3>
                             <h6 className='sub-title'>
-                                49 Key Performance Indicators with 81 <br /> data points for the tracking and display <br /> of data on a real-time basis.
+                            {t('kpiSentence1')} <br /> {t('kpiSentence2')}<br /> {t('kpiSentence3')}
                             </h6>
-                            <Link to="/transition-rate" className='btn-banner'>Explore Composite Score  <span className="material-icons-round">arrow_forward</span></Link>
+                            <Link to="/transition-rate" className='btn-banner'>{t('exploreCompositeScore')} <span className="material-icons-round">arrow_forward</span></Link>
                         </div>
 
                     </div>
@@ -38,28 +41,28 @@ export default function Themes() {
                                 <div className="themes-box-img">
                                     <div className="themes-box">
                                         <div className="theme-text">
-                                            Transition Rate (Boys/Girls)
+                                        {t('transitionRateBoysGirls')}
                                         </div>
                                         <div className="theme-maintext">
                                             67.5%
                                         </div>
                                         <div className="theme-subtext">
-                                            All States
+                                        {t('allStates')}
                                         </div>
                                     </div>
 
                                     <div className="theme-shadow-box">
                                         <div className="content">
 
-                                            <p>KPI's of Basic Infrastructure</p>
+                                            <p>{t('kpiBasicInfrastructure')}</p>
                                             <ul>
-                                                <li>Percentage of Schools having Adequate Functional Girls' Toilets</li>
+                                                <li>{t('percentageSchoolsAdequateToilets')}</li>
                                             </ul>
                                         </div>
 
                                         <div className="link-box">
-                                            <Link to="/transition-rate" className="link" onClick={() => handleTransitionClick("ADP_Report")}>See ADP Report <span className="material-icons-round">arrow_forward_ios</span></Link>
-                                            <Link to="/transition-rate" className="link" onClick={() => handleTransitionClick("ABP_Report")}>See ABP Report <span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/transition-rate" className="link" onClick={() => handleTransitionClick("ADP_Report")}>{t('seeADPReport')} <span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/transition-rate" className="link" onClick={() => handleTransitionClick("ABP_Report")}>{t('seeABPReport')} <span className="material-icons-round">arrow_forward_ios</span></Link>
                                         </div>
                                     </div>
 
@@ -71,28 +74,28 @@ export default function Themes() {
                                 <div className="themes-box-img">
                                     <div className="themes-box">
                                         <div className="theme-text">
-                                            Teacher and School Resources
+                                        {t('teacherSchoolResources')}
                                         </div>
                                         <div className="theme-maintext">
                                             34%
                                         </div>
                                         <div className="theme-subtext mb-2">
-                                            All States
+                                        {t('allStates')}
                                         </div>
                                     </div>
 
                                     <div className="theme-shadow-box">
                                         <div className="content">
 
-                                            <p>KPI's of Basic Infrastructure</p>
+                                            <p>{t('kpiBasicInfrastructure')}</p>
                                             <ul>
-                                                <li>Percentage of Schools having Adequate Functional Girls' Toilets</li>
+                                                <li>{t('percentageSchoolsAdequateToilets')}</li>
                                             </ul>
                                         </div>
 
                                         <div className="link-box">
-                                            <Link to="/" className="link">See ADP Report <span className="material-icons-round">arrow_forward_ios</span></Link>
-                                            <Link to="/" className="link">See ABP Report <span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/" className="link">{t('seeADPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/" className="link">{t('seeABPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
                                         </div>
                                     </div>
 
@@ -109,28 +112,28 @@ export default function Themes() {
                                 <div className="themes-box-img">
                                     <div className="themes-box">
                                         <div className="theme-text">
-                                            Student Performance
+                                        {t('studentPerformance')}
                                         </div>
                                         <div className="theme-maintext">
                                             62%
                                         </div>
                                         <div className="theme-subtext mb-2">
-                                            All States
+                                        {t('allStates')}
                                         </div>
                                     </div>
 
                                     <div className="theme-shadow-box">
                                         <div className="content">
 
-                                            <p>KPI's of Basic Infrastructure</p>
+                                            <p>{t('kpiBasicInfrastructure')}</p>
                                             <ul>
-                                                <li>Percentage of Schools having Adequate Functional Girls' Toilets</li>
+                                                <li>{t('percentageSchoolsAdequateToilets')}</li>
                                             </ul>
                                         </div>
 
                                         <div className="link-box">
-                                            <Link to="/" className="link">See ADP Report <span className="material-icons-round">arrow_forward_ios</span></Link>
-                                            <Link to="/" className="link">See ABP Report <span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/" className="link">{t('seeADPReport')} <span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/" className="link">{t('seeADPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
                                         </div>
                                     </div>
 
@@ -142,28 +145,28 @@ export default function Themes() {
                                 <div className="themes-box-img">
                                     <div className="themes-box">
                                         <div className="theme-text">
-                                            School Infrastructure
+                                        {t('schoolInfrastructure')}
                                         </div>
                                         <div className="theme-maintext">
                                             73%
                                         </div>
                                         <div className="theme-subtext mb-2">
-                                            All States
+                                        {t('allStates')}
                                         </div>
                                     </div>
 
                                     <div className="theme-shadow-box">
                                         <div className="content">
 
-                                            <p>KPI's of Basic Infrastructure</p>
+                                            <p>{t('kpiBasicInfrastructure')}</p>
                                             <ul>
-                                                <li>Percentage of Schools having Adequate Functional Girls' Toilets</li>
+                                                <li>{t('percentageSchoolsAdequateToilets')}</li>
                                             </ul>
                                         </div>
 
                                         <div className="link-box">
-                                            <Link to="/" className="link">See ADP Report <span className="material-icons-round">arrow_forward_ios</span></Link>
-                                            <Link to="/" className="link">See ABP Report <span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/" className="link">{t('seeADPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/" className="link">{t('seeABPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
                                         </div>
                                     </div>
 
@@ -175,28 +178,28 @@ export default function Themes() {
                                 <div className="themes-box-img">
                                     <div className="themes-box">
                                         <div className="theme-text">
-                                            Enrollment and Retention
+                                        {t('enrollmentRetention')}
                                         </div>
                                         <div className="theme-maintext">
                                             71.4%
                                         </div>
                                         <div className="theme-subtext mb-2">
-                                            All States
+                                        {t('allStates')}
                                         </div>
                                     </div>
 
                                     <div className="theme-shadow-box">
                                         <div className="content">
 
-                                            <p>KPI's of Basic Infrastructure</p>
+                                            <p>{t('kpiBasicInfrastructure')}</p>
                                             <ul>
-                                                <li>Percentage of Schools having Adequate Functional Girls' Toilets</li>
+                                                <li>{t('percentageSchoolsAdequateToilets')}</li>
                                             </ul>
                                         </div>
 
                                         <div className="link-box">
-                                            <Link to="/" className="link">See ADP Report <span className="material-icons-round">arrow_forward_ios</span></Link>
-                                            <Link to="/" className="link">See ABP Report <span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/" className="link">{t('seeADPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/" className="link">{t('seeABPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
                                         </div>
                                     </div>
 
