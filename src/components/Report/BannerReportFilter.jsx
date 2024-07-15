@@ -185,11 +185,11 @@ export default function BannerReportFilter() {
                   <div className="d-flex justify-content-between text-aligns-center antd-select">
                     {/* State select option */}
 
-                    <Select style={{ width: "100%" }} placeholder="Select State" mode="single" showSearch
-                      value={selectedState || "Select State"} className="form-select">
-                      <Select.Option key="Select State" value={SelectState}>
+                    <Select style={{ width: "100%" }} placeholder="Academic Year" mode="single" showSearch
+                      className="form-select">
+                      {/* <Select.Option key="Select Year">
                         Academic Year
-                      </Select.Option>
+                      </Select.Option> */}
                       <Select.Option key={2023 - 2024} value={2023 - 2024} >
                         2023-2024
                       </Select.Option>

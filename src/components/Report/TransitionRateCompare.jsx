@@ -45,8 +45,8 @@ export default function TransitionRateCompare() {
 
     const dispatch = useDispatch();
     const [aspirationalData, setAspirationalData] = useState([])
-    const selectedOption = useSelector((state) => state.reportAdpAbpType.updateReportType)
-    console.log(selectedOption, "selectedOption")
+    const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedCompareOption);
+    const selectedAdpAbpOption = useSelector((state) => state.reportAdpAbpType.updateReportType);
     const MAX_DISTRICTS = 5;
     const states = useSelector((state) => state.locationAdp.states);
     const districts = useSelector((state) => state.locationAdp.districts);
@@ -66,13 +66,13 @@ export default function TransitionRateCompare() {
      setAspirationalData(aspirationalAdpData)
    }, [dispatch]);
    useEffect(() => {
-     if (selectedOption === "ADP_Report") {
+     if (selectedAdpAbpOption === "ADP_Report") {
        setAspirationalData(aspirationalAdpData)
      }
      else {
        setAspirationalData(aspirationalAbpData)
      }
-   }, [selectedOption])
+   }, [selectedAdpAbpOption])
     // Initialize states and districts from JSON data
     useEffect(() => {
         const structuredData = aspirationalData.reduce((acc, curr) => {
