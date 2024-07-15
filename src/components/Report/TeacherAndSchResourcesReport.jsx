@@ -193,20 +193,20 @@ export default function TeacherAndSchResourcesReport() {
         },
 
         {
-            headerName: "Number of Schools having teacher trained to teach CWSN",
-            field: "total_school_cwsn",
+            headerName: "Number of Elementary Schools having PTR less than equal to 30",
+            field: "u_ptr",
             hide: false,
           },
       
           {
-            headerName: "Total Number of Schools",
-            field: "tot_school",
+            headerName: "Number of Elementary Schools ",
+            field: "total_sch_ele",
             hide: false,
           },
       
           {
-            headerName: "% Schools with Teachers trained for teaching CWSN",
-            field: "swsn_teacher_percent",
+            headerName: "Percentage of elementary schools having PTR less than equal to 30",
+            field: "ele_sch_percent",
             cellRenderer: percentageRenderer,
             hide: false,
           },
@@ -232,20 +232,20 @@ export default function TeacherAndSchResourcesReport() {
                     field: "Location",
                 },
                 {
-                    headerName: "Number of Schools having teacher trained to teach CWSN",
-                    field: "total_school_cwsn",
+                    headerName: "Number of Elementary Schools having PTR less than equal to 30",
+                    field: "u_ptr",
                     hide: false,
                   },
               
                   {
-                    headerName: "Total Number of Schools",
-                    field: "tot_school",
+                    headerName: "Number of Elementary Schools ",
+                    field: "total_sch_ele",
                     hide: false,
                   },
               
                   {
-                    headerName: "% Schools with Teachers trained for teaching CWSN",
-                    field: "swsn_teacher_percent",
+                    headerName: "Percentage of elementary schools having PTR less than equal to 30",
+                    field: "ele_sch_percent",
                     cellRenderer: percentageRenderer,
                     hide: false,
                   },
@@ -265,47 +265,40 @@ export default function TeacherAndSchResourcesReport() {
                     field: "Location",
                 },
                 {
-                    headerName: "Number of Schools having teacher trained to teach CWSN",
-                    field: "total_school_cwsn",
+                    headerName: "Number of Elementary Schools having PTR less than equal to 30",
+                    field: "u_ptr",
                     hide: false,
                   },
               
                   {
-                    headerName: "Total Number of Schools",
-                    field: "tot_school",
+                    headerName: "Number of Elementary Schools ",
+                    field: "total_sch_ele",
                     hide: false,
                   },
               
                   {
-                    headerName: "% Schools with Teachers trained for teaching CWSN",
-                    field: "swsn_teacher_percent",
+                    headerName: "Percentage of elementary schools having PTR less than equal to 30",
+                    field: "ele_sch_percent",
                     cellRenderer: percentageRenderer,
                     hide: false,
                   },
             ]);
         }
     }, [locationHeader, selectedOption]);
-
-    const compressData = useCallback((data, groupBy) => {
+    const compressData = useCallback((data, groupBy)  => {
         return data.reduce((acc, curr) => {
           let groupKey = curr[groupBy];
           let group = acc.find((item) => item[groupBy] === groupKey);
           if (group) {
-            group.total_school_cwsn += curr.total_school_cwsn;
-            group.tot_school += curr.tot_school;
-    
-            group.swsn_teacher_percent = parseFloat(
-              ((group.total_school_cwsn * 100) / group.tot_school).toFixed(2)
+            group.u_ptr += curr.u_ptr;
+            group.total_sch_ele += curr.total_sch_ele;
+            group.ele_sch_percent = parseFloat(
+              ((group.u_ptr * 100) / group.total_sch_ele).toFixed(2)
             );
           } else {
             acc.push({
               ...curr,
-              lgd_state_name: curr.lgd_state_name,
-              total_school_cwsn: curr.total_school_cwsn,
-              tot_school: curr.tot_school,
-              swsn_teacher_percent: parseFloat(
-                ((curr.total_school_cwsn * 100) / curr.tot_school).toFixed(2)
-              ),
+              ele_sch_percent: parseFloat(((curr.u_ptr * 100) / curr.total_sch_ele).toFixed(2)),
             });
           }
           return acc;
