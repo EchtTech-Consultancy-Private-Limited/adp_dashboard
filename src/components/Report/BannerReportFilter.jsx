@@ -9,9 +9,11 @@ import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDis
 import { Select } from 'antd';
 import { AllDistrict, SelectBlock, SelectDistrict, SelectKpi, SelectState } from '../../constant/Constant';
 import { selectComparisionDistrict } from '../../redux/slice/filterServicesComprisionSlice';
+import { useTranslation } from "react-i18next";
 
 export default function BannerReportFilter() {
 
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate()
@@ -151,8 +153,8 @@ export default function BannerReportFilter() {
         <div className="content-box">
           <div className="row align-items-center">
             <div className="col-md-3">
-              <div className='main-title'>Reports </div>
-              <div className="brudcrumb-text">Home / <span>{showBreadcomeAdpAbp}</span> / <span>{savedReportName}</span></div>
+              <div className='main-title'>{t('reports')} </div>
+              <div className="brudcrumb-text">{t('home')} / <span>{showBreadcomeAdpAbp}</span> / <span>{savedReportName}</span></div>
             </div>
             <div className="col-md-9">
               <div className="row select-infra Comparison-select-group">
@@ -165,7 +167,7 @@ export default function BannerReportFilter() {
                         checked={selectedOption === "ADP_Report"}
                         onChange={handleOptionChange} />
 
-                      <label htmlFor="radio1">ADP Report</label>
+                      <label htmlFor="radio1">{t('adpReport')}</label>
                     </div>
 
                     <div className="box-radio">
@@ -174,7 +176,7 @@ export default function BannerReportFilter() {
                         id="radio2"
                         checked={selectedOption === "ABP_Report"}
                         onChange={handleOptionChange} />
-                      <label htmlFor="radio2">ABP Report</label>
+                      <label htmlFor="radio2">{t('abpReport')}</label>
                     </div>
 
                   </div>
@@ -185,7 +187,7 @@ export default function BannerReportFilter() {
                   <div className="d-flex justify-content-between text-aligns-center antd-select">
                     {/* State select option */}
 
-                    <Select style={{ width: "100%" }} placeholder="Academic Year" mode="single" showSearch
+                    <Select style={{ width: "100%" }} placeholder={t('academicYear')} mode="single" showSearch
                       className="form-select">
                       {/* <Select.Option key="Select Year">
                         Academic Year
@@ -197,7 +199,7 @@ export default function BannerReportFilter() {
                     <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="Select State" mode="single" showSearch
                       value={selectedState || "Select State"} className="form-select">
                       <Select.Option key="Select State" value={SelectState}>
-                        Select State
+                      {t('selectState')}
                       </Select.Option>
 
                       {states.map((state) => (
@@ -213,7 +215,7 @@ export default function BannerReportFilter() {
                     <Select
                       onChange={handleDistrictChange}
                       style={{ width: "100%" }}
-                      placeholder="All District"
+                      placeholder={t('allDistrict')}
                       mode="single"
                       showSearch
                       value={selectedDistrict || SelectDistrict}
@@ -225,7 +227,7 @@ export default function BannerReportFilter() {
                         value={AllDistrict}
                         disabled={disableSelectedState}
                       >
-                        All District
+                       {t('allDistrict')}
                       </Select.Option>
                       {districts.map((district) => (
                         <Select.Option
@@ -255,7 +257,7 @@ export default function BannerReportFilter() {
                           value="All Block"
                           disabled={disableSelectedDistrict || disableSelectedState}
                         >
-                          All Block
+                        {t('allBlock')}
                         </Select.Option>
                         {blocks.map((block) => (
                           <Select.Option
@@ -280,19 +282,19 @@ export default function BannerReportFilter() {
                       onChange={handleReportChange}
                     >
                       <Select.Option key="Transition Rate" value="Transition Rate">
-                        Transition Rate
+                      {t('transitionRate')}
                       </Select.Option>
                       <Select.Option key="Teacher and School Resources" value="Teacher and School Resources">
-                          Teacher and School Resources
+                      {t('teacherSchoolResources')}
                         </Select.Option>
                         <Select.Option key="Student Performance" value="Student Performance">
-                          Student Performance
+                        {t('studentPerformance')}
                         </Select.Option>
                         <Select.Option key="School Infrastructure" value="School Infrastructure">
-                          School Infrastructure
+                        {t('schoolInfrastructure')}
                         </Select.Option>
                         <Select.Option key="Enrollment and Retention" value="Enrollment and Retention">
-                          Enrollment and Retention
+                        {t('enrollmentRetention')}
                         </Select.Option>
                     </Select>
                   </div>
