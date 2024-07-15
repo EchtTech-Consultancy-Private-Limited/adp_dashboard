@@ -1174,9 +1174,13 @@ button.text-increment-btn {
         top: 60px;
         background-color: #fef7e5;
         width: 0px;
-        height: calc(100vh - 60px);
+        height: auto;
         transition: all 0.3s ease-in;
         overflow: hidden;
+
+        ul{
+            padding: 0px 0;
+        }
     }
 
     .nav-elements.active {
@@ -1189,8 +1193,11 @@ button.text-increment-btn {
     }
 
     .nav-elements ul li {
-        margin-right: unset;
-        margin-top: 22px;
+        margin-right: 0 !important;
+        margin-top: 0px;
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+        width: 100%;
     }
 }
 
