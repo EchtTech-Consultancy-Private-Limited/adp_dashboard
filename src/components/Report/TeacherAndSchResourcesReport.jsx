@@ -193,20 +193,20 @@ export default function TeacherAndSchResourcesReport() {
         },
 
         {
-            headerName: "Number of Schools having teacher trained to teach CWSN",
-            field: "total_school_cwsn",
+            headerName: "Number of Elementary Schools having PTR less than equal to 30",
+            field: "u_ptr",
             hide: false,
           },
       
           {
-            headerName: "Total Number of Schools",
-            field: "tot_school",
+            headerName: "Number of Elementary Schools ",
+            field: "total_sch_ele",
             hide: false,
           },
       
           {
-            headerName: "% Schools with Teachers trained for teaching CWSN",
-            field: "swsn_teacher_percent",
+            headerName: "Percentage of elementary schools having PTR less than equal to 30",
+            field: "ele_sch_percent",
             cellRenderer: percentageRenderer,
             hide: false,
           },
@@ -232,20 +232,20 @@ export default function TeacherAndSchResourcesReport() {
                     field: "Location",
                 },
                 {
-                    headerName: "Number of Schools having teacher trained to teach CWSN",
-                    field: "total_school_cwsn",
+                    headerName: "Number of Elementary Schools having PTR less than equal to 30",
+                    field: "u_ptr",
                     hide: false,
                   },
               
                   {
-                    headerName: "Total Number of Schools",
-                    field: "tot_school",
+                    headerName: "Number of Elementary Schools ",
+                    field: "total_sch_ele",
                     hide: false,
                   },
               
                   {
-                    headerName: "% Schools with Teachers trained for teaching CWSN",
-                    field: "swsn_teacher_percent",
+                    headerName: "Percentage of elementary schools having PTR less than equal to 30",
+                    field: "ele_sch_percent",
                     cellRenderer: percentageRenderer,
                     hide: false,
                   },
@@ -265,47 +265,40 @@ export default function TeacherAndSchResourcesReport() {
                     field: "Location",
                 },
                 {
-                    headerName: "Number of Schools having teacher trained to teach CWSN",
-                    field: "total_school_cwsn",
+                    headerName: "Number of Elementary Schools having PTR less than equal to 30",
+                    field: "u_ptr",
                     hide: false,
                   },
               
                   {
-                    headerName: "Total Number of Schools",
-                    field: "tot_school",
+                    headerName: "Number of Elementary Schools ",
+                    field: "total_sch_ele",
                     hide: false,
                   },
               
                   {
-                    headerName: "% Schools with Teachers trained for teaching CWSN",
-                    field: "swsn_teacher_percent",
+                    headerName: "Percentage of elementary schools having PTR less than equal to 30",
+                    field: "ele_sch_percent",
                     cellRenderer: percentageRenderer,
                     hide: false,
                   },
             ]);
         }
     }, [locationHeader, selectedOption]);
-
-    const compressData = useCallback((data, groupBy) => {
+    const compressData = useCallback((data, groupBy)  => {
         return data.reduce((acc, curr) => {
           let groupKey = curr[groupBy];
           let group = acc.find((item) => item[groupBy] === groupKey);
           if (group) {
-            group.total_school_cwsn += curr.total_school_cwsn;
-            group.tot_school += curr.tot_school;
-    
-            group.swsn_teacher_percent = parseFloat(
-              ((group.total_school_cwsn * 100) / group.tot_school).toFixed(2)
+            group.u_ptr += curr.u_ptr;
+            group.total_sch_ele += curr.total_sch_ele;
+            group.ele_sch_percent = parseFloat(
+              ((group.u_ptr * 100) / group.total_sch_ele).toFixed(2)
             );
           } else {
             acc.push({
               ...curr,
-              lgd_state_name: curr.lgd_state_name,
-              total_school_cwsn: curr.total_school_cwsn,
-              tot_school: curr.tot_school,
-              swsn_teacher_percent: parseFloat(
-                ((curr.total_school_cwsn * 100) / curr.tot_school).toFixed(2)
-              ),
+              ele_sch_percent: parseFloat(((curr.u_ptr * 100) / curr.total_sch_ele).toFixed(2)),
             });
           }
           return acc;
@@ -534,11 +527,11 @@ export default function TeacherAndSchResourcesReport() {
                                                         ) : selectedBlock
                                                     )}
                                                 </h5>
-                                                <h3 className='heading-sm'>School Infrastructure</h3>
+                                                <h3 className='heading-sm'>{t('schoolInfrastructure')}</h3>
                                             </div>
                                             <div className="tab-box">
-                                                <button className='tab-button active'><img src={table} alt="Table" /> Table View</button>
-                                                <button className='tab-button'><img src={chart} alt="chart" /> Chart View</button>
+                                                <button className='tab-button active'><img src={table} alt="Table" /> {t('tableView')}</button>
+                                                <button className='tab-button'><img src={chart} alt="chart" /> {t('chartView')}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -551,7 +544,7 @@ export default function TeacherAndSchResourcesReport() {
                                                         value="upper_primary_to_secondary"
                                                         checked={selectedOption === "upper_primary_to_secondary"}
                                                         onChange={handleOptionChange} />
-                                                    <label htmlFor="radio4">Upper Primary to Secondary  </label>
+                                                    <label htmlFor="radio4">{t('upperPrimaryToSecondary')}</label>
                                                 </div>
 
                                                 <div className="box-radio">
@@ -560,15 +553,15 @@ export default function TeacherAndSchResourcesReport() {
                                                         value="secondary_to_higher_secondary"
                                                         checked={selectedOption === "secondary_to_higher_secondary"}
                                                         onChange={handleOptionChange} />
-                                                    <label htmlFor="radio5">Secondary to Higher Secondary</label>
+                                                    <label htmlFor="radio5">{t('secondaryToHigherSecondary')}</label>
                                                 </div>
                                             </div>
                                             <div className="">
                                                 {/* <img src={download} alt="download" /> */}
                                                 <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
-                                                    <option className="option-hide"> Download Report 2023-24</option>
-                                                    <option value="export_pdf">Download as PDF </option>
-                                                    <option value="export_excel">Download as Excel</option>
+                                                    <option className="option-hide"> {t('downloadReport2023_24')}</option>
+                                                    <option value="export_pdf">{t('downloadAsPdf')}</option>
+                                                    <option value="export_excel">{t('downloadAsExcel')}</option>
                                                 </select>
                                             </div>
                                         </div>

@@ -549,11 +549,11 @@ export default function TransitionRateReport() {
                                                         ) : selectedBlock
                                                     )}
                                                 </h5>
-                                                <h3 className='heading-sm'>Transition Rate</h3>
+                                                <h3 className='heading-sm'>{t('transitionRate')}</h3>
                                             </div>
                                             <div className="tab-box">
-                                                <button className='tab-button active'><img src={table} alt="Table" /> Table View</button>
-                                                <button className='tab-button'><img src={chart} alt="chart" /> Chart View</button>
+                                                <button className='tab-button active'><img src={table} alt="Table" /> {t('tableView')}</button>
+                                                <button className='tab-button'><img src={chart} alt="chart" /> {t('chartView')}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -566,7 +566,7 @@ export default function TransitionRateReport() {
                                                         value="upper_primary_to_secondary"
                                                         checked={selectedOption === "upper_primary_to_secondary"}
                                                         onChange={handleOptionChange} />
-                                                    <label htmlFor="radio4">Upper Primary to Secondary  </label>
+                                                    <label htmlFor="radio4">{t('upperPrimaryToSecondary')}</label>
                                                 </div>
 
                                                 <div className="box-radio">
@@ -575,15 +575,15 @@ export default function TransitionRateReport() {
                                                         value="secondary_to_higher_secondary"
                                                         checked={selectedOption === "secondary_to_higher_secondary"}
                                                         onChange={handleOptionChange} />
-                                                    <label htmlFor="radio5">Secondary to Higher Secondary</label>
+                                                    <label htmlFor="radio5">{t('secondaryToHigherSecondary')}</label>
                                                 </div>
                                             </div>
                                             <div className="">
                                                 {/* <img src={download} alt="download" /> */}
                                                 <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
-                                                    <option className="option-hide"> Download Report 2023-24</option>
-                                                    <option value="export_pdf">Download as PDF </option>
-                                                    <option value="export_excel">Download as Excel</option>
+                                                    <option className="option-hide"> {t('downloadReport2023_24')}</option>
+                                                    <option value="export_pdf">{t('downloadAsPdf')}</option>
+                                                    <option value="export_excel">{t('downloadAsExcel')}</option>
                                                 </select>
                                             </div>
                                         </div>
