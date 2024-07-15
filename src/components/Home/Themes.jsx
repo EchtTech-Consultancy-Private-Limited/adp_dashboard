@@ -9,7 +9,8 @@ import devider from '../../assets/images/devider.svg'
 import { useDispatch } from 'react-redux'
 import { setselectedReport, setUpdateReportType } from '../../redux/slice/reportTypeSlice'
 import { useTranslation } from "react-i18next";
-
+import Allindia from '../../utils/AllIndiaData'
+import  aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json"
 
 export default function Themes() {
     const { t, i18n } = useTranslation();
@@ -17,7 +18,8 @@ export default function Themes() {
     const handleTransitionClick = (reportType) => {
         dispatch(setUpdateReportType(reportType));
         dispatch(setselectedReport("Transition Rate"));
-    };
+    };                
+   const   AllIndiaNation=Allindia(aspirationalAdpData);
     return (
         <section className='themes ptb-70 position-relative'>
 
