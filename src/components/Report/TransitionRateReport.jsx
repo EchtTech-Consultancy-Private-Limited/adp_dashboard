@@ -67,7 +67,8 @@ export default function TransitionRateReport() {
     localStorage.setItem('selectedReport', "Transition Rate");
     const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
     const [aspirationalData, setAspirationalData] = useState([])
-    const [locationHeader, SetLocationHeader] = useState()
+    const [locationHeader, SetLocationHeader] = useState();
+    const [sheetName, SetSheetName]=useState()
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType)
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption)
     const updateLoading = useSelector((state) => state.reportAdpAbpType.loadingStatus)
@@ -88,6 +89,7 @@ export default function TransitionRateReport() {
         if (selectReportType === "ADP_Report") {
             if (selectedState !== SelectState && selectedDistrict === SelectDistrict) {
                 SetLocationHeader("District")
+                SetSheetName("Aspirational District Programme")
             }
         }
         else if ((selectReportType === "ABP_Report")) {
@@ -97,7 +99,7 @@ export default function TransitionRateReport() {
             else if (selectedState !== SelectState && selectedDistrict !== SelectDistrict) {
                 SetLocationHeader("Block")
             }
-
+            SetSheetName("Aspirational Block Programme")
         }
 
     }, [selectedState, SelectState, selectedDistrict, SelectDistrict, selectedOption])
@@ -411,7 +413,7 @@ export default function TransitionRateReport() {
             doc.setFontSize(25);
             doc.setTextColor("blue");
             doc.setFont("bold");
-            doc.text("Aspirational District Programme", 0.6, 0.5);
+            doc.text(sheetName, 0.6, 0.5);
             doc.setFontSize(20);
             doc.setTextColor("blue");
             doc.text(`Report Name: ${report_name}`, 0.6, 1.0);
@@ -493,7 +495,7 @@ export default function TransitionRateReport() {
                 },
                 rowData: allData,
                 fileName: report_name,
-                sheetName: "Aspirational District Programme",
+                sheetName: sheetName,
                 columnKeys: columnKeys,
                 columnNames: columnNames,
             });
