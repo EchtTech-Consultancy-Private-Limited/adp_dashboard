@@ -16,6 +16,7 @@ export const routes = (
         <Route exact path="/student-performance" element={<StudentsPerformanceReport />} />
         <Route exact path="/school-infrastructure" element={<SchoolInfraStructureReport />} />
         <Route exact path="/enrollment-retention" element={<EnrollmentAndRetentionReport />} />
+
         <Route path="/*" element={<Navigate to="/" />} />
         {/* <Route path="/report" element={<TransitionRateReport/>} /> */}
     </Routes>
