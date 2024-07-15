@@ -45,7 +45,8 @@ export default function TransitionRateCompare() {
 
     const dispatch = useDispatch();
     const [aspirationalData, setAspirationalData] = useState([])
-    const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedCompareOption)
+    const selectedOption = useSelector((state) => state.reportAdpAbpType.updateReportType)
+    console.log(selectedOption, "selectedOption")
     const MAX_DISTRICTS = 5;
     const states = useSelector((state) => state.locationAdp.states);
     const districts = useSelector((state) => state.locationAdp.districts);

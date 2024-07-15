@@ -5,6 +5,7 @@ import Teacher from '../../assets/images/Teacher_School.png'
 import Student from '../../assets/images/Student_performance.png'
 import Infrastructure from '../../assets/images/School_infrastructure.png'
 import Enrollment from '../../assets/images/Enrollment_retention.png'
+import devider from '../../assets/images/devider.svg'
 import { useDispatch } from 'react-redux'
 import { setselectedReport, setUpdateReportType } from '../../redux/slice/reportTypeSlice'
 
@@ -15,7 +16,8 @@ export default function Themes() {
         dispatch(setselectedReport("Transition Rate"));
     };
     return (
-        <section className='themes ptb-70'>
+        <section className='themes ptb-70 position-relative'>
+
             <div className="container ptb-70 position-relative">
                 <div className="theme-border"></div>
                 <div className="row position-relative z-2 pt-5 mt-3">
@@ -205,6 +207,10 @@ export default function Themes() {
                     </div>
                 </div>
 
+            </div>
+
+            <div className="devider-theme">
+                <img src={devider} alt="devider" />
             </div>
         </section>
     )
