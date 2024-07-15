@@ -6,6 +6,8 @@ import search from '../../assets/images/search.png';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateToggleDark } from '../../redux/slice/darkLightModeSlice';
+import { useTranslation } from "react-i18next";
+import  {i18n} from '../i18next/i18n'  //Do not remove this line
 
 
 const Header = () => {
@@ -22,6 +24,25 @@ const dispatch=useDispatch()
   const handleShowNavbar = () => {
     setShowNavbar(!showNavbar);
   };
+
+
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (e) => {
+    const selectedLanguage = e.target.value;
+    localStorage.setItem("selectedLanguage", selectedLanguage); // Save selected language to local storage
+    i18n.changeLanguage(selectedLanguage); // Change the language in i18n
+    console.log("i18n",i18n)
+  };
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem("selectedLanguage");
+    if (!savedLanguage) {
+      localStorage.setItem("selectedLanguage", "en");
+      i18n.changeLanguage("en");
+    } else {
+      i18n.changeLanguage(savedLanguage);
+    }
+  }, [i18n]);
+
 
   const changeSizeByBtn = (size) => {
     if (size === "normal") {
@@ -99,9 +120,9 @@ const dispatch=useDispatch()
 
                 <div className="header-top-skipwrap">
                   <ul className='ps-0 mb-0'>
-                    <li><Link to='#'>Sitemap</Link></li>
-                    <li><Link to='#' onClick={handleClickScroll}>Skip to Main Content</Link></li>
-                    <li><Link to='#'>Screen Reader Access</Link></li>
+                    <li><Link to='#'>{t('sitemap')}</Link></li>
+                    <li><Link to='#' onClick={handleClickScroll}> {t('skipToMainContent')}</Link></li>
+                    <li><Link to='#'>{t('screenReaderAccess')}</Link></li>
                   </ul>
                 </div>
 
@@ -152,7 +173,9 @@ const dispatch=useDispatch()
                     <li>
                       <div className='select-right'>
                         <div className="select-wrap">
-                          <select className="form-select Langchange">
+                          <select className="form-select Langchange"
+                             value={i18n.language}
+                             onChange={changeLanguage}>
                             <option value="en">Eng</option>
                             <option value="hi">हिन्दी</option>
                           </select>
@@ -164,9 +187,9 @@ const dispatch=useDispatch()
                       <div>
                         <div className='select-right'>
                           <select className="form-select Langchange">
-                            <option value="">A+</option>
-                            <option value="">A</option>
-                            <option value="">A-</option>
+                            <option value="">{t('gradeAPlus')}</option>
+                            <option value="">{t('gradeA')}</option>
+                            <option value="">{t('gradeAMinus')}</option>
                           </select>
 
                         </div>
@@ -189,7 +212,7 @@ const dispatch=useDispatch()
                 <div className="logo-wrap">
                   <Link to="" onClick={goToPageOnClick} className="top-logo ordernav-sm-1"> <img src={ministry} alt="logo" className="img-fluid logo-main" />
                   </Link>
-                  <Link to="" onClick={goToPageOnClick} className="logo-text ordernav-sm-2"> Asprirational <br /> District Programme   </Link>
+                  <Link to="" onClick={goToPageOnClick} className="logo-text ordernav-sm-2"> {t('aspirational')} <br />{t('districtProgramme')}  </Link>
 
                 </div>
 
@@ -197,35 +220,35 @@ const dispatch=useDispatch()
                   <div className={`nav-elements  ${showNavbar && "active"}`}>
                     <ul className='mb-0'>
                       <li>
-                        <NavLink to="/">HOME</NavLink>
+                        <NavLink to="/">{t('home')}</NavLink>
                       </li>
                       <li>
-                        <NavLink to="/about">ABOUT US</NavLink>
+                        <NavLink to="/about">{t('about_us')}</NavLink>
                       </li>
                       <li>
                         {pathName === "/" ? (
-                          <NavLink to="/transition-rate">REPORTS</NavLink>
+                          <NavLink to="/transition-rate">{t('reports')}</NavLink>
                         ) : pathName === "/transition-rate" ? (
-                          <NavLink to="/transition-rate">REPORTS</NavLink>
+                          <NavLink to="/transition-rate">{t('reports')}</NavLink>
                         ) : pathName === "/teacher-and-school-resources" ? (
-                          <NavLink to="/teacher-and-school-resources">REPORTS</NavLink>
+                          <NavLink to="/teacher-and-school-resources">{t('reports')}</NavLink>
                         ) : pathName === "/student-performance" ? (
-                          <NavLink to="/student-performance">REPORTS</NavLink>
+                          <NavLink to="/student-performance">{t('reports')}</NavLink>
                         ) : pathName === "/school-infrastructure" ? (
-                          <NavLink to="/school-infrastructure">REPORTS</NavLink>
+                          <NavLink to="/school-infrastructure">{t('reports')}</NavLink>
                         ) : pathName === "/enrollment-retention" ? (
-                          <NavLink to="/enrollment-retention">REPORTS</NavLink>
+                          <NavLink to="/enrollment-retention">{t('reports')}</NavLink>
                         ) : null}
                       </li>
 
                       <li>
-                        <NavLink to="/news">NEWS & ARTICLES</NavLink>
+                        <NavLink to="/news">{t('newsAndArticles')}</NavLink>
                       </li>
                       <li>
-                        <NavLink to="/insights">INSIGHTS</NavLink>
+                        <NavLink to="/insights">{t('insights')}</NavLink>
                       </li>
                       <li>
-                        <NavLink to="/contact">CONTACT US</NavLink>
+                        <NavLink to="/contact">{t('contactUs')}</NavLink>
                       </li>
                       <li>
                         <div className='search-icon'>
