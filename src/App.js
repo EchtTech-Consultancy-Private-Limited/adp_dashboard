@@ -9,16 +9,16 @@ function App() {
 
   const toggleDarkMode = useSelector((state) => state.toggle.toggleDarkLight);
 
-  useEffect(() => {
-    if (toggleDarkMode) {
-      localStorage.setItem("dark-mode", "true");
-      document.getElementById("root").classList.add(toggleDarkMode ? "dark-mode" : "text");
-    } else {
-      localStorage.setItem("dark-mode", "false");
+  // useEffect(() => {
+  //   if (toggleDarkMode) {
+  //     localStorage.setItem("dark-mode", "true");
+  //     document.getElementById("root").classList.add(toggleDarkMode ? "dark-mode" : "text");
+  //   } else {
+  //     localStorage.setItem("dark-mode", "false");
 
-        document.getElementById("root").classList.remove("dark-mode");
-    }
-  }, [toggleDarkMode]);
+  //       document.getElementById("root").classList.remove("dark-mode");
+  //   }
+  // }, [toggleDarkMode]);
   return (
     <div className="App">
   <HashRouter>

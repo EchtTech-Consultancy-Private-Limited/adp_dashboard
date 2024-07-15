@@ -9,6 +9,10 @@
     padding: 50px 0;
 }
 
+// .devider-theme{
+//     background: url('../../assets/images/devider.svg');
+// }
+
 .banner-text {
     display: flex;
     align-items: center;
@@ -40,17 +44,18 @@
         }
     }
 
-    
+
 }
+
 .btn-banner {
     background: #FF9461;
     color: #fff;
     float: left;
     margin-top: 20px;
     border-radius: 46px;
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 400;
-    padding: 10px 20px 10px;
+    padding: 9px 20px;
     display: flex;
     align-items: center;
     transition: all .3s ease-in-out;
@@ -69,13 +74,13 @@
 
     .material-icons-round {
         border: 1px solid #fafafa;
-        height: 31px;
-        width: 45px;
+        height: 30px;
+        width: 42px;
         margin-left: 10px;
         text-align: center;
         border-radius: 15px;
         vertical-align: middle;
-        padding-top: 5px;
+        padding-top: 4px;
         font-size: 20px;
     }
 
@@ -105,23 +110,23 @@
     .nav-tabs .nav-item.show .nav-link,
     .nav-tabs .nav-link.active {
         color: #fff;
-        background-color:#2B9C9F;
+        background-color: #2B9C9F;
         border-color: #2B9C9F;
-        font-weight: 400;        
+        font-weight: 400;
     }
 
     .nav-tabs {
-        .nav-item{
-            &:first-child{
-                .nav-link{
+        .nav-item {
+            &:first-child {
+                .nav-link {
                     border-radius: 6px 0px 0px 6px;
                 }
             }
-    
-            &:last-child{
-                .nav-link{
+
+            &:last-child {
+                .nav-link {
                     border-radius: 0px 6px 6px 0px;
-                }                
+                }
             }
         }
 
@@ -131,14 +136,14 @@
             transition: all 0.3s ease-in-out;
             font-weight: 400;
             font-size: 18px;
-            padding:8px 11px;
+            padding: 8px 11px;
             background: #F1F1F1;
             text-transform: capitalize;
-    
-           
+
+
         }
     }
-    
+
     button.view-table-btn {
         background: #F7EDD6;
         border: 0;
@@ -164,7 +169,188 @@
 
 }
 
-.themes{
+.themes {
     background: #BADBE3;
+
+    .themes-text {
+        text-align: left;
+
+        .sub-title {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            line-height: 1.5;
+        }
+    }
+
+    .themes-box-img {
+        background: #fff;
+        border-radius: 20px;
+        text-align: left;
+        position: relative;
+        overflow: hidden;
+
+        .themes-box {
+            padding: 20px 20px 0;
+            z-index: 2;
+            position: relative;
+
+
+            .theme-text {
+                font-size: 18px;
+                font-weight: 700;
+                color: #000;
+            }
+
+            .theme-maintext {
+                font-size: 44px;
+                font-weight: 700;
+                line-height: 1;
+                padding-top: 10px;
+            }
+
+            .theme-subtext {
+                font-weight: 600;
+                font-size: 19px;
+                padding-top: 5px;
+            }
+        }
+
+        img {
+            width: 100%;
+
+            &.img-1 {
+                margin-top: -36px;
+
+                @media (max-width:1399px) and (min-width: 1024px) {
+                    margin-top: -28px;
+                }
+            }
+
+            &.img-3 {
+                margin-top: -59px;
+
+                @media (max-width:1399px) and (min-width: 1024px) {
+                    margin-top: -38px;
+                }
+            }
+
+            &.img-4 {
+                margin-top: -72px;
+
+                @media (max-width:1399px) and (min-width: 1024px) {
+                    margin-top: -50px;
+                }
+            }
+
+            &.img-5 {
+                margin-top: -59px;
+
+                @media (max-width:1399px) and (min-width: 1024px) {
+                    margin-top: -38px;
+                }
+            }
+        }
+
+        .theme-shadow-box {
+            position: absolute;
+            width: 101%;
+            transform: translate(-50%, 50%);
+            top: 61%;
+            left: 50%;
+            background: #fffffff0;
+            height: 78%;
+            padding: 60px 18px;
+            border-radius: 0px 0px 12px 12px;
+            transition: all .5s ease-in-out;          
+
+        }
+
+        .content {
+            border: 1px solid #2B9C9F;
+            margin-top: 8px;
+            padding: 14px 20px;
+            min-height: 170px;
+            border-radius: 20px;
+           
+            @media (max-width:1599px) and (min-width: 1400px) {
+               
+            }
+            @media (max-width:1399px) and (min-width: 1024px) {
+                margin-top: 30px;
+                padding: 5px 15px;
+                min-height: 130px;
+                border-radius: 20px;
+            }
+
+            p {
+                color: #6a6767;
+                font-weight: 600;
+                margin-bottom: 6px;
+            }
+
+            ul {
+                list-style: disc;
+                padding-left: 18px;
+                margin-bottom: 0;
+
+                li {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .link-box {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5px;
+
+            @media (max-width:1399px) and (min-width: 1024px) {
+                padding: 0;
+            }
+
+            a {
+                color: #2B9C9F;
+                display: flex;
+                text-decoration: none;
+                font-size: 16px;
+                align-items: center;
+
+                @media (max-width:1399px) and (min-width: 1024px) {
+                    font-size: 12px;
+                }
+
+                span {
+                    font-size: 17px;
+                    margin-left: 5px;
+                    
+                    @media (max-width:1399px) and (min-width: 1024px) {
+                        font-size: 12px;
+                        margin-top: 2px;
+                        margin-left: 3px;
+                    }
+                }
+            }
+        }
+
+        &:hover {
+            .theme-shadow-box {
+                transform: translate(-50%, -50%);
+                transition: all .5s ease-in-out;
+            }
+        }
+
+    }
 }
 
+.theme-border {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    border: 1px solid #85C5D5;
+    left: 4%;
+    border-radius: 20px;
+    z-index: 1;
+}
