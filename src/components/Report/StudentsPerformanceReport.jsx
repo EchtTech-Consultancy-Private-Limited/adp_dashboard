@@ -14,6 +14,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectBlock, selectDistrict, selectState } from '../../redux/slice/filterServicesSlice'
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
+import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json"
+// import aspirationalAbpData2021 from "../../aspirational-reports-data/aspirationalAbpData.json";
+import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
+// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
+import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { useTranslation } from "react-i18next";
@@ -64,7 +69,7 @@ export default function StudentsPerformanceReport() {
     const type = queryParameters.get('type');
     const [gridApi, setGridApi] = useState();
     const [loading, setLoading] = useState(true);
-    localStorage.setItem('selectedReport', "Transition Rate");
+    localStorage.setItem('selectedReport', "Student Performance");
     const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
     const [aspirationalData, setAspirationalData] = useState([])
     const [locationHeader, SetLocationHeader] = useState();
@@ -72,6 +77,7 @@ export default function StudentsPerformanceReport() {
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType)
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption)
     const updateLoading = useSelector((state) => state.reportAdpAbpType.loadingStatus)
+    const selectedYear= useSelector((state) => state.reportAdpAbpType.selectedYear);
     const savedReportName = localStorage.getItem('selectedReport');
     const report_name = savedReportName
     const [data, setData] = useState([]);
@@ -105,16 +111,36 @@ export default function StudentsPerformanceReport() {
     }, [selectedState, SelectState, selectedDistrict, SelectDistrict, selectedOption])
 
     {/*...............Take data report wise..............*/ }
-    useEffect(() => {
-        if (selectReportType === "ADP_Report") {
-            setAspirationalData(aspirationalAdpData)
-            resteData()
-        }
-        else {
-            setAspirationalData(aspirationalAbpData)
-            resteData()
-        }
-    }, [selectReportType])
+    // useEffect(() => {
+    //     if (selectReportType === "ADP_Report") {
+    //         setAspirationalData(aspirationalAdpData)
+    //         resteData()
+    //     }
+    //     else {
+    //         setAspirationalData(aspirationalAbpData)
+    //         resteData()
+    //     }
+    // }, [selectReportType])
+    const combinedData = {
+        "2020-21": {
+          ADP_Report: aspirationalAdpData2020,
+           ABP_Report: aspirationalAbpData,
+        },
+        "2021-22": {
+          ADP_Report: aspirationalAdpData2021,
+           ABP_Report: aspirationalAbpData,
+        },
+        "2022-23": {
+          ADP_Report: aspirationalAdpData2022,
+          ABP_Report: aspirationalAbpData,
+        },
+      };
+    
+      useEffect(() => {
+        // Update the state based on the selected options
+        const selectedData = combinedData[selectedYear][selectReportType];
+        setAspirationalData(selectedData);
+      }, [selectReportType, selectedYear]);
     useEffect(() => {
         let filteredData = aspirationalData;
 
@@ -291,11 +317,11 @@ export default function StudentsPerformanceReport() {
           let groupKey = curr[groupBy];
           let group = acc.find((item) => item[groupBy] === groupKey);
           if (group) {
-            group.total_school_cwsn += curr.total_school_cwsn;
-            group.tot_school += curr.tot_school;
+            group.total_school_cwsn += curr?.total_school_cwsn;
+            group.tot_school += curr?.tot_school;
     
             group.swsn_teacher_percent = parseFloat(
-              ((group.total_school_cwsn * 100) / group.tot_school).toFixed(2)
+              ((group.total_school_cwsn * 100) / group.tot_school)?.toFixed(2)
             );
           } else {
             acc.push({
@@ -304,7 +330,7 @@ export default function StudentsPerformanceReport() {
               total_school_cwsn: curr.total_school_cwsn,
               tot_school: curr.tot_school,
               swsn_teacher_percent: parseFloat(
-                ((curr.total_school_cwsn * 100) / curr.tot_school).toFixed(2)
+                ((curr.total_school_cwsn * 100) / curr.tot_school)?.toFixed(2)
               ),
             });
           }
@@ -544,7 +570,7 @@ export default function StudentsPerformanceReport() {
                                     </div>
                                     <div className="col-md-7">
                                         <div className="d-flex w-m-100">
-                                            <div className="radio-button">
+                                            {/* <div className="radio-button">
                                                 <div className="box-radio">
                                                     <input type="radio"
                                                         id="radio4"
@@ -562,7 +588,7 @@ export default function StudentsPerformanceReport() {
                                                         onChange={handleOptionChange} />
                                                     <label htmlFor="radio5">Secondary to Higher Secondary</label>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div className="">
                                                 {/* <img src={download} alt="download" /> */}
                                                 <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>

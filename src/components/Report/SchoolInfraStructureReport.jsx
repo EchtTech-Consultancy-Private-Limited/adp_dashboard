@@ -18,6 +18,11 @@ import {
 } from "../../redux/slice/filterServicesSlice";
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
+import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json"
+// import aspirationalAbpData2021 from "../../aspirational-reports-data/aspirationalAbpData.json";
+import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
+// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
+import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { useTranslation } from "react-i18next";
@@ -100,7 +105,7 @@ export default function SchoolInfraStructureReport() {
   const type = queryParameters.get("type");
   const [gridApi, setGridApi] = useState();
   const [loading, setLoading] = useState(true);
-  localStorage.setItem("selectedReport", "Transition Rate");
+  localStorage.setItem("selectedReport", "School Infrastructure");
   const { selectedState, selectedDistrict, selectedBlock } = useSelector(
     (state) => state.locationAdp
   );
@@ -115,6 +120,7 @@ export default function SchoolInfraStructureReport() {
   const updateLoading = useSelector(
     (state) => state.reportAdpAbpType.loadingStatus
   );
+  const selectedYear= useSelector((state) => state.reportAdpAbpType.selectedYear);
   const savedReportName = localStorage.getItem("selectedReport");
   const report_name = savedReportName;
   const [data, setData] = useState([]);
@@ -163,15 +169,35 @@ export default function SchoolInfraStructureReport() {
   {
     /*...............Take data report wise..............*/
   }
+  // useEffect(() => {
+  //   if (selectReportType === "ADP_Report") {
+  //     setAspirationalData(aspirationalAdpData);
+  //     resteData();
+  //   } else {
+  //     setAspirationalData(aspirationalAbpData);
+  //     resteData();
+  //   }
+  // }, [selectReportType]);
+  const combinedData = {
+    "2020-21": {
+      ADP_Report: aspirationalAdpData2020,
+       ABP_Report: aspirationalAbpData,
+    },
+    "2021-22": {
+      ADP_Report: aspirationalAdpData2021,
+       ABP_Report: aspirationalAbpData,
+    },
+    "2022-23": {
+      ADP_Report: aspirationalAdpData2022,
+      ABP_Report: aspirationalAbpData,
+    },
+  };
+
   useEffect(() => {
-    if (selectReportType === "ADP_Report") {
-      setAspirationalData(aspirationalAdpData);
-      resteData();
-    } else {
-      setAspirationalData(aspirationalAbpData);
-      resteData();
-    }
-  }, [selectReportType]);
+    // Update the state based on the selected options
+    const selectedData = combinedData[selectedYear][selectReportType];
+    setAspirationalData(selectedData);
+  }, [selectReportType, selectedYear]);
   useEffect(() => {
     let filteredData = aspirationalData;
 
@@ -403,28 +429,28 @@ export default function SchoolInfraStructureReport() {
       let group = acc.find((item) => item[groupBy] === groupKey);
       // let state = acc.find((item) => item.lgd_state_name === curr.lgd_state_name);
       if (group) {
-        group.tot_school_girl_co_ed += curr.tot_school_girl_co_ed;
-        group.total_no_of_fun_toilet += curr.total_no_of_fun_toilet;
-        group.toilet_40 += curr.toilet_40;
+        group.tot_school_girl_co_ed += curr?.tot_school_girl_co_ed;
+        group.total_no_of_fun_toilet += curr?.total_no_of_fun_toilet;
+        group.toilet_40 += curr?.toilet_40;
         group.functional_toilet_girls_percent = parseFloat(
           (group.tot_school_girl_co_ed * 100) / group.total_no_of_fun_toilet
-        ).toFixed(2);
+        )?.toFixed(2);
         group.sch_having_toilet_40_percent = parseFloat(
           (group.toilet_40 * 100) / group.tot_school_girl_co_ed
-        ).toFixed(2);
+        )?.toFixed(2);
       } else {
         acc.push({
           ...curr,
           lgd_state_name: curr.lgd_state_name,
-          tot_school_girl_co_ed: curr.tot_school_girl_co_ed,
-          total_no_of_fun_toilet: curr.total_no_of_fun_toilet,
-          toilet_40: curr.toilet_40,
+          tot_school_girl_co_ed: curr?.tot_school_girl_co_ed,
+          total_no_of_fun_toilet: curr?.total_no_of_fun_toilet,
+          toilet_40: curr?.toilet_40,
           functional_toilet_girls_percent: parseFloat(
             (curr.tot_school_girl_co_ed * 100) / curr.total_no_of_fun_toilet
-          ).toFixed(2),
+          )?.toFixed(2),
           sch_having_toilet_40_percent: parseFloat(
             (curr.toilet_40 * 100) / curr.tot_school_girl_co_ed
-          ).toFixed(2),
+          )?.toFixed(2),
         });
       }
       return acc;
@@ -679,7 +705,7 @@ export default function SchoolInfraStructureReport() {
                     <div className="col-md-7">
                       <div className="d-flex w-m-100">
                         <div className="radio-button">
-                          <div className="box-radio">
+                          {/* <div className="box-radio">
                             <input
                               type="radio"
                               id="radio4"
@@ -708,7 +734,7 @@ export default function SchoolInfraStructureReport() {
                             <label htmlFor="radio5">
                               Secondary to Higher Secondary
                             </label>
-                          </div>
+                          </div> */}
                         </div>
                         <div className="">
                           {/* <img src={download} alt="download" /> */}

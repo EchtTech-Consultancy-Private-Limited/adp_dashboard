@@ -14,6 +14,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectBlock, selectDistrict, selectState } from '../../redux/slice/filterServicesSlice'
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
+import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json"
+// import aspirationalAbpData2021 from "../../aspirational-reports-data/aspirationalAbpData.json";
+import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
+// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
+import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { useTranslation } from "react-i18next";
@@ -30,7 +35,6 @@ import { ScrollToTopOnMount } from '../../Scroll/ScrollToTopOnMount'
 const ArrowRenderer = ({ data, value }) => {
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
     const [arrowData, setArrowData] = useState([]);
-
     useEffect(() => {
         if (selectedOption === "upper_primary_to_secondary") {
             setArrowData(data.upri_t);
@@ -64,7 +68,7 @@ export default function TeacherAndSchResourcesReport() {
     const type = queryParameters.get('type');
     const [gridApi, setGridApi] = useState();
     const [loading, setLoading] = useState(true);
-    localStorage.setItem('selectedReport', "Transition Rate");
+    localStorage.setItem('selectedReport', "Teacher and School Resources");
     const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
     const [aspirationalData, setAspirationalData] = useState([])
     const [locationHeader, SetLocationHeader] = useState();
@@ -72,6 +76,8 @@ export default function TeacherAndSchResourcesReport() {
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType)
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption)
     const updateLoading = useSelector((state) => state.reportAdpAbpType.loadingStatus)
+    
+    const selectedYear= useSelector((state) => state.reportAdpAbpType.selectedYear);
     const savedReportName = localStorage.getItem('selectedReport');
     const report_name = savedReportName
     const [data, setData] = useState([]);
@@ -105,16 +111,36 @@ export default function TeacherAndSchResourcesReport() {
     }, [selectedState, SelectState, selectedDistrict, SelectDistrict, selectedOption])
 
     {/*...............Take data report wise..............*/ }
-    useEffect(() => {
-        if (selectReportType === "ADP_Report") {
-            setAspirationalData(aspirationalAdpData)
-            resteData()
-        }
-        else {
-            setAspirationalData(aspirationalAbpData)
-            resteData()
-        }
-    }, [selectReportType])
+    // useEffect(() => {
+    //     if (selectReportType === "ADP_Report") {
+    //         setAspirationalData(aspirationalAdpData)
+    //         resteData()
+    //     }
+    //     else {
+    //         setAspirationalData(aspirationalAbpData)
+    //         resteData()
+    //     }
+    // }, [selectReportType])
+    const combinedData = {
+        "2020-21": {
+          ADP_Report: aspirationalAdpData2020,
+           ABP_Report: aspirationalAbpData,
+        },
+        "2021-22": {
+          ADP_Report: aspirationalAdpData2021,
+           ABP_Report: aspirationalAbpData,
+        },
+        "2022-23": {
+          ADP_Report: aspirationalAdpData2022,
+          ABP_Report: aspirationalAbpData,
+        },
+      };
+    
+      useEffect(() => {
+        // Update the state based on the selected options
+        const selectedData = combinedData[selectedYear][selectReportType];
+        setAspirationalData(selectedData);
+      }, [selectReportType, selectedYear]);
     useEffect(() => {
         let filteredData = aspirationalData;
 
@@ -293,12 +319,12 @@ export default function TeacherAndSchResourcesReport() {
             group.u_ptr += curr.u_ptr;
             group.total_sch_ele += curr.total_sch_ele;
             group.ele_sch_percent = parseFloat(
-              ((group.u_ptr * 100) / group.total_sch_ele).toFixed(2)
+              ((group.u_ptr * 100) / group.total_sch_ele)?.toFixed(2)
             );
           } else {
             acc.push({
               ...curr,
-              ele_sch_percent: parseFloat(((curr.u_ptr * 100) / curr.total_sch_ele).toFixed(2)),
+              ele_sch_percent: parseFloat(((curr.u_ptr * 100) / curr.total_sch_ele)?.toFixed(2)),
             });
           }
           return acc;
@@ -538,7 +564,7 @@ export default function TeacherAndSchResourcesReport() {
                                     <div className="col-md-7">
                                         <div className="d-flex w-m-100">
                                             <div className="radio-button">
-                                                <div className="box-radio">
+                                                {/* <div className="box-radio">
                                                     <input type="radio"
                                                         id="radio4"
                                                         value="upper_primary_to_secondary"
@@ -554,7 +580,7 @@ export default function TeacherAndSchResourcesReport() {
                                                         checked={selectedOption === "secondary_to_higher_secondary"}
                                                         onChange={handleOptionChange} />
                                                     <label htmlFor="radio5">Secondary to Higher Secondary</label>
-                                                </div>
+                                                </div> */}
                                             </div>
                                             <div className="">
                                                 {/* <img src={download} alt="download" /> */}

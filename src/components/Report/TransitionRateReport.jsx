@@ -14,6 +14,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectBlock, selectDistrict, selectState } from '../../redux/slice/filterServicesSlice'
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
+import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json"
+// import aspirationalAbpData2021 from "../../aspirational-reports-data/aspirationalAbpData.json";
+import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
+// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
+import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { useTranslation } from "react-i18next";
@@ -21,7 +26,7 @@ import { jsPDF } from "jspdf";
 import { Select } from 'antd';
 import 'jspdf-autotable';
 import { GlobalLoading } from '../GlobalLoading/GlobalLoading'
-import { setselectedOption, setUpdateStatus } from '../../redux/slice/reportTypeSlice'
+import { setselectedOption, setSelectedYear, setUpdateStatus } from '../../redux/slice/reportTypeSlice'
 import BlankPage from './BlankPage'
 import { AllBlock, AllDistrict, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
 import TransitionRateCompare from './TransitionRateCompare'
@@ -72,8 +77,10 @@ export default function TransitionRateReport() {
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType)
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption)
     const updateLoading = useSelector((state) => state.reportAdpAbpType.loadingStatus)
+    const selectedYear= useSelector((state) => state.reportAdpAbpType.selectedYear);
     const savedReportName = localStorage.getItem('selectedReport');
     const report_name = savedReportName
+    console.log(aspirationalData, "aspirationalData")
     const [data, setData] = useState([]);
     function resteData() {
         dispatch(selectState(SelectState));
@@ -105,17 +112,41 @@ export default function TransitionRateReport() {
     }, [selectedState, SelectState, selectedDistrict, SelectDistrict, selectedOption])
 
     {/*...............Take data report wise..............*/ }
-    useEffect(() => {
-        if (selectReportType === "ADP_Report") {
-            setAspirationalData(aspirationalAdpData)
-            resteData()
+    // useEffect(() => {
+    //     if (selectReportType === "ADP_Report") {
+    //         setAspirationalData(aspirationalAdpData)
+    //         resteData()
+    //     }
+    //     else {
+    //         setAspirationalData(aspirationalAbpData)
+    //         resteData()
+    //     }
+    // }, [selectReportType])
+    const combinedData = {
+        "2020-21": {
+          ADP_Report: aspirationalAdpData2020,
+           ABP_Report: aspirationalAbpData,
+        },
+        "2021-22": {
+          ADP_Report: aspirationalAdpData2021,
+           ABP_Report: aspirationalAbpData,
+        },
+        "2022-23": {
+          ADP_Report: aspirationalAdpData2022,
+          ABP_Report: aspirationalAbpData,
+        },
+      };
+    
+      useEffect(() => {
+        console.log("sdsdsd")
+        const selectedData = combinedData[selectedYear][selectReportType];
+        if(selectedData){
+
+            setAspirationalData(selectedData);
         }
-        else {
-            setAspirationalData(aspirationalAbpData)
-            resteData()
-        }
-    }, [selectReportType])
-    useEffect(() => {
+      }, [selectReportType, selectedYear]);
+
+       useEffect(() => {
         let filteredData = aspirationalData;
 
         if (selectedState && selectedState !== SelectState) {
@@ -285,45 +316,49 @@ export default function TransitionRateReport() {
             ]);
         }
     }, [locationHeader, selectedOption]);
-    const compressData = useCallback((data, groupBy) => {
+    const compressData = useCallback((data, groupBy,) => {
+        console.log(data, "ksjdksdsj")
+    if(data){
         return data.reduce((acc, curr) => {
             let groupKey = curr[groupBy];
+            
             let group = acc.find((item) => item[groupBy] === groupKey);
             if (group) {
                 group.upri_b = parseFloat(
-                    ((group.upri_b * group.blocks + curr.upri_b) / (group.blocks + 1)).toFixed(2)
+                    ((group.upri_b * group.blocks + curr.upri_b) / (group.blocks + 1))?.toFixed(2)
                 );
                 group.upri_g = parseFloat(
-                    ((group.upri_g * group.blocks + curr.upri_g) / (group.blocks + 1)).toFixed(2)
+                    ((group.upri_g * group.blocks + curr.upri_g) / (group.blocks + 1))?.toFixed(2)
                 );
                 group.upri_t = parseFloat(
-                    ((group.upri_t * group.blocks + curr.upri_t) / (group.blocks + 1)).toFixed(2)
+                    ((group.upri_t * group.blocks + curr.upri_t) / (group.blocks + 1))?.toFixed(2)
                 );
                 group.sec_b = parseFloat(
-                    ((group.sec_b * group.blocks + curr.sec_b) / (group.blocks + 1)).toFixed(2)
+                    ((group.sec_b * group.blocks + curr.sec_b) / (group.blocks + 1))?.toFixed(2)
                 );
                 group.sec_g = parseFloat(
-                    ((group.sec_g * group.blocks + curr.sec_g) / (group.blocks + 1)).toFixed(2)
+                    ((group.sec_g * group.blocks + curr.sec_g) / (group.blocks + 1))?.toFixed(2)
                 );
                 group.sec_t = parseFloat(
-                    ((group.sec_t * group.blocks + curr.sec_t) / (group.blocks + 1)).toFixed(2)
+                    ((group.sec_t * group.blocks + curr.sec_t) / (group.blocks + 1))?.toFixed(2)
                 );
                 group.blocks += 1;
             } else {
                 acc.push({
                     ...curr,
                     [groupBy]: groupKey,
-                    upri_b: parseFloat(curr.upri_b.toFixed(2)),
-                    upri_g: parseFloat(curr.upri_g.toFixed(2)),
-                    upri_t: parseFloat(curr.upri_t.toFixed(2)),
-                    sec_b: parseFloat(curr.sec_b.toFixed(2)),
-                    sec_g: parseFloat(curr.sec_g.toFixed(2)),
-                    sec_t: parseFloat(curr.sec_t.toFixed(2)),
+                    upri_b: parseFloat(curr.upri_b?.toFixed(2)),
+                    upri_g: parseFloat(curr.upri_g?.toFixed(2)),
+                    upri_t: parseFloat(curr.upri_t?.toFixed(2)),
+                    sec_b: parseFloat(curr.sec_b?.toFixed(2)),
+                    sec_g: parseFloat(curr.sec_g?.toFixed(2)),
+                    sec_t: parseFloat(curr.sec_t?.toFixed(2)),
                     blocks: 1,
                 });
             }
             return acc;
         }, []);
+    }
     }, []);
 
     const compressedData = useMemo(() => {

@@ -12,7 +12,6 @@ import { SelectState } from "../../constant/Constant";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import BlankPage from "./BlankPage";
-import { ScrollToTopOnMount } from "../../Scroll/ScrollToTopOnMount";
 const ArrowRenderer = ({ data }) => {
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
     const [arrowData, setArrowData] = useState(null);
@@ -160,7 +159,6 @@ export default function TransitionRateCompare() {
     };
     return (
         <>
-        <ScrollToTopOnMount/>
             <div className="card-box">
                 <div className="row align-items-end">
                     <div className="col-md-7">
