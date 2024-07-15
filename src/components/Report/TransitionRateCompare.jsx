@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectDistrict, selectState, setStates } from "../../redux/slice/filterServicesComprisionSlice";
-import { setselectedCompareOption, setUpdateReportType } from "../../redux/slice/reportTypeSlice";
+import { setselectedCompareDistricts, setselectedCompareOption, setUpdateReportType } from "../../redux/slice/reportTypeSlice";
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
 import table from '../../assets/images/table.svg'
@@ -44,12 +44,14 @@ const ArrowRenderer = ({ data }) => {
 export default function TransitionRateCompare() {
 
     const dispatch = useDispatch();
-    const [selectedDistricts, setSelectedDistricts] = useState([]);
-    const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedCompareOption)
+    const [aspirationalData, setAspirationalData] = useState([])
+    const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedCompareOption);
+    const selectedAdpAbpOption = useSelector((state) => state.reportAdpAbpType.updateReportType);
     const MAX_DISTRICTS = 5;
-    const states = useSelector((state) => state.comprisionAdp.states);
-    const districts = useSelector((state) => state.comprisionAdp.districts);
-    const selectedState = useSelector((state) => state.comprisionAdp.selectedState);
+    const states = useSelector((state) => state.locationAdp.states);
+    const districts = useSelector((state) => state.locationAdp.districts);
+    const selectedState = useSelector((state) => state.locationAdp.selectedState);
+    const selectedDistricts=useSelector((state) => state.reportAdpAbpType.selectedCompareDistricts)
     function resteData() {
         dispatch(selectState(SelectState));
         dispatch(setselectedCompareOption("upper_primary_to_secondary"));
@@ -57,9 +59,23 @@ export default function TransitionRateCompare() {
     useEffect(() => {
         resteData()
     }, [dispatch]);
+
+    
+  useEffect(() => {
+    // dispatch(setUpdateReportType('ADP_Report'));
+     setAspirationalData(aspirationalAdpData)
+   }, [dispatch]);
+   useEffect(() => {
+     if (selectedAdpAbpOption === "ADP_Report") {
+       setAspirationalData(aspirationalAdpData)
+     }
+     else {
+       setAspirationalData(aspirationalAbpData)
+     }
+   }, [selectedAdpAbpOption])
     // Initialize states and districts from JSON data
     useEffect(() => {
-        const structuredData = aspirationalAdpData.reduce((acc, curr) => {
+        const structuredData = aspirationalData.reduce((acc, curr) => {
             const stateIndex = acc.findIndex(
                 (st) => st.lgd_state_id === curr.lgd_state_id
             );
@@ -106,20 +122,20 @@ export default function TransitionRateCompare() {
     // Handle state change
     const handleStateChange = (value) => {
         dispatch(selectState(value));
-        setSelectedDistricts([]);
+        dispatch(setselectedCompareDistricts([]));
     };
 
     // Handle district change
     const handleDistrictChange = (value, position) => {
         const newSelectedDistricts = [...selectedDistricts];
-        const districtData = aspirationalAdpData.find(
+        const districtData = aspirationalData.find(
             (district) =>
                 district.lgd_district_name === value &&
                 district.lgd_state_name === selectedState
         );
         if (districtData) {
             newSelectedDistricts[position] = districtData;
-            setSelectedDistricts(newSelectedDistricts.slice(0, MAX_DISTRICTS));
+            dispatch(setselectedCompareDistricts(newSelectedDistricts.slice(0, MAX_DISTRICTS)));
             dispatch(selectDistrict(value));
         }
     };
@@ -150,7 +166,7 @@ export default function TransitionRateCompare() {
                     <div className="col-md-7">
                         <div className="d-flex align-items-end">
                             <div className="title-box">
-                                <h5 className='sub-title'>State :
+                                {/* <h5 className='sub-title'>State :
                                     <Select
                                         className='state-select'
                                         onChange={handleStateChange}
@@ -172,7 +188,7 @@ export default function TransitionRateCompare() {
                                             </Select.Option>
                                         ))}
                                     </Select>
-                                </h5>
+                                </h5> */}
                                 <h3 className='heading-sm mt-2'>Comparison by Transition Rate</h3>
                             </div>
                         </div>
