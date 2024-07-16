@@ -124,6 +124,9 @@ export default function BannerReportFilter() {
     }
   }, [aspirationalData, dispatch]);
   const handleOptionChange = (event) => {
+
+    console.log("event value",event.target.value
+    )
     dispatch(setUpdateReportType(event.target.value));
   };
   const handleStateChange = (value) => {

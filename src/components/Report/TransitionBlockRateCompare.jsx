@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectDistrict, selectState, setStates } from "../../redux/slice/filterServicesComprisionSlice";
+import { selectDistrict, selectState, setStates,selectBlock } from "../../redux/slice/filterServicesComprisionSlice";
 import { setselectedCompareDistricts, setselectedCompareOption, setUpdateReportType } from "../../redux/slice/reportTypeSlice";
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
@@ -41,20 +41,23 @@ const ArrowRenderer = ({ data }) => {
         </span>
     );
 };
-export default function TransitionRateCompare() {
+export default function TransitionBlockRateCompare() {
 
     const dispatch = useDispatch();
     const [aspirationalData, setAspirationalData] = useState([])
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedCompareOption);
     const selectedAdpAbpOption = useSelector((state) => state.reportAdpAbpType.updateReportType);
-    const MAX_DISTRICTS = 5;
+    const MAX_BLOCKS = 5;
     const states = useSelector((state) => state.locationAdp.states);
     const districts = useSelector((state) => state.locationAdp.districts);
+    const blocks=                  useSelector((state)=>state.locationAdp.blocks) 
+
+    console.log("blocks",blocks)
     const selectedState = useSelector((state) => state.locationAdp.selectedState);
     const selectedDistricts=useSelector((state) => state.reportAdpAbpType.selectedCompareDistricts)
+    const selectedBlocks=useSelector((state) => state.reportAdpAbpType.selectedCompareBlock)
 
-   console.log("selectDistrict",selectDistrict)
-   
+    console.log("selectBlock",selectedBlocks)
 
     function resteData() {
         dispatch(selectState(SelectState));
@@ -87,10 +90,10 @@ export default function TransitionRateCompare() {
                 acc.push({
                     lgd_state_id: curr.lgd_state_id,
                     lgd_state_name: curr.lgd_state_name,
-                    districts: [
+                    block: [
                         {
-                            lgd_district_id: curr.lgd_district_id,
-                            lgd_district_name: curr.lgd_district_name,
+                            lgd_block_id: curr.lgd_block_id,
+                            lgd_block_name: curr.lgd_block_name,
                             upri_b: curr.upri_b,
                             upri_g: curr.upri_g,
                             upri_t: curr.upri_t,
@@ -101,13 +104,13 @@ export default function TransitionRateCompare() {
                     ],
                 });
             } else {
-                const districtIndex = acc[stateIndex].districts.findIndex(
-                    (dist) => dist.lgd_district_id === curr.lgd_district_id
+                const blockIndex  = acc[stateIndex].blocks.findIndex(
+                    (blk) => blk.lgd_block_id === curr.lgd_block_id
                 );
-                if (districtIndex === -1) {
-                    acc[stateIndex].districts.push({
-                        lgd_district_id: curr.lgd_district_id,
-                        lgd_district_name: curr.lgd_district_name,
+                if (blockIndex  === -1) {
+                    acc[stateIndex].blocks.push({
+                        lgd_block_id: curr.lgd_block_id,
+                        lgd_block_name: curr.lgd_block_name,
                         upri_b: curr.upri_b,
                         upri_g: curr.upri_g,
                         upri_t: curr.upri_t,
@@ -123,6 +126,8 @@ export default function TransitionRateCompare() {
         dispatch(setStates(structuredData));
     }, [dispatch]);
 
+    //   suggestion      [dispatch, aspirationalData]
+
     // Handle state change
     const handleStateChange = (value) => {
         dispatch(selectState(value));
@@ -130,31 +135,34 @@ export default function TransitionRateCompare() {
     };
 
     // Handle district change
-    const handleDistrictChange = (value, position) => {
-        const newSelectedDistricts = [...selectedDistricts];
-        const districtData = aspirationalData.find(
-            (district) =>
-                district.lgd_district_name === value &&
-                district.lgd_state_name === selectedState
+    const handleBlockChange  = (value, position) => {
+
+        console.log("handle Block change value",value);
+        console.log("handle Block position",position)
+        const newSelectedBlocks = [...selectedBlocks];
+        const blockData  = aspirationalData.find(
+            (block) =>
+                block.lgd_block_name  === value &&
+            block.lgd_state_name === selectedState
         );
-        if (districtData) {
-            newSelectedDistricts[position] = districtData;
-            dispatch(setselectedCompareDistricts(newSelectedDistricts.slice(0, MAX_DISTRICTS)));
-            dispatch(selectDistrict(value));
+        if (blockData) {
+            newSelectedBlocks[position] = blockData;
+            dispatch(setselectedCompareDistricts(newSelectedBlocks.slice(0, MAX_BLOCKS)));
+            dispatch(selectBlock(value));
         }
     };
 
     // Get filtered districts based on selected state and existing selections
-    const getFilteredDistricts = (position) => {
-        const selected = selectedDistricts.filter(
-            (district) =>
-                district &&
-                district.lgd_district_name !==
-                selectedDistricts[position]?.lgd_district_name
+    const getFilteredBlocks  = (position) => {
+        const selected = selectedBlocks.filter(
+            (block)            =>
+                block &&
+            block.lgd_block_name  !==
+            selectedBlocks[position]?.lgd_block_name
         );
-        return districts.filter(
-            (district) =>
-                !selected.map((d) => d.lgd_district_name).includes(district.lgd_district_name)
+        return blocks.filter(
+            (block) =>
+                !selected.map((d) => d.lgd_block_name).includes(block.lgd_block_name)
         );
     };
 
@@ -229,7 +237,7 @@ export default function TransitionRateCompare() {
                             <div className="row align-items-center">
                                 <div className="col-md-3">
                                     <h5 className='sub-title'>
-                                        Select District to Compare
+                                        Select Block to Compare
                                     </h5>
                                 </div>
                                 <div className="col-md-6 Comparison-select-group">
@@ -240,24 +248,24 @@ export default function TransitionRateCompare() {
                                                 className="form-select"
                                                 key={index}
                                                 onChange={(value) =>
-                                                    handleDistrictChange(value, index)
+                                                handleBlockChange(value, index)
                                                 }
                                                 style={{ width: "100%" }}
-                                                placeholder={`Add District ${index + 1}`}
+                                                placeholder={`Add Block ${index + 1}`}
                                                 mode="single"
                                                 showSearch
                                                 value={
-                                                    selectedDistricts[index]?.lgd_district_name ||
-                                                    `Add District`
+                                                    selectedBlocks[index]?.lgd_block_name ||
+                                                    `Add Block`
                                                 }
                                                 disabled={!selectedState}
                                             >
-                                                {getFilteredDistricts(index).map((district) => (
+                                                {getFilteredBlocks(index).map((block) => (
                                                     <Select.Option
-                                                        key={district.lgd_district_id}
-                                                        value={district.lgd_district_name}
+                                                        key={block.lgd_block_id}
+                                                        value={block.lgd_block_name}
                                                     >
-                                                        {district.lgd_district_name}
+                                                        {block.lgd_block_name}
                                                     </Select.Option>
                                                 ))}
                                             </Select>
@@ -277,10 +285,10 @@ export default function TransitionRateCompare() {
 
                     {selectedState !== SelectState ? (<div className="col-md-12 mt-4">
                         <div className="row">
-                            {selectedDistricts.map((district, index) => (
-                                <div className={`col-sm-12 col-20 ${selectedDistricts.length === 1 ? "m-auto" : ""}`}>
+                            {selectedBlocks.map((district, index) => (
+                                <div className={`col-sm-12 col-20 ${selectedBlocks.length === 1 ? "m-auto" : ""}`}>
 
-                                    {selectedDistricts.length === 1 ? (<Card style={{
+                                    {selectedBlocks.length === 1 ? (<Card style={{
                                         width: 300,
                                     }}><b>Please select one more district for comparison to enhance the analysis.</b></Card>) : <> <div className="comp-card" key={index}>
                                         <div className="upper-card">

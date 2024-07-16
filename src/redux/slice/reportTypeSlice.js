@@ -9,7 +9,8 @@ const reportTypeSlice = createSlice({
         selectedCompareOption:"upper_primary_to_secondary",
         selectedStateShow:"Select State",
         selectedReport:"Transition Rate",
-        selectedCompareDistricts:[]
+        selectedCompareDistricts:[],
+        selectedCompareBlock:[]
     },
     reducers: {
       setUpdateReportType(state,action) {
@@ -32,6 +33,9 @@ const reportTypeSlice = createSlice({
       },
       setselectedCompareDistricts(state,action) {
         state.selectedCompareDistricts=action.payload;
+      },
+      setselectedCompareBlocks(state,action) {
+        state.selectedCompareBlock=action.payload;
       },
     },
   })
