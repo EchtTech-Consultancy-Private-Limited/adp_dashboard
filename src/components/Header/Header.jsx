@@ -29,9 +29,9 @@ const dispatch=useDispatch()
   const { t, i18n } = useTranslation();
   const changeLanguage = (e) => {
     const selectedLanguage = e.target.value;
-    localStorage.setItem("selectedLanguage", selectedLanguage); // Save selected language to local storage
-    i18n.changeLanguage(selectedLanguage); // Change the language in i18n
-    console.log("i18n",i18n)
+    localStorage.setItem("selectedLanguage", selectedLanguage); 
+    i18n.changeLanguage(selectedLanguage); 
+  
   };
   useEffect(() => {
     const savedLanguage = localStorage.getItem("selectedLanguage");

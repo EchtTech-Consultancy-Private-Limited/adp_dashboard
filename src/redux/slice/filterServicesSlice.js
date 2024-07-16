@@ -5,7 +5,7 @@ const initialState = {
   states: [],
   districts: [],
   blocks: [],
-  selectedState: "Select State",
+  selectedState: "All State",
   selectedDistrict: "All District",
   selectedBlock: "All Block",
 };
