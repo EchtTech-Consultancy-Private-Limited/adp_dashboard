@@ -38,12 +38,23 @@
                
     }
 
-    .themes .themes-box-img .theme-shadow-box{
-        background: rgb(18 18 18 / 84%);
+    .card-box, .radio-button, .Comparison-select-group .antd-select .form-select, .comparison-box, .tab-box .tab-button.active, .tab-box .tab-button:last-child, .download-button, .ant-card-body, .comp-card{
+        background: #000 !important;
+        border: 1px solid #ddd !important;
     }
 
-    .themes .themes-box-img .content{
-        background: rgba(18, 18, 18, 0.84);
+    .card-box .card-box{border: none !important;}
+
+    .themes .themes-box-img .theme-shadow-box, .ag-row-even.ag-row-no-focus.ag-row.ag-row-level-0.ag-row-position-absolute.ag-row-first.ag-row-not-inline-editing.ag-row-hover, .tab-box .tab-button:last-child, .Comparison-select-group :where(.css-dev-only-do-not-override-98ntnt).ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector{
+        background: rgb(18 18 18 / 84%) !important;
+    }
+
+    .download-button{
+        color: #ff0;
+    }
+
+    .themes .themes-box-img .content, .ag-center-cols-viewport, .multi-header-table .ag-row-animation .ag-row{
+        background: rgba(18, 18, 18, 0.84) !important;
     }
     .footer .footer-bottom .visitor-counter span{color: #000 !important;}
     
