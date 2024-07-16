@@ -29,7 +29,7 @@ import { GlobalLoading } from '../GlobalLoading/GlobalLoading'
 import { setselectedOption, setSelectedYear, setUpdateStatus } from '../../redux/slice/reportTypeSlice'
 import BlankPage from './BlankPage'
 import { AllBlock, AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
-import TransitionRateCompare from './TransitionRateCompare'
+// import TransitionRateCompare from './TransitionRateCompare'
 import { ScrollToTopOnMount } from '../../Scroll/ScrollToTopOnMount'
 
 const ArrowRenderer = ({ data, value }) => {

@@ -29,9 +29,9 @@ import { GlobalLoading } from '../GlobalLoading/GlobalLoading'
 import { setselectedOption, setSelectedYear, setUpdateStatus } from '../../redux/slice/reportTypeSlice'
 import BlankPage from './BlankPage'
 import { AllBlock, AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
-import TransitionRateCompare from './TransitionRateCompare'
+import TransitionRateCompare from './ReportCompare/TransitionRateCompare'
 import { ScrollToTopOnMount } from '../../Scroll/ScrollToTopOnMount'
-import TransitionBlockRateCompare from './TransitionBlockRateCompare'
+import TransitionBlockRateCompare from './ReportCompare/TransitionBlockRateCompare'
 
 const ArrowRenderer = ({ data, value }) => {
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
@@ -149,6 +149,10 @@ export default function TransitionRateReport() {
             setAspirationalData(selectedData);
         }
     }, [selectReportType, selectedYear]);
+
+
+
+    console.log("aspirationalData",aspirationalData)
 
     useEffect(() => {
         let filteredData = aspirationalData;
