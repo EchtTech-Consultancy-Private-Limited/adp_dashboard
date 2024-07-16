@@ -3,7 +3,7 @@ import Header from '../Header/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { selectBlock, selectDistrict, selectState, setStates } from '../../redux/slice/filterServicesSlice';
-import { setselectedCompareDistricts, setselectedReport, setSelectedYear, setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTypeSlice';
+import { setselectedCompareDistricts, setselectedOption, setselectedReport, setSelectedYear, setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTypeSlice';
 // import aspirationalAbpData2020 from "../../aspirational-reports-data/2020-21/aspirationalAbpData.json";
 import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json"
 // import aspirationalAbpData from "../../aspirational-reports-data/aspirationalAbpData.json";
@@ -12,7 +12,7 @@ import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationa
 import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import { Select } from 'antd';
-import { AllDistrict, SelectBlock, SelectDistrict, SelectKpi, SelectState } from '../../constant/Constant';
+import { AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectKpi, SelectState } from '../../constant/Constant';
 import { selectComparisionDistrict } from '../../redux/slice/filterServicesComprisionSlice';
 
 export default function BannerReportFilter() {
@@ -28,44 +28,66 @@ export default function BannerReportFilter() {
   const selectedBlock = useSelector((state) => state.locationAdp.selectedBlock);
   const selectedOption = useSelector((state) => state.reportAdpAbpType.updateReportType);
   const selectedReport = useSelector((state) => state.reportAdpAbpType.selectedReport);
-  const selectedYear= useSelector((state) => state.reportAdpAbpType.selectedYear);
+  const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
   const [showBreadcomeAdpAbp, setShowBreadcomeAdpAbp] = useState();
   const [aspirationalData, setAspirationalData] = useState([]);
-  const disableSelectedState = selectedState === "Select State";
+  const disableSelectedState = selectedState === "All State";
   const disableSelectedDistrict = selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict;
 
   // Combine the data from multiple JSON files
+
+  function resteData() {
+    dispatch(selectState(SelectState));
+    dispatch(selectDistrict(SelectDistrict));
+    dispatch(selectBlock(SelectBlock));
+    dispatch(setselectedOption(selectedOptionConst));
+  }
   const combinedData = {
     "2020-21": {
       ADP_Report: aspirationalAdpData2020,
-       ABP_Report: aspirationalAbpData,
+      ABP_Report: aspirationalAbpData,
     },
     "2021-22": {
       ADP_Report: aspirationalAdpData2021,
-       ABP_Report: aspirationalAbpData,
+      ABP_Report: aspirationalAbpData,
     },
     "2022-23": {
       ADP_Report: aspirationalAdpData2022,
-       ABP_Report: aspirationalAbpData,
+      ABP_Report: aspirationalAbpData,
     },
   };
 
   useEffect(() => {
+
+    if (selectedOption === "ADP_Report") {
+
+      dispatch(setSelectedYear(intialYear))
+      resteData()
+    }
+    else {
+
+      dispatch(setSelectedYear(intialYear))
+      resteData()
+    }
+  }, [dispatch, selectedOption])
+  useEffect(() => {
     // Update the state based on the selected options
     let selectedData;
-    if(selectedOption){
+    if (selectedOption) {
       selectedData = combinedData[selectedYear][selectedOption];
     }
-    
-    if(selectedData){
+
+    if (selectedData) {
 
       setAspirationalData(selectedData);
     }
-    if(selectedOption === "ADP_Report"){
+    if (selectedOption === "ADP_Report") {
       setShowBreadcomeAdpAbp("ADP Report")
+      resteData()
     }
-    else{
+    else {
       setShowBreadcomeAdpAbp("ABP Report")
+      resteData()
     }
   }, [selectedOption, selectedYear]);
 
@@ -169,8 +191,8 @@ export default function BannerReportFilter() {
   };
 
   const handleYearChange = (value) => {
-   dispatch(setSelectedYear(value));
-    dispatch(selectState("Select State"));
+    dispatch(setSelectedYear(value));
+    dispatch(selectState("All State"));
     dispatch(setselectedCompareDistricts([]));
   };
 
@@ -209,14 +231,14 @@ export default function BannerReportFilter() {
                 <div className="col-md-9">
                   <div className="d-flex justify-content-between text-aligns-center antd-select">
                     {/* Year select option */}
-                    <Select onChange={handleYearChange} style={{ width: "100%" }} placeholder="Academic Year" mode="single" showSearch className="form-select" value={selectedYear }>
+                    <Select onChange={handleYearChange} style={{ width: "100%" }} placeholder="Academic Year" mode="single" showSearch className="form-select" value={selectedYear}>
                       <Select.Option key="2020-21" value="2020-21">2020 - 21</Select.Option>
                       <Select.Option key="2021-22" value="2021-22">2021 - 22</Select.Option>
                       <Select.Option key="2022-23" value="2022-23">2022 - 23</Select.Option>
                     </Select>
                     {/* State select option */}
-                    <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="Select State" mode="single" showSearch value={selectedState || "Select State"} className="form-select">
-                      <Select.Option key="Select State" value={SelectState}>Select State</Select.Option>
+                    <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="All State" mode="single" showSearch value={selectedState || "All State"} className="form-select">
+                      <Select.Option key="All State" value={SelectState}>All State</Select.Option>
                       {states.map((state) => (
                         <Select.Option key={state.lgd_state_id} value={state.lgd_state_name}>
                           {state.lgd_state_name}

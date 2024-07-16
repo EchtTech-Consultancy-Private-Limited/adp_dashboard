@@ -74,6 +74,7 @@ export default function TransitionRateReport() {
     const [aspirationalData, setAspirationalData] = useState([])
     const [locationHeader, SetLocationHeader] = useState();
     const [sheetName, SetSheetName] = useState()
+    const states = useSelector((state) => state.locationAdp.states);
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType)
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption)
     const updateLoading = useSelector((state) => state.reportAdpAbpType.loadingStatus)
@@ -81,6 +82,27 @@ export default function TransitionRateReport() {
     const savedReportName = localStorage.getItem('selectedReport');
     const report_name = savedReportName;
     const [data, setData] = useState([]);
+    const [allData, SetAllData] = useState([])
+    const [showFinalData, setShowFinalData] = useState([])
+
+    const flattenData = (data) => {
+        const flattened = [];
+
+        data?.forEach(state => {
+            state.districts.forEach(district => {
+                district.blocks.forEach(block => {
+                    flattened.push({
+                        lgd_state_name: state.lgd_state_name,
+                        lgd_district_name: district.lgd_district_name,
+                        lgd_block_name: block.lgd_block_name,
+                    });
+                });
+            });
+        });
+
+        return flattened;
+    };
+
     function resteData() {
         dispatch(selectState(SelectState));
         dispatch(selectDistrict(SelectDistrict));
@@ -91,6 +113,9 @@ export default function TransitionRateReport() {
     useEffect(() => {
         resteData()
     }, [dispatch]);
+    useEffect(() => {
+        SetAllData(states)
+    }, [states])
     {/*...............update Location Header..............*/ }
     useEffect(() => {
         if (selectReportType === "ADP_Report") {
@@ -217,37 +242,52 @@ export default function TransitionRateReport() {
             suppressFiltersToolPanel: true,
         },
         {
-            headerName: locationHeader,
-            cellRenderer: ArrowRenderer,
-            field: "Location",
-        },
-
-        {
-            headerName: "Boys",
-            field: "upri_b",
-            cellRenderer: percentageRenderer,
-            hide: false,
+            headerName: "State",
+            field: "lgd_state_name",
         },
         {
-            headerName: "Girls",
-            field: "upri_g",
-            cellRenderer: percentageRenderer,
-            hide: false,
+            headerName: "District",
+            field: "lgd_district_name",
         },
         {
-            headerName: "Total",
-            field: "upri_t",
-            cellRenderer: percentageRenderer,
-            hide: false,
+            headerName: "Block",
+            field: "lgd_block_name",
         },
 
     ]);
-    const handleOptionChange = (event) => {
-        dispatch(setselectedOption(event.target.value));
-    };
+    useEffect(() => {
+        if (selectedState === "All State") {
+            const columns = [
+                {
+                    headerName: "Serial Number",
+                    field: "Serial Number",
+                    hide: true,
+                    suppressColumnsToolPanel: true,
+                    suppressFiltersToolPanel: true,
+                },
+                {
+                    headerName: "State",
+                    field: "lgd_state_name",
+                },
+                {
+                    headerName: "District",
+                    field: "lgd_district_name",
+                },
+            ];
+
+            if (selectReportType === "ABP_Report") {
+                columns.push({
+                    headerName: "Block",
+                    field: "lgd_block_name",
+                });
+            }
+
+            setColumn(columns);
+        }
+    }, [selectedState, selectReportType]);
 
     useEffect(() => {
-        if (selectedOption === "upper_primary_to_secondary") {
+        if (selectedState !== "All State") {
             setColumn([
                 {
                     headerName: "Serial Number",
@@ -261,6 +301,7 @@ export default function TransitionRateReport() {
                     cellRenderer: ArrowRenderer,
                     field: "Location",
                 },
+
                 {
                     headerName: "Boys",
                     field: "upri_b",
@@ -279,42 +320,85 @@ export default function TransitionRateReport() {
                     cellRenderer: percentageRenderer,
                     hide: false,
                 },
-            ]);
-        } else if (selectedOption === "secondary_to_higher_secondary") {
-            setColumn([
-                {
-                    headerName: "Serial Number",
-                    field: "Serial Number",
-                    hide: true,
-                    suppressColumnsToolPanel: true,
-                    suppressFiltersToolPanel: true,
-                },
-                {
-                    headerName: locationHeader,
-                    cellRenderer: ArrowRenderer,
-                    field: "Location",
-                },
-                {
-                    headerName: "Boys",
-                    field: "sec_b",
-                    cellRenderer: percentageRenderer,
-                    hide: false,
-                },
-                {
-                    headerName: "Girls",
-                    field: "sec_g",
-                    cellRenderer: percentageRenderer,
-                    hide: false,
-                },
-                {
-                    headerName: "Total",
-                    field: "sec_t",
-                    cellRenderer: percentageRenderer,
-                    hide: false,
-                },
+
             ]);
         }
-    }, [locationHeader, selectedOption]);
+    }, [selectedState])
+    const handleOptionChange = (event) => {
+        dispatch(setselectedOption(event.target.value));
+    };
+
+    useEffect(() => {
+        if (selectedState !== "All State") {
+            if (selectedOption === "upper_primary_to_secondary") {
+                setColumn([
+                    {
+                        headerName: "Serial Number",
+                        field: "Serial Number",
+                        hide: true,
+                        suppressColumnsToolPanel: true,
+                        suppressFiltersToolPanel: true,
+                    },
+                    {
+                        headerName: locationHeader,
+                        cellRenderer: ArrowRenderer,
+                        field: "Location",
+                    },
+                    {
+                        headerName: "Boys",
+                        field: "upri_b",
+                        cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+                    {
+                        headerName: "Girls",
+                        field: "upri_g",
+                        cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+                    {
+                        headerName: "Total",
+                        field: "upri_t",
+                        cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+                ]);
+            } else if (selectedOption === "secondary_to_higher_secondary") {
+                setColumn([
+                    {
+                        headerName: "Serial Number",
+                        field: "Serial Number",
+                        hide: true,
+                        suppressColumnsToolPanel: true,
+                        suppressFiltersToolPanel: true,
+                    },
+                    {
+                        headerName: locationHeader,
+                        cellRenderer: ArrowRenderer,
+                        field: "Location",
+                    },
+                    {
+                        headerName: "Boys",
+                        field: "sec_b",
+                        cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+                    {
+                        headerName: "Girls",
+                        field: "sec_g",
+                        cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+                    {
+                        headerName: "Total",
+                        field: "sec_t",
+                        cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+                ]);
+            }
+        }
+    }, [locationHeader, selectedOption, selectedState]);
     const compressData = useCallback((data, groupBy,) => {
         if (data) {
             return data.reduce((acc, curr) => {
@@ -369,6 +453,19 @@ export default function TransitionRateReport() {
         return compressData(data, "lgd_state_name");
     }, [data, selectedState, selectedDistrict, selectedBlock]);
 
+
+    useEffect(() => {
+        if (selectedState !== "All State") {
+            setShowFinalData(compressedData)
+        }
+        else {
+            if (allData.length > 0) {
+                const flattenedData = flattenData(allData);
+                setShowFinalData(flattenedData);
+            }
+
+        }
+    }, [selectedState, data, allData, selectedDistrict, selectedBlock,])
     const defColumnDefs = useMemo(() => ({
         flex: 1,
         minWidth: 150,
@@ -555,94 +652,87 @@ export default function TransitionRateReport() {
                 <div className="container">
                     <div className="row mt-4">
 
-                        {selectedState !== SelectState ?
 
-                            <div className="col-md-12">
-                                {loading && <GlobalLoading />}
-                                <div className="card-box">
-                                    <div className="row align-items-end">
-                                        <div className="col-md-5">
-                                            <div className="d-flex align-items-end">
-                                                <div className="title-box">
-                                                    <h5 className='sub-title'>
-                                                        {selectReportType === "ADP_Report" ? (
-                                                            selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict ?
-                                                                `${selectedDistrict}` :
-                                                                selectedDistrict === AllDistrict ?
-                                                                    `${selectedState} District's` : `${selectedState} District's`
-                                                        ) : (
-                                                            selectReportType === "ABP_Report" ? (
-                                                                selectedState !== SelectState ? (
-                                                                    selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict ?
-                                                                        `${selectedState} District's` :
-                                                                        selectedBlock !== SelectBlock && selectedBlock !== AllBlock ?
-                                                                            `${selectedBlock}` :
-                                                                            `${selectedDistrict} Block's`
-                                                                ) : selectedBlock
+
+                        <div className="col-md-12">
+                            {loading && <GlobalLoading />}
+                            <div className="card-box">
+                                <div className="row align-items-end">
+                                    <div className="col-md-5">
+                                        <div className="d-flex align-items-end">
+                                            <div className="title-box">
+                                                <h5 className='sub-title'>
+                                                    {selectReportType === "ADP_Report" ? (
+                                                        selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict ?
+                                                            `${selectedDistrict}` :
+                                                            selectedDistrict === AllDistrict ?
+                                                                `${selectedState} District's` : `${selectedState} District's`
+                                                    ) : (
+                                                        selectReportType === "ABP_Report" ? (
+                                                            selectedState !== SelectState ? (
+                                                                selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict ?
+                                                                    `${selectedState} District's` :
+                                                                    selectedBlock !== SelectBlock && selectedBlock !== AllBlock ?
+                                                                        `${selectedBlock}` :
+                                                                        `${selectedDistrict} Block's`
                                                             ) : selectedBlock
-                                                        )}
-                                                    </h5>
-                                                    <h3 className='heading-sm'>Transition Rate</h3>
-                                                </div>
-                                                <div className="tab-box">
-                                                    <button className='tab-button active'><img src={table} alt="Table" /> Table View</button>
-                                                    <button className='tab-button'><img src={chart} alt="chart" /> Chart View</button>
-                                                </div>
+                                                        ) : selectedBlock
+                                                    )}
+                                                </h5>
+                                                <h3 className='heading-sm'>Transition Rate</h3>
                                             </div>
-                                        </div>
-                                        <div className="col-md-7">
-                                            <div className="d-flex w-m-100">
-                                                <div className="radio-button">
-                                                    <div className="box-radio">
-                                                        <input type="radio"
-                                                            id="radio4"
-                                                            value="upper_primary_to_secondary"
-                                                            checked={selectedOption === "upper_primary_to_secondary"}
-                                                            onChange={handleOptionChange} />
-                                                        <label htmlFor="radio4">Upper Primary to Secondary  </label>
-                                                    </div>
-
-                                                    <div className="box-radio">
-                                                        <input type="radio"
-                                                            id="radio5"
-                                                            value="secondary_to_higher_secondary"
-                                                            checked={selectedOption === "secondary_to_higher_secondary"}
-                                                            onChange={handleOptionChange} />
-                                                        <label htmlFor="radio5">Secondary to Higher Secondary</label>
-                                                    </div>
-                                                </div>
-                                                <div className="">
-                                                    {/* <img src={download} alt="download" /> */}
-                                                    <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
-                                                        <option className="option-hide"> Download Report {selectedYear}</option>
-                                                        <option value="export_pdf">Download as PDF </option>
-                                                        <option value="export_excel">Download as Excel</option>
-                                                    </select>
-                                                </div>
+                                            <div className="tab-box">
+                                                <button className='tab-button active'><img src={table} alt="Table" /> Table View</button>
+                                                <button className='tab-button'><img src={chart} alt="chart" /> Chart View</button>
                                             </div>
-
                                         </div>
                                     </div>
-
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <div className="table-box mt-4">
-                                                <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
-                                                    style={{ width: "100%", height: 200 }} >
-                                                    <AgGridReact columnDefs={columns} rowData={compressedData} defaultColDef={defColumnDefs} onGridReady={onGridReady} />
+                                    <div className="col-md-7">
+                                        <div className="d-flex w-m-100">
+                                            <div className="radio-button">
+                                                <div className="box-radio">
+                                                    <input type="radio"
+                                                        id="radio4"
+                                                        value="upper_primary_to_secondary"
+                                                        checked={selectedOption === "upper_primary_to_secondary"}
+                                                        onChange={handleOptionChange} />
+                                                    <label htmlFor="radio4">Upper Primary to Secondary  </label>
                                                 </div>
+
+                                                <div className="box-radio">
+                                                    <input type="radio"
+                                                        id="radio5"
+                                                        value="secondary_to_higher_secondary"
+                                                        checked={selectedOption === "secondary_to_higher_secondary"}
+                                                        onChange={handleOptionChange} />
+                                                    <label htmlFor="radio5">Secondary to Higher Secondary</label>
+                                                </div>
+                                            </div>
+                                            <div className="">
+                                                {/* <img src={download} alt="download" /> */}
+                                                <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
+                                                    <option className="option-hide"> Download Report {selectedYear}</option>
+                                                    <option value="export_pdf">Download as PDF </option>
+                                                    <option value="export_excel">Download as Excel</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <div className="table-box mt-4">
+                                            <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
+                                                style={{ width: "100%", height: 200 }} >
+                                                <AgGridReact columnDefs={columns} rowData={showFinalData} defaultColDef={defColumnDefs} onGridReady={onGridReady} />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
-                            </div> : <div className="col-md-12">
-                                <BlankPage />
                             </div>
-                        }
+                        </div>
                         <TransitionRateCompare />
                     </div>
                 </div>

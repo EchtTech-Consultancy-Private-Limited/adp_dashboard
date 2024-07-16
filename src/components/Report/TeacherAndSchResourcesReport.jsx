@@ -76,11 +76,32 @@ export default function TeacherAndSchResourcesReport() {
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType)
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption)
     const updateLoading = useSelector((state) => state.reportAdpAbpType.loadingStatus)
-
+    const states = useSelector((state) => state.locationAdp.states);
     const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
     const savedReportName = localStorage.getItem('selectedReport');
     const report_name = savedReportName
     const [data, setData] = useState([]);
+    const [allData, SetAllData] = useState([])
+    const [showFinalData, setShowFinalData] = useState([])
+
+    const flattenData = (data) => {
+        const flattened = [];
+
+        data?.forEach(state => {
+            state.districts.forEach(district => {
+                district.blocks.forEach(block => {
+                    flattened.push({
+                        lgd_state_name: state.lgd_state_name,
+                        lgd_district_name: district.lgd_district_name,
+                        lgd_block_name: block.lgd_block_name,
+                    });
+                });
+            });
+        });
+
+        return flattened;
+    };
+
     function resteData() {
         dispatch(selectState(SelectState));
         dispatch(selectDistrict(SelectDistrict));
@@ -91,6 +112,10 @@ export default function TeacherAndSchResourcesReport() {
     useEffect(() => {
         resteData()
     }, [dispatch]);
+
+    useEffect(() => {
+        SetAllData(states)
+    }, [states])
     {/*...............update Location Header..............*/ }
     useEffect(() => {
         if (selectReportType === "ADP_Report") {
@@ -109,7 +134,7 @@ export default function TeacherAndSchResourcesReport() {
             SetSheetName("Aspirational Block Programme")
         }
 
-    }, [selectedState, SelectState, selectedDistrict, SelectDistrict, selectedOption])
+    }, [selectedState, SelectState, selectedDistrict, SelectDistrict, selectReportType])
 
     {/*...............Take data report wise..............*/ }
     // useEffect(() => {
@@ -214,36 +239,55 @@ export default function TeacherAndSchResourcesReport() {
             suppressFiltersToolPanel: true,
         },
         {
-            headerName: locationHeader,
-            cellRenderer: ArrowRenderer,
-            field: "Location",
+            headerName: "State",
+            field: "lgd_state_name",
         },
-
         {
-            headerName: "Number of Elementary Schools having PTR less than equal to 30",
-            field: "u_ptr",
-            hide: false,
+            headerName: "District",
+            field: "lgd_district_name",
         },
-
         {
-            headerName: "Number of Elementary Schools ",
-            field: "total_sch_ele",
-            hide: false,
-        },
-
-        {
-            headerName: "Percentage of elementary schools having PTR less than equal to 30",
-            field: "ele_sch_percent",
-            cellRenderer: percentageRenderer,
-            hide: false,
+            headerName: "Block",
+            field: "lgd_block_name",
         },
 
     ]);
+    useEffect(() => {
+        if (selectedState === "All State") {
+            const columns = [
+                {
+                    headerName: "Serial Number",
+                    field: "Serial Number",
+                    hide: true,
+                    suppressColumnsToolPanel: true,
+                    suppressFiltersToolPanel: true,
+                },
+                {
+                    headerName: "State",
+                    field: "lgd_state_name",
+                },
+                {
+                    headerName: "District",
+                    field: "lgd_district_name",
+                },
+            ];
+
+            if (selectReportType === "ABP_Report") {
+                columns.push({
+                    headerName: "Block",
+                    field: "lgd_block_name",
+                });
+            }
+
+            setColumn(columns);
+        }
+    }, [selectedState, selectReportType]);
     const handleOptionChange = (event) => {
         dispatch(setselectedOption(event.target.value));
     };
 
     useEffect(() => {
+        if (selectedState !== "All State") {
         if (selectedOption === "upper_primary_to_secondary") {
             setColumn([
                 {
@@ -311,7 +355,8 @@ export default function TeacherAndSchResourcesReport() {
                 },
             ]);
         }
-    }, [locationHeader, selectedOption]);
+    }
+    }, [locationHeader, selectedOption, selectedState]);
     const compressData = useCallback((data, groupBy) => {
         return data.reduce((acc, curr) => {
             let groupKey = curr[groupBy];
@@ -340,6 +385,19 @@ export default function TeacherAndSchResourcesReport() {
         }
         return compressData(data, "lgd_state_name");
     }, [data, selectedState, selectedDistrict, selectedBlock]);
+
+    useEffect(() => {
+        if (selectedState !== "All State") {
+            setShowFinalData(compressedData)
+        }
+        else {
+            if (allData.length > 0) {
+                const flattenedData = flattenData(allData);
+                setShowFinalData(flattenedData);
+            }
+
+        }
+    }, [selectedState, data, allData, selectedDistrict, selectedBlock,])
 
     const defColumnDefs = useMemo(() => ({
         flex: 1,
@@ -527,45 +585,43 @@ export default function TeacherAndSchResourcesReport() {
                 <div className="container">
                     <div className="row mt-4">
 
-                        {selectedState !== SelectState ?
-
-                            <div className="col-md-12">
-                                {loading && <GlobalLoading />}
-                                <div className="card-box">
-                                    <div className="row align-items-end">
-                                        <div className="col-md-5">
-                                            <div className="d-flex align-items-end">
-                                                <div className="title-box">
-                                                    <h5 className='sub-title'>
-                                                        {selectReportType === "ADP_Report" ? (
-                                                            selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict ?
-                                                                `${selectedDistrict}` :
-                                                                selectedDistrict === AllDistrict ?
-                                                                    `${selectedState} District's` : `${selectedState} District's`
-                                                        ) : (
-                                                            selectReportType === "ABP_Report" ? (
-                                                                selectedState !== SelectState ? (
-                                                                    selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict ?
-                                                                        `${selectedState} District's` :
-                                                                        selectedBlock !== SelectBlock && selectedBlock !== AllBlock ?
-                                                                            `${selectedBlock}` :
-                                                                            `${selectedDistrict} Block's`
-                                                                ) : selectedBlock
+                        <div className="col-md-12">
+                            {loading && <GlobalLoading />}
+                            <div className="card-box">
+                                <div className="row align-items-end">
+                                    <div className="col-md-5">
+                                        <div className="d-flex align-items-end">
+                                            <div className="title-box">
+                                                <h5 className='sub-title'>
+                                                    {selectReportType === "ADP_Report" ? (
+                                                        selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict ?
+                                                            `${selectedDistrict}` :
+                                                            selectedDistrict === AllDistrict ?
+                                                                `${selectedState} District's` : `${selectedState} District's`
+                                                    ) : (
+                                                        selectReportType === "ABP_Report" ? (
+                                                            selectedState !== SelectState ? (
+                                                                selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict ?
+                                                                    `${selectedState} District's` :
+                                                                    selectedBlock !== SelectBlock && selectedBlock !== AllBlock ?
+                                                                        `${selectedBlock}` :
+                                                                        `${selectedDistrict} Block's`
                                                             ) : selectedBlock
-                                                        )}
-                                                    </h5>
-                                                    <h3 className='heading-sm'>Teacher and School Resources</h3>
-                                                </div>
-                                                <div className="tab-box">
-                                                    <button className='tab-button active'><img src={table} alt="Table" /> Table View</button>
-                                                    <button className='tab-button'><img src={chart} alt="chart" /> Chart View</button>
-                                                </div>
+                                                        ) : selectedBlock
+                                                    )}
+                                                </h5>
+                                                <h3 className='heading-sm'>Teacher and School Resources</h3>
+                                            </div>
+                                            <div className="tab-box">
+                                                <button className='tab-button active'><img src={table} alt="Table" /> Table View</button>
+                                                <button className='tab-button'><img src={chart} alt="chart" /> Chart View</button>
                                             </div>
                                         </div>
-                                        <div className="col-md-7">
-                                            <div className="d-flex w-m-100">
-                                                <div className="radio-button">
-                                                    {/* <div className="box-radio">
+                                    </div>
+                                    <div className="col-md-7">
+                                        <div className="d-flex w-m-100">
+                                            <div className="radio-button">
+                                                {/* <div className="box-radio">
                                                     <input type="radio"
                                                         id="radio4"
                                                         value="upper_primary_to_secondary"
@@ -582,39 +638,36 @@ export default function TeacherAndSchResourcesReport() {
                                                         onChange={handleOptionChange} />
                                                     <label htmlFor="radio5">Secondary to Higher Secondary</label>
                                                 </div> */}
-                                                </div>
-                                                <div className="">
-                                                    {/* <img src={download} alt="download" /> */}
-                                                    <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
-                                                        <option className="option-hide"> Download Report {selectedYear}</option>
-                                                        <option value="export_pdf">Download as PDF </option>
-                                                        <option value="export_excel">Download as Excel</option>
-                                                    </select>
-                                                </div>
                                             </div>
-
+                                            <div className="">
+                                                {/* <img src={download} alt="download" /> */}
+                                                <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
+                                                    <option className="option-hide"> Download Report {selectedYear}</option>
+                                                    <option value="export_pdf">Download as PDF </option>
+                                                    <option value="export_excel">Download as Excel</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <div className="table-box mt-4">
-                                                <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
-                                                    style={{ width: "100%", height: 200 }} >
-                                                    <AgGridReact columnDefs={columns} rowData={compressedData} defaultColDef={defColumnDefs} onGridReady={onGridReady} />
-                                                </div>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <div className="table-box mt-4">
+                                            <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
+                                                style={{ width: "100%", height: 200 }} >
+                                                <AgGridReact columnDefs={columns} rowData={showFinalData} defaultColDef={defColumnDefs} onGridReady={onGridReady} />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
-                            </div> : <div className="col-md-12">
-                                <BlankPage />
                             </div>
-                        }
+
+
+
+
+                        </div>
                         {/* <TransitionRateCompare /> */}
                     </div>
                 </div>
