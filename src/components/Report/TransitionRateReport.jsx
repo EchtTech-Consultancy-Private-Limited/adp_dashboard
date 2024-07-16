@@ -741,11 +741,13 @@ export default function TransitionRateReport() {
                         </div>
                      
 
+                   {selectedState !== "All State" ? <>
                     { selectReportType ==="ADP_Report"?
                     <TransitionRateCompare />:
                     <TransitionBlockRateCompare/>
                     
                     }
+                   </>:""}
                     </div>
                 </div>
             </section>
