@@ -31,10 +31,12 @@ import BlankPage from './BlankPage'
 import { AllBlock, AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
 import TransitionRateCompare from './TransitionRateCompare'
 import { ScrollToTopOnMount } from '../../Scroll/ScrollToTopOnMount'
+import TransitionBlockRateCompare from './TransitionBlockRateCompare'
 
 const ArrowRenderer = ({ data, value }) => {
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
     const [arrowData, setArrowData] = useState([]);
+
 
     useEffect(() => {
         if (selectedOption === "upper_primary_to_secondary") {
@@ -91,6 +93,9 @@ export default function TransitionRateReport() {
     useEffect(() => {
         resteData()
     }, [dispatch]);
+
+
+    console.log("selectReportType",selectReportType)
     {/*...............update Location Header..............*/ }
     useEffect(() => {
         if (selectReportType === "ADP_Report") {
@@ -642,8 +647,17 @@ export default function TransitionRateReport() {
                             </div> : <div className="col-md-12">
                                 <BlankPage />
                             </div>
-                        }
-                        <TransitionRateCompare />
+
+
+
+                    }
+
+
+                    { selectReportType ==="ADP_Report"?
+                    <TransitionRateCompare />:
+                    <TransitionBlockRateCompare/>
+                    
+                    }
                     </div>
                 </div>
             </section>

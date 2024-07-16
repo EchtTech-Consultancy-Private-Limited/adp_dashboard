@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import './footer.scss'
+import './Footer.scss'
 import { useTranslation } from "react-i18next";
 import AOS from "aos";
 import "aos/dist/aos.css";
