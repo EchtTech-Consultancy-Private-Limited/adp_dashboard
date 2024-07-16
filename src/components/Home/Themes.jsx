@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Transition from '../../assets/images/Transition_Rate.png'
 import Teacher from '../../assets/images/Teacher_School.png'
@@ -9,6 +9,8 @@ import devider from '../../assets/images/devider.svg'
 import { useDispatch } from 'react-redux'
 import { setselectedReport, setUpdateReportType } from '../../redux/slice/reportTypeSlice'
 import { useTranslation } from "react-i18next";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 
 export default function Themes() {
@@ -34,6 +36,15 @@ export default function Themes() {
     //     dispatch(setUpdateReportType(reportType));
     //     dispatch(setselectedReport("Enrollment and Retention"));
     // };
+
+    useEffect(() => {
+        AOS.init({
+          disable: "phone",
+          duration: 1000,
+          easing: "ease-out-cubic",
+        });
+      }, []);
+
     return (
         <section className='themes ptb-70 position-relative'>
 
@@ -54,7 +65,7 @@ export default function Themes() {
                     <div className="col-md-7">
                         <div className="row">
                             <div className="col-md-5">
-                                <div className="themes-box-img">
+                                <div className="themes-box-img" data-aos="fade-up-right">
                                     <div className="themes-box">
                                         <div className="theme-text">
                                         {t('transitionRateBoysGirls')}
@@ -87,7 +98,7 @@ export default function Themes() {
                             </div>
 
                             <div className="col-md-5">
-                                <div className="themes-box-img">
+                                <div className="themes-box-img" data-aos="fade-up-left">
                                     <div className="themes-box">
                                         <div className="theme-text">
                                         {t('teacherSchoolResources')}
@@ -125,7 +136,7 @@ export default function Themes() {
                     <div className="col-md-9">
                         <div className="row">
                             <div className="col-md-4">
-                                <div className="themes-box-img">
+                                <div className="themes-box-img" data-aos="fade-up-right">
                                     <div className="themes-box">
                                         <div className="theme-text">
                                         {t('studentPerformance')}
@@ -158,7 +169,7 @@ export default function Themes() {
                             </div>
 
                             <div className="col-md-4">
-                                <div className="themes-box-img">
+                                <div className="themes-box-img" data-aos="fade-down-right">
                                     <div className="themes-box">
                                         <div className="theme-text">
                                         {t('schoolInfrastructure')}
@@ -191,7 +202,7 @@ export default function Themes() {
                             </div>
 
                             <div className="col-md-4">
-                                <div className="themes-box-img">
+                                <div className="themes-box-img" data-aos="fade-up-left"> 
                                     <div className="themes-box">
                                         <div className="theme-text">
                                         {t('enrollmentRetention')}

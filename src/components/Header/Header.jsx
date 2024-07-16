@@ -44,13 +44,14 @@ const dispatch=useDispatch()
   }, [i18n]);
 
 
-  const changeSizeByBtn = (size) => {
+  const changeSizeByBtn = (event) => {
+    const size = event.target.value;
     if (size === "normal") {
-      document.body.style.fontSize = "14px";
+      document.body.className = "DecreaseFont";
     } else if (size === "average") {
-      document.body.style.fontSize = "16px";
+      document.body.className = "AverageFont";
     } else if (size === "max") {
-      document.body.style.fontSize = "18px";
+      document.body.className = "MaxFont";
     }
   }
 
@@ -63,45 +64,11 @@ const dispatch=useDispatch()
   };
 
 
-  const [currentDateTime, setCurrentDateTime] = useState(new Date());
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentDateTime(new Date());
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  // Function to format the date in the desired format
-  const formatDateString = (date) => {
-    const day = date.getDate();
-    const month = date.toLocaleString('default', { month: 'long' });
-    const year = date.getFullYear();
-    const ordinalSuffix = getOrdinalSuffix(day);
-
-    return (
-      <a href="#" className="date-link">
-        {day}<sup className="ordinal">{ordinalSuffix} </sup> &nbsp;{month} {year}
-      </a>
-    );
-  };
-
-  // Function to get the ordinal suffix for a given day
-  const getOrdinalSuffix = (day) => {
-    if (day === 1 || day === 21 || day === 31) {
-      return "st";
-    } else if (day === 2 || day === 22) {
-      return "nd";
-    } else if (day === 3 || day === 23) {
-      return "rd";
-    } else {
-      return "th";
-    }
-  };
   const toggleDarkTheme = () => {
     dispatch(updateToggleDark(!toggleDarkMode));
   };
+
+
   return (
 
     <>
@@ -128,35 +95,7 @@ const dispatch=useDispatch()
 
                 <div className="header-top-skipwrap right-access-points">
                   <ul className='mb-0'>
-                    {/* <li>
-                      <div id="form-wrapper">
-                        <form action="" method="" className="font-item">
-                          <span className="font-t">A</span>
-                          <div id="debt-amount-slider">
-                            <input type="radio" name="debt-amount" id="1" value="1" required="" title="Decrease Font Size" onClick={() => changeSizeByBtn("normal")} />
-                            <label htmlFor="1" title="Decrease Font Size"></label>
-                            <input type="radio" name="debt-amount" id="2" value="2" defaultChecked="checked" required="" title="Normal Font Size" onClick={() => changeSizeByBtn("average")} />
-                            <label htmlFor="2" title="Normal Font Size"></label>
-                            <input type="radio" name="debt-amount" id="3" value="3" required="" title="Increase Font Size" onClick={() => changeSizeByBtn("max")} />
-                            <label htmlFor="3" title="Increase Font Size"></label>
-                            <div id="debt-amount-pos"></div>
-                          </div>
-                          <span className="font-t size-16">A</span>
-                        </form>
-                      </div>
-                    </li> */}
-
-                    {/* <li>
-                      <div className="d-flex align-items-center">
-                        <span className="text me-2">Dark Mode </span>
-                        <label className="switch mb-0" title="Dark Mode">
-                          <input type="checkbox" id="mode" />
-                          <span className="slider round"></span>
-                        </label>
-                        <Switch  onChange={toggleDarkTheme} />
-                      </div>
-                    </li> */}
-
+                   
                     <li>
                       <div className="theme-toggle">
                         <label className="switch" title="Dark Mode">
@@ -186,10 +125,10 @@ const dispatch=useDispatch()
                     <li>
                       <div>
                         <div className='select-right'>
-                          <select className="form-select Langchange">
-                            <option value="">{t('gradeAPlus')}</option>
-                            <option value="">{t('gradeA')}</option>
-                            <option value="">{t('gradeAMinus')}</option>
+                          <select className="form-select Langchange" onChange={changeSizeByBtn}>
+                            <option value="average">{t('gradeA')}</option>
+                            <option value="max">{t('gradeAPlus')}</option>
+                            <option value="normal">{t('gradeAMinus')}</option>
                           </select>
 
                         </div>

@@ -17,6 +17,7 @@
     "ag-grid-enterprise": "^31.3.2",
     "ag-grid-react": "^31.3.2",
     "antd": "^5.19.1",
+    "aos": "^2.3.4",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.3",
     "esri-loader": "^3.7.0",

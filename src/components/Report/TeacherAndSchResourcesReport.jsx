@@ -664,9 +664,6 @@ export default function TeacherAndSchResourcesReport() {
                                 </div>
                             </div>
 
-
-
-
                         </div>
                         {/* <TransitionRateCompare /> */}
                     </div>
