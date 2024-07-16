@@ -658,7 +658,6 @@ export default function TransitionRateReport() {
                     <TransitionBlockRateCompare/>
                     
                     }
-                        <TransitionRateCompare />
                     </div>
                 </div>
             </section>
