@@ -58,7 +58,7 @@ export default function Themes() {
                             <h6 className='sub-title'>
                             {t('kpiSentence1')} <br /> {t('kpiSentence2')}<br /> {t('kpiSentence3')}
                             </h6>
-                            <Link to="/transition-rate" className='btn-banner'>{t('exploreCompositeScore')} <span className="material-icons-round">arrow_forward</span></Link>
+                            <Link to="/transition-rate" className='btn-banner d-none-mobile'>{t('exploreCompositeScore')} <span className="material-icons-round">arrow_forward</span></Link>
                         </div>
 
                     </div>
@@ -78,10 +78,11 @@ export default function Themes() {
                                         </div>
                                     </div>
 
+
                                     <div className="theme-shadow-box">
                                         <div className="content">
 
-                                            <p>{t('kpiBasicInfrastructure')}</p>
+                                            <p>{t('kpitransitionRateBoysGirls')}</p>
                                             <ul>
                                                 <li>{t('percentageSchoolsAdequateToilets')}</li>
                                             </ul>
@@ -114,7 +115,7 @@ export default function Themes() {
                                     <div className="theme-shadow-box">
                                         <div className="content">
 
-                                            <p>{t('kpiBasicInfrastructure')}</p>
+                                            <p>{t('kpiteacherSchoolResources')}</p>
                                             <ul>
                                                 <li>{t('percentageSchoolsAdequateToilets')}</li>
                                             </ul>
@@ -152,7 +153,7 @@ export default function Themes() {
                                     <div className="theme-shadow-box">
                                         <div className="content">
 
-                                            <p>{t('kpiBasicInfrastructure')}</p>
+                                            <p>{t('kpistudentPerformance')}</p>
                                             <ul>
                                                 <li>{t('percentageSchoolsAdequateToilets')}</li>
                                             </ul>
@@ -185,7 +186,7 @@ export default function Themes() {
                                     <div className="theme-shadow-box">
                                         <div className="content">
 
-                                            <p>{t('kpiBasicInfrastructure')}</p>
+                                            <p>{t('kpischoolInfrastructure')}</p>
                                             <ul>
                                                 <li>{t('percentageSchoolsAdequateToilets')}</li>
                                             </ul>
@@ -218,7 +219,7 @@ export default function Themes() {
                                     <div className="theme-shadow-box">
                                         <div className="content">
 
-                                            <p>{t('kpiBasicInfrastructure')}</p>
+                                            <p>{t('kpienrollmentRetention')}</p>
                                             <ul>
                                                 <li>{t('percentageSchoolsAdequateToilets')}</li>
                                             </ul>
@@ -232,6 +233,10 @@ export default function Themes() {
 
                                     <img src={Enrollment} alt="Enrollment" className='img-5' />
                                 </div>
+                            </div>
+
+                            <div className='text-center'>
+                            <Link to="/transition-rate" className='btn-banner d-none-desktop mt-4 ms-4'>{t('exploreCompositeScore')} <span className="material-icons-round">arrow_forward</span></Link>
                             </div>
                         </div>
                     </div>
