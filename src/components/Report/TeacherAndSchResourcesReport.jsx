@@ -31,6 +31,8 @@ import BlankPage from './BlankPage'
 import { AllBlock, AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
 // import TransitionRateCompare from './TransitionRateCompare'
 import { ScrollToTopOnMount } from '../../Scroll/ScrollToTopOnMount'
+import TeacherAndSchoolCompare from './ReportCompare/TeacherAndSchoolCompare'
+import TeacherAndSchoolBlockCompare from './ReportCompare/TeacherAndSchoolBlockCompare'
 
 const ArrowRenderer = ({ data, value }) => {
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
@@ -646,7 +648,13 @@ export default function TeacherAndSchResourcesReport() {
                             </div>
 
                         </div>
-                        {/* <TransitionRateCompare /> */}
+                        {selectedState !== "All State" ? <>
+                    { selectReportType ==="ADP_Report"?
+                    <TeacherAndSchoolCompare />:
+                    <TeacherAndSchoolBlockCompare/>
+                    
+                    }
+                   </>:""}
                     </div>
                 </div>
             </section>
