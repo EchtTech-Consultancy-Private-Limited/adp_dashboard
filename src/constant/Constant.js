@@ -1,4 +1,4 @@
-export const  SelectState= "Select State";
+export const  SelectState= "All State";
 export const  AllDistrict= "All District";
 export const  SelectDistrict= "Select District";
 export const  AllBlock= "All Block";

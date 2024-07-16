@@ -1,22 +1,22 @@
 
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectDistrict, selectState, setStates } from "../../redux/slice/filterServicesComprisionSlice";
-import { setselectedCompareDistricts, setselectedCompareOption, setUpdateReportType } from "../../redux/slice/reportTypeSlice";
-import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
-import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
-import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json"
+import { selectDistrict, selectState, setStates } from "../../../redux/slice/filterServicesComprisionSlice";
+import { setselectedCompareDistricts, setselectedCompareOption, setUpdateReportType } from "../../../redux/slice/reportTypeSlice";
+import aspirationalAbpData from "../../../aspirational-reports-data/aspirational.json";
+import aspirationalAdpData from "../../../aspirational-reports-data/aspirationalDistrict.json";
+import aspirationalAdpData2020 from "../../../aspirational-reports-data/aspirationalAdpData2020-21.json"
 // import aspirationalAbpData2021 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
+import aspirationalAdpData2021 from "../../../aspirational-reports-data/aspirationalAdpData2021-22.json";
 // import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
-import table from '../../assets/images/table.svg'
-import card from '../../assets/images/card-list.svg'
+import aspirationalAdpData2022 from "../../../aspirational-reports-data/aspirationalAdpData2022-23.json";
+import table from '../../../assets/images/table.svg'
+import card from '../../../assets/images/card-list.svg'
 import { Card, Select } from 'antd';
-import { SelectState } from "../../constant/Constant";
+import { SelectState } from "../../../constant/Constant";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import BlankPage from "./BlankPage";
+import BlankPage from "../BlankPage";
 const ArrowRenderer = ({ data }) => {
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
     const [arrowData, setArrowData] = useState(null);
@@ -107,39 +107,39 @@ export default function TransitionRateCompare() {
     useEffect(() => {
         const structuredData = aspirationalData.reduce((acc, curr) => {
             const stateIndex = acc.findIndex(
-                (st) => st.lgd_state_id === curr.lgd_state_id
+                (st) => st.lgd_state_id === curr?.lgd_state_id
             );
             if (stateIndex === -1) {
                 acc.push({
-                    lgd_state_id: curr.lgd_state_id,
-                    lgd_state_name: curr.lgd_state_name,
+                    lgd_state_id: curr?.lgd_state_id,
+                    lgd_state_name: curr?.lgd_state_name,
                     districts: [
                         {
-                            lgd_district_id: curr.lgd_district_id,
-                            lgd_district_name: curr.lgd_district_name,
-                            upri_b: curr.upri_b,
-                            upri_g: curr.upri_g,
-                            upri_t: curr.upri_t,
-                            sec_b: curr.sec_b,
-                            sec_g: curr.sec_g,
-                            sec_t: curr.sec_t,
+                            lgd_district_id: curr?.lgd_district_id,
+                            lgd_district_name: curr?.lgd_district_name,
+                            upri_b: curr?.upri_b,
+                            upri_g: curr?.upri_g,
+                            upri_t: curr?.upri_t,
+                            sec_b: curr?.sec_b,
+                            sec_g: curr?.sec_g,
+                            sec_t: curr?.sec_t,
                         },
                     ],
                 });
             } else {
                 const districtIndex = acc[stateIndex].districts.findIndex(
-                    (dist) => dist.lgd_district_id === curr.lgd_district_id
+                    (dist) => dist.lgd_district_id === curr?.lgd_district_id
                 );
                 if (districtIndex === -1) {
                     acc[stateIndex].districts.push({
-                        lgd_district_id: curr.lgd_district_id,
-                        lgd_district_name: curr.lgd_district_name,
-                        upri_b: curr.upri_b,
-                        upri_g: curr.upri_g,
-                        upri_t: curr.upri_t,
-                        sec_b: curr.sec_b,
-                        sec_g: curr.sec_g,
-                        sec_t: curr.sec_t,
+                        lgd_district_id: curr?.lgd_district_id,
+                        lgd_district_name: curr?.lgd_district_name,
+                        upri_b: curr?.upri_b,
+                        upri_g: curr?.upri_g,
+                        upri_t: curr?.upri_t,
+                        sec_b: curr?.sec_b,
+                        sec_g: curr?.sec_g,
+                        sec_t: curr?.sec_t,
                     });
                 }
             }
@@ -332,19 +332,19 @@ export default function TransitionRateCompare() {
                                             <div className="text-card">
                                                 <p>Boys</p>
                                                 <h6 className='sub-title'>
-                                                    {selectedOption === "upper_primary_to_secondary" ? district.upri_b : district.sec_b}
+                                                    {selectedOption === "upper_primary_to_secondary" ? district?.upri_b : district?.sec_b}
                                                 </h6>
                                             </div>
                                             <div className="text-card">
                                                 <p>Girls</p>
                                                 <h6 className='sub-title'>
-                                                    {selectedOption === "upper_primary_to_secondary" ? district.upri_g : district.sec_g}
+                                                    {selectedOption === "upper_primary_to_secondary" ? district?.upri_g : district?.sec_g}
                                                 </h6>
                                             </div>
                                             <div className="text-card">
                                                 <p>Total</p>
                                                 <h6 className='sub-title'>
-                                                    {selectedOption === "upper_primary_to_secondary" ? district.upri_t : district.sec_t}
+                                                    {selectedOption === "upper_primary_to_secondary" ? district?.upri_t : district?.sec_t}
                                                 </h6>
                                             </div>
                                         </div>

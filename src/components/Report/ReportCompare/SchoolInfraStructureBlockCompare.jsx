@@ -5,23 +5,23 @@ import {
   selectState,
   setStates,
   selectBlock,
-} from "../../redux/slice/filterServicesComprisionSlice";
+} from "../../../redux/slice/filterServicesComprisionSlice";
 import {
   setselectedCompareDistricts,
   setselectedCompareOption,
   setUpdateReportType,
   setselectedCompareBlocks,
-} from "../../redux/slice/reportTypeSlice";
-import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
-import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
-import table from "../../assets/images/table.svg";
-import card from "../../assets/images/card-list.svg";
+} from "../../../redux/slice/reportTypeSlice";
+import aspirationalAbpData from "../../../aspirational-reports-data/aspirational.json";
+import aspirationalAdpData from "../../../aspirational-reports-data/aspirationalDistrict.json";
+import table from "../../../assets/images/table.svg";
+import card from "../../../assets/images/card-list.svg";
 import { Card, Select } from "antd";
-import { SelectState } from "../../constant/Constant";
+import { SelectState } from "../../../constant/Constant";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import BlankPage from "./BlankPage";
-import { ScrollToTopOnMount } from "../../Scroll/ScrollToTopOnMount";
+import BlankPage from "../BlankPage";
+import { ScrollToTopOnMount } from "../../../Scroll/ScrollToTopOnMount";
 const ArrowRenderer = ({ data }) => {
   const selectedOption = useSelector(
     (state) => state.reportAdpAbpType.selectedOption
@@ -68,7 +68,8 @@ const ArrowRenderer = ({ data }) => {
 
   return <span>{renderArrow()}</span>;
 };
-export default function TransitionBlockRateCompare() {
+
+export default function SchoolInfraStructureBlockCompare() {
   const dispatch = useDispatch();
   const [aspirationalData, setAspirationalData] = useState([]);
   const selectedOption = useSelector(
@@ -113,39 +114,39 @@ export default function TransitionBlockRateCompare() {
   useEffect(() => {
     const structuredData = aspirationalData.reduce((acc, curr) => {
       const stateIndex = acc.findIndex(
-        (st) => st.lgd_state_id === curr.lgd_state_id
+        (st) => st.lgd_state_id === curr?.lgd_state_id
       );
       if (stateIndex === -1) {
         acc.push({
-          lgd_state_id: curr.lgd_state_id,
-          lgd_state_name: curr.lgd_state_name,
+          lgd_state_id: curr?.lgd_state_id,
+          lgd_state_name: curr?.lgd_state_name,
           block: [
             {
-              lgd_block_id: curr.lgd_block_id,
-              lgd_block_name: curr.lgd_block_name,
-              upri_b: curr.upri_b,
-              upri_g: curr.upri_g,
-              upri_t: curr.upri_t,
-              sec_b: curr.sec_b,
-              sec_g: curr.sec_g,
-              sec_t: curr.sec_t,
+              lgd_block_id: curr?.lgd_block_id,
+              lgd_block_name: curr?.lgd_block_name,
+              tot_school_girl_co_ed: curr?.tot_school_girl_co_ed,
+              total_no_of_fun_girls_toilet: curr?.total_no_of_fun_girls_toilet,
+              functional_toilet_girls_percent:
+                curr?.functional_toilet_girls_percent,
+              toilet_40: curr?.toilet_40,
+              sch_having_toilet_40_percent: curr?.sch_having_toilet_40_percent,
             },
           ],
         });
       } else {
         const blockIndex = acc[stateIndex].blocks.findIndex(
-          (blk) => blk.lgd_block_id === curr.lgd_block_id
+          (blk) => blk.lgd_block_id === curr?.lgd_block_id
         );
         if (blockIndex === -1) {
           acc[stateIndex].blocks.push({
-            lgd_block_id: curr.lgd_block_id,
-            lgd_block_name: curr.lgd_block_name,
-            upri_b: curr.upri_b,
-            upri_g: curr.upri_g,
-            upri_t: curr.upri_t,
-            sec_b: curr.sec_b,
-            sec_g: curr.sec_g,
-            sec_t: curr.sec_t,
+            lgd_block_id: curr?.lgd_block_id,
+            lgd_block_name: curr?.lgd_block_name,
+            tot_school_girl_co_ed: curr?.tot_school_girl_co_ed,
+            total_no_of_fun_girls_toilet: curr?.total_no_of_fun_girls_toilet,
+            functional_toilet_girls_percent:
+              curr?.functional_toilet_girls_percent,
+            toilet_40: curr?.toilet_40,
+            sch_having_toilet_40_percent: curr?.sch_having_toilet_40_percent,
           });
         }
       }
@@ -155,13 +156,6 @@ export default function TransitionBlockRateCompare() {
     dispatch(setStates(structuredData));
   }, [dispatch]);
 
-  //   suggestion      [dispatch, aspirationalData]
-
-  // Handle state change
-  const handleStateChange = (value) => {
-    dispatch(selectState(value));
-    dispatch(setselectedCompareBlocks([]));
-  };
 
   // Handle district change
   const handleBlockChange = (value, position) => {
@@ -228,36 +222,14 @@ export default function TransitionBlockRateCompare() {
                                     </Select>
                                 </h5> */}
                 <h3 className="heading-sm mt-2">
-                  Comparison by Transition Rate
+                  Comparison by School Infrastructure
                 </h3>
               </div>
             </div>
           </div>
           <div className="col-md-5">
             <div className="d-flex w-m-100">
-              <div className="radio-button">
-                <div className="box-radio">
-                  <input
-                    type="radio"
-                    id="radio11"
-                    value="upper_primary_to_secondary"
-                    checked={selectedOption === "upper_primary_to_secondary"}
-                    onChange={handleOptionChange}
-                  />
-                  <label htmlFor="radio11">Upper Primary to Secondary </label>
-                </div>
-
-                <div className="box-radio">
-                  <input
-                    type="radio"
-                    id="radio22"
-                    value="secondary_to_higher_secondary"
-                    checked={selectedOption === "secondary_to_higher_secondary"}
-                    onChange={handleOptionChange}
-                  />
-                  <label htmlFor="radio22">Secondary to Higher Secondary</label>
-                </div>
-              </div>
+           
             </div>
           </div>
         </div>
@@ -363,27 +335,36 @@ export default function TransitionBlockRateCompare() {
 
                           <div className="lower-card">
                             <div className="text-card">
-                              <p>Boys</p>
+                              <p>Tot Coed & Girls Sch</p>
                               <h6 className="sub-title">
-                                {selectedOption === "upper_primary_to_secondary"
-                                  ? block.upri_b
-                                  : block.sec_b}
+                                {block?.tot_school_girl_co_ed}
                               </h6>
                             </div>
                             <div className="text-card">
-                              <p>Girls</p>
+                              <p>Tot Sch Fun girls toilets</p>
                               <h6 className="sub-title">
-                                {selectedOption === "upper_primary_to_secondary"
-                                  ? block.upri_g
-                                  : block.sec_g}
+                                {block?.total_no_of_fun_girls_toilet}
                               </h6>
                             </div>
                             <div className="text-card">
-                              <p>Total</p>
+                              <p>Per Sch Fun girls toilets</p>
                               <h6 className="sub-title">
-                                {selectedOption === "upper_primary_to_secondary"
-                                  ? block.upri_t
-                                  : block.sec_t}
+                                {block?.functional_toilet_girls_percent?.toFixed(
+                                  2
+                                )}
+                              </h6>
+                            </div>
+
+                            <div className="text-card">
+                              <p>Tot Sch Fun girls toilets 40:1</p>
+                              <h6 className="sub-title">{block?.toilet_40}</h6>
+                            </div>
+                            <div className="text-card">
+                              <p>Percent</p>
+                              <h6 className="sub-title">
+                                {block?.sch_having_toilet_40_percent?.toFixed(
+                                  2
+                                )}
                               </h6>
                             </div>
                           </div>
