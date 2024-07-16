@@ -533,7 +533,7 @@ export default function TeacherAndSchResourcesReport() {
                                 {loading && <GlobalLoading />}
                                 <div className="card-box">
                                     <div className="row align-items-end">
-                                        <div className="col-md-5">
+                                        <div className="col-md-6">
                                             <div className="d-flex align-items-end">
                                                 <div className="title-box">
                                                     <h5 className='sub-title'>
@@ -562,27 +562,9 @@ export default function TeacherAndSchResourcesReport() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-md-7">
-                                            <div className="d-flex w-m-100">
-                                                <div className="radio-button">
-                                                    {/* <div className="box-radio">
-                                                    <input type="radio"
-                                                        id="radio4"
-                                                        value="upper_primary_to_secondary"
-                                                        checked={selectedOption === "upper_primary_to_secondary"}
-                                                        onChange={handleOptionChange} />
-                                                    <label htmlFor="radio4">Upper Primary to Secondary  </label>
-                                                </div>
-
-                                                <div className="box-radio">
-                                                    <input type="radio"
-                                                        id="radio5"
-                                                        value="secondary_to_higher_secondary"
-                                                        checked={selectedOption === "secondary_to_higher_secondary"}
-                                                        onChange={handleOptionChange} />
-                                                    <label htmlFor="radio5">Secondary to Higher Secondary</label>
-                                                </div> */}
-                                                </div>
+                                        <div className="col-md-6">
+                                            <div className="d-flex justify-content-end w-m-100">
+                                               
                                                 <div className="">
                                                     {/* <img src={download} alt="download" /> */}
                                                     <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>

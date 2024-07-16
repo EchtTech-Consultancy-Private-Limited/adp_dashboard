@@ -9,6 +9,8 @@ import {
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
+
+
 export default function AboutUs() {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();

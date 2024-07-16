@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import AboutUs from '../components/Home/AboutUs'
 import Banners from '../components/Home/Banners'
 import '../components/Home/home.scss'
