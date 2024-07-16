@@ -10,7 +10,7 @@ const reportTypeSlice = createSlice({
         selectedStateShow:"Select State",
         selectedReport:"Transition Rate",
         selectedCompareDistricts:[],
-        selectedYear:"2020 - 21"
+        selectedYear:"2020-21"
     },
     reducers: {
       setUpdateReportType(state,action) {

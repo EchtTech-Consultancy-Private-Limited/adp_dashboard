@@ -27,16 +27,13 @@ export default function BannerReportFilter() {
   const selectedDistrict = useSelector((state) => state.locationAdp.selectedDistrict);
   const selectedBlock = useSelector((state) => state.locationAdp.selectedBlock);
   const selectedOption = useSelector((state) => state.reportAdpAbpType.updateReportType);
-  console.log(selectedOption, "selectedOption")
   const selectedReport = useSelector((state) => state.reportAdpAbpType.selectedReport);
   const selectedYear= useSelector((state) => state.reportAdpAbpType.selectedYear);
   const [showBreadcomeAdpAbp, setShowBreadcomeAdpAbp] = useState();
   const [aspirationalData, setAspirationalData] = useState([]);
-  
-
   const disableSelectedState = selectedState === "Select State";
   const disableSelectedDistrict = selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict;
-console.log(aspirationalData, "aspirationalData")
+
   // Combine the data from multiple JSON files
   const combinedData = {
     "2020-21": {
@@ -60,7 +57,6 @@ console.log(aspirationalData, "aspirationalData")
       selectedData = combinedData[selectedYear][selectedOption];
     }
     
-    console.log(selectedData, "selectedData")
     if(selectedData){
 
       setAspirationalData(selectedData);
@@ -169,6 +165,7 @@ console.log(aspirationalData, "aspirationalData")
   const handleYearChange = (value) => {
    dispatch(setSelectedYear(value));
     dispatch(selectState("Select State"));
+    dispatch(setselectedCompareDistricts([]));
   };
 
   return (

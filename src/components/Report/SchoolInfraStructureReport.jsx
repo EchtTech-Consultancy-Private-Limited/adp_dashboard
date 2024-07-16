@@ -32,12 +32,14 @@ import "jspdf-autotable";
 import { GlobalLoading } from "../GlobalLoading/GlobalLoading";
 import {
   setselectedOption,
+  setSelectedYear,
   setUpdateStatus,
 } from "../../redux/slice/reportTypeSlice";
 import BlankPage from "./BlankPage";
 import {
   AllBlock,
   AllDistrict,
+  intialYear,
   SelectBlock,
   SelectDistrict,
   selectedOptionConst,
@@ -120,7 +122,7 @@ export default function SchoolInfraStructureReport() {
   const updateLoading = useSelector(
     (state) => state.reportAdpAbpType.loadingStatus
   );
-  const selectedYear= useSelector((state) => state.reportAdpAbpType.selectedYear);
+  const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
   const savedReportName = localStorage.getItem("selectedReport");
   const report_name = savedReportName;
   const [data, setData] = useState([]);
@@ -129,6 +131,7 @@ export default function SchoolInfraStructureReport() {
     dispatch(selectDistrict(SelectDistrict));
     dispatch(selectBlock(SelectBlock));
     dispatch(setselectedOption(selectedOptionConst));
+    dispatch(setSelectedYear(intialYear))
   }
   useEffect(() => {
     resteData();
@@ -181,11 +184,11 @@ export default function SchoolInfraStructureReport() {
   const combinedData = {
     "2020-21": {
       ADP_Report: aspirationalAdpData2020,
-       ABP_Report: aspirationalAbpData,
+      ABP_Report: aspirationalAbpData,
     },
     "2021-22": {
       ADP_Report: aspirationalAdpData2021,
-       ABP_Report: aspirationalAbpData,
+      ABP_Report: aspirationalAbpData,
     },
     "2022-23": {
       ADP_Report: aspirationalAdpData2022,
@@ -295,7 +298,7 @@ export default function SchoolInfraStructureReport() {
     },
     {
       headerName: "Number of Schools having Functional girls toilets",
-      field: "total_no_of_fun_toilet",
+      field: "total_no_of_fun_girls_toilet",
       // cellRenderer: percentageRenderer,
       hide: false,
     },
@@ -347,7 +350,7 @@ export default function SchoolInfraStructureReport() {
         },
         {
           headerName: "Number of Schools having Functional girls toilets",
-          field: "total_no_of_fun_toilet",
+          field: "total_no_of_fun_girls_toilet",
           // cellRenderer: percentageRenderer,
           hide: false,
         },
@@ -395,7 +398,7 @@ export default function SchoolInfraStructureReport() {
         },
         {
           headerName: "Number of Schools having Functional girls toilets",
-          field: "total_no_of_fun_toilet",
+          field: "total_no_of_fun_girls_toilet",
           // cellRenderer: percentageRenderer,
           hide: false,
         },
@@ -430,10 +433,10 @@ export default function SchoolInfraStructureReport() {
       // let state = acc.find((item) => item.lgd_state_name === curr.lgd_state_name);
       if (group) {
         group.tot_school_girl_co_ed += curr?.tot_school_girl_co_ed;
-        group.total_no_of_fun_toilet += curr?.total_no_of_fun_toilet;
+        group.total_no_of_fun_girls_toilet += curr?.total_no_of_fun_girls_toilet;
         group.toilet_40 += curr?.toilet_40;
         group.functional_toilet_girls_percent = parseFloat(
-          (group.tot_school_girl_co_ed * 100) / group.total_no_of_fun_toilet
+          (curr?.functional_toilet_girls_percent)
         )?.toFixed(2);
         group.sch_having_toilet_40_percent = parseFloat(
           (group.toilet_40 * 100) / group.tot_school_girl_co_ed
@@ -443,10 +446,10 @@ export default function SchoolInfraStructureReport() {
           ...curr,
           lgd_state_name: curr.lgd_state_name,
           tot_school_girl_co_ed: curr?.tot_school_girl_co_ed,
-          total_no_of_fun_toilet: curr?.total_no_of_fun_toilet,
+          total_no_of_fun_girls_toilet: curr?.total_no_of_fun_girls_toilet,
           toilet_40: curr?.toilet_40,
           functional_toilet_girls_percent: parseFloat(
-            (curr.tot_school_girl_co_ed * 100) / curr.total_no_of_fun_toilet
+            (curr.functional_toilet_girls_percent)
           )?.toFixed(2),
           sch_having_toilet_40_percent: parseFloat(
             (curr.toilet_40 * 100) / curr.tot_school_girl_co_ed
@@ -676,19 +679,19 @@ export default function SchoolInfraStructureReport() {
                                 selectedDistrict !== AllDistrict
                                 ? `${selectedDistrict}`
                                 : selectedDistrict === AllDistrict
-                                ? `${selectedState} District's`
-                                : `${selectedState} District's`
-                              : selectReportType === "ABP_Report"
-                              ? selectedState !== SelectState
-                                ? selectedDistrict === SelectDistrict ||
-                                  selectedDistrict === AllDistrict
                                   ? `${selectedState} District's`
-                                  : selectedBlock !== SelectBlock &&
-                                    selectedBlock !== AllBlock
-                                  ? `${selectedBlock}`
-                                  : `${selectedDistrict} Block's`
-                                : selectedBlock
-                              : selectedBlock}
+                                  : `${selectedState} District's`
+                              : selectReportType === "ABP_Report"
+                                ? selectedState !== SelectState
+                                  ? selectedDistrict === SelectDistrict ||
+                                    selectedDistrict === AllDistrict
+                                    ? `${selectedState} District's`
+                                    : selectedBlock !== SelectBlock &&
+                                      selectedBlock !== AllBlock
+                                      ? `${selectedBlock}`
+                                      : `${selectedDistrict} Block's`
+                                  : selectedBlock
+                                : selectedBlock}
                           </h5>
                           <h3 className="heading-sm">Student Performance</h3>
                         </div>

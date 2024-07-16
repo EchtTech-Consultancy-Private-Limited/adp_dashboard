@@ -5,6 +5,11 @@ import { selectDistrict, selectState, setStates } from "../../redux/slice/filter
 import { setselectedCompareDistricts, setselectedCompareOption, setUpdateReportType } from "../../redux/slice/reportTypeSlice";
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
+import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json"
+// import aspirationalAbpData2021 from "../../aspirational-reports-data/aspirationalAbpData.json";
+import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
+// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
+import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
 import table from '../../assets/images/table.svg'
 import card from '../../assets/images/card-list.svg'
 import { Card, Select } from 'antd';
@@ -50,7 +55,8 @@ export default function TransitionRateCompare() {
     const states = useSelector((state) => state.locationAdp.states);
     const districts = useSelector((state) => state.locationAdp.districts);
     const selectedState = useSelector((state) => state.locationAdp.selectedState);
-    const selectedDistricts=useSelector((state) => state.reportAdpAbpType.selectedCompareDistricts)
+    const selectedDistricts = useSelector((state) => state.reportAdpAbpType.selectedCompareDistricts)
+    const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
     function resteData() {
         dispatch(selectState(SelectState));
         dispatch(setselectedCompareOption("upper_primary_to_secondary"));
@@ -59,19 +65,44 @@ export default function TransitionRateCompare() {
         resteData()
     }, [dispatch]);
 
-    
-  useEffect(() => {
-    // dispatch(setUpdateReportType('ADP_Report'));
-     setAspirationalData(aspirationalAdpData)
-   }, [dispatch]);
-   useEffect(() => {
-     if (selectedAdpAbpOption === "ADP_Report") {
-       setAspirationalData(aspirationalAdpData)
-     }
-     else {
-       setAspirationalData(aspirationalAbpData)
-     }
-   }, [selectedAdpAbpOption])
+
+    useEffect(() => {
+        // dispatch(setUpdateReportType('ADP_Report'));
+        setAspirationalData(aspirationalAdpData)
+    }, [dispatch]);
+    //    useEffect(() => {
+    //      if (selectedAdpAbpOption === "ADP_Report") {
+    //        setAspirationalData(aspirationalAdpData)
+    //      }
+    //      else {
+    //        setAspirationalData(aspirationalAbpData)
+    //      }
+    //    }, [selectedAdpAbpOption])
+
+
+    const combinedData = {
+        "2020-21": {
+            ADP_Report: aspirationalAdpData2020,
+            ABP_Report: aspirationalAbpData,
+        },
+        "2021-22": {
+            ADP_Report: aspirationalAdpData2021,
+            ABP_Report: aspirationalAbpData,
+        },
+        "2022-23": {
+            ADP_Report: aspirationalAdpData2022,
+            ABP_Report: aspirationalAbpData,
+        },
+    };
+
+    useEffect(() => {
+        const selectedData = combinedData[selectedYear][selectedAdpAbpOption];
+        if (selectedData) {
+
+            setAspirationalData(selectedData);
+        }
+    }, [selectedAdpAbpOption, selectedYear]);
+
     // Initialize states and districts from JSON data
     useEffect(() => {
         const structuredData = aspirationalData.reduce((acc, curr) => {
