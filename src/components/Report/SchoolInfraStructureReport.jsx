@@ -45,7 +45,7 @@ import {
   selectedOptionConst,
   SelectState,
 } from "../../constant/Constant";
-import TransitionRateCompare from "./TransitionRateCompare";
+// import TransitionRateCompare from "./TransitionRateCompare";
 import { ScrollToTopOnMount } from "../../Scroll/ScrollToTopOnMount";
 
 const ArrowRenderer = ({ data, value }) => {

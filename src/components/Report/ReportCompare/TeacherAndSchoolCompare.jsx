@@ -1,22 +1,22 @@
 
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectDistrict, selectState, setStates } from "../../redux/slice/filterServicesComprisionSlice";
-import { setselectedCompareDistricts, setselectedCompareOption, setUpdateReportType } from "../../redux/slice/reportTypeSlice";
-import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
-import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
-import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json"
+import { selectDistrict, selectState, setStates } from "../../../redux/slice/filterServicesComprisionSlice";
+import { setselectedCompareDistricts, setselectedCompareOption, setUpdateReportType } from "../../../redux/slice/reportTypeSlice";
+import aspirationalAbpData from "../../../aspirational-reports-data/aspirational.json";
+import aspirationalAdpData from "../../../aspirational-reports-data/aspirationalDistrict.json";
+import aspirationalAdpData2020 from "../../../aspirational-reports-data/aspirationalAdpData2020-21.json"
 // import aspirationalAbpData2021 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
+import aspirationalAdpData2021 from "../../../aspirational-reports-data/aspirationalAdpData2021-22.json";
 // import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
-import table from '../../assets/images/table.svg'
-import card from '../../assets/images/card-list.svg'
+import aspirationalAdpData2022 from "../../../aspirational-reports-data/aspirationalAdpData2022-23.json";
+import table from '../../../assets/images/table.svg'
+import card from '../../../assets/images/card-list.svg'
 import { Card, Select } from 'antd';
-import { SelectState } from "../../constant/Constant";
+import { SelectState } from "../../../constant/Constant";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import BlankPage from "./BlankPage";
+import BlankPage from "../BlankPage";
 const ArrowRenderer = ({ data }) => {
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
     const [arrowData, setArrowData] = useState(null);
@@ -45,7 +45,10 @@ const ArrowRenderer = ({ data }) => {
         </span>
     );
 };
-export default function TransitionRateCompare() {
+
+
+
+export default function TeacherAndSchoolCompare() {
 
     const dispatch = useDispatch();
     const [aspirationalData, setAspirationalData] = useState([])
