@@ -124,9 +124,30 @@ export default function SchoolInfraStructureReport() {
     (state) => state.reportAdpAbpType.loadingStatus
   );
   const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
+  const states = useSelector((state) => state.locationAdp.states);
   const savedReportName = localStorage.getItem("selectedReport");
   const report_name = savedReportName;
   const [data, setData] = useState([]);
+  const [allData, SetAllData]=useState([])
+  const [showFinalData, setShowFinalData]=useState([])
+  const flattenData = (data) => {
+    const flattened = [];
+  
+    data?.forEach(state => {
+      state.districts.forEach(district => {
+        district.blocks.forEach(block => {
+          flattened.push({
+            lgd_state_name: state.lgd_state_name,
+            lgd_district_name: district.lgd_district_name,
+            lgd_block_name: block.lgd_block_name,
+          });
+        });
+      });
+    });
+  
+    return flattened;
+  };
+  
   function resteData() {
     dispatch(selectState(SelectState));
     dispatch(selectDistrict(SelectDistrict));
@@ -137,6 +158,10 @@ export default function SchoolInfraStructureReport() {
   useEffect(() => {
     resteData();
   }, [dispatch]);
+
+  useEffect(()=>{
+    SetAllData(states)
+},[states])
   {
     /*...............update Location Header..............*/
   }
@@ -169,7 +194,7 @@ export default function SchoolInfraStructureReport() {
     SelectState,
     selectedDistrict,
     SelectDistrict,
-    selectedOption,
+    selectReportType,
   ]);
 
   {
@@ -281,55 +306,62 @@ export default function SchoolInfraStructureReport() {
 
   const [columns, setColumn] = useState([
     {
-      headerName: "Serial Number",
-      field: "Serial Number",
-      hide: true,
-      suppressColumnsToolPanel: true,
-      suppressFiltersToolPanel: true,
+        headerName: "Serial Number",
+        field: "Serial Number",
+        hide: true,
+        suppressColumnsToolPanel: true,
+        suppressFiltersToolPanel: true,
     },
     {
-      headerName: locationHeader,
-      cellRenderer: ArrowRenderer,
-      field: "Location",
+        headerName: "State",
+        field: "lgd_state_name",
+    },
+    {
+        headerName: "District",
+        field: "lgd_district_name",
+    },
+    {
+        headerName: "Block",
+        field: "lgd_block_name",
     },
 
-    {
-      headerName: "Total number of Coed and Girls Schools",
-      field: "tot_school_girl_co_ed",
-      // cellRenderer: percentageRenderer,
-      hide: false,
-    },
-    {
-      headerName: "Number of Schools having Functional girls toilets",
-      field: "total_no_of_fun_girls_toilet",
-      // cellRenderer: percentageRenderer,
-      hide: false,
-    },
+]);
+useEffect(() => {
+    if (selectedState === "All State") {
+        const columns = [
+            {
+                headerName: "Serial Number",
+                field: "Serial Number",
+                hide: true,
+                suppressColumnsToolPanel: true,
+                suppressFiltersToolPanel: true,
+            },
+            {
+                headerName: "State",
+                field: "lgd_state_name",
+            },
+            {
+                headerName: "District",
+                field: "lgd_district_name",
+            },
+        ];
 
-    {
-      headerName: "Percentange of Schools having Functional Girls Toilets",
-      field: "functional_toilet_girls_percent",
-      cellRenderer: percentageRenderer,
-      hide: false,
-    },
+        if (selectReportType === "ABP_Report") {
+            columns.push({
+                headerName: "Block",
+                field: "lgd_block_name",
+            });
+        }
 
-    {
-      headerName: "Number of Schools having girls toilets in the ratio of 40:1",
-      field: "toilet_40",
-      hide: false,
-    },
-    {
-      headerName: "Percent",
-      field: "sch_having_toilet_40_percent",
-      cellRenderer: percentageRenderer,
-      hide: false,
-    },
-  ]);
+        setColumn(columns);
+    }
+}, [selectedState, selectReportType]);
   const handleOptionChange = (event) => {
     dispatch(setselectedOption(event.target.value));
   };
 
   useEffect(() => {
+    if (selectedState !== "All State") {
     if (selectedOption === "upper_primary_to_secondary") {
       setColumn([
         {
@@ -427,7 +459,8 @@ export default function SchoolInfraStructureReport() {
         },
       ]);
     }
-  }, [locationHeader, selectedOption]);
+  }
+  }, [locationHeader, selectedOption, selectedState]);
 
   const compressData = useCallback((data, groupBy) => {
     return data.reduce((acc, curr) => {
@@ -476,6 +509,19 @@ export default function SchoolInfraStructureReport() {
     }
     return compressData(data, "lgd_state_name");
   }, [data, selectedState, selectedDistrict, selectedBlock]);
+
+  useEffect(()=>{
+    if(selectedState !== "All State"){
+        setShowFinalData(compressedData)
+    }
+    else{
+        if (allData.length > 0) {
+            const flattenedData = flattenData(allData);
+            setShowFinalData(flattenedData);
+          }
+        
+    }
+        },[selectedState,data,allData , selectedDistrict, selectedBlock,])
 
   const defColumnDefs = useMemo(
     () => ({
@@ -663,12 +709,12 @@ const handleExportData = (e) => {
 
         <div className="container">
           <div className="row mt-4">
-            {selectedState !== SelectState ? (
+           
               <div className="col-md-12">
                 {loading && <GlobalLoading />}
                 <div className="card-box">
                   <div className="row align-items-end">
-                    <div className="col-md-5">
+                    <div className="col-md-6">
                       <div className="d-flex align-items-end">
                         <div className="title-box">
                           <h5 className="sub-title">
@@ -703,40 +749,9 @@ const handleExportData = (e) => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-md-7">
-                      <div className="d-flex w-m-100">
-                        <div className="radio-button">
-                          {/* <div className="box-radio">
-                            <input
-                              type="radio"
-                              id="radio4"
-                              value="upper_primary_to_secondary"
-                              checked={
-                                selectedOption === "upper_primary_to_secondary"
-                              }
-                              onChange={handleOptionChange}
-                            />
-                            <label htmlFor="radio4">
-                              Upper Primary to Secondary{" "}
-                            </label>
-                          </div>
-
-                          <div className="box-radio">
-                            <input
-                              type="radio"
-                              id="radio5"
-                              value="secondary_to_higher_secondary"
-                              checked={
-                                selectedOption ===
-                                "secondary_to_higher_secondary"
-                              }
-                              onChange={handleOptionChange}
-                            />
-                            <label htmlFor="radio5">
-                              Secondary to Higher Secondary
-                            </label>
-                          </div> */}
-                        </div>
+                    <div className="col-md-6">
+                      <div className="d-flex justify-content-end w-m-100">
+                       
                         <div className="">
                           {/* <img src={download} alt="download" /> */}
                           <select
@@ -768,7 +783,7 @@ const handleExportData = (e) => {
                         >
                           <AgGridReact
                             columnDefs={columns}
-                            rowData={compressedData}
+                            rowData={showFinalData}
                             defaultColDef={defColumnDefs}
                             onGridReady={onGridReady}
                           />
@@ -778,11 +793,6 @@ const handleExportData = (e) => {
                   </div>
                 </div>
               </div>
-            ) : (
-              <div className="col-md-12">
-                <BlankPage />
-              </div>
-            )}
             {/* <TransitionRateCompare /> */}
           </div>
         </div>

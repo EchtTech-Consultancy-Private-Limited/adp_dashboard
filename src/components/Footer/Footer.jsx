@@ -1,10 +1,20 @@
 import { Link } from "react-router-dom";
-import './Footer.scss'
+import './footer.scss'
 import { useTranslation } from "react-i18next";
-
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { useEffect } from "react";
 
 const Footer = () => {
   const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    AOS.init({
+      disable: "phone",
+      duration: 1000,
+      easing: "ease-out-cubic",
+    });
+  }, []);
 
   return (
    
@@ -12,7 +22,7 @@ const Footer = () => {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <div className="footer-link">
+              <div className="footer-link" data-aos="fade-up">
                 <Link to="/">{t('webInformationManager')}</Link>
                 <Link to="/">{t('termsConditions')}</Link>
                 <Link to="/">{t('copyrightPolicy')}</Link>
