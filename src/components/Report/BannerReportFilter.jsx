@@ -181,6 +181,7 @@ export default function BannerReportFilter() {
   const handleStateChange = (value) => {
     dispatch(selectState(value));
     dispatch(setselectedCompareDistricts([]));
+    dispatch(setselectedCompareBlocks([]))
   };
 
   const handleDistrictChange = (value) => {
@@ -196,6 +197,7 @@ export default function BannerReportFilter() {
     dispatch(setSelectedYear(value));
     dispatch(selectState("All State"));
     dispatch(setselectedCompareDistricts([]));
+    dispatch(setselectedCompareBlocks([]))
   };
 
   return (
