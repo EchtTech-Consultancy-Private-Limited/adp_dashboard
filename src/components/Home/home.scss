@@ -11,7 +11,7 @@
         .overlay {
             background: rgb(0 0 0 / 45%);
             height: 64vh;
-            padding-top: 6px;
+            padding-top: 0px;
         }
     }
 }
@@ -20,7 +20,7 @@
     padding: 50px 0;
 
     @media (max-width: 991px) {
-        padding: 30px 0;
+        padding: 35px 0;
     }
 
 }
@@ -28,6 +28,10 @@
 .devider-theme {
     position: absolute;
     bottom: 0%;
+
+    @media (max-width: 767px) {
+       bottom: 1%;
+    }
 }
 
 img {
@@ -149,12 +153,22 @@ img {
 }
 
 .home-tab {
-    padding-top: 25px;
+    padding-top: 30px;
 
     ul.nav.nav-tabs {
         border: 0;
         justify-content: center;
         margin-bottom: 30px;
+
+        @media (max-width: 991px) {
+            li{
+                width: 95%;
+
+                .nav-link{
+                    width: 100%;
+                }
+            }  
+        }
     }
 
     .nav-tabs .nav-item.show .nav-link,
@@ -235,10 +249,9 @@ img {
     background: #BADBE3;
 
     @media (max-width: 991px) {
-        padding-top: 0px !important;
 
         .z-2.pt-5.mt-3 {
-            padding-top: 0 !important;
+            // padding-top: 0 !important;
             margin-top: 0 !important;
         }
 
@@ -249,6 +262,10 @@ img {
 
     .themes-text {
         text-align: left;
+
+        @media (max-width: 991px) {
+            padding-left: 5%;
+        }
 
         .sub-title {
             font-size: 18px;
@@ -292,8 +309,8 @@ img {
                 padding-top: 10px;
 
                 @media (max-width: 991px) {
-                    font-size: 30px;
-                    padding-top: 5px;   
+                    font-size: 36px;
+                    padding-top: 2px;   
                 }
             }
 
@@ -313,6 +330,16 @@ img {
                 @media (max-width:1399px) and (min-width: 1024px) {
                     margin-top: -28px;
                 }
+
+                @media (max-width: 991px) {
+                    margin-top: -30px;
+                }
+            }
+
+            &.img-2{
+                @media (max-width: 991px) {
+                    margin-top: -30px;
+                }
             }
 
             &.img-3 {
@@ -320,6 +347,9 @@ img {
 
                 @media (max-width:1399px) and (min-width: 1024px) {
                     margin-top: -38px;
+                }
+                @media (max-width: 991px) {
+                    margin-top: -52px;
                 }
             }
 
@@ -329,6 +359,10 @@ img {
                 @media (max-width:1399px) and (min-width: 1024px) {
                     margin-top: -50px;
                 }
+
+                @media (max-width: 991px) {
+                    margin-top: -52px;
+                }
             }
 
             &.img-5 {
@@ -336,6 +370,9 @@ img {
 
                 @media (max-width:1399px) and (min-width: 1024px) {
                     margin-top: -38px;
+                }
+                @media (max-width: 991px) {
+                    margin-top: -40px;
                 }
             }
         }
@@ -430,22 +467,37 @@ img {
     }
 }
 
+.d-none-desktop{
+    display: none;
+}
+
 .theme-border {
     position: absolute;
     width: 80%;
     height: 80%;
-    border: 1px solid #85C5D5;
+    border: 2px solid #85C5D5;
     left: 4%;
     border-radius: 20px;
     z-index: 1;
 
     @media (max-width: 767px) {
-        display: none
+        width: 94%;
+        left: 3%;
+        height: 99%;
+        
     }
 }
 
 @media (max-width: 991px) {
     p {
         font-size: 14px !important;
+    }
+
+    .d-none-desktop{
+        display: block;
+    }
+
+    .d-none-mobile{
+        display: none;
     }
 }

@@ -154,9 +154,7 @@ const dispatch=useDispatch()
                   <Link to="" onClick={goToPageOnClick} className="logo-text ordernav-sm-2"> {t('aspirational')} <br />{t('districtProgramme')}  </Link>
 
                 </div>
-                <div className="menu-icon" onClick={handleShowNavbar}>
-                  <Hamburger />
-                </div>
+               
                 <div className="navbar-right">
                   <div className={`nav-elements  ${showNavbar && "active"}`}>
                     <ul className='mb-0'>
@@ -198,6 +196,10 @@ const dispatch=useDispatch()
                       </li>
                     </ul>
                   </div>
+                </div>
+
+                <div className="menu-icon" onClick={handleShowNavbar}>
+                  <Hamburger />
                 </div>
 
               </nav>
