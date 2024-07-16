@@ -113,39 +113,39 @@ export default function TransitionBlockRateCompare() {
   useEffect(() => {
     const structuredData = aspirationalData.reduce((acc, curr) => {
       const stateIndex = acc.findIndex(
-        (st) => st.lgd_state_id === curr.lgd_state_id
+        (st) => st.lgd_state_id === curr?.lgd_state_id
       );
       if (stateIndex === -1) {
         acc.push({
-          lgd_state_id: curr.lgd_state_id,
-          lgd_state_name: curr.lgd_state_name,
+          lgd_state_id: curr?.lgd_state_id,
+          lgd_state_name: curr?.lgd_state_name,
           block: [
             {
-              lgd_block_id: curr.lgd_block_id,
-              lgd_block_name: curr.lgd_block_name,
-              upri_b: curr.upri_b,
-              upri_g: curr.upri_g,
-              upri_t: curr.upri_t,
-              sec_b: curr.sec_b,
-              sec_g: curr.sec_g,
-              sec_t: curr.sec_t,
+              lgd_block_id: curr?.lgd_block_id,
+              lgd_block_name: curr?.lgd_block_name,
+              upri_b: curr?.upri_b,
+              upri_g: curr?.upri_g,
+              upri_t: curr?.upri_t,
+              sec_b: curr?.sec_b,
+              sec_g: curr?.sec_g,
+              sec_t: curr?.sec_t,
             },
           ],
         });
       } else {
         const blockIndex = acc[stateIndex].blocks.findIndex(
-          (blk) => blk.lgd_block_id === curr.lgd_block_id
+          (blk) => blk.lgd_block_id === curr?.lgd_block_id
         );
         if (blockIndex === -1) {
           acc[stateIndex].blocks.push({
-            lgd_block_id: curr.lgd_block_id,
-            lgd_block_name: curr.lgd_block_name,
-            upri_b: curr.upri_b,
-            upri_g: curr.upri_g,
-            upri_t: curr.upri_t,
-            sec_b: curr.sec_b,
-            sec_g: curr.sec_g,
-            sec_t: curr.sec_t,
+            lgd_block_id: curr?.lgd_block_id,
+            lgd_block_name: curr?.lgd_block_name,
+            upri_b: curr?.upri_b,
+            upri_g: curr?.upri_g,
+            upri_t: curr?.upri_t,
+            sec_b: curr?.sec_b,
+            sec_g: curr?.sec_g,
+            sec_t: curr?.sec_t,
           });
         }
       }
@@ -366,24 +366,24 @@ export default function TransitionBlockRateCompare() {
                               <p>Boys</p>
                               <h6 className="sub-title">
                                 {selectedOption === "upper_primary_to_secondary"
-                                  ? block.upri_b
-                                  : block.sec_b}
+                                  ? block?.upri_b
+                                  : block?.sec_b}
                               </h6>
                             </div>
                             <div className="text-card">
                               <p>Girls</p>
                               <h6 className="sub-title">
                                 {selectedOption === "upper_primary_to_secondary"
-                                  ? block.upri_g
-                                  : block.sec_g}
+                                  ? block?.upri_g
+                                  : block?.sec_g}
                               </h6>
                             </div>
                             <div className="text-card">
                               <p>Total</p>
                               <h6 className="sub-title">
                                 {selectedOption === "upper_primary_to_secondary"
-                                  ? block.upri_t
-                                  : block.sec_t}
+                                  ? block?.upri_t
+                                  : block?.sec_t}
                               </h6>
                             </div>
                           </div>
