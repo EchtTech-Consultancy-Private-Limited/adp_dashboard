@@ -6,6 +6,7 @@ name: "district/comprision",
   districts: [],
   selectedState: "Select State",
   selectedDistrict: "All District",
+  selectedBlock:"All Block"
   
 };
 
@@ -31,9 +32,13 @@ const filterServicesComprisionSlice = createSlice({
     
     },
    
+    selectBlock: (state, action) => {
+      state.selectedBlock = action.payload;
+    
+    },
   }
 });
 
-export const { setStates, setDistricts, selectState, selectDistrict,selectedAllIndia } = filterServicesComprisionSlice.actions;
+export const { setStates, setDistricts, selectState, selectDistrict,selectedAllIndia,selectBlock } = filterServicesComprisionSlice.actions;
 
 export default filterServicesComprisionSlice.reducer;

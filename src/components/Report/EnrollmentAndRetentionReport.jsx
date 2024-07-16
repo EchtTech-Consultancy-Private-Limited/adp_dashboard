@@ -13,6 +13,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectBlock, selectDistrict, selectState } from '../../redux/slice/filterServicesSlice'
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
+import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json"
+// import aspirationalAbpData2021 from "../../aspirational-reports-data/aspirationalAbpData.json";
+import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
+// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
+import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { useTranslation } from "react-i18next";
@@ -67,6 +72,7 @@ export default function EnrollmentAndRetentionReport() {
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType)
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption)
     const updateLoading = useSelector((state) => state.reportAdpAbpType.loadingStatus)
+    const selectedYear= useSelector((state) => state.reportAdpAbpType.selectedYear);
     const savedReportName = localStorage.getItem('selectedReport');
     const report_name = savedReportName
     const [data, setData] = useState([]);
@@ -94,16 +100,36 @@ export default function EnrollmentAndRetentionReport() {
     }, [selectedState, SelectState, selectedDistrict, SelectDistrict])
 
     {/*...............Take data report wise..............*/ }
-    useEffect(() => {
-        if (selectReportType === "ADP_Report") {
-            setAspirationalData(aspirationalAdpData)
-            dispatchingData()
-        }
-        else {
-            setAspirationalData(aspirationalAbpData)
-            dispatchingData()
-        }
-    }, [selectReportType])
+    // useEffect(() => {
+    //     if (selectReportType === "ADP_Report") {
+    //         setAspirationalData(aspirationalAdpData)
+    //         dispatchingData()
+    //     }
+    //     else {
+    //         setAspirationalData(aspirationalAbpData)
+    //         dispatchingData()
+    //     }
+    // }, [selectReportType])
+    const combinedData = {
+        "2020-21": {
+          ADP_Report: aspirationalAdpData2020,
+           ABP_Report: aspirationalAbpData,
+        },
+        "2021-22": {
+          ADP_Report: aspirationalAdpData2021,
+           ABP_Report: aspirationalAbpData,
+        },
+        "2022-23": {
+          ADP_Report: aspirationalAdpData2022,
+          ABP_Report: aspirationalAbpData,
+        },
+      };
+    
+      useEffect(() => {
+        // Update the state based on the selected options
+        const selectedData = combinedData[selectedYear][selectReportType];
+        setAspirationalData(selectedData);
+      }, [selectReportType, selectedYear]);
     useEffect(() => {
         let filteredData = aspirationalData;
 
@@ -280,34 +306,34 @@ export default function EnrollmentAndRetentionReport() {
             let group = acc.find((item) => item[groupBy] === groupKey);
             if (group) {
                 group.upri_b = parseFloat(
-                    ((group.upri_b * group.blocks + curr.upri_b) / (group.blocks + 1)).toFixed(2)
+                    ((group.upri_b * group.blocks + curr.upri_b) / (group.blocks + 1))?.toFixed(2)
                 );
                 group.upri_g = parseFloat(
-                    ((group.upri_g * group.blocks + curr.upri_g) / (group.blocks + 1)).toFixed(2)
+                    ((group.upri_g * group.blocks + curr.upri_g) / (group.blocks + 1))?.toFixed(2)
                 );
                 group.upri_t = parseFloat(
-                    ((group.upri_t * group.blocks + curr.upri_t) / (group.blocks + 1)).toFixed(2)
+                    ((group.upri_t * group.blocks + curr.upri_t) / (group.blocks + 1))?.toFixed(2)
                 );
                 group.sec_b = parseFloat(
-                    ((group.sec_b * group.blocks + curr.sec_b) / (group.blocks + 1)).toFixed(2)
+                    ((group.sec_b * group.blocks + curr.sec_b) / (group.blocks + 1))?.toFixed(2)
                 );
                 group.sec_g = parseFloat(
-                    ((group.sec_g * group.blocks + curr.sec_g) / (group.blocks + 1)).toFixed(2)
+                    ((group.sec_g * group.blocks + curr.sec_g) / (group.blocks + 1))?.toFixed(2)
                 );
                 group.sec_t = parseFloat(
-                    ((group.sec_t * group.blocks + curr.sec_t) / (group.blocks + 1)).toFixed(2)
+                    ((group.sec_t * group.blocks + curr.sec_t) / (group.blocks + 1))?.toFixed(2)
                 );
                 group.blocks += 1;
             } else {
                 acc.push({
                     ...curr,
                     [groupBy]: groupKey,
-                    upri_b: parseFloat(curr.upri_b.toFixed(2)),
-                    upri_g: parseFloat(curr.upri_g.toFixed(2)),
-                    upri_t: parseFloat(curr.upri_t.toFixed(2)),
-                    sec_b: parseFloat(curr.sec_b.toFixed(2)),
-                    sec_g: parseFloat(curr.sec_g.toFixed(2)),
-                    sec_t: parseFloat(curr.sec_t.toFixed(2)),
+                    upri_b: parseFloat(curr.upri_b?.toFixed(2)),
+                    upri_g: parseFloat(curr.upri_g?.toFixed(2)),
+                    upri_t: parseFloat(curr.upri_t?.toFixed(2)),
+                    sec_b: parseFloat(curr.sec_b?.toFixed(2)),
+                    sec_g: parseFloat(curr.sec_g?.toFixed(2)),
+                    sec_t: parseFloat(curr.sec_t?.toFixed(2)),
                     blocks: 1,
                 });
             }
@@ -535,11 +561,11 @@ export default function EnrollmentAndRetentionReport() {
                                                         ) : selectedBlock
                                                     )}
                                                 </h5>
-                                                <h3 className='heading-sm'>Transition Rate</h3>
+                                                <h3 className='heading-sm'>{t('transitionRate')}</h3>
                                             </div>
                                             <div className="tab-box">
-                                                <button className='tab-button active'><img src={table} alt="Table" /> Table View</button>
-                                                <button className='tab-button'><img src={chart} alt="chart" /> Chart View</button>
+                                                <button className='tab-button active'><img src={table} alt="Table" /> {t('tableView')}</button>
+                                                <button className='tab-button'><img src={chart} alt="chart" /> {t('chartView')}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -551,7 +577,7 @@ export default function EnrollmentAndRetentionReport() {
                                                         value="upper_primary_to_secondary"
                                                         checked={selectedOption === "upper_primary_to_secondary"}
                                                         onChange={handleOptionChange} />
-                                                    <label htmlFor="radio4">Upper Primary to Secondary  </label>
+                                                    <label htmlFor="radio4">{t('upperPrimaryToSecondary')}</label>
                                                 </div>
 
                                                 <div className="box-radio">
@@ -559,15 +585,15 @@ export default function EnrollmentAndRetentionReport() {
                                                         value="secondary_to_higher_secondary"
                                                         checked={selectedOption === "secondary_to_higher_secondary"}
                                                         onChange={handleOptionChange} />
-                                                    <label htmlFor="radio5">Secondary to Higher Secondary</label>
+                                                    <label htmlFor="radio5">{t('secondaryToHigherSecondary')}</label>
                                                 </div>
                                             </div>
                                             <div className="">
                                                 {/* <img src={download} alt="download" /> */}
                                                 <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
-                                                    <option className="option-hide"> Download Report</option>
-                                                    <option value="export_pdf">Download as PDF </option>
-                                                    <option value="export_excel">Download as Excel</option>
+                                                    <option className="option-hide"> {t('downloadReport')}</option>
+                                                    <option value="export_pdf">{t('downloadAsPdf')} </option>
+                                                    <option value="export_excel">{t('downloadAsExcel')}</option>
                                                 </select>
                                             </div>
                                         </div>
