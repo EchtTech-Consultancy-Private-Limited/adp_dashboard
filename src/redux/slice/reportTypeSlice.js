@@ -9,7 +9,8 @@ const reportTypeSlice = createSlice({
         selectedCompareOption:"upper_primary_to_secondary",
         selectedStateShow:"Select State",
         selectedReport:"Transition Rate",
-        selectedCompareDistricts:[]
+        selectedCompareDistricts:[],
+        selectedYear:"2020-21"
     },
     reducers: {
       setUpdateReportType(state,action) {
@@ -33,8 +34,11 @@ const reportTypeSlice = createSlice({
       setselectedCompareDistricts(state,action) {
         state.selectedCompareDistricts=action.payload;
       },
+      setSelectedYear(state,action) {
+        state.selectedYear=action.payload;
+      },
     },
   })
   
-  export const { setUpdateReportType,setUpdateStatus, setselectedOption,setselectedCompareOption,setselectedStateShow,setselectedReport,setselectedCompareDistricts } = reportTypeSlice.actions
+  export const { setUpdateReportType,setUpdateStatus, setselectedOption,setselectedCompareOption,setselectedStateShow,setselectedReport,setselectedCompareDistricts,setSelectedYear } = reportTypeSlice.actions
   export default reportTypeSlice.reducer

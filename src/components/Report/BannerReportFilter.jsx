@@ -1,42 +1,81 @@
-import React, { useState, useEffect } from 'react'
-import Header from '../Header/Header'
+import React, { useState, useEffect } from 'react';
+import Header from '../Header/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { selectBlock, selectDistrict, selectState, setStates } from '../../redux/slice/filterServicesSlice';
-import { setselectedCompareDistricts, setselectedReport, setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTypeSlice';
+import { setselectedCompareDistricts, setselectedReport, setSelectedYear, setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTypeSlice';
+// import aspirationalAbpData2020 from "../../aspirational-reports-data/2020-21/aspirationalAbpData.json";
+import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json"
+// import aspirationalAbpData from "../../aspirational-reports-data/aspirationalAbpData.json";
+import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
+// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
+import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
-import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
 import { Select } from 'antd';
 import { AllDistrict, SelectBlock, SelectDistrict, SelectKpi, SelectState } from '../../constant/Constant';
 import { selectComparisionDistrict } from '../../redux/slice/filterServicesComprisionSlice';
-import { useTranslation } from "react-i18next";
 
 export default function BannerReportFilter() {
-
-  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const savedReportName = localStorage.getItem('selectedReport');
   const states = useSelector((state) => state.locationAdp.states);
   const districts = useSelector((state) => state.locationAdp.districts);
   const blocks = useSelector((state) => state.locationAdp.blocks);
   const selectedState = useSelector((state) => state.locationAdp.selectedState);
-  const [aspirationalData, setAspirationalData] = useState([])
   const selectedDistrict = useSelector((state) => state.locationAdp.selectedDistrict);
   const selectedBlock = useSelector((state) => state.locationAdp.selectedBlock);
-  const disableSelectedState = selectedState === "Select State"
+  const selectedOption = useSelector((state) => state.reportAdpAbpType.updateReportType);
+  const selectedReport = useSelector((state) => state.reportAdpAbpType.selectedReport);
+  const selectedYear= useSelector((state) => state.reportAdpAbpType.selectedYear);
+  const [showBreadcomeAdpAbp, setShowBreadcomeAdpAbp] = useState();
+  const [aspirationalData, setAspirationalData] = useState([]);
+  const disableSelectedState = selectedState === "Select State";
   const disableSelectedDistrict = selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict;
-  const selectedOption = useSelector((state) => state.reportAdpAbpType.updateReportType)
-  const selectedReport = useSelector((state) => state.reportAdpAbpType.selectedReport)
-  const [showBreadcomeAdpAbp, setShowBreadcomeAdpAbp] = useState()
+
+  // Combine the data from multiple JSON files
+  const combinedData = {
+    "2020-21": {
+      ADP_Report: aspirationalAdpData2020,
+       ABP_Report: aspirationalAbpData,
+    },
+    "2021-22": {
+      ADP_Report: aspirationalAdpData2021,
+       ABP_Report: aspirationalAbpData,
+    },
+    "2022-23": {
+      ADP_Report: aspirationalAdpData2022,
+       ABP_Report: aspirationalAbpData,
+    },
+  };
+
+  useEffect(() => {
+    // Update the state based on the selected options
+    let selectedData;
+    if(selectedOption){
+      selectedData = combinedData[selectedYear][selectedOption];
+    }
+    
+    if(selectedData){
+
+      setAspirationalData(selectedData);
+    }
+    if(selectedOption === "ADP_Report"){
+      setShowBreadcomeAdpAbp("ADP Report")
+    }
+    else{
+      setShowBreadcomeAdpAbp("ABP Report")
+    }
+  }, [selectedOption, selectedYear]);
 
   useEffect(() => {
     const savedReportName = localStorage.getItem('selectedReport');
     if (savedReportName) {
-      setselectedReport(savedReportName);
+      dispatch(setselectedReport(savedReportName));
     }
-  }, []);
+  }, [dispatch]);
+
   const handleReportChange = (value) => {
     dispatch(setUpdateReportType('ADP_Report'));
     localStorage.setItem('selectedReport', value);
@@ -62,20 +101,6 @@ export default function BannerReportFilter() {
     }
   };
 
-  useEffect(() => {
-    // dispatch(setUpdateReportType('ADP_Report'));
-    setAspirationalData(aspirationalAdpData)
-  }, [dispatch]);
-  useEffect(() => {
-    if (selectedOption === "ADP_Report") {
-      setAspirationalData(aspirationalAdpData)
-      setShowBreadcomeAdpAbp("ADP Report")
-    }
-    else {
-      setAspirationalData(aspirationalAbpData)
-      setShowBreadcomeAdpAbp("ABP Report")
-    }
-  }, [selectedOption])
   useEffect(() => {
     if (aspirationalData.length > 0) {
       const structuredData = aspirationalData.reduce((acc, curr) => {
@@ -125,9 +150,11 @@ export default function BannerReportFilter() {
       dispatch(setStates(structuredData));
     }
   }, [aspirationalData, dispatch]);
+
   const handleOptionChange = (event) => {
     dispatch(setUpdateReportType(event.target.value));
   };
+
   const handleStateChange = (value) => {
     dispatch(selectState(value));
     dispatch(setselectedCompareDistricts([]));
@@ -141,10 +168,11 @@ export default function BannerReportFilter() {
     dispatch(selectBlock(value));
   };
 
-
-
-
-
+  const handleYearChange = (value) => {
+   dispatch(setSelectedYear(value));
+    dispatch(selectState("Select State"));
+    dispatch(setselectedCompareDistricts([]));
+  };
 
   return (
     <section className='internal-banner-bg'>
@@ -153,8 +181,8 @@ export default function BannerReportFilter() {
         <div className="content-box">
           <div className="row align-items-center">
             <div className="col-md-3">
-              <div className='main-title'>{t('reports')} </div>
-              <div className="brudcrumb-text">{t('home')} / <span>{showBreadcomeAdpAbp}</span> / <span>{savedReportName}</span></div>
+              <div className='main-title'>Reports </div>
+              <div className="brudcrumb-text">Home / <span>{showBreadcomeAdpAbp}</span> / <span>{savedReportName}</span></div>
             </div>
             <div className="col-md-9">
               <div className="row select-infra Comparison-select-group">
@@ -166,148 +194,69 @@ export default function BannerReportFilter() {
                         id="radio1"
                         checked={selectedOption === "ADP_Report"}
                         onChange={handleOptionChange} />
-
-                      <label htmlFor="radio1">{t('adpReport')}</label>
+                      <label htmlFor="radio1">ADP Report</label>
                     </div>
-
                     <div className="box-radio">
                       <input type="radio"
                         value="ABP_Report"
                         id="radio2"
                         checked={selectedOption === "ABP_Report"}
                         onChange={handleOptionChange} />
-                      <label htmlFor="radio2">{t('abpReport')}</label>
+                      <label htmlFor="radio2">ABP Report</label>
                     </div>
-
                   </div>
-
                 </div>
-
                 <div className="col-md-9">
                   <div className="d-flex justify-content-between text-aligns-center antd-select">
-                    {/* State select option */}
-
-                    <Select style={{ width: "100%" }} placeholder={t('academicYear')} mode="single" showSearch
-                      className="form-select">
-                      {/* <Select.Option key="Select Year">
-                        Academic Year
-                      </Select.Option> */}
-                      <Select.Option key={2023 - 2024} value={2023 - 2024} >
-                        2023-2024
-                      </Select.Option>
+                    {/* Year select option */}
+                    <Select onChange={handleYearChange} style={{ width: "100%" }} placeholder="Academic Year" mode="single" showSearch className="form-select" value={selectedYear }>
+                      <Select.Option key="2020-21" value="2020-21">2020 - 21</Select.Option>
+                      <Select.Option key="2021-22" value="2021-22">2021 - 22</Select.Option>
+                      <Select.Option key="2022-23" value="2022-23">2022 - 23</Select.Option>
                     </Select>
-                    <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="Select State" mode="single" showSearch
-                      value={selectedState || "Select State"} className="form-select">
-                      <Select.Option key="Select State" value={SelectState}>
-                      {t('selectState')}
-                      </Select.Option>
-
+                    {/* State select option */}
+                    <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="Select State" mode="single" showSearch value={selectedState || "Select State"} className="form-select">
+                      <Select.Option key="Select State" value={SelectState}>Select State</Select.Option>
                       {states.map((state) => (
-                        <Select.Option
-                          key={state.lgd_state_id}
-                          value={state.lgd_state_name}
-                        >
+                        <Select.Option key={state.lgd_state_id} value={state.lgd_state_name}>
                           {state.lgd_state_name}
                         </Select.Option>
                       ))}
                     </Select>
                     {/* District select option */}
-                    <Select
-                      onChange={handleDistrictChange}
-                      style={{ width: "100%" }}
-                      placeholder={t('allDistrict')}
-                      mode="single"
-                      showSearch
-                      value={selectedDistrict || SelectDistrict}
-                      className="form-select"
-
-                    >
-                      <Select.Option
-                        key="All District"
-                        value={AllDistrict}
-                        disabled={disableSelectedState}
-                      >
-                       {t('allDistrict')}
-                      </Select.Option>
+                    <Select onChange={handleDistrictChange} style={{ width: "100%" }} placeholder="All District" mode="single" showSearch value={selectedDistrict || SelectDistrict} className="form-select">
+                      <Select.Option key="All District" value={AllDistrict} disabled={disableSelectedState}>All District</Select.Option>
                       {districts.map((district) => (
-                        <Select.Option
-                          key={district.lgd_district_id}
-                          value={district.lgd_district_name}
-                        >
+                        <Select.Option key={district.lgd_district_id} value={district.lgd_district_name}>
                           {district.lgd_district_name}
                         </Select.Option>
                       ))}
                     </Select>
-
                     {/* Block select option */}
                     {selectedOption === "ADP_Report" ? "" :
-
-                      <Select
-                        onChange={handleBlockChange}
-                        style={{ width: "100%" }}
-                        placeholder="All Block"
-                        mode="single"
-                        showSearch
-                        value={selectedBlock || SelectBlock}
-                        className="form-select"
-
-                      >
-                        <Select.Option
-                          key="All Block"
-                          value="All Block"
-                          disabled={disableSelectedDistrict || disableSelectedState}
-                        >
-                        {t('allBlock')}
-                        </Select.Option>
+                      <Select onChange={handleBlockChange} style={{ width: "100%" }} placeholder="All Block" mode="single" showSearch value={selectedBlock || SelectBlock} className="form-select">
+                        <Select.Option key="All Block" value="All Block" disabled={disableSelectedDistrict || disableSelectedState}>All Block</Select.Option>
                         {blocks.map((block) => (
-                          <Select.Option
-                            key={block.lgd_block_id}
-                            value={block.lgd_block_name}
-                          >
+                          <Select.Option key={block.lgd_block_id} value={block.lgd_block_name}>
                             {block.lgd_block_name}
                           </Select.Option>
                         ))}
                       </Select>
-
                     }
-
-
-                    <Select
-                      style={{ width: '100%' }}
-                      placeholder="Select KPI"
-                      mode="single"
-                      showSearch
-                      className="form-select"
-                      value={selectedReport || SelectKpi}
-                      onChange={handleReportChange}
-                    >
-                      <Select.Option key="Transition Rate" value="Transition Rate">
-                      {t('transitionRate')}
-                      </Select.Option>
-                      <Select.Option key="Teacher and School Resources" value="Teacher and School Resources">
-                      {t('teacherSchoolResources')}
-                        </Select.Option>
-                        <Select.Option key="Student Performance" value="Student Performance">
-                        {t('studentPerformance')}
-                        </Select.Option>
-                        <Select.Option key="School Infrastructure" value="School Infrastructure">
-                        {t('schoolInfrastructure')}
-                        </Select.Option>
-                        <Select.Option key="Enrollment and Retention" value="Enrollment and Retention">
-                        {t('enrollmentRetention')}
-                        </Select.Option>
+                    <Select style={{ width: '100%' }} placeholder="Select KPI" mode="single" showSearch className="form-select" value={selectedReport || SelectKpi} onChange={handleReportChange}>
+                      <Select.Option key="Transition Rate" value="Transition Rate">Transition Rate</Select.Option>
+                      <Select.Option key="Teacher and School Resources" value="Teacher and School Resources">Teacher and School Resources</Select.Option>
+                      <Select.Option key="Student Performance" value="Student Performance">Student Performance</Select.Option>
+                      <Select.Option key="School Infrastructure" value="School Infrastructure">School Infrastructure</Select.Option>
+                      {/* <Select.Option key="Enrollment and Retention" value="Enrollment and Retention">Enrollment and Retention</Select.Option> */}
                     </Select>
                   </div>
                 </div>
-
-
-
               </div>
             </div>
           </div>
         </div>
       </div>
-
-    </section >
+    </section>
   )
 }
