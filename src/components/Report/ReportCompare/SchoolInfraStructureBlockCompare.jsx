@@ -156,13 +156,6 @@ export default function SchoolInfraStructureBlockCompare() {
     dispatch(setStates(structuredData));
   }, [dispatch]);
 
-  //   suggestion      [dispatch, aspirationalData]
-
-  // Handle state change
-  const handleStateChange = (value) => {
-    dispatch(selectState(value));
-    dispatch(setselectedCompareBlocks([]));
-  };
 
   // Handle district change
   const handleBlockChange = (value, position) => {
@@ -236,29 +229,7 @@ export default function SchoolInfraStructureBlockCompare() {
           </div>
           <div className="col-md-5">
             <div className="d-flex w-m-100">
-              <div className="radio-button">
-                <div className="box-radio">
-                  <input
-                    type="radio"
-                    id="radio11"
-                    value="upper_primary_to_secondary"
-                    checked={selectedOption === "upper_primary_to_secondary"}
-                    onChange={handleOptionChange}
-                  />
-                  <label htmlFor="radio11">Upper Primary to Secondary </label>
-                </div>
-
-                <div className="box-radio">
-                  <input
-                    type="radio"
-                    id="radio22"
-                    value="secondary_to_higher_secondary"
-                    checked={selectedOption === "secondary_to_higher_secondary"}
-                    onChange={handleOptionChange}
-                  />
-                  <label htmlFor="radio22">Secondary to Higher Secondary</label>
-                </div>
-              </div>
+           
             </div>
           </div>
         </div>
