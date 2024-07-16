@@ -31,6 +31,8 @@ import BlankPage from './BlankPage'
 import { AllBlock, AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
 // import TransitionRateCompare from './TransitionRateCompare'
 import { ScrollToTopOnMount } from '../../Scroll/ScrollToTopOnMount'
+import StudentsPerformanceCompare from './ReportCompare/StudentsPerformanceCompare'
+import StudentsPerformanceBlockCompare from './ReportCompare/StudentsPerformanceBlockCompare'
 
 const ArrowRenderer = ({ data, value }) => {
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
@@ -82,27 +84,27 @@ export default function StudentsPerformanceReport() {
     const savedReportName = localStorage.getItem('selectedReport');
     const report_name = savedReportName
     const [data, setData] = useState([]);
-    const [allData, SetAllData]=useState([])
-    const [showFinalData, setShowFinalData]=useState([])
+    const [allData, SetAllData] = useState([])
+    const [showFinalData, setShowFinalData] = useState([])
 
     const flattenData = (data) => {
         const flattened = [];
-      
+
         data?.forEach(state => {
-          state.districts.forEach(district => {
-            district.blocks.forEach(block => {
-              flattened.push({
-                lgd_state_name: state.lgd_state_name,
-                lgd_district_name: district.lgd_district_name,
-                lgd_block_name: block.lgd_block_name,
-              });
+            state.districts.forEach(district => {
+                district.blocks.forEach(block => {
+                    flattened.push({
+                        lgd_state_name: state.lgd_state_name,
+                        lgd_district_name: district.lgd_district_name,
+                        lgd_block_name: block.lgd_block_name,
+                    });
+                });
             });
-          });
         });
-      
+
         return flattened;
-      };
-      
+    };
+
     function resteData() {
         dispatch(selectState(SelectState));
         dispatch(selectDistrict(SelectDistrict));
@@ -114,9 +116,9 @@ export default function StudentsPerformanceReport() {
         resteData()
     }, [dispatch]);
 
-    useEffect(()=>{
+    useEffect(() => {
         SetAllData(states)
-    },[states])
+    }, [states])
     {/*...............update Location Header..............*/ }
     useEffect(() => {
         if (selectReportType === "ADP_Report") {
@@ -272,14 +274,14 @@ export default function StudentsPerformanceReport() {
                     field: "lgd_district_name",
                 },
             ];
-    
+
             if (selectReportType === "ABP_Report") {
                 columns.push({
                     headerName: "Block",
                     field: "lgd_block_name",
                 });
             }
-    
+
             setColumn(columns);
         }
     }, [selectedState, selectReportType]);
@@ -289,75 +291,75 @@ export default function StudentsPerformanceReport() {
 
     useEffect(() => {
         if (selectedState !== "All State") {
-        if (selectedOption === "upper_primary_to_secondary") {
-            setColumn([
-                {
-                    headerName: "Serial Number",
-                    field: "Serial Number",
-                    hide: true,
-                    suppressColumnsToolPanel: true,
-                    suppressFiltersToolPanel: true,
-                },
-                {
-                    headerName: locationHeader,
-                    cellRenderer: ArrowRenderer,
-                    field: "Location",
-                },
-                {
-                    headerName: "Number of Schools having teacher trained to teach CWSN",
-                    field: "total_school_cwsn",
-                    hide: false,
-                },
+            if (selectedOption === "upper_primary_to_secondary") {
+                setColumn([
+                    {
+                        headerName: "Serial Number",
+                        field: "Serial Number",
+                        hide: true,
+                        suppressColumnsToolPanel: true,
+                        suppressFiltersToolPanel: true,
+                    },
+                    {
+                        headerName: locationHeader,
+                        cellRenderer: ArrowRenderer,
+                        field: "Location",
+                    },
+                    {
+                        headerName: "Number of Schools having teacher trained to teach CWSN",
+                        field: "total_school_cwsn",
+                        hide: false,
+                    },
 
-                {
-                    headerName: "Total Number of Schools",
-                    field: "tot_school",
-                    hide: false,
-                },
+                    {
+                        headerName: "Total Number of Schools",
+                        field: "tot_school",
+                        hide: false,
+                    },
 
-                {
-                    headerName: "% Schools with Teachers trained for teaching CWSN",
-                    field: "swsn_teacher_percent",
-                    cellRenderer: percentageRenderer,
-                    hide: false,
-                },
-            ]);
-        } else if (selectedOption === "secondary_to_higher_secondary") {
-            setColumn([
-                {
-                    headerName: "Serial Number",
-                    field: "Serial Number",
-                    hide: true,
-                    suppressColumnsToolPanel: true,
-                    suppressFiltersToolPanel: true,
-                },
-                {
-                    headerName: locationHeader,
-                    cellRenderer: ArrowRenderer,
-                    field: "Location",
-                },
-                {
-                    headerName: "Number of Schools having teacher trained to teach CWSN",
-                    field: "total_school_cwsn",
-                    hide: false,
-                },
+                    {
+                        headerName: "% Schools with Teachers trained for teaching CWSN",
+                        field: "swsn_teacher_percent",
+                        cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+                ]);
+            } else if (selectedOption === "secondary_to_higher_secondary") {
+                setColumn([
+                    {
+                        headerName: "Serial Number",
+                        field: "Serial Number",
+                        hide: true,
+                        suppressColumnsToolPanel: true,
+                        suppressFiltersToolPanel: true,
+                    },
+                    {
+                        headerName: locationHeader,
+                        cellRenderer: ArrowRenderer,
+                        field: "Location",
+                    },
+                    {
+                        headerName: "Number of Schools having teacher trained to teach CWSN",
+                        field: "total_school_cwsn",
+                        hide: false,
+                    },
 
-                {
-                    headerName: "Total Number of Schools",
-                    field: "tot_school",
-                    hide: false,
-                },
+                    {
+                        headerName: "Total Number of Schools",
+                        field: "tot_school",
+                        hide: false,
+                    },
 
-                {
-                    headerName: "% Schools with Teachers trained for teaching CWSN",
-                    field: "swsn_teacher_percent",
-                    cellRenderer: percentageRenderer,
-                    hide: false,
-                },
-            ]);
+                    {
+                        headerName: "% Schools with Teachers trained for teaching CWSN",
+                        field: "swsn_teacher_percent",
+                        cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+                ]);
+            }
         }
-    }
-    }, [locationHeader, selectedOption,selectedState]);
+    }, [locationHeader, selectedOption, selectedState]);
 
     const compressData = useCallback((data, groupBy) => {
         return data.reduce((acc, curr) => {
@@ -395,18 +397,18 @@ export default function StudentsPerformanceReport() {
     }, [data, selectedState, selectedDistrict, selectedBlock]);
 
 
-    useEffect(()=>{
-        if(selectedState !== "All State"){
+    useEffect(() => {
+        if (selectedState !== "All State") {
             setShowFinalData(compressedData)
         }
-        else{
+        else {
             if (allData.length > 0) {
                 const flattenedData = flattenData(allData);
                 setShowFinalData(flattenedData);
-              }
-            
+            }
+
         }
-            },[selectedState,data,allData , selectedDistrict, selectedBlock,])
+    }, [selectedState, data, allData, selectedDistrict, selectedBlock,])
 
     const defColumnDefs = useMemo(() => ({
         flex: 1,
@@ -593,42 +595,42 @@ export default function StudentsPerformanceReport() {
                 <div className="container">
                     <div className="row mt-4">
 
-                            <div className="col-md-12">
-                                {loading && <GlobalLoading />}
-                                <div className="card-box">
-                                    <div className="row align-items-end">
-                                        <div className="col-md-6">
-                                            <div className="d-flex align-items-end">
-                                                <div className="title-box">
-                                                    <h5 className='sub-title'>
-                                                        {selectReportType === "ADP_Report" ? (
-                                                            selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict ?
-                                                                `${selectedDistrict}` :
-                                                                selectedDistrict === AllDistrict ?
-                                                                    `${selectedState} District's` : `${selectedState} District's`
-                                                        ) : (
-                                                            selectReportType === "ABP_Report" ? (
-                                                                selectedState !== SelectState ? (
-                                                                    selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict ?
-                                                                        `${selectedState} District's` :
-                                                                        selectedBlock !== SelectBlock && selectedBlock !== AllBlock ?
-                                                                            `${selectedBlock}` :
-                                                                            `${selectedDistrict} Block's`
-                                                                ) : selectedBlock
+                        <div className="col-md-12">
+                            {loading && <GlobalLoading />}
+                            <div className="card-box">
+                                <div className="row align-items-end">
+                                    <div className="col-md-6">
+                                        <div className="d-flex align-items-end">
+                                            <div className="title-box">
+                                                <h5 className='sub-title'>
+                                                    {selectReportType === "ADP_Report" ? (
+                                                        selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict ?
+                                                            `${selectedDistrict}` :
+                                                            selectedDistrict === AllDistrict ?
+                                                                `${selectedState} District's` : `${selectedState} District's`
+                                                    ) : (
+                                                        selectReportType === "ABP_Report" ? (
+                                                            selectedState !== SelectState ? (
+                                                                selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict ?
+                                                                    `${selectedState} District's` :
+                                                                    selectedBlock !== SelectBlock && selectedBlock !== AllBlock ?
+                                                                        `${selectedBlock}` :
+                                                                        `${selectedDistrict} Block's`
                                                             ) : selectedBlock
-                                                        )}
-                                                    </h5>
-                                                    <h3 className='heading-sm'>Student Performance</h3>
-                                                </div>
-                                                <div className="tab-box">
-                                                    <button className='tab-button active'><img src={table} alt="Table" /> Table View</button>
-                                                    <button className='tab-button'><img src={chart} alt="chart" /> Chart View</button>
-                                                </div>
+                                                        ) : selectedBlock
+                                                    )}
+                                                </h5>
+                                                <h3 className='heading-sm'>Student Performance</h3>
+                                            </div>
+                                            <div className="tab-box">
+                                                <button className='tab-button active'><img src={table} alt="Table" /> Table View</button>
+                                                <button className='tab-button'><img src={chart} alt="chart" /> Chart View</button>
                                             </div>
                                         </div>
-                                        <div className="col-md-6">
-                                            <div className="d-flex justify-content-end w-m-100">
-                                                {/* <div className="radio-button">
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="d-flex justify-content-end w-m-100">
+                                            {/* <div className="radio-button">
                                                 <div className="box-radio">
                                                     <input type="radio"
                                                         id="radio4"
@@ -647,36 +649,40 @@ export default function StudentsPerformanceReport() {
                                                     <label htmlFor="radio5">Secondary to Higher Secondary</label>
                                                 </div>
                                             </div> */}
-                                                <div className="">
-                                                    {/* <img src={download} alt="download" /> */}
-                                                    <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
-                                                        <option className="option-hide"> Download Report {selectedYear}</option>
-                                                        <option value="export_pdf">Download as PDF </option>
-                                                        <option value="export_excel">Download as Excel</option>
-                                                    </select>
-                                                </div>
+                                            <div className="">
+                                                {/* <img src={download} alt="download" /> */}
+                                                <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
+                                                    <option className="option-hide"> Download Report {selectedYear}</option>
+                                                    <option value="export_pdf">Download as PDF </option>
+                                                    <option value="export_excel">Download as Excel</option>
+                                                </select>
                                             </div>
-
                                         </div>
-                                    </div>
 
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <div className="table-box mt-4">
-                                                <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
-                                                    style={{ width: "100%", height: 200 }} >
-                                                    <AgGridReact columnDefs={columns} rowData={showFinalData} defaultColDef={defColumnDefs} onGridReady={onGridReady} />
-                                                </div>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <div className="table-box mt-4">
+                                            <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
+                                                style={{ width: "100%", height: 200 }} >
+                                                <AgGridReact columnDefs={columns} rowData={showFinalData} defaultColDef={defColumnDefs} onGridReady={onGridReady} />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
 
+                        </div>
+                        {selectedState !== "All State" ? <>
+                            {selectReportType === "ADP_Report" ?
+                                <StudentsPerformanceCompare /> :
+                                <StudentsPerformanceBlockCompare />
 
-
-                            </div> 
-                        {/* <TransitionRateCompare /> */}
+                            }
+                        </> : ""}
                     </div>
                 </div>
             </section>

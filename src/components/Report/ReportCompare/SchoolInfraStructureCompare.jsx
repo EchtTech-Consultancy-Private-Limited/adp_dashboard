@@ -45,7 +45,7 @@ const ArrowRenderer = ({ data }) => {
         </span>
     );
 };
-export default function TransitionRateCompare() {
+export default function SchoolInfraStructureCompare() {
 
     const dispatch = useDispatch();
     const [aspirationalData, setAspirationalData] = useState([])
@@ -107,39 +107,39 @@ export default function TransitionRateCompare() {
     useEffect(() => {
         const structuredData = aspirationalData.reduce((acc, curr) => {
             const stateIndex = acc.findIndex(
-                (st) => st.lgd_state_id === curr?.lgd_state_id
+                (st) => st.lgd_state_id === curr.lgd_state_id
             );
             if (stateIndex === -1) {
                 acc.push({
-                    lgd_state_id: curr?.lgd_state_id,
-                    lgd_state_name: curr?.lgd_state_name,
+                    lgd_state_id: curr.lgd_state_id,
+                    lgd_state_name: curr.lgd_state_name,
                     districts: [
                         {
-                            lgd_district_id: curr?.lgd_district_id,
-                            lgd_district_name: curr?.lgd_district_name,
-                            upri_b: curr?.upri_b,
-                            upri_g: curr?.upri_g,
-                            upri_t: curr?.upri_t,
-                            sec_b: curr?.sec_b,
-                            sec_g: curr?.sec_g,
-                            sec_t: curr?.sec_t,
+                            lgd_district_id: curr.lgd_district_id,
+                            lgd_district_name: curr.lgd_district_name,
+                            upri_b: curr.upri_b,
+                            upri_g: curr.upri_g,
+                            upri_t: curr.upri_t,
+                            sec_b: curr.sec_b,
+                            sec_g: curr.sec_g,
+                            sec_t: curr.sec_t,
                         },
                     ],
                 });
             } else {
                 const districtIndex = acc[stateIndex].districts.findIndex(
-                    (dist) => dist.lgd_district_id === curr?.lgd_district_id
+                    (dist) => dist.lgd_district_id === curr.lgd_district_id
                 );
                 if (districtIndex === -1) {
                     acc[stateIndex].districts.push({
-                        lgd_district_id: curr?.lgd_district_id,
-                        lgd_district_name: curr?.lgd_district_name,
-                        upri_b: curr?.upri_b,
-                        upri_g: curr?.upri_g,
-                        upri_t: curr?.upri_t,
-                        sec_b: curr?.sec_b,
-                        sec_g: curr?.sec_g,
-                        sec_t: curr?.sec_t,
+                        lgd_district_id: curr.lgd_district_id,
+                        lgd_district_name: curr.lgd_district_name,
+                        upri_b: curr.upri_b,
+                        upri_g: curr.upri_g,
+                        upri_t: curr.upri_t,
+                        sec_b: curr.sec_b,
+                        sec_g: curr.sec_g,
+                        sec_t: curr.sec_t,
                     });
                 }
             }
@@ -184,10 +184,7 @@ export default function TransitionRateCompare() {
         );
     };
 
-    // Handle option change
-    const handleOptionChange = (event) => {
-        dispatch(setselectedCompareOption(event.target.value));
-    };
+  
     return (
         <>
             <div className="card-box">
@@ -224,25 +221,7 @@ export default function TransitionRateCompare() {
                     </div>
                     <div className="col-md-5">
                         <div className="d-flex w-m-100">
-                            <div className="radio-button">
-                                <div className="box-radio">
-                                    <input type="radio"
-                                        id="radio11"
-                                        value="upper_primary_to_secondary"
-                                        checked={selectedOption === "upper_primary_to_secondary"}
-                                        onChange={handleOptionChange} />
-                                    <label htmlFor="radio11">Upper Primary to Secondary  </label>
-                                </div>
-
-                                <div className="box-radio">
-                                    <input type="radio"
-                                        id="radio22"
-                                        value="secondary_to_higher_secondary"
-                                        checked={selectedOption === "secondary_to_higher_secondary"}
-                                        onChange={handleOptionChange} />
-                                    <label htmlFor="radio22">Secondary to Higher Secondary</label>
-                                </div>
-                            </div>
+                        
                         </div>
 
                     </div>
@@ -332,19 +311,19 @@ export default function TransitionRateCompare() {
                                             <div className="text-card">
                                                 <p>Boys</p>
                                                 <h6 className='sub-title'>
-                                                    {selectedOption === "upper_primary_to_secondary" ? district?.upri_b : district?.sec_b}
+                                                    {selectedOption === "upper_primary_to_secondary" ? district.upri_b : district.sec_b}
                                                 </h6>
                                             </div>
                                             <div className="text-card">
                                                 <p>Girls</p>
                                                 <h6 className='sub-title'>
-                                                    {selectedOption === "upper_primary_to_secondary" ? district?.upri_g : district?.sec_g}
+                                                    {selectedOption === "upper_primary_to_secondary" ? district.upri_g : district.sec_g}
                                                 </h6>
                                             </div>
                                             <div className="text-card">
                                                 <p>Total</p>
                                                 <h6 className='sub-title'>
-                                                    {selectedOption === "upper_primary_to_secondary" ? district?.upri_t : district?.sec_t}
+                                                    {selectedOption === "upper_primary_to_secondary" ? district.upri_t : district.sec_t}
                                                 </h6>
                                             </div>
                                         </div>
