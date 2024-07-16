@@ -14,6 +14,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectBlock, selectDistrict, selectState } from '../../redux/slice/filterServicesSlice'
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
+import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json"
+// import aspirationalAbpData2021 from "../../aspirational-reports-data/aspirationalAbpData.json";
+import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
+// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
+import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { useTranslation } from "react-i18next";
@@ -21,16 +26,15 @@ import { jsPDF } from "jspdf";
 import { Select } from 'antd';
 import 'jspdf-autotable';
 import { GlobalLoading } from '../GlobalLoading/GlobalLoading'
-import { setselectedOption, setUpdateStatus } from '../../redux/slice/reportTypeSlice'
+import { setselectedOption, setSelectedYear, setUpdateStatus } from '../../redux/slice/reportTypeSlice'
 import BlankPage from './BlankPage'
-import { AllBlock, AllDistrict, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
+import { AllBlock, AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
 import TransitionRateCompare from './TransitionRateCompare'
 import { ScrollToTopOnMount } from '../../Scroll/ScrollToTopOnMount'
 
 const ArrowRenderer = ({ data, value }) => {
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
     const [arrowData, setArrowData] = useState([]);
-
     useEffect(() => {
         if (selectedOption === "upper_primary_to_secondary") {
             setArrowData(data.upri_t);
@@ -64,14 +68,16 @@ export default function TeacherAndSchResourcesReport() {
     const type = queryParameters.get('type');
     const [gridApi, setGridApi] = useState();
     const [loading, setLoading] = useState(true);
-    localStorage.setItem('selectedReport', "Transition Rate");
+    localStorage.setItem('selectedReport', "Teacher and School Resources");
     const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
     const [aspirationalData, setAspirationalData] = useState([])
     const [locationHeader, SetLocationHeader] = useState();
-    const [sheetName, SetSheetName]=useState()
+    const [sheetName, SetSheetName] = useState()
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType)
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption)
     const updateLoading = useSelector((state) => state.reportAdpAbpType.loadingStatus)
+
+    const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
     const savedReportName = localStorage.getItem('selectedReport');
     const report_name = savedReportName
     const [data, setData] = useState([]);
@@ -80,6 +86,7 @@ export default function TeacherAndSchResourcesReport() {
         dispatch(selectDistrict(SelectDistrict));
         dispatch(selectBlock(SelectBlock));
         dispatch(setselectedOption(selectedOptionConst));
+        dispatch(setSelectedYear(intialYear))
     }
     useEffect(() => {
         resteData()
@@ -105,16 +112,36 @@ export default function TeacherAndSchResourcesReport() {
     }, [selectedState, SelectState, selectedDistrict, SelectDistrict, selectedOption])
 
     {/*...............Take data report wise..............*/ }
+    // useEffect(() => {
+    //     if (selectReportType === "ADP_Report") {
+    //         setAspirationalData(aspirationalAdpData)
+    //         resteData()
+    //     }
+    //     else {
+    //         setAspirationalData(aspirationalAbpData)
+    //         resteData()
+    //     }
+    // }, [selectReportType])
+    const combinedData = {
+        "2020-21": {
+            ADP_Report: aspirationalAdpData2020,
+            ABP_Report: aspirationalAbpData,
+        },
+        "2021-22": {
+            ADP_Report: aspirationalAdpData2021,
+            ABP_Report: aspirationalAbpData,
+        },
+        "2022-23": {
+            ADP_Report: aspirationalAdpData2022,
+            ABP_Report: aspirationalAbpData,
+        },
+    };
+
     useEffect(() => {
-        if (selectReportType === "ADP_Report") {
-            setAspirationalData(aspirationalAdpData)
-            resteData()
-        }
-        else {
-            setAspirationalData(aspirationalAbpData)
-            resteData()
-        }
-    }, [selectReportType])
+        // Update the state based on the selected options
+        const selectedData = combinedData[selectedYear][selectReportType];
+        setAspirationalData(selectedData);
+    }, [selectReportType, selectedYear]);
     useEffect(() => {
         let filteredData = aspirationalData;
 
@@ -196,20 +223,20 @@ export default function TeacherAndSchResourcesReport() {
             headerName: "Number of Elementary Schools having PTR less than equal to 30",
             field: "u_ptr",
             hide: false,
-          },
-      
-          {
+        },
+
+        {
             headerName: "Number of Elementary Schools ",
             field: "total_sch_ele",
             hide: false,
-          },
-      
-          {
+        },
+
+        {
             headerName: "Percentage of elementary schools having PTR less than equal to 30",
             field: "ele_sch_percent",
             cellRenderer: percentageRenderer,
             hide: false,
-          },
+        },
 
     ]);
     const handleOptionChange = (event) => {
@@ -235,20 +262,20 @@ export default function TeacherAndSchResourcesReport() {
                     headerName: "Number of Elementary Schools having PTR less than equal to 30",
                     field: "u_ptr",
                     hide: false,
-                  },
-              
-                  {
+                },
+
+                {
                     headerName: "Number of Elementary Schools ",
                     field: "total_sch_ele",
                     hide: false,
-                  },
-              
-                  {
+                },
+
+                {
                     headerName: "Percentage of elementary schools having PTR less than equal to 30",
                     field: "ele_sch_percent",
                     cellRenderer: percentageRenderer,
                     hide: false,
-                  },
+                },
             ]);
         } else if (selectedOption === "secondary_to_higher_secondary") {
             setColumn([
@@ -268,42 +295,42 @@ export default function TeacherAndSchResourcesReport() {
                     headerName: "Number of Elementary Schools having PTR less than equal to 30",
                     field: "u_ptr",
                     hide: false,
-                  },
-              
-                  {
+                },
+
+                {
                     headerName: "Number of Elementary Schools ",
                     field: "total_sch_ele",
                     hide: false,
-                  },
-              
-                  {
+                },
+
+                {
                     headerName: "Percentage of elementary schools having PTR less than equal to 30",
                     field: "ele_sch_percent",
                     cellRenderer: percentageRenderer,
                     hide: false,
-                  },
+                },
             ]);
         }
     }, [locationHeader, selectedOption]);
-    const compressData = useCallback((data, groupBy)  => {
+    const compressData = useCallback((data, groupBy) => {
         return data.reduce((acc, curr) => {
-          let groupKey = curr[groupBy];
-          let group = acc.find((item) => item[groupBy] === groupKey);
-          if (group) {
-            group.u_ptr += curr.u_ptr;
-            group.total_sch_ele += curr.total_sch_ele;
-            group.ele_sch_percent = parseFloat(
-              ((group.u_ptr * 100) / group.total_sch_ele).toFixed(2)
-            );
-          } else {
-            acc.push({
-              ...curr,
-              ele_sch_percent: parseFloat(((curr.u_ptr * 100) / curr.total_sch_ele).toFixed(2)),
-            });
-          }
-          return acc;
+            let groupKey = curr[groupBy];
+            let group = acc.find((item) => item[groupBy] === groupKey);
+            if (group) {
+                group.u_ptr += curr.u_ptr;
+                group.total_sch_ele += curr.total_sch_ele;
+                group.ele_sch_percent = parseFloat(
+                    ((group.u_ptr * 100) / group.total_sch_ele)?.toFixed(2)
+                );
+            } else {
+                acc.push({
+                    ...curr,
+                    ele_sch_percent: parseFloat(((curr.u_ptr * 100) / curr.total_sch_ele)?.toFixed(2)),
+                });
+            }
+            return acc;
         }, []);
-      }, []);
+    }, []);
     const compressedData = useMemo(() => {
         if (selectedState && selectedState !== SelectState) {
             if (selectedDistrict && selectedDistrict !== AllDistrict && selectedDistrict !== SelectDistrict) {
@@ -400,9 +427,9 @@ export default function TeacherAndSchResourcesReport() {
             doc.text(`Report type : ${selectedState}`, 0.6, 1.5);
             doc.setTextColor("blue");
             doc.setFont("bold");
-            // doc.text(`Report Id : ${id}`, doc.internal.pageSize.width - 2, 0.5, {
-            //     align: "right",
-            // });
+            doc.text(`Report Year : ${selectedYear}`, doc.internal.pageSize.width - 2, 0.5, {
+                align: "right",
+            });
 
             doc.setFontSize(20);
             doc.text(`Report generated on: ${formattedDate}`, doc.internal.pageSize.width - 2, 1.5, { align: "right" });
@@ -492,53 +519,53 @@ export default function TeacherAndSchResourcesReport() {
 
 
     return (
-       <>
-        <ScrollToTopOnMount />
-        <section>
-            <BannerReportFilter />
+        <>
+            <ScrollToTopOnMount />
+            <section>
+                <BannerReportFilter />
 
-            <div className="container">
-                <div className="row mt-4">
+                <div className="container">
+                    <div className="row mt-4">
 
-                    {selectedState !== SelectState ?
+                        {selectedState !== SelectState ?
 
-                        <div className="col-md-12">
-                            {loading && <GlobalLoading />}
-                            <div className="card-box">
-                                <div className="row align-items-end">
-                                    <div className="col-md-5">
-                                        <div className="d-flex align-items-end">
-                                            <div className="title-box">
-                                                <h5 className='sub-title'>
-                                                    {selectReportType === "ADP_Report" ? (
-                                                        selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict ?
-                                                            `${selectedDistrict}` :
-                                                            selectedDistrict === AllDistrict ?
-                                                                `${selectedState} District's` : `${selectedState} District's`
-                                                    ) : (
-                                                        selectReportType === "ABP_Report" ? (
-                                                            selectedState !== SelectState ? (
-                                                                selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict ?
-                                                                    `${selectedState} District's` :
-                                                                    selectedBlock !== SelectBlock && selectedBlock !== AllBlock ?
-                                                                        `${selectedBlock}` :
-                                                                        `${selectedDistrict} Block's`
+                            <div className="col-md-12">
+                                {loading && <GlobalLoading />}
+                                <div className="card-box">
+                                    <div className="row align-items-end">
+                                        <div className="col-md-5">
+                                            <div className="d-flex align-items-end">
+                                                <div className="title-box">
+                                                    <h5 className='sub-title'>
+                                                        {selectReportType === "ADP_Report" ? (
+                                                            selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict ?
+                                                                `${selectedDistrict}` :
+                                                                selectedDistrict === AllDistrict ?
+                                                                    `${selectedState} District's` : `${selectedState} District's`
+                                                        ) : (
+                                                            selectReportType === "ABP_Report" ? (
+                                                                selectedState !== SelectState ? (
+                                                                    selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict ?
+                                                                        `${selectedState} District's` :
+                                                                        selectedBlock !== SelectBlock && selectedBlock !== AllBlock ?
+                                                                            `${selectedBlock}` :
+                                                                            `${selectedDistrict} Block's`
+                                                                ) : selectedBlock
                                                             ) : selectedBlock
-                                                        ) : selectedBlock
-                                                    )}
-                                                </h5>
-                                                <h3 className='heading-sm'>School Infrastructure</h3>
-                                            </div>
-                                            <div className="tab-box">
-                                                <button className='tab-button active'><img src={table} alt="Table" /> Table View</button>
-                                                <button className='tab-button'><img src={chart} alt="chart" /> Chart View</button>
+                                                        )}
+                                                    </h5>
+                                                    <h3 className='heading-sm'>Teacher and School Resources</h3>
+                                                </div>
+                                                <div className="tab-box">
+                                                    <button className='tab-button active'><img src={table} alt="Table" /> Table View</button>
+                                                    <button className='tab-button'><img src={chart} alt="chart" /> Chart View</button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="col-md-7">
-                                        <div className="d-flex w-m-100">
-                                            <div className="radio-button">
-                                                <div className="box-radio">
+                                        <div className="col-md-7">
+                                            <div className="d-flex w-m-100">
+                                                <div className="radio-button">
+                                                    {/* <div className="box-radio">
                                                     <input type="radio"
                                                         id="radio4"
                                                         value="upper_primary_to_secondary"
@@ -554,44 +581,44 @@ export default function TeacherAndSchResourcesReport() {
                                                         checked={selectedOption === "secondary_to_higher_secondary"}
                                                         onChange={handleOptionChange} />
                                                     <label htmlFor="radio5">Secondary to Higher Secondary</label>
+                                                </div> */}
+                                                </div>
+                                                <div className="">
+                                                    {/* <img src={download} alt="download" /> */}
+                                                    <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
+                                                        <option className="option-hide"> Download Report {selectedYear}</option>
+                                                        <option value="export_pdf">Download as PDF </option>
+                                                        <option value="export_excel">Download as Excel</option>
+                                                    </select>
                                                 </div>
                                             </div>
-                                            <div className="">
-                                                {/* <img src={download} alt="download" /> */}
-                                                <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
-                                                    <option className="option-hide"> Download Report 2023-24</option>
-                                                    <option value="export_pdf">Download as PDF </option>
-                                                    <option value="export_excel">Download as Excel</option>
-                                                </select>
-                                            </div>
+
                                         </div>
-
                                     </div>
-                                </div>
 
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <div className="table-box mt-4">
-                                            <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
-                                                style={{ width: "100%", height: 200 }} >
-                                                <AgGridReact columnDefs={columns} rowData={compressedData} defaultColDef={defColumnDefs} onGridReady={onGridReady} />
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <div className="table-box mt-4">
+                                                <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
+                                                    style={{ width: "100%", height: 200 }} >
+                                                    <AgGridReact columnDefs={columns} rowData={compressedData} defaultColDef={defColumnDefs} onGridReady={onGridReady} />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+
+
+
+                            </div> : <div className="col-md-12">
+                                <BlankPage />
                             </div>
-
-
-
-
-                        </div> : <div className="col-md-12">
-                            <BlankPage />
-                        </div>
-                    }
-                    {/* <TransitionRateCompare /> */}
+                        }
+                        {/* <TransitionRateCompare /> */}
+                    </div>
                 </div>
-            </div>
-        </section>
-       </>
+            </section>
+        </>
     )
 }

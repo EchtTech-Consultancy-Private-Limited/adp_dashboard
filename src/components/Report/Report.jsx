@@ -56,12 +56,12 @@ export default function Report() {
                                         <div className="radio-button">
                                             <div className="box-radio">
                                                 <input type="radio" name="view" id="radio4" value="" checked />
-                                                <label htmlFor="radio4">Upper Primary to Secondary  </label>
+                                                <label htmlFor="radio4">U{t('upperPrimaryToSecondary')} </label>
                                             </div>
 
                                             <div className="box-radio">
                                                 <input type="radio" name="view" id="radio5" value="" />
-                                                <label htmlFor="radio5">Secondary to Higher Secondary</label>
+                                                <label htmlFor="radio5">{t('secondaryToHigherSecondary')}</label>
                                             </div>
                                         </div>
                                         <button className='download-button'><img src={download} alt="download" /> Download Report 2023-24</button>

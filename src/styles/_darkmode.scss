@@ -5,8 +5,8 @@
     color: #ff0 !important;
    }
    ul li, p,.heading-blue, .heading-sm,.right-card-sec .card-box-impact .impact-box-content .main-text-c,span,.heading-sm1,.form-control,.infrastructure-main-card .tab-for-graph table tr th, table tr td, div, .ag-ltr .ag-cell{color: #fff !important;}
-   .header-top,.header-top-skipwrap ul li a .select-wrap, .site-header,.menu-switch-tab, .header-dropdown-btn,.bg-grey,.main-card-home::after, .filter_drodown .filter-content,.filter_drodown,.filter_drodown .select-box.from-control li.nav-item.position-static,.right-card-sec .srid-card-se,.tab-for-graph .nav-tabs .nav-link,.form-control,table tr th, table tr td,.bg-grey2,.title-brd span.internalpagename,.ag-header-cell, .ag-tool-panel-wrapper, ul.highcharts-menu{background: #000 !important;}
-   input:checked + .slider,.header-top-skipwrap ul li a .select-wrap, .menu-switch-tab,.header-dropdown-btn,.main-card-home::after,.filter_drodown,.filter_drodown .select-box.from-control li.nav-item.position-static,.right-card-sec .srid-card-se, .filter_drodown ul.dropdown-menu.show.animation {border: 1px solid #fff;}
+   .header-top,.header-top-skipwrap ul li a .select-wrap, .site-header,.menu-switch-tab, .header-dropdown-btn,.bg-grey,.main-card-home::after, .filter_drodown .filter-content,.filter_drodown,.filter_drodown .select-box.from-control li.nav-item.position-static,.right-card-sec .srid-card-se,.tab-for-graph .nav-tabs .nav-link,.form-control,table tr th, table tr td,.bg-grey2,.title-brd span.internalpagename,.ag-header-cell, .ag-tool-panel-wrapper, ul.highcharts-menu, .select-right select.form-select, .btn-banner{background: #000 !important;}
+   input:checked + .slider,.header-top-skipwrap ul li a .select-wrap, .menu-switch-tab,.header-dropdown-btn,.main-card-home::after,.filter_drodown,.filter_drodown .select-box.from-control li.nav-item.position-static,.right-card-sec .srid-card-se, .filter_drodown ul.dropdown-menu.show.animation, .btn-banner {border: 1px solid #fff;}
    header.site-header {
     border-top: 1px solid #545050;}
    .menu-switch-tab .nav-tabs .nav-link.active,.tab-for-graph .nav-tabs .nav-item.show .nav-link, .tab-for-graph .nav-tabs .nav-link.active, .ag-side-bar.ag-unselectable.ag-focus-managed.ag-side-bar-right{background: #000;border: 1px solid #ff0 !important;}
@@ -14,40 +14,48 @@
     background: #fff;
     padding: 3px 10px;
     border-radius: 10px;}
-    .right-card-sec .srid-card-se .card-box,.right-card-sec .card-box-impact .impact-box-content,.right-card-sec .card-box-impact .impact-box-content-education,.tab-for-graph button.view-table-btn,.infrastructure-main-card .tab-for-graph .filter-card, .infrastructure-main-card .tab-for-graph .report-inner-tab .nav-tabs, .infrastructure-main-card .tab-for-graph .about-card, .infrastructure-main-card .tab-for-graph .btn-add-more,.ag-center-cols-viewport, .ag-header-cell, .ag-ltr .ag-cell, .ag-input-field-input, .ag-virtual-list-item, .ag-checkbox-input-wrapper.ag-checked::before, .esriSimpleSlider div, .esriPopup .titlePane .title > div, .Side_filter, .custmize-filter-column .heading-sm.main-title, .custmize-filter-column .box-cont-cust, .custmize-filter-column .box-cont-cust .search-box-div, .btn-reset-filter, .infrastructure-main-card .tab-for-graph .map-heading-map span,.select-infra.button-group-filter select.form-select, .infrastructure-main-card .tab-for-graph .mul-tab-main .multibtn, .ag-theme-material .ag-tabs-header, .ag-theme-material .ag-column-drop-horizontal, .ag-theme-material .ag-tabs-body, .infrastructure-main-card .tab-for-graph .impact-box-content-education{
+    
+    .bg-white, .themes, .themes .themes-box-img .themes-box{background: #000 !important;}
+    .home-tab .nav-tabs .nav-item.show .nav-link, .home-tab .nav-tabs .nav-link.active {
+        color: #fff;
+        background-color: #000000;
+        border-color: #ff0;
+        font-weight: 400;
+    }
+    .home-tab .nav-tabs .nav-link{background: #585858;}
+    .devider-theme{display: none;}
+    .theme-border{border-color: #fff;}
+    .themes .themes-box-img .themes-box{
+        border: 1px solid #fafafa;
+        border-bottom: 0;
+        border-radius: 20px 20px 0 0;
+        padding: 15px 20px 5px;
+
+    }
+    .themes, .footer, .footer .footer-bottom{
+        background: #000;
+        border-top: 1px solid #fff;
+               
+    }
+
+    .card-box, .radio-button, .Comparison-select-group .antd-select .form-select, .comparison-box, .tab-box .tab-button.active, .tab-box .tab-button:last-child, .download-button, .ant-card-body, .comp-card{
         background: #000 !important;
-        border: 1px solid #fff !important;
-    }
-    g.highcharts-legend-item.highcharts-pie-series text,g.highcharts-axis-labels text, button.highcharts-a11y-proxy-element, g.highcharts-legend-item.highcharts-column-series text, .btn-reset-filter{
-        color: #ff0 !important;
-        fill: #ff0 !important;
-    }
-    rect.highcharts-legend-box, .esriPopup .contentPane, .infrastructure-main-card .tab-for-graph .blue-strip, .dark-mode span   {
-        background: #000 !important;
-        fill: #000 !important;
-    }
-    .right-card-sec .srid-card-se.school-dashboard .card-box{border: 0px !important;margin-left: 5px;padding-left: 0px;}
-    .right-card-sec .srid-card-se.school-dashboard img.school-graph-icon{bottom: 0px !important;}
-    table tr th{border-color: #bebebe !important;}
-    .infrastructure-main-card .tab-for-graph a.action-icon{background: #fff;}
-    ::placeholder{color: #bebebe !important;}
-    .ag-checkbox-input-wrapper.ag-checked::after, caption{color: #fff !important;}
-
-    .right-card-sec .srid-card-se .card-box img.card-img, .right-card-sec .card-box-impact .impact-box-content img.card-img-impact, .right-card-sec .card-box-impact .impact-box-content .img-multi-box img {
-        filter: brightness(10) !important;
+        border: 1px solid #ddd !important;
     }
 
-    g.highcharts-legend-item.highcharts-bar-series.highcharts-color-undefined text, .header-top-skipwrap ul li a, .text-black {
-        color: #fff !important;
-        fill: #fff !important;
-    }
-    .table-text-i button#uncontrolled-tab-example-tab-table:before, .table-text-i button#uncontrolled-tab-example-tab-graph:before{filter: invert(1);}
+    .card-box .card-box{border: none !important;}
 
-    select#export_data option, li.highcharts-menu-item, .ag-header-cell:hover {
-        background: #000 !important;
-    }
-    g.highcharts-level-group-1 rect {
-        stroke: #333;
+    .themes .themes-box-img .theme-shadow-box, .ag-row-even.ag-row-no-focus.ag-row.ag-row-level-0.ag-row-position-absolute.ag-row-first.ag-row-not-inline-editing.ag-row-hover, .tab-box .tab-button:last-child, .Comparison-select-group :where(.css-dev-only-do-not-override-98ntnt).ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector{
+        background: rgb(18 18 18 / 84%) !important;
     }
 
+    .download-button{
+        color: #ff0;
+    }
+
+    .themes .themes-box-img .content, .ag-center-cols-viewport, .multi-header-table .ag-row-animation .ag-row{
+        background: rgba(18, 18, 18, 0.84) !important;
+    }
+    .footer .footer-bottom .visitor-counter span{color: #000 !important;}
+    
 }

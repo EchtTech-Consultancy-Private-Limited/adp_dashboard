@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from "react";
-import "./Header.scss";
+import "./header.scss";
 import ministry from '../../assets/images/education_ministry.png';
 import search from '../../assets/images/search.png';
 import { Link, NavLink, useLocation } from 'react-router-dom';
