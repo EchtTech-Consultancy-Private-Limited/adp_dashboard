@@ -3,7 +3,7 @@ import Header from '../Header/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { selectBlock, selectDistrict, selectState, setStates } from '../../redux/slice/filterServicesSlice';
-import { setselectedCompareDistricts, setselectedOption, setselectedReport, setSelectedYear, setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTypeSlice';
+import { setselectedCompareBlocks, setselectedCompareDistricts, setselectedOption, setselectedReport, setSelectedYear, setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTypeSlice';
 // import aspirationalAbpData2020 from "../../aspirational-reports-data/2020-21/aspirationalAbpData.json";
 import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json"
 // import aspirationalAbpData from "../../aspirational-reports-data/aspirationalAbpData.json";
@@ -187,6 +187,7 @@ export default function BannerReportFilter() {
 
   const handleDistrictChange = (value) => {
     dispatch(selectDistrict(value));
+    dispatch(setselectedCompareBlocks([]));
   };
 
   const handleBlockChange = (value) => {
