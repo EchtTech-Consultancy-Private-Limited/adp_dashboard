@@ -30,10 +30,10 @@ export default function Themes() {
         dispatch(setUpdateReportType(reportType));
         dispatch(setselectedReport("School Infrastructure"));
     };
-    const handleEnrollmenClick = (reportType) => {
-        dispatch(setUpdateReportType(reportType));
-        dispatch(setselectedReport("Enrollment and Retention"));
-    };
+    // const handleEnrollmenClick = (reportType) => {
+    //     dispatch(setUpdateReportType(reportType));
+    //     dispatch(setselectedReport("Enrollment and Retention"));
+    // };
     return (
         <section className='themes ptb-70 position-relative'>
 
@@ -111,7 +111,7 @@ export default function Themes() {
 
                                         <div className="link-box">
                                             <Link to="/teacher-and-school-resources" className="link" onClick={() => handleTeacherResourcesClick("ADP_Report")}>{t('seeADPReport')} <span className="material-icons-round">arrow_forward_ios</span></Link>
-                                            <Link to="/teacher-and-school-resources" className="link" onClick={() => handleTeacherResourcesClick("ADP_Report")}>{t('seeABPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/teacher-and-school-resources" className="link" onClick={() => handleTeacherResourcesClick("ABP_Report")}>{t('seeABPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
                                         </div>
                                     </div>
 
@@ -149,7 +149,7 @@ export default function Themes() {
 
                                         <div className="link-box">
                                             <Link to="/student-performance" className="link" onClick={() => handleStudentPerformanceClick("ADP_Report")}>{t('seeADPReport')} <span className="material-icons-round">arrow_forward_ios</span></Link>
-                                            <Link to="/student-performance" className="link" onClick={() => handleStudentPerformanceClick("ADP_Report")}>{t('seeADPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/student-performance" className="link" onClick={() => handleStudentPerformanceClick("ABP_Report")}>{t('seeADPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
                                         </div>
                                     </div>
 
@@ -182,7 +182,7 @@ export default function Themes() {
 
                                         <div className="link-box">
                                             <Link to="/school-infrastructure" className="link" onClick={() => handleSchoolInfraClick("ADP_Report")}>{t('seeADPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
-                                            <Link to="/school-infrastructure" className="link" onClick={() => handleSchoolInfraClick("ADP_Report")}>{t('seeABPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/school-infrastructure" className="link" onClick={() => handleSchoolInfraClick("ABP_Report")}>{t('seeABPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
                                         </div>
                                     </div>
 
@@ -214,8 +214,8 @@ export default function Themes() {
                                         </div>
 
                                         <div className="link-box">
-                                            <Link to="/enrollment-retention" className="link" onClick={() => handleEnrollmenClick("ADP_Report")}>{t('seeADPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
-                                            <Link to="/enrollment-retention" className="link" onClick={() => handleEnrollmenClick("ADP_Report")}>{t('seeABPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/enrollment-retention" className="link" >{t('seeADPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/enrollment-retention" className="link" >{t('seeABPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
                                         </div>
                                     </div>
 

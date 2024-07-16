@@ -113,6 +113,7 @@ export default function SchoolInfraStructureReport() {
   );
   const [aspirationalData, setAspirationalData] = useState([]);
   const [locationHeader, SetLocationHeader] = useState();
+  const [sheetName, SetSheetName] = useState()
   const selectReportType = useSelector(
     (state) => state.reportAdpAbpType.updateReportType
   );
@@ -146,6 +147,7 @@ export default function SchoolInfraStructureReport() {
         selectedDistrict === SelectDistrict
       ) {
         SetLocationHeader("District");
+        SetSheetName("Aspirational District Programme")
       }
     } else if (selectReportType === "ABP_Report") {
       if (
@@ -160,6 +162,7 @@ export default function SchoolInfraStructureReport() {
       ) {
         SetLocationHeader("Block");
       }
+      SetSheetName("Aspirational Block Programme")
     }
   }, [
     selectedState,
@@ -495,167 +498,162 @@ export default function SchoolInfraStructureReport() {
   const getHeaderToExport = (gridApi) => {
     const columns = gridApi.api.getAllDisplayedColumns();
     const headerCellSerialNumber = {
-      text: "Serial Number",
-      headerName: "Serial Number",
-      bold: true,
-      margin: [0, 12, 0, 0],
-    };
-    const headerRow = columns.map((column) => {
-      const { field, headerName } = column.getColDef();
-      const sort = column.getSort();
-      const headerNameUppercase = field[0].toUpperCase() + field.slice(1);
-      const headerCell = {
-        text: headerNameUppercase + (sort ? ` (${sort})` : ""),
-        headerName: headerName,
+        text: "Serial Number",
+        headerName: "Serial Number",
         bold: true,
         margin: [0, 12, 0, 0],
-      };
-      return headerCell;
+    };
+    const headerRow = columns.map((column) => {
+        const { field, headerName } = column.getColDef();
+        const sort = column.getSort();
+        const headerNameUppercase = field[0].toUpperCase() + field.slice(1);
+        const headerCell = {
+            text: headerNameUppercase + (sort ? ` (${sort})` : ""),
+            headerName: headerName,
+            bold: true,
+            margin: [0, 12, 0, 0],
+        };
+        return headerCell;
     });
     headerRow.unshift(headerCellSerialNumber);
     return headerRow;
-  };
-  const getRowsToExport = (gridApi) => {
+};
+const getRowsToExport = (gridApi) => {
     const columns = gridApi.api.getAllDisplayedColumns();
     const getCellToExport = (column, node) => ({
-      text: gridApi.api.getValue(column, node) ?? "",
+        text: gridApi.api.getValue(column, node) ?? "",
     });
     const rowsToExport = [];
     gridApi.api.forEachNodeAfterFilterAndSort((node) => {
-      const rowToExport = [];
-      rowToExport.push({ text: rowsToExport.length + 1 });
-      columns.forEach((column) => {
-        rowToExport.push(getCellToExport(column, node));
-      });
-      rowsToExport.push(rowToExport);
+        const rowToExport = [];
+        rowToExport.push({ text: rowsToExport.length + 1 });
+        columns.forEach((column) => {
+            rowToExport.push(getCellToExport(column, node));
+        });
+        rowsToExport.push(rowToExport);
     });
     return rowsToExport;
-  };
-  const getDocument = (gridApi) => {
+};
+const getDocument = (gridApi) => {
     const headerRow = getHeaderToExport(gridApi);
     const rows = getRowsToExport(gridApi);
     const date = new Date();
     const formattedDate = new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
     }).format(date);
     const doc = new jsPDF({
-      orientation: "portrait",
-      unit: "in",
-      format: [20, 20],
+        orientation: "portrait",
+        unit: "in",
+        format: [20, 20],
     });
     // Function to add header
     const addHeader = () => {
-      doc.setFontSize(25);
-      doc.setTextColor("blue");
-      doc.setFont("bold");
-      doc.text("Aspirational District Programme", 0.6, 0.5);
-      doc.setFontSize(20);
-      doc.setTextColor("blue");
-      doc.text(`Report Name: ${report_name}`, 0.6, 1.0);
-      doc.setFontSize(20);
-      doc.setTextColor("blue");
-      doc.text(`Report type : ${selectedState}`, 0.6, 1.5);
-      doc.setTextColor("blue");
-      doc.setFont("bold");
-      // doc.text(`Report Id : ${id}`, doc.internal.pageSize.width - 2, 0.5, {
-      //     align: "right",
-      // });
+        doc.setFontSize(25);
+        doc.setTextColor("blue");
+        doc.setFont("bold");
+        doc.text(sheetName, 0.6, 0.5);
+        doc.setFontSize(20);
+        doc.setTextColor("blue");
+        doc.text(`Report Name: ${report_name}`, 0.6, 1.0);
+        doc.setFontSize(20);
+        doc.setTextColor("blue");
+        doc.text(`Report type : ${selectedState}`, 0.6, 1.5);
+        doc.setTextColor("blue");
+        doc.setFont("bold");
+        doc.text(`Report Year : ${selectedYear}`, doc.internal.pageSize.width - 2, 0.5, {
+            align: "right",
+        });
 
-      doc.setFontSize(20);
-      doc.text(
-        `Report generated on: ${formattedDate}`,
-        doc.internal.pageSize.width - 2,
-        1.5,
-        { align: "right" }
-      );
+        doc.setFontSize(20);
+        doc.text(`Report generated on: ${formattedDate}`, doc.internal.pageSize.width - 2, 1.5, { align: "right" });
     };
 
     // Function to add footer
     const addFooter = () => {
-      const pageCount = doc.internal.getNumberOfPages();
-      doc.setFontSize(10);
-      for (let i = 1; i <= pageCount; i++) {
-        doc.setPage(i);
-        doc.text(
-          `Page ${i} of ${pageCount}`,
-          doc.internal.pageSize.width - 1,
-          doc.internal.pageSize.height - 0.5,
-          { align: "right" }
-        );
-      }
+        const pageCount = doc.internal.getNumberOfPages();
+        doc.setFontSize(10);
+        for (let i = 1; i <= pageCount; i++) {
+            doc.setPage(i);
+            doc.text(
+                `Page ${i} of ${pageCount}`,
+                doc.internal.pageSize.width - 1,
+                doc.internal.pageSize.height - 0.5,
+                { align: "right" }
+            );
+        }
     };
     const table = [];
     table.push(headerRow.map((cell) => cell.headerName));
     rows.forEach((row) => {
-      table.push(row.map((cell) => cell.text));
+        table.push(row.map((cell) => cell.text));
     });
     addHeader();
     doc.autoTable({
-      head: [table[0]],
-      body: table.slice(1),
-      startY: 2.2,
-      didDrawPage: addFooter,
+        head: [table[0]],
+        body: table.slice(1),
+        startY: 2.2,
+        didDrawPage: addFooter,
     });
 
     const totalPages = doc.internal.getNumberOfPages();
     for (let i = 0; i < totalPages; i++) {
-      doc.setPage(i + 1);
-      doc.autoTable({
-        startY: 3.5,
-      });
+        doc.setPage(i + 1);
+        doc.autoTable({
+            startY: 3.5,
+        });
     }
     return doc;
-  };
-  const exportToPDF = () => {
+};
+const exportToPDF = () => {
     const doc = getDocument(gridApi);
     doc.save(`${report_name}.pdf`);
-  };
-  const exportToExcel = () => {
+};
+const exportToExcel = () => {
     if (gridApi) {
-      const allData = [];
-      const visibleColumns = gridApi.api.getAllDisplayedColumns();
-      const columnHeaders = visibleColumns.map((column) => ({
-        headerName: column.getColDef().headerName,
-        field: column.getColDef().field,
-      }));
-      columnHeaders.unshift({
-        headerName: "Serial Number",
-        field: "Serial Number",
-      });
-      gridApi.api.forEachNode((node, index) => {
-        const data = node.data;
-        const rowDataWithSerial = { ...data, "Serial Number": index + 1 };
-        allData.push(rowDataWithSerial);
-      });
-      const columnKeys = columnHeaders.map((column) => column.field);
-      const columnNames = columnHeaders.map((column) => column.headerName);
-      gridApi.api.exportDataAsExcel({
-        processCellCallback: (params) => {
-          return params.value;
-        },
-        rowData: allData,
-        fileName: report_name,
-        sheetName: "Aspirational District Programme",
-        columnKeys: columnKeys,
-        columnNames: columnNames,
-      });
+        const allData = [];
+        const visibleColumns = gridApi.api.getAllDisplayedColumns();
+        const columnHeaders = visibleColumns.map((column) => ({
+            headerName: column.getColDef().headerName,
+            field: column.getColDef().field,
+        }));
+        columnHeaders.unshift({
+            headerName: "Serial Number",
+            field: "Serial Number",
+        });
+        gridApi.api.forEachNode((node, index) => {
+            const data = node.data;
+            const rowDataWithSerial = { ...data, "Serial Number": index + 1 };
+            allData.push(rowDataWithSerial);
+        });
+        const columnKeys = columnHeaders.map((column) => column.field);
+        const columnNames = columnHeaders.map((column) => column.headerName);
+        gridApi.api.exportDataAsExcel({
+            processCellCallback: (params) => {
+                return params.value;
+            },
+            rowData: allData,
+            fileName: report_name,
+            sheetName: sheetName,
+            columnKeys: columnKeys,
+            columnNames: columnNames,
+        });
     }
-  };
-  const handleExportData = (e) => {
+};
+const handleExportData = (e) => {
     const { value } = e.target;
     if (value === "export_pdf") {
-      exportToPDF();
+        exportToPDF();
     }
     if (value === "export_excel") {
-      exportToExcel();
+        exportToExcel();
     }
     document.getElementById("export_data").selectedIndex = 0;
-  };
+};
 
   return (
     <>
@@ -693,7 +691,7 @@ export default function SchoolInfraStructureReport() {
                                   : selectedBlock
                                 : selectedBlock}
                           </h5>
-                          <h3 className="heading-sm">Student Performance</h3>
+                          <h3 className="heading-sm">School Infrastructure</h3>
                         </div>
                         <div className="tab-box">
                           <button className="tab-button active">
@@ -749,7 +747,7 @@ export default function SchoolInfraStructureReport() {
                           >
                             <option className="option-hide">
                               {" "}
-                              Download Report 2023-24
+                              Download Report {selectedYear}
                             </option>
                             <option value="export_pdf">Download as PDF </option>
                             <option value="export_excel">

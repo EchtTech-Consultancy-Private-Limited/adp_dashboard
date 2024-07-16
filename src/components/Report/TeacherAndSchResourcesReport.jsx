@@ -427,9 +427,9 @@ export default function TeacherAndSchResourcesReport() {
             doc.text(`Report type : ${selectedState}`, 0.6, 1.5);
             doc.setTextColor("blue");
             doc.setFont("bold");
-            // doc.text(`Report Id : ${id}`, doc.internal.pageSize.width - 2, 0.5, {
-            //     align: "right",
-            // });
+            doc.text(`Report Year : ${selectedYear}`, doc.internal.pageSize.width - 2, 0.5, {
+                align: "right",
+            });
 
             doc.setFontSize(20);
             doc.text(`Report generated on: ${formattedDate}`, doc.internal.pageSize.width - 2, 1.5, { align: "right" });
@@ -554,7 +554,7 @@ export default function TeacherAndSchResourcesReport() {
                                                             ) : selectedBlock
                                                         )}
                                                     </h5>
-                                                    <h3 className='heading-sm'>School Infrastructure</h3>
+                                                    <h3 className='heading-sm'>Teacher and School Resources</h3>
                                                 </div>
                                                 <div className="tab-box">
                                                     <button className='tab-button active'><img src={table} alt="Table" /> Table View</button>
@@ -586,7 +586,7 @@ export default function TeacherAndSchResourcesReport() {
                                                 <div className="">
                                                     {/* <img src={download} alt="download" /> */}
                                                     <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
-                                                        <option className="option-hide"> Download Report 2023-24</option>
+                                                        <option className="option-hide"> Download Report {selectedYear}</option>
                                                         <option value="export_pdf">Download as PDF </option>
                                                         <option value="export_excel">Download as Excel</option>
                                                     </select>

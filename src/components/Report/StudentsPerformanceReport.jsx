@@ -434,9 +434,9 @@ export default function StudentsPerformanceReport() {
             doc.text(`Report type : ${selectedState}`, 0.6, 1.5);
             doc.setTextColor("blue");
             doc.setFont("bold");
-            // doc.text(`Report Id : ${id}`, doc.internal.pageSize.width - 2, 0.5, {
-            //     align: "right",
-            // });
+            doc.text(`Report Year : ${selectedYear}`, doc.internal.pageSize.width - 2, 0.5, {
+                align: "right",
+            });
 
             doc.setFontSize(20);
             doc.text(`Report generated on: ${formattedDate}`, doc.internal.pageSize.width - 2, 1.5, { align: "right" });
@@ -524,7 +524,6 @@ export default function StudentsPerformanceReport() {
         document.getElementById("export_data").selectedIndex = 0;
     };
 
-
     return (
         <>
             <ScrollToTopOnMount />
@@ -561,7 +560,7 @@ export default function StudentsPerformanceReport() {
                                                             ) : selectedBlock
                                                         )}
                                                     </h5>
-                                                    <h3 className='heading-sm'>School Infrastructure</h3>
+                                                    <h3 className='heading-sm'>Student Performance</h3>
                                                 </div>
                                                 <div className="tab-box">
                                                     <button className='tab-button active'><img src={table} alt="Table" /> Table View</button>
@@ -593,7 +592,7 @@ export default function StudentsPerformanceReport() {
                                                 <div className="">
                                                     {/* <img src={download} alt="download" /> */}
                                                     <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
-                                                        <option className="option-hide"> Download Report 2023-24</option>
+                                                        <option className="option-hide"> Download Report {selectedYear}</option>
                                                         <option value="export_pdf">Download as PDF </option>
                                                         <option value="export_excel">Download as Excel</option>
                                                     </select>

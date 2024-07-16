@@ -455,9 +455,9 @@ export default function TransitionRateReport() {
             doc.text(`Report type : ${selectedState}`, 0.6, 1.5);
             doc.setTextColor("blue");
             doc.setFont("bold");
-            // doc.text(`Report Id : ${id}`, doc.internal.pageSize.width - 2, 0.5, {
-            //     align: "right",
-            // });
+            doc.text(`Report Year : ${selectedYear}`, doc.internal.pageSize.width - 2, 0.5, {
+                align: "right",
+            });
 
             doc.setFontSize(20);
             doc.text(`Report generated on: ${formattedDate}`, doc.internal.pageSize.width - 2, 1.5, { align: "right" });
