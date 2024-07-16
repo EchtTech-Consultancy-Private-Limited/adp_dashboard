@@ -19,6 +19,9 @@ function App() {
         document.getElementById("root").classList.remove("dark-mode");
     }
   }, [toggleDarkMode]);
+
+  
+
   return (
     <div className="App">
    <HashRouter>

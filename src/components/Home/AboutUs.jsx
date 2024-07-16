@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { Link } from "react-router-dom";
@@ -8,8 +8,8 @@ import {
 } from "../../redux/slice/reportTypeSlice";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-
-
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function AboutUs() {
   const { t, i18n } = useTranslation();
@@ -18,8 +18,17 @@ export default function AboutUs() {
     dispatch(setUpdateReportType(reportType));
     dispatch(setselectedReport("Transition Rate"));
   };
+
+  useEffect(() => {
+    AOS.init({
+      disable: "phone",
+      duration: 1000,
+      easing: "ease-out-cubic",
+    });
+  }, []);
+
   return (
-    <section className="about-us ptb-70 bg-white">
+    <section className="about-us ptb-70 bg-white" data-aos="fade-up">
       <div className="container">
         <div className="row">
           <h2 className="heading-blue">{t("aboutTitle")}</h2>
