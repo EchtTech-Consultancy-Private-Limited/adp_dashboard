@@ -322,7 +322,7 @@ export default function SchoolInfraStructureBlockCompare() {
                                 <div className="text-card">
                                   <p>Block</p>
                                   <h6 className="sub-title">
-                                    {block.lgd_block_name}
+                                    {block?.lgd_block_name}
                                   </h6>
                                 </div>
                               </div>
