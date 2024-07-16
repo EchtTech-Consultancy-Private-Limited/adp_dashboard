@@ -9,6 +9,7 @@ export default function Banners() {
   
   return (
     <section className="bg-home">
+      <div className="overlay">
       <div className="container">
         <Header />
         <div className="row mt-5 align-items-center">
@@ -25,6 +26,7 @@ export default function Banners() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
   )

@@ -3,10 +3,26 @@
     background-size: cover;
     height: 100vh;
     padding-top: 12px;
+
+    @media (max-width: 991px) {
+        padding-top: 0px;
+        height: 64vh;
+
+        .overlay {
+            background: rgb(0 0 0 / 45%);
+            height: 64vh;
+            padding-top: 6px;
+        }
+    }
 }
 
 .ptb-70 {
     padding: 50px 0;
+
+    @media (max-width: 991px) {
+        padding: 30px 0;
+    }
+
 }
 
 .devider-theme {
@@ -14,7 +30,9 @@
     bottom: 0%;
 }
 
-img{width: 100%;}
+img {
+    width: 100%;
+}
 
 .banner-text {
     display: flex;
@@ -28,6 +46,10 @@ img{width: 100%;}
 
     @media (max-width:1399px) and (min-width: 1024px) {
         height: 60vh;
+    }
+
+    @media (max-width: 991px) {
+        height: 35vh;
     }
 
     h1 {
@@ -44,6 +66,11 @@ img{width: 100%;}
 
         @media (max-width:1399px) and (min-width: 1024px) {
             font-size: 35px;
+        }
+
+        @media (max-width: 991px) {
+            font-size: 32px;
+            letter-spacing: normal;
         }
     }
 
@@ -99,10 +126,30 @@ img{width: 100%;}
         margin-top: 12px;
     }
 
+    @media (max-width: 991px) {
+        margin-top: 15px;
+        border-radius: 46px;
+        font-size: 16px;
+        font-weight: 400;
+        padding: 6px 14px;
+
+        .material-icons-round {
+            border: 1px solid #fafafa;
+            height: 28px;
+            width: 36px;
+            margin-left: 8px;
+            text-align: center;
+            border-radius: 15px;
+            vertical-align: middle;
+            padding-top: 5px;
+            font-size: 16px;
+        }
+    }
+
 }
 
 .home-tab {
-    padding-top: 35px;
+    padding-top: 25px;
 
     ul.nav.nav-tabs {
         border: 0;
@@ -123,12 +170,21 @@ img{width: 100%;}
             &:first-child {
                 .nav-link {
                     border-radius: 6px 0px 0px 6px;
+
+                    @media (max-width: 991px) {
+                        border-radius: 6px;
+                        margin-bottom: 10px;
+                    }
                 }
             }
 
             &:last-child {
                 .nav-link {
                     border-radius: 0px 6px 6px 0px;
+
+                    @media (max-width: 991px) {
+                        border-radius: 6px;
+                    }
                 }
             }
         }
@@ -143,6 +199,9 @@ img{width: 100%;}
             background: #F1F1F1;
             text-transform: capitalize;
 
+            @media (max-width: 991px) {
+                font-size: 16px;
+            }
 
         }
     }
@@ -175,6 +234,19 @@ img{width: 100%;}
 .themes {
     background: #BADBE3;
 
+    @media (max-width: 991px) {
+        padding-top: 0px !important;
+
+        .z-2.pt-5.mt-3 {
+            padding-top: 0 !important;
+            margin-top: 0 !important;
+        }
+
+        .row.mt-4.position-relative.z-2 {
+            margin-top: 0 !important;
+        }
+    }
+
     .themes-text {
         text-align: left;
 
@@ -183,6 +255,10 @@ img{width: 100%;}
             font-weight: 500;
             margin-bottom: 4px;
             line-height: 1.5;
+
+            @media (max-width: 991px) {
+                font-size: 16px;
+            }
         }
     }
 
@@ -192,6 +268,10 @@ img{width: 100%;}
         text-align: left;
         position: relative;
         overflow: hidden;
+
+        @media (max-width: 991px) {
+            margin-top: 30px;
+        }
 
         .themes-box {
             padding: 20px 20px 0;
@@ -210,6 +290,11 @@ img{width: 100%;}
                 font-weight: 700;
                 line-height: 1;
                 padding-top: 10px;
+
+                @media (max-width: 991px) {
+                    font-size: 30px;
+                    padding-top: 5px;   
+                }
             }
 
             .theme-subtext {
@@ -275,8 +360,6 @@ img{width: 100%;}
             padding: 14px 20px;
             min-height: 170px;
             border-radius: 20px;
-
-            @media (max-width:1599px) and (min-width: 1400px) {}
 
             @media (max-width:1399px) and (min-width: 1024px) {
                 margin-top: 30px;
@@ -355,4 +438,14 @@ img{width: 100%;}
     left: 4%;
     border-radius: 20px;
     z-index: 1;
+
+    @media (max-width: 767px) {
+        display: none
+    }
+}
+
+@media (max-width: 991px) {
+    p {
+        font-size: 14px !important;
+    }
 }
