@@ -4,19 +4,16 @@ import {
   selectDistrict,
   selectState,
   setStates,
+  selectBlock,
 } from "../../../redux/slice/filterServicesComprisionSlice";
 import {
   setselectedCompareDistricts,
   setselectedCompareOption,
   setUpdateReportType,
+  setselectedCompareBlocks,
 } from "../../../redux/slice/reportTypeSlice";
 import aspirationalAbpData from "../../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../../aspirational-reports-data/aspirationalDistrict.json";
-import aspirationalAdpData2020 from "../../../aspirational-reports-data/aspirationalAdpData2020-21.json";
-// import aspirationalAbpData2021 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2021 from "../../../aspirational-reports-data/aspirationalAdpData2021-22.json";
-// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2022 from "../../../aspirational-reports-data/aspirationalAdpData2022-23.json";
 import table from "../../../assets/images/table.svg";
 import card from "../../../assets/images/card-list.svg";
 import { Card, Select } from "antd";
@@ -24,6 +21,7 @@ import { SelectState } from "../../../constant/Constant";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BlankPage from "../BlankPage";
+import { ScrollToTopOnMount } from "../../../Scroll/ScrollToTopOnMount";
 const ArrowRenderer = ({ data }) => {
   const selectedOption = useSelector(
     (state) => state.reportAdpAbpType.selectedOption
@@ -71,7 +69,7 @@ const ArrowRenderer = ({ data }) => {
   return <span>{renderArrow()}</span>;
 };
 
-export default function SchoolInfraStructureCompare() {
+export default function SchoolInfraStructureBlockCompare() {
   const dispatch = useDispatch();
   const [aspirationalData, setAspirationalData] = useState([]);
   const selectedOption = useSelector(
@@ -80,16 +78,19 @@ export default function SchoolInfraStructureCompare() {
   const selectedAdpAbpOption = useSelector(
     (state) => state.reportAdpAbpType.updateReportType
   );
-  const MAX_DISTRICTS = 5;
+  const MAX_BLOCKS = 5;
   const states = useSelector((state) => state.locationAdp.states);
   const districts = useSelector((state) => state.locationAdp.districts);
+  const blocks = useSelector((state) => state.locationAdp.blocks);
+
   const selectedState = useSelector((state) => state.locationAdp.selectedState);
   const selectedDistricts = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareDistricts
   );
-  const selectedYear = useSelector(
-    (state) => state.reportAdpAbpType.selectedYear
+  const selectedBlocks = useSelector(
+    (state) => state.reportAdpAbpType.selectedCompareBlock
   );
+
   function resteData() {
     dispatch(selectState(SelectState));
     dispatch(setselectedCompareOption("upper_primary_to_secondary"));
@@ -102,37 +103,13 @@ export default function SchoolInfraStructureCompare() {
     // dispatch(setUpdateReportType('ADP_Report'));
     setAspirationalData(aspirationalAdpData);
   }, [dispatch]);
-  //    useEffect(() => {
-  //      if (selectedAdpAbpOption === "ADP_Report") {
-  //        setAspirationalData(aspirationalAdpData)
-  //      }
-  //      else {
-  //        setAspirationalData(aspirationalAbpData)
-  //      }
-  //    }, [selectedAdpAbpOption])
-
-  const combinedData = {
-    "2020-21": {
-      ADP_Report: aspirationalAdpData2020,
-      ABP_Report: aspirationalAbpData,
-    },
-    "2021-22": {
-      ADP_Report: aspirationalAdpData2021,
-      ABP_Report: aspirationalAbpData,
-    },
-    "2022-23": {
-      ADP_Report: aspirationalAdpData2022,
-      ABP_Report: aspirationalAbpData,
-    },
-  };
-
   useEffect(() => {
-    const selectedData = combinedData[selectedYear][selectedAdpAbpOption];
-    if (selectedData) {
-      setAspirationalData(selectedData);
+    if (selectedAdpAbpOption === "ADP_Report") {
+      setAspirationalData(aspirationalAdpData);
+    } else {
+      setAspirationalData(aspirationalAbpData);
     }
-  }, [selectedAdpAbpOption, selectedYear]);
-
+  }, [selectedAdpAbpOption]);
   // Initialize states and districts from JSON data
   useEffect(() => {
     const structuredData = aspirationalData.reduce((acc, curr) => {
@@ -143,10 +120,10 @@ export default function SchoolInfraStructureCompare() {
         acc.push({
           lgd_state_id: curr?.lgd_state_id,
           lgd_state_name: curr?.lgd_state_name,
-          districts: [
+          block: [
             {
-              lgd_district_id: curr?.lgd_district_id,
-              lgd_district_name: curr?.lgd_district_name,
+              lgd_block_id: curr?.lgd_block_id,
+              lgd_block_name: curr?.lgd_block_name,
               tot_school_girl_co_ed: curr?.tot_school_girl_co_ed,
               total_no_of_fun_girls_toilet: curr?.total_no_of_fun_girls_toilet,
               functional_toilet_girls_percent:
@@ -157,13 +134,13 @@ export default function SchoolInfraStructureCompare() {
           ],
         });
       } else {
-        const districtIndex = acc[stateIndex].districts.findIndex(
-          (dist) => dist.lgd_district_id === curr?.lgd_district_id
+        const blockIndex = acc[stateIndex].blocks.findIndex(
+          (blk) => blk.lgd_block_id === curr?.lgd_block_id
         );
-        if (districtIndex === -1) {
-          acc[stateIndex].districts.push({
-            lgd_district_id: curr?.lgd_district_id,
-            lgd_district_name: curr?.lgd_district_name,
+        if (blockIndex === -1) {
+          acc[stateIndex].blocks.push({
+            lgd_block_id: curr?.lgd_block_id,
+            lgd_block_name: curr?.lgd_block_name,
             tot_school_girl_co_ed: curr?.tot_school_girl_co_ed,
             total_no_of_fun_girls_toilet: curr?.total_no_of_fun_girls_toilet,
             functional_toilet_girls_percent:
@@ -179,50 +156,42 @@ export default function SchoolInfraStructureCompare() {
     dispatch(setStates(structuredData));
   }, [dispatch]);
 
+  //   suggestion      [dispatch, aspirationalData]
+
   // Handle state change
   const handleStateChange = (value) => {
     dispatch(selectState(value));
-    dispatch(setselectedCompareDistricts([]));
+    dispatch(setselectedCompareBlocks([]));
   };
 
   // Handle district change
-  const handleDistrictChange = (value, position) => {
-    const newSelectedDistricts = [...selectedDistricts];
-    const districtData = aspirationalData.find(
-      (district) =>
-        district.lgd_district_name === value &&
-        district.lgd_state_name === selectedState
+  const handleBlockChange = (value, position) => {
+    const newSelectedBlocks = [...selectedBlocks];
+    const blockData = aspirationalData.find(
+      (block) =>
+        block.lgd_block_name === value && block.lgd_state_name === selectedState
     );
-    if (districtData) {
-      newSelectedDistricts[position] = districtData;
+    if (blockData) {
+      newSelectedBlocks[position] = blockData;
       dispatch(
-        setselectedCompareDistricts(
-          newSelectedDistricts.slice(0, MAX_DISTRICTS)
-        )
+        setselectedCompareBlocks(newSelectedBlocks.slice(0, MAX_BLOCKS))
       );
-      dispatch(selectDistrict(value));
+      dispatch(selectBlock(value));
     }
   };
 
   // Get filtered districts based on selected state and existing selections
-  const getFilteredDistricts = (position) => {
-    const selected = selectedDistricts.filter(
-      (district) =>
-        district &&
-        district.lgd_district_name !==
-          selectedDistricts[position]?.lgd_district_name
+  const getFilteredBlocks = (position) => {
+    const selected = selectedBlocks.filter(
+      (block) =>
+        block &&
+        block.lgd_block_name !== selectedBlocks[position]?.lgd_block_name
     );
-    return districts.filter(
-      (district) =>
-        !selected
-          .map((d) => d.lgd_district_name)
-          .includes(district.lgd_district_name)
+    return blocks.filter(
+      (block) =>
+        !selected.map((d) => d.lgd_block_name).includes(block.lgd_block_name)
     );
   };
-
-  const data = getFilteredDistricts();
-
-  console.log("data", data);
 
   // Handle option change
   const handleOptionChange = (event) => {
@@ -230,6 +199,7 @@ export default function SchoolInfraStructureCompare() {
   };
   return (
     <>
+      <ScrollToTopOnMount />
       <div className="card-box">
         <div className="row align-items-end">
           <div className="col-md-7">
@@ -298,7 +268,7 @@ export default function SchoolInfraStructureCompare() {
             <div className="comparison-box">
               <div className="row align-items-center">
                 <div className="col-md-3">
-                  <h5 className="sub-title">Select District to Compare</h5>
+                  <h5 className="sub-title">Select Block to Compare</h5>
                 </div>
                 <div className="col-md-6 Comparison-select-group">
                   <div className="d-flex justify-content-between text-aligns-center antd-select">
@@ -306,23 +276,22 @@ export default function SchoolInfraStructureCompare() {
                       <Select
                         className="form-select"
                         key={index}
-                        onChange={(value) => handleDistrictChange(value, index)}
+                        onChange={(value) => handleBlockChange(value, index)}
                         style={{ width: "100%" }}
-                        placeholder={`Add District ${index + 1}`}
+                        placeholder={`Add Block ${index + 1}`}
                         mode="single"
                         showSearch
                         value={
-                          selectedDistricts[index]?.lgd_district_name ||
-                          `Add District`
+                          selectedBlocks[index]?.lgd_block_name || `Add Block`
                         }
                         disabled={!selectedState}
                       >
-                        {getFilteredDistricts(index).map((district) => (
+                        {getFilteredBlocks(index).map((block) => (
                           <Select.Option
-                            key={district.lgd_district_id}
-                            value={district.lgd_district_name}
+                            key={block.lgd_block_id}
+                            value={block.lgd_block_name}
                           >
-                            {district.lgd_district_name}
+                            {block.lgd_block_name}
                           </Select.Option>
                         ))}
                       </Select>
@@ -346,13 +315,13 @@ export default function SchoolInfraStructureCompare() {
           {selectedState !== SelectState ? (
             <div className="col-md-12 mt-4">
               <div className="row">
-                {selectedDistricts.map((district, index) => (
+                {selectedBlocks.map((block, index) => (
                   <div
                     className={`col-sm-12 col-20 ${
-                      selectedDistricts.length === 1 ? "m-auto" : ""
+                      selectedBlocks.length === 1 ? "m-auto" : ""
                     }`}
                   >
-                    {selectedDistricts.length === 1 ? (
+                    {selectedBlocks.length === 1 ? (
                       <Card
                         style={{
                           width: 300,
@@ -380,15 +349,15 @@ export default function SchoolInfraStructureCompare() {
                                   </div>
                                 </div>
                                 <div className="text-card">
-                                  <p>District</p>
+                                  <p>Block</p>
                                   <h6 className="sub-title">
-                                    {district.lgd_district_name}
+                                    {block.lgd_block_name}
                                   </h6>
                                 </div>
                               </div>
                               <div className="arrow-d">
                                 {" "}
-                                <ArrowRenderer data={district} />
+                                <ArrowRenderer data={block} />
                               </div>
                             </div>
                           </div>
@@ -397,19 +366,19 @@ export default function SchoolInfraStructureCompare() {
                             <div className="text-card">
                               <p>Tot Coed & Girls Sch</p>
                               <h6 className="sub-title">
-                                {district?.tot_school_girl_co_ed}
+                                {block?.tot_school_girl_co_ed}
                               </h6>
                             </div>
                             <div className="text-card">
                               <p>Tot Sch Fun girls toilets</p>
                               <h6 className="sub-title">
-                                {district?.total_no_of_fun_girls_toilet}
+                                {block?.total_no_of_fun_girls_toilet}
                               </h6>
                             </div>
                             <div className="text-card">
                               <p>Per Sch Fun girls toilets</p>
                               <h6 className="sub-title">
-                                {district?.functional_toilet_girls_percent?.toFixed(
+                                {block?.functional_toilet_girls_percent?.toFixed(
                                   2
                                 )}
                               </h6>
@@ -417,14 +386,14 @@ export default function SchoolInfraStructureCompare() {
 
                             <div className="text-card">
                               <p>Tot Sch Fun girls toilets 40:1</p>
-                              <h6 className="sub-title">
-                                {district?.toilet_40}
-                              </h6>
+                              <h6 className="sub-title">{block?.toilet_40}</h6>
                             </div>
                             <div className="text-card">
                               <p>Percent</p>
                               <h6 className="sub-title">
-                                {district?.sch_having_toilet_40_percent}
+                                {block?.sch_having_toilet_40_percent?.toFixed(
+                                  2
+                                )}
                               </h6>
                             </div>
                           </div>

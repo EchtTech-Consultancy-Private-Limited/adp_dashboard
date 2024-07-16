@@ -47,6 +47,8 @@ import {
 } from "../../constant/Constant";
 // import TransitionRateCompare from "./TransitionRateCompare";
 import { ScrollToTopOnMount } from "../../Scroll/ScrollToTopOnMount";
+import SchoolInfraStructureCompare from "./ReportCompare/SchoolInfraStructureCompare";
+import SchoolInfraStructureBlockCompare from "./ReportCompare/SchoolInfraStructureBlockCompare";
 
 const ArrowRenderer = ({ data, value }) => {
   const selectedOption = useSelector(
@@ -793,6 +795,18 @@ const handleExportData = (e) => {
                   </div>
                 </div>
               </div>
+
+           
+
+                   {selectState !=="All State"?<>
+                {  selectReportType ==="ADP_Report"?
+               <SchoolInfraStructureCompare/>:
+
+<SchoolInfraStructureBlockCompare/>
+}</>:""
+}
+
+
             {/* <TransitionRateCompare /> */}
           </div>
         </div>
