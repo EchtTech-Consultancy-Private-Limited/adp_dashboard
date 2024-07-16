@@ -18,6 +18,11 @@ import {
 } from "../../redux/slice/filterServicesSlice";
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
+import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json"
+// import aspirationalAbpData2021 from "../../aspirational-reports-data/aspirationalAbpData.json";
+import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
+// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
+import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { useTranslation } from "react-i18next";
@@ -27,12 +32,14 @@ import "jspdf-autotable";
 import { GlobalLoading } from "../GlobalLoading/GlobalLoading";
 import {
   setselectedOption,
+  setSelectedYear,
   setUpdateStatus,
 } from "../../redux/slice/reportTypeSlice";
 import BlankPage from "./BlankPage";
 import {
   AllBlock,
   AllDistrict,
+  intialYear,
   SelectBlock,
   SelectDistrict,
   selectedOptionConst,
@@ -100,12 +107,13 @@ export default function SchoolInfraStructureReport() {
   const type = queryParameters.get("type");
   const [gridApi, setGridApi] = useState();
   const [loading, setLoading] = useState(true);
-  localStorage.setItem("selectedReport", "Transition Rate");
+  localStorage.setItem("selectedReport", "School Infrastructure");
   const { selectedState, selectedDistrict, selectedBlock } = useSelector(
     (state) => state.locationAdp
   );
   const [aspirationalData, setAspirationalData] = useState([]);
   const [locationHeader, SetLocationHeader] = useState();
+  const [sheetName, SetSheetName] = useState()
   const selectReportType = useSelector(
     (state) => state.reportAdpAbpType.updateReportType
   );
@@ -115,6 +123,7 @@ export default function SchoolInfraStructureReport() {
   const updateLoading = useSelector(
     (state) => state.reportAdpAbpType.loadingStatus
   );
+  const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
   const savedReportName = localStorage.getItem("selectedReport");
   const report_name = savedReportName;
   const [data, setData] = useState([]);
@@ -123,6 +132,7 @@ export default function SchoolInfraStructureReport() {
     dispatch(selectDistrict(SelectDistrict));
     dispatch(selectBlock(SelectBlock));
     dispatch(setselectedOption(selectedOptionConst));
+    dispatch(setSelectedYear(intialYear))
   }
   useEffect(() => {
     resteData();
@@ -137,6 +147,7 @@ export default function SchoolInfraStructureReport() {
         selectedDistrict === SelectDistrict
       ) {
         SetLocationHeader("District");
+        SetSheetName("Aspirational District Programme")
       }
     } else if (selectReportType === "ABP_Report") {
       if (
@@ -151,6 +162,7 @@ export default function SchoolInfraStructureReport() {
       ) {
         SetLocationHeader("Block");
       }
+      SetSheetName("Aspirational Block Programme")
     }
   }, [
     selectedState,
@@ -163,15 +175,35 @@ export default function SchoolInfraStructureReport() {
   {
     /*...............Take data report wise..............*/
   }
+  // useEffect(() => {
+  //   if (selectReportType === "ADP_Report") {
+  //     setAspirationalData(aspirationalAdpData);
+  //     resteData();
+  //   } else {
+  //     setAspirationalData(aspirationalAbpData);
+  //     resteData();
+  //   }
+  // }, [selectReportType]);
+  const combinedData = {
+    "2020-21": {
+      ADP_Report: aspirationalAdpData2020,
+      ABP_Report: aspirationalAbpData,
+    },
+    "2021-22": {
+      ADP_Report: aspirationalAdpData2021,
+      ABP_Report: aspirationalAbpData,
+    },
+    "2022-23": {
+      ADP_Report: aspirationalAdpData2022,
+      ABP_Report: aspirationalAbpData,
+    },
+  };
+
   useEffect(() => {
-    if (selectReportType === "ADP_Report") {
-      setAspirationalData(aspirationalAdpData);
-      resteData();
-    } else {
-      setAspirationalData(aspirationalAbpData);
-      resteData();
-    }
-  }, [selectReportType]);
+    // Update the state based on the selected options
+    const selectedData = combinedData[selectedYear][selectReportType];
+    setAspirationalData(selectedData);
+  }, [selectReportType, selectedYear]);
   useEffect(() => {
     let filteredData = aspirationalData;
 
@@ -269,7 +301,7 @@ export default function SchoolInfraStructureReport() {
     },
     {
       headerName: "Number of Schools having Functional girls toilets",
-      field: "total_no_of_fun_toilet",
+      field: "total_no_of_fun_girls_toilet",
       // cellRenderer: percentageRenderer,
       hide: false,
     },
@@ -321,7 +353,7 @@ export default function SchoolInfraStructureReport() {
         },
         {
           headerName: "Number of Schools having Functional girls toilets",
-          field: "total_no_of_fun_toilet",
+          field: "total_no_of_fun_girls_toilet",
           // cellRenderer: percentageRenderer,
           hide: false,
         },
@@ -369,7 +401,7 @@ export default function SchoolInfraStructureReport() {
         },
         {
           headerName: "Number of Schools having Functional girls toilets",
-          field: "total_no_of_fun_toilet",
+          field: "total_no_of_fun_girls_toilet",
           // cellRenderer: percentageRenderer,
           hide: false,
         },
@@ -403,28 +435,28 @@ export default function SchoolInfraStructureReport() {
       let group = acc.find((item) => item[groupBy] === groupKey);
       // let state = acc.find((item) => item.lgd_state_name === curr.lgd_state_name);
       if (group) {
-        group.tot_school_girl_co_ed += curr.tot_school_girl_co_ed;
-        group.total_no_of_fun_toilet += curr.total_no_of_fun_toilet;
-        group.toilet_40 += curr.toilet_40;
+        group.tot_school_girl_co_ed += curr?.tot_school_girl_co_ed;
+        group.total_no_of_fun_girls_toilet += curr?.total_no_of_fun_girls_toilet;
+        group.toilet_40 += curr?.toilet_40;
         group.functional_toilet_girls_percent = parseFloat(
-          (group.tot_school_girl_co_ed * 100) / group.total_no_of_fun_toilet
-        ).toFixed(2);
+          (curr?.functional_toilet_girls_percent)
+        )?.toFixed(2);
         group.sch_having_toilet_40_percent = parseFloat(
           (group.toilet_40 * 100) / group.tot_school_girl_co_ed
-        ).toFixed(2);
+        )?.toFixed(2);
       } else {
         acc.push({
           ...curr,
           lgd_state_name: curr.lgd_state_name,
-          tot_school_girl_co_ed: curr.tot_school_girl_co_ed,
-          total_no_of_fun_toilet: curr.total_no_of_fun_toilet,
-          toilet_40: curr.toilet_40,
+          tot_school_girl_co_ed: curr?.tot_school_girl_co_ed,
+          total_no_of_fun_girls_toilet: curr?.total_no_of_fun_girls_toilet,
+          toilet_40: curr?.toilet_40,
           functional_toilet_girls_percent: parseFloat(
-            (curr.tot_school_girl_co_ed * 100) / curr.total_no_of_fun_toilet
-          ).toFixed(2),
+            (curr.functional_toilet_girls_percent)
+          )?.toFixed(2),
           sch_having_toilet_40_percent: parseFloat(
             (curr.toilet_40 * 100) / curr.tot_school_girl_co_ed
-          ).toFixed(2),
+          )?.toFixed(2),
         });
       }
       return acc;
@@ -466,167 +498,162 @@ export default function SchoolInfraStructureReport() {
   const getHeaderToExport = (gridApi) => {
     const columns = gridApi.api.getAllDisplayedColumns();
     const headerCellSerialNumber = {
-      text: "Serial Number",
-      headerName: "Serial Number",
-      bold: true,
-      margin: [0, 12, 0, 0],
-    };
-    const headerRow = columns.map((column) => {
-      const { field, headerName } = column.getColDef();
-      const sort = column.getSort();
-      const headerNameUppercase = field[0].toUpperCase() + field.slice(1);
-      const headerCell = {
-        text: headerNameUppercase + (sort ? ` (${sort})` : ""),
-        headerName: headerName,
+        text: "Serial Number",
+        headerName: "Serial Number",
         bold: true,
         margin: [0, 12, 0, 0],
-      };
-      return headerCell;
+    };
+    const headerRow = columns.map((column) => {
+        const { field, headerName } = column.getColDef();
+        const sort = column.getSort();
+        const headerNameUppercase = field[0].toUpperCase() + field.slice(1);
+        const headerCell = {
+            text: headerNameUppercase + (sort ? ` (${sort})` : ""),
+            headerName: headerName,
+            bold: true,
+            margin: [0, 12, 0, 0],
+        };
+        return headerCell;
     });
     headerRow.unshift(headerCellSerialNumber);
     return headerRow;
-  };
-  const getRowsToExport = (gridApi) => {
+};
+const getRowsToExport = (gridApi) => {
     const columns = gridApi.api.getAllDisplayedColumns();
     const getCellToExport = (column, node) => ({
-      text: gridApi.api.getValue(column, node) ?? "",
+        text: gridApi.api.getValue(column, node) ?? "",
     });
     const rowsToExport = [];
     gridApi.api.forEachNodeAfterFilterAndSort((node) => {
-      const rowToExport = [];
-      rowToExport.push({ text: rowsToExport.length + 1 });
-      columns.forEach((column) => {
-        rowToExport.push(getCellToExport(column, node));
-      });
-      rowsToExport.push(rowToExport);
+        const rowToExport = [];
+        rowToExport.push({ text: rowsToExport.length + 1 });
+        columns.forEach((column) => {
+            rowToExport.push(getCellToExport(column, node));
+        });
+        rowsToExport.push(rowToExport);
     });
     return rowsToExport;
-  };
-  const getDocument = (gridApi) => {
+};
+const getDocument = (gridApi) => {
     const headerRow = getHeaderToExport(gridApi);
     const rows = getRowsToExport(gridApi);
     const date = new Date();
     const formattedDate = new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
     }).format(date);
     const doc = new jsPDF({
-      orientation: "portrait",
-      unit: "in",
-      format: [20, 20],
+        orientation: "portrait",
+        unit: "in",
+        format: [20, 20],
     });
     // Function to add header
     const addHeader = () => {
-      doc.setFontSize(25);
-      doc.setTextColor("blue");
-      doc.setFont("bold");
-      doc.text("Aspirational District Programme", 0.6, 0.5);
-      doc.setFontSize(20);
-      doc.setTextColor("blue");
-      doc.text(`Report Name: ${report_name}`, 0.6, 1.0);
-      doc.setFontSize(20);
-      doc.setTextColor("blue");
-      doc.text(`Report type : ${selectedState}`, 0.6, 1.5);
-      doc.setTextColor("blue");
-      doc.setFont("bold");
-      // doc.text(`Report Id : ${id}`, doc.internal.pageSize.width - 2, 0.5, {
-      //     align: "right",
-      // });
+        doc.setFontSize(25);
+        doc.setTextColor("blue");
+        doc.setFont("bold");
+        doc.text(sheetName, 0.6, 0.5);
+        doc.setFontSize(20);
+        doc.setTextColor("blue");
+        doc.text(`Report Name: ${report_name}`, 0.6, 1.0);
+        doc.setFontSize(20);
+        doc.setTextColor("blue");
+        doc.text(`Report type : ${selectedState}`, 0.6, 1.5);
+        doc.setTextColor("blue");
+        doc.setFont("bold");
+        doc.text(`Report Year : ${selectedYear}`, doc.internal.pageSize.width - 2, 0.5, {
+            align: "right",
+        });
 
-      doc.setFontSize(20);
-      doc.text(
-        `Report generated on: ${formattedDate}`,
-        doc.internal.pageSize.width - 2,
-        1.5,
-        { align: "right" }
-      );
+        doc.setFontSize(20);
+        doc.text(`Report generated on: ${formattedDate}`, doc.internal.pageSize.width - 2, 1.5, { align: "right" });
     };
 
     // Function to add footer
     const addFooter = () => {
-      const pageCount = doc.internal.getNumberOfPages();
-      doc.setFontSize(10);
-      for (let i = 1; i <= pageCount; i++) {
-        doc.setPage(i);
-        doc.text(
-          `Page ${i} of ${pageCount}`,
-          doc.internal.pageSize.width - 1,
-          doc.internal.pageSize.height - 0.5,
-          { align: "right" }
-        );
-      }
+        const pageCount = doc.internal.getNumberOfPages();
+        doc.setFontSize(10);
+        for (let i = 1; i <= pageCount; i++) {
+            doc.setPage(i);
+            doc.text(
+                `Page ${i} of ${pageCount}`,
+                doc.internal.pageSize.width - 1,
+                doc.internal.pageSize.height - 0.5,
+                { align: "right" }
+            );
+        }
     };
     const table = [];
     table.push(headerRow.map((cell) => cell.headerName));
     rows.forEach((row) => {
-      table.push(row.map((cell) => cell.text));
+        table.push(row.map((cell) => cell.text));
     });
     addHeader();
     doc.autoTable({
-      head: [table[0]],
-      body: table.slice(1),
-      startY: 2.2,
-      didDrawPage: addFooter,
+        head: [table[0]],
+        body: table.slice(1),
+        startY: 2.2,
+        didDrawPage: addFooter,
     });
 
     const totalPages = doc.internal.getNumberOfPages();
     for (let i = 0; i < totalPages; i++) {
-      doc.setPage(i + 1);
-      doc.autoTable({
-        startY: 3.5,
-      });
+        doc.setPage(i + 1);
+        doc.autoTable({
+            startY: 3.5,
+        });
     }
     return doc;
-  };
-  const exportToPDF = () => {
+};
+const exportToPDF = () => {
     const doc = getDocument(gridApi);
     doc.save(`${report_name}.pdf`);
-  };
-  const exportToExcel = () => {
+};
+const exportToExcel = () => {
     if (gridApi) {
-      const allData = [];
-      const visibleColumns = gridApi.api.getAllDisplayedColumns();
-      const columnHeaders = visibleColumns.map((column) => ({
-        headerName: column.getColDef().headerName,
-        field: column.getColDef().field,
-      }));
-      columnHeaders.unshift({
-        headerName: "Serial Number",
-        field: "Serial Number",
-      });
-      gridApi.api.forEachNode((node, index) => {
-        const data = node.data;
-        const rowDataWithSerial = { ...data, "Serial Number": index + 1 };
-        allData.push(rowDataWithSerial);
-      });
-      const columnKeys = columnHeaders.map((column) => column.field);
-      const columnNames = columnHeaders.map((column) => column.headerName);
-      gridApi.api.exportDataAsExcel({
-        processCellCallback: (params) => {
-          return params.value;
-        },
-        rowData: allData,
-        fileName: report_name,
-        sheetName: "Aspirational District Programme",
-        columnKeys: columnKeys,
-        columnNames: columnNames,
-      });
+        const allData = [];
+        const visibleColumns = gridApi.api.getAllDisplayedColumns();
+        const columnHeaders = visibleColumns.map((column) => ({
+            headerName: column.getColDef().headerName,
+            field: column.getColDef().field,
+        }));
+        columnHeaders.unshift({
+            headerName: "Serial Number",
+            field: "Serial Number",
+        });
+        gridApi.api.forEachNode((node, index) => {
+            const data = node.data;
+            const rowDataWithSerial = { ...data, "Serial Number": index + 1 };
+            allData.push(rowDataWithSerial);
+        });
+        const columnKeys = columnHeaders.map((column) => column.field);
+        const columnNames = columnHeaders.map((column) => column.headerName);
+        gridApi.api.exportDataAsExcel({
+            processCellCallback: (params) => {
+                return params.value;
+            },
+            rowData: allData,
+            fileName: report_name,
+            sheetName: sheetName,
+            columnKeys: columnKeys,
+            columnNames: columnNames,
+        });
     }
-  };
-  const handleExportData = (e) => {
+};
+const handleExportData = (e) => {
     const { value } = e.target;
     if (value === "export_pdf") {
-      exportToPDF();
+        exportToPDF();
     }
     if (value === "export_excel") {
-      exportToExcel();
+        exportToExcel();
     }
     document.getElementById("export_data").selectedIndex = 0;
-  };
+};
 
   return (
     <>
@@ -650,21 +677,21 @@ export default function SchoolInfraStructureReport() {
                                 selectedDistrict !== AllDistrict
                                 ? `${selectedDistrict}`
                                 : selectedDistrict === AllDistrict
-                                ? `${selectedState} District's`
-                                : `${selectedState} District's`
-                              : selectReportType === "ABP_Report"
-                              ? selectedState !== SelectState
-                                ? selectedDistrict === SelectDistrict ||
-                                  selectedDistrict === AllDistrict
                                   ? `${selectedState} District's`
-                                  : selectedBlock !== SelectBlock &&
-                                    selectedBlock !== AllBlock
-                                  ? `${selectedBlock}`
-                                  : `${selectedDistrict} Block's`
-                                : selectedBlock
-                              : selectedBlock}
+                                  : `${selectedState} District's`
+                              : selectReportType === "ABP_Report"
+                                ? selectedState !== SelectState
+                                  ? selectedDistrict === SelectDistrict ||
+                                    selectedDistrict === AllDistrict
+                                    ? `${selectedState} District's`
+                                    : selectedBlock !== SelectBlock &&
+                                      selectedBlock !== AllBlock
+                                      ? `${selectedBlock}`
+                                      : `${selectedDistrict} Block's`
+                                  : selectedBlock
+                                : selectedBlock}
                           </h5>
-                          <h3 className="heading-sm">Student Performance</h3>
+                          <h3 className="heading-sm">School Infrastructure</h3>
                         </div>
                         <div className="tab-box">
                           <button className="tab-button active">
@@ -679,7 +706,7 @@ export default function SchoolInfraStructureReport() {
                     <div className="col-md-7">
                       <div className="d-flex w-m-100">
                         <div className="radio-button">
-                          <div className="box-radio">
+                          {/* <div className="box-radio">
                             <input
                               type="radio"
                               id="radio4"
@@ -708,7 +735,7 @@ export default function SchoolInfraStructureReport() {
                             <label htmlFor="radio5">
                               Secondary to Higher Secondary
                             </label>
-                          </div>
+                          </div> */}
                         </div>
                         <div className="">
                           {/* <img src={download} alt="download" /> */}
@@ -720,7 +747,7 @@ export default function SchoolInfraStructureReport() {
                           >
                             <option className="option-hide">
                               {" "}
-                              Download Report 2023-24
+                              Download Report {selectedYear}
                             </option>
                             <option value="export_pdf">Download as PDF </option>
                             <option value="export_excel">

@@ -13,6 +13,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectBlock, selectDistrict, selectState } from '../../redux/slice/filterServicesSlice'
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
+import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json"
+// import aspirationalAbpData2021 from "../../aspirational-reports-data/aspirationalAbpData.json";
+import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
+// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
+import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { useTranslation } from "react-i18next";
@@ -67,6 +72,7 @@ export default function EnrollmentAndRetentionReport() {
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType)
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption)
     const updateLoading = useSelector((state) => state.reportAdpAbpType.loadingStatus)
+    const selectedYear= useSelector((state) => state.reportAdpAbpType.selectedYear);
     const savedReportName = localStorage.getItem('selectedReport');
     const report_name = savedReportName
     const [data, setData] = useState([]);
@@ -94,16 +100,36 @@ export default function EnrollmentAndRetentionReport() {
     }, [selectedState, SelectState, selectedDistrict, SelectDistrict])
 
     {/*...............Take data report wise..............*/ }
-    useEffect(() => {
-        if (selectReportType === "ADP_Report") {
-            setAspirationalData(aspirationalAdpData)
-            dispatchingData()
-        }
-        else {
-            setAspirationalData(aspirationalAbpData)
-            dispatchingData()
-        }
-    }, [selectReportType])
+    // useEffect(() => {
+    //     if (selectReportType === "ADP_Report") {
+    //         setAspirationalData(aspirationalAdpData)
+    //         dispatchingData()
+    //     }
+    //     else {
+    //         setAspirationalData(aspirationalAbpData)
+    //         dispatchingData()
+    //     }
+    // }, [selectReportType])
+    const combinedData = {
+        "2020-21": {
+          ADP_Report: aspirationalAdpData2020,
+           ABP_Report: aspirationalAbpData,
+        },
+        "2021-22": {
+          ADP_Report: aspirationalAdpData2021,
+           ABP_Report: aspirationalAbpData,
+        },
+        "2022-23": {
+          ADP_Report: aspirationalAdpData2022,
+          ABP_Report: aspirationalAbpData,
+        },
+      };
+    
+      useEffect(() => {
+        // Update the state based on the selected options
+        const selectedData = combinedData[selectedYear][selectReportType];
+        setAspirationalData(selectedData);
+      }, [selectReportType, selectedYear]);
     useEffect(() => {
         let filteredData = aspirationalData;
 
@@ -280,34 +306,34 @@ export default function EnrollmentAndRetentionReport() {
             let group = acc.find((item) => item[groupBy] === groupKey);
             if (group) {
                 group.upri_b = parseFloat(
-                    ((group.upri_b * group.blocks + curr.upri_b) / (group.blocks + 1)).toFixed(2)
+                    ((group.upri_b * group.blocks + curr.upri_b) / (group.blocks + 1))?.toFixed(2)
                 );
                 group.upri_g = parseFloat(
-                    ((group.upri_g * group.blocks + curr.upri_g) / (group.blocks + 1)).toFixed(2)
+                    ((group.upri_g * group.blocks + curr.upri_g) / (group.blocks + 1))?.toFixed(2)
                 );
                 group.upri_t = parseFloat(
-                    ((group.upri_t * group.blocks + curr.upri_t) / (group.blocks + 1)).toFixed(2)
+                    ((group.upri_t * group.blocks + curr.upri_t) / (group.blocks + 1))?.toFixed(2)
                 );
                 group.sec_b = parseFloat(
-                    ((group.sec_b * group.blocks + curr.sec_b) / (group.blocks + 1)).toFixed(2)
+                    ((group.sec_b * group.blocks + curr.sec_b) / (group.blocks + 1))?.toFixed(2)
                 );
                 group.sec_g = parseFloat(
-                    ((group.sec_g * group.blocks + curr.sec_g) / (group.blocks + 1)).toFixed(2)
+                    ((group.sec_g * group.blocks + curr.sec_g) / (group.blocks + 1))?.toFixed(2)
                 );
                 group.sec_t = parseFloat(
-                    ((group.sec_t * group.blocks + curr.sec_t) / (group.blocks + 1)).toFixed(2)
+                    ((group.sec_t * group.blocks + curr.sec_t) / (group.blocks + 1))?.toFixed(2)
                 );
                 group.blocks += 1;
             } else {
                 acc.push({
                     ...curr,
                     [groupBy]: groupKey,
-                    upri_b: parseFloat(curr.upri_b.toFixed(2)),
-                    upri_g: parseFloat(curr.upri_g.toFixed(2)),
-                    upri_t: parseFloat(curr.upri_t.toFixed(2)),
-                    sec_b: parseFloat(curr.sec_b.toFixed(2)),
-                    sec_g: parseFloat(curr.sec_g.toFixed(2)),
-                    sec_t: parseFloat(curr.sec_t.toFixed(2)),
+                    upri_b: parseFloat(curr.upri_b?.toFixed(2)),
+                    upri_g: parseFloat(curr.upri_g?.toFixed(2)),
+                    upri_t: parseFloat(curr.upri_t?.toFixed(2)),
+                    sec_b: parseFloat(curr.sec_b?.toFixed(2)),
+                    sec_g: parseFloat(curr.sec_g?.toFixed(2)),
+                    sec_t: parseFloat(curr.sec_t?.toFixed(2)),
                     blocks: 1,
                 });
             }
