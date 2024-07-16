@@ -175,8 +175,6 @@ export default function BannerReportFilter() {
 
   const handleOptionChange = (event) => {
 
-    console.log("event value",event.target.value
-    )
     dispatch(setUpdateReportType(event.target.value));
   };
 

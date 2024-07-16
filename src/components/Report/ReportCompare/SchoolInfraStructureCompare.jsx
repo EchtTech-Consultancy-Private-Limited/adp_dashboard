@@ -220,14 +220,7 @@ export default function SchoolInfraStructureCompare() {
     );
   };
 
-  const data = getFilteredDistricts();
 
-  console.log("data", data);
-
-  // Handle option change
-  const handleOptionChange = (event) => {
-    dispatch(setselectedCompareOption(event.target.value));
-  };
   return (
     <>
       <div className="card-box">
@@ -266,29 +259,7 @@ export default function SchoolInfraStructureCompare() {
           </div>
           <div className="col-md-5">
             <div className="d-flex w-m-100">
-              <div className="radio-button">
-                <div className="box-radio">
-                  <input
-                    type="radio"
-                    id="radio11"
-                    value="upper_primary_to_secondary"
-                    checked={selectedOption === "upper_primary_to_secondary"}
-                    onChange={handleOptionChange}
-                  />
-                  <label htmlFor="radio11">Upper Primary to Secondary </label>
-                </div>
-
-                <div className="box-radio">
-                  <input
-                    type="radio"
-                    id="radio22"
-                    value="secondary_to_higher_secondary"
-                    checked={selectedOption === "secondary_to_higher_secondary"}
-                    onChange={handleOptionChange}
-                  />
-                  <label htmlFor="radio22">Secondary to Higher Secondary</label>
-                </div>
-              </div>
+          
             </div>
           </div>
         </div>
