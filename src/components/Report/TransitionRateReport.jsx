@@ -31,10 +31,8 @@ import { Select } from "antd";
 import "jspdf-autotable";
 import { GlobalLoading } from "../GlobalLoading/GlobalLoading";
 import {
-    setgirdAPIForCommonData,
     setselectedOption,
     setSelectedYear,
-    SetSheetName,
     setUpdateStatus,
 } from "../../redux/slice/reportTypeSlice";
 import BlankPage from "./BlankPage";
@@ -50,7 +48,6 @@ import {
 import TransitionRateCompare from "./ReportCompare/TransitionRateCompare";
 import { ScrollToTopOnMount } from "../../Scroll/ScrollToTopOnMount";
 import TransitionBlockRateCompare from "./ReportCompare/TransitionBlockRateCompare";
-import { CommonData } from "./CommonData/CommonData";
 
 const ArrowRenderer = ({ data, value }) => {
     const selectedOption = useSelector(
@@ -109,21 +106,36 @@ export default function TransitionRateReport() {
     const [queryParameters] = useSearchParams();
     const id = queryParameters.get("id");
     const type = queryParameters.get("type");
+    const [gridApi, setGridApi] = useState();
     const [loading, setLoading] = useState(true);
     localStorage.setItem("selectedReport", "Transition Rate");
-    const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
+    const { selectedState, selectedDistrict, selectedBlock } = useSelector(
+        (state) => state.locationAdp
+    );
     const [aspirationalData, setAspirationalData] = useState([]);
     const [locationHeader, SetLocationHeader] = useState();
+    const [sheetName, SetSheetName] = useState();
     const states = useSelector((state) => state.locationAdp.states);
-    const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
-    const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
-    const updateLoading = useSelector((state) => state.reportAdpAbpType.loadingStatus);
-    const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
-    const gridApi = useSelector((state) => state.reportAdpAbpType.girdAPIForCommonData);
-    const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName)
+    const selectReportType = useSelector(
+        (state) => state.reportAdpAbpType.updateReportType
+    );
+    const selectedOption = useSelector(
+        (state) => state.reportAdpAbpType.selectedOption
+    );
+    const updateLoading = useSelector(
+        (state) => state.reportAdpAbpType.loadingStatus
+    );
+    const selectedYear = useSelector(
+        (state) => state.reportAdpAbpType.selectedYear
+    );
     const savedReportName = localStorage.getItem("selectedReport");
     const report_name = savedReportName;
     const [data, setData] = useState([]);
+    const [allData, SetAllData] = useState([]);
+    const [showFinalData, setShowFinalData] = useState([]);
+
+    
+
     function resteData() {
         dispatch(selectState(SelectState));
         dispatch(selectDistrict(SelectDistrict));
@@ -134,9 +146,12 @@ export default function TransitionRateReport() {
     useEffect(() => {
         resteData();
     }, [dispatch]);
-
-    /*...............update Location Header..............*/
-
+    useEffect(() => {
+        SetAllData(states);
+    }, [states]);
+    {
+        /*...............update Location Header..............*/
+    }
     useEffect(() => {
         if (selectReportType === "ADP_Report") {
             if (
@@ -144,7 +159,7 @@ export default function TransitionRateReport() {
                 selectedDistrict === SelectDistrict
             ) {
                 SetLocationHeader("District");
-                dispatch(SetSheetName("Aspirational District Programme"));
+                SetSheetName("Aspirational District Programme");
             }
         } else if (selectReportType === "ABP_Report") {
             if (
@@ -159,7 +174,7 @@ export default function TransitionRateReport() {
             ) {
                 SetLocationHeader("Block");
             }
-            dispatch(SetSheetName("Aspirational Block Programme"));
+            SetSheetName("Aspirational Block Programme");
         }
     }, [
         selectedState,
@@ -169,8 +184,19 @@ export default function TransitionRateReport() {
         selectedOption,
     ]);
 
-    /*...............Take data report wise..............*/
-
+    {
+        /*...............Take data report wise..............*/
+    }
+    // useEffect(() => {
+    //     if (selectReportType === "ADP_Report") {
+    //         setAspirationalData(aspirationalAdpData)
+    //         resteData()
+    //     }
+    //     else {
+    //         setAspirationalData(aspirationalAbpData)
+    //         resteData()
+    //     }
+    // }, [selectReportType])
     const combinedData = {
         "2020-21": {
             ADP_Report: aspirationalAdpData2020,
@@ -190,6 +216,7 @@ export default function TransitionRateReport() {
         const selectedData = combinedData[selectedYear][selectReportType];
         if (selectedData) {
             setAspirationalData(selectedData);
+            setShowFinalData(selectedData)
         }
     }, [selectReportType, selectedYear]);
 
@@ -277,75 +304,174 @@ export default function TransitionRateReport() {
             suppressFiltersToolPanel: true,
         },
         {
-            headerName: locationHeader,
-            cellRenderer: ArrowRenderer,
-            field: "Location",
-        },
-
-        {
-            headerName: "Boys",
-            field: "upri_b",
-            cellRenderer: percentageRenderer,
-            hide: false,
+            headerName: "State",
+            field: "lgd_state_name",
         },
         {
-            headerName: "Girls",
-            field: "upri_g",
-            cellRenderer: percentageRenderer,
-            hide: false,
+            headerName: "District",
+            field: "lgd_district_name",
         },
         {
-            headerName: "Total",
-            field: "upri_t",
-            cellRenderer: percentageRenderer,
-            hide: false,
+            headerName: "Block",
+            field: "lgd_block_name",
         },
     ]);
+    useEffect(() => {
+        if (selectedState === "All State") {
+            const columns = [
+                {
+                    headerName: "Serial Number",
+                    field: "Serial Number",
+                    hide: true,
+                    suppressColumnsToolPanel: true,
+                    suppressFiltersToolPanel: true,
+                },
+                {
+                    headerName: "",
+                    children: [
+                        {
+                            headerName: "State",
+                            field: "lgd_state_name",
+                        },
+                        {
+                            headerName: "District",
+                            field: "lgd_district_name",
+                        },
+
+                        ...(selectReportType === "ABP_Report" ? [{
+                            headerName: "Block",
+                            field: "lgd_block_name",
+                        }] : [])
+                    ]
+                },
+                {
+                    headerName: "Primary to Upper Primary",
+                    children: [
+                        {
+                            headerName: "Boys",
+                            field: "upri_b",
+                            cellRenderer: percentageRenderer,
+                            valueFormatter: (params) => params.value.toFixed(2),
+                            hide: false,
+                        },
+                        {
+                            headerName: "Girls",
+                            field: "upri_g",
+                            cellRenderer: percentageRenderer,
+                            valueFormatter: (params) => params.value.toFixed(2),
+                            hide: false,
+                        },
+                        {
+                            headerName: "Total",
+                            field: "upri_t",
+                            cellRenderer: percentageRenderer,
+                            valueFormatter: (params) => params.value.toFixed(2),
+                            hide: false,
+                        }
+                    ]
+                },
+                {
+                    headerName: "Secondary to Heigher Secondary",
+                    children: [
+                        {
+                            headerName: "Boys",
+                            field: "upri_b",
+                            cellRenderer: percentageRenderer,
+                            valueFormatter: (params) => params.value.toFixed(2),
+                            hide: false,
+                        },
+                        {
+                            headerName: "Girls",
+                            field: "upri_g",
+                            cellRenderer: percentageRenderer,
+                            valueFormatter: (params) => params.value.toFixed(2),
+                            hide: false,
+                        },
+                        {
+                            headerName: "Total",
+                            field: "upri_t",
+                            cellRenderer: percentageRenderer,
+                            valueFormatter: (params) => params.value.toFixed(2),
+                            hide: false,
+                        }
+                    ]
+                },
+                {
+                    headerName: "",
+                    children: [
+                        {
+                            headerName: "Number of Elementary Schools having PTR less than equal to 30",
+                            field: "u_ptr",
+                            hide: false,
+                        },
+                        {
+                            headerName: "Number of Elementary Schools ",
+                            field: "total_sch_ele",
+                            hide: false,
+                        },
+                        {
+                            headerName: "Percentage of elementary schools having PTR less than equal to 30",
+                            field: "ele_sch_percent",
+                            cellRenderer: percentageRenderer,
+                            valueFormatter: (params) => params.value.toFixed(2),
+                            hide: false,
+                        },
+                        {
+                            headerName: "Number of Schools having teacher trained to teach CWSN",
+                            field: "total_school_cwsn",
+                            hide: false,
+                        },
+                        {
+                            headerName: "Total Number of Schools",
+                            field: "tot_school",
+                            hide: false,
+                        },
+                        {
+                            headerName: "% Schools with Teachers trained for teaching CWSN",
+                            field: "swsn_teacher_percent",
+                            cellRenderer: percentageRenderer,
+                            valueFormatter: (params) => params.value.toFixed(2),
+                            hide: false,
+                        },
+                        {
+                            headerName: "Total number of Coed and Girls Schools",
+                            field: "tot_school_girl_co_ed",
+                            hide: false,
+                        },
+                        {
+                            headerName: "Number of Schools having Functional girls toilets",
+                            field: "total_no_of_fun_girls_toilet",
+                            hide: false,
+                        },
+                        {
+                            headerName: "Percentange of Schools having Functional Girls Toilets",
+                            field: "functional_toilet_girls_percent",
+                            cellRenderer: percentageRenderer,
+                            valueFormatter: (params) => params.value.toFixed(2),
+                            hide: false,
+                        },
+                        {
+                            headerName: "Number of Schools having girls toilets in the ratio of 40:1",
+                            field: "toilet_40",
+                            hide: false,
+                        },
+                        {
+                            headerName: "Percent",
+                            field: "sch_having_toilet_40_percent",
+                            cellRenderer: percentageRenderer,
+                            valueFormatter: (params) => params.value.toFixed(2),
+                            hide: false,
+                        },
+                    ]
+                }
+            ];
+
+            setColumn(columns);
+        }
+    }, [selectedState, selectReportType]);
 
     useEffect(() => {
-
-        setColumn([
-            {
-                headerName: "Serial Number",
-                field: "Serial Number",
-                hide: true,
-                suppressColumnsToolPanel: true,
-                suppressFiltersToolPanel: true,
-            },
-            {
-                headerName: locationHeader,
-                cellRenderer: ArrowRenderer,
-                field: "Location",
-            },
-
-            {
-                headerName: "Boys",
-                field: "upri_b",
-                cellRenderer: percentageRenderer,
-                hide: false,
-            },
-            {
-                headerName: "Girls",
-                field: "upri_g",
-                cellRenderer: percentageRenderer,
-                hide: false,
-            },
-            {
-                headerName: "Total",
-                field: "upri_t",
-                cellRenderer: percentageRenderer,
-                hide: false,
-            },
-        ]);
-
-    }, [selectedState]);
-    const handleOptionChange = (event) => {
-        dispatch(setselectedOption(event.target.value));
-    };
-
-    useEffect(() => {
-
-        if (selectedOption === "upper_primary_to_secondary") {
+        if (selectedState !== "All State") {
             setColumn([
                 {
                     headerName: "Serial Number",
@@ -359,6 +485,7 @@ export default function TransitionRateReport() {
                     cellRenderer: ArrowRenderer,
                     field: "Location",
                 },
+
                 {
                     headerName: "Boys",
                     field: "upri_b",
@@ -378,41 +505,82 @@ export default function TransitionRateReport() {
                     hide: false,
                 },
             ]);
-        } else if (selectedOption === "secondary_to_higher_secondary") {
-            setColumn([
-                {
-                    headerName: "Serial Number",
-                    field: "Serial Number",
-                    hide: true,
-                    suppressColumnsToolPanel: true,
-                    suppressFiltersToolPanel: true,
-                },
-                {
-                    headerName: locationHeader,
-                    cellRenderer: ArrowRenderer,
-                    field: "Location",
-                },
-                {
-                    headerName: "Boys",
-                    field: "sec_b",
-                    cellRenderer: percentageRenderer,
-                    hide: false,
-                },
-                {
-                    headerName: "Girls",
-                    field: "sec_g",
-                    cellRenderer: percentageRenderer,
-                    hide: false,
-                },
-                {
-                    headerName: "Total",
-                    field: "sec_t",
-                    cellRenderer: percentageRenderer,
-                    hide: false,
-                },
-            ]);
         }
+    }, [selectedState]);
+    const handleOptionChange = (event) => {
+        dispatch(setselectedOption(event.target.value));
+    };
 
+    useEffect(() => {
+        if (selectedState !== "All State") {
+            if (selectedOption === "upper_primary_to_secondary") {
+                setColumn([
+                    {
+                        headerName: "Serial Number",
+                        field: "Serial Number",
+                        hide: true,
+                        suppressColumnsToolPanel: true,
+                        suppressFiltersToolPanel: true,
+                    },
+                    {
+                        headerName: locationHeader,
+                        cellRenderer: ArrowRenderer,
+                        field: "Location",
+                    },
+                    {
+                        headerName: "Boys",
+                        field: "upri_b",
+                        cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+                    {
+                        headerName: "Girls",
+                        field: "upri_g",
+                        cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+                    {
+                        headerName: "Total",
+                        field: "upri_t",
+                        cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+                ]);
+            } else if (selectedOption === "secondary_to_higher_secondary") {
+                setColumn([
+                    {
+                        headerName: "Serial Number",
+                        field: "Serial Number",
+                        hide: true,
+                        suppressColumnsToolPanel: true,
+                        suppressFiltersToolPanel: true,
+                    },
+                    {
+                        headerName: locationHeader,
+                        cellRenderer: ArrowRenderer,
+                        field: "Location",
+                    },
+                    {
+                        headerName: "Boys",
+                        field: "sec_b",
+                        cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+                    {
+                        headerName: "Girls",
+                        field: "sec_g",
+                        cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+                    {
+                        headerName: "Total",
+                        field: "sec_t",
+                        cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+                ]);
+            }
+        }
     }, [locationHeader, selectedOption, selectedState]);
     const compressData = useCallback((data, groupBy) => {
         if (data) {
@@ -490,7 +658,13 @@ export default function TransitionRateReport() {
         return compressData(data, "lgd_state_name");
     }, [data, selectedState, selectedDistrict, selectedBlock]);
 
-
+    useEffect(() => {
+        if (selectedState !== "All State") {
+            setShowFinalData(compressedData);
+        } else {
+           setShowFinalData()
+        }
+    }, [selectedState, data, allData, selectedDistrict, selectedBlock]);
     const defColumnDefs = useMemo(
         () => ({
             flex: 1,
@@ -506,7 +680,7 @@ export default function TransitionRateReport() {
     );
 
     const onGridReady = useCallback((params) => {
-        dispatch(setgirdAPIForCommonData(params))
+        setGridApi(params);
     }, []);
     /*------------Export data to Excel and PDF-------------*/
     const getHeaderToExport = (gridApi) => {
@@ -517,7 +691,7 @@ export default function TransitionRateReport() {
             bold: true,
             margin: [0, 12, 0, 0],
         };
-        const headerRow = columns?.map((column) => {
+        const headerRow = columns.map((column) => {
             const { field, headerName } = column.getColDef();
             const sort = column.getSort();
             const headerNameUppercase = field[0].toUpperCase() + field.slice(1);
@@ -788,17 +962,14 @@ export default function TransitionRateReport() {
                                         <div className="table-box mt-4">
                                             <div
                                                 className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
-                                                style={{ width: "100%", height: 300 }}
+                                                style={{ width: "100%", height: 200 }}
                                             >
-                                                {selectedState === "All State" ? <><CommonData /></> : <>
-                                                    <AgGridReact
-                                                        columnDefs={columns}
-                                                        rowData={compressedData}
-                                                        defaultColDef={defColumnDefs}
-                                                        onGridReady={onGridReady}
-                                                    />
-                                                </>}
-
+                                                <AgGridReact
+                                                    columnDefs={columns}
+                                                    rowData={showFinalData}
+                                                    defaultColDef={defColumnDefs}
+                                                    onGridReady={onGridReady}
+                                                />
                                             </div>
                                         </div>
                                     </div>
