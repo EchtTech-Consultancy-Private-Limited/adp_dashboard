@@ -678,14 +678,14 @@ export default function SchoolInfraStructureReport() {
                                 : selectedBlock
                               : selectedBlock}
                         </h5>
-                        <h3 className="heading-sm">School Infrastructure</h3>
+                        <h3 className="heading-sm">{t('schoolInfrastructure')}</h3>
                       </div>
                       <div className="tab-box">
                         <button className="tab-button active">
-                          <img src={table} alt="Table" /> Table View
+                          <img src={table} alt="Table" /> {t('tableView')}
                         </button>
                         <button className="tab-button">
-                          <img src={chart} alt="chart" /> Chart View
+                          <img src={chart} alt="chart" />{t('chartView')}
                         </button>
                       </div>
                     </div>
@@ -703,11 +703,11 @@ export default function SchoolInfraStructureReport() {
                         >
                           <option className="option-hide">
                             {" "}
-                            Download Report {selectedYear}
+                           {t('downloadReport')} {selectedYear}
                           </option>
-                          <option value="export_pdf">Download as PDF </option>
+                          <option value="export_pdf">{t('downloadAsPdf')} </option>
                           <option value="export_excel">
-                            Download as Excel
+                        {t('downloadAsExcel')}
                           </option>
                         </select>
                       </div>
@@ -737,16 +737,13 @@ export default function SchoolInfraStructureReport() {
               </div>
             </div>
 
+            {selectedState !== "All State" ? <>
+                            {selectReportType === "ADP_Report" ?
+                                <SchoolInfraStructureCompare /> :
+                                <SchoolInfraStructureBlockCompare />
 
-
-            {selectState !== "All State" ? <>
-              {selectReportType === "ADP_Report" ?
-                <SchoolInfraStructureCompare /> :
-
-                <SchoolInfraStructureBlockCompare />
-              }</> : ""
-            }
-
+                            }
+                        </> : ""}
 
             {/* <TransitionRateCompare /> */}
           </div>

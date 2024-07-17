@@ -114,7 +114,7 @@ export default function TransitionBlockRateCompare() {
   }, [selectedAdpAbpOption]);
   // Initialize states and districts from JSON data
   useEffect(() => {
-    const structuredData = aspirationalData.reduce((acc, curr) => {
+    const structuredData = aspirationalData?.reduce((acc, curr) => {
       const stateIndex = acc.findIndex(
         (st) => st.lgd_state_id === curr?.lgd_state_id
       );
@@ -140,7 +140,7 @@ export default function TransitionBlockRateCompare() {
           (blk) => blk.lgd_block_id === curr?.lgd_block_id
         );
         if (blockIndex === -1) {
-          acc[stateIndex].blocks.push({
+          acc[stateIndex]?.blocks.push({
             lgd_block_id: curr?.lgd_block_id,
             lgd_block_name: curr?.lgd_block_name,
             upri_b: curr?.upri_b,
@@ -231,7 +231,7 @@ export default function TransitionBlockRateCompare() {
                                     </Select>
                                 </h5> */}
                 <h3 className="heading-sm mt-2">
-                  Comparison by Transition Rate
+                {t('comparisonByTransitionRate')}
                 </h3>
               </div>
             </div>
@@ -270,7 +270,7 @@ export default function TransitionBlockRateCompare() {
             <div className="comparison-box">
               <div className="row align-items-center">
                 <div className="col-md-3">
-                  <h5 className="sub-title">Select Block to Compare</h5>
+                  <h5 className="sub-title">{t('selectBlockToCompare')}</h5>
                 </div>
                 <div className="col-md-6 Comparison-select-group">
                   <div className="d-flex justify-content-between text-aligns-center antd-select">

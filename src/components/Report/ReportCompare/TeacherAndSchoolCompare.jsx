@@ -18,6 +18,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import BlankPage from "../BlankPage";
 import { useTranslation } from "react-i18next";
+
 const ArrowRenderer = ({ data }) => {
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
     const [arrowData, setArrowData] = useState(null);
@@ -216,7 +217,7 @@ export default function TeacherAndSchoolCompare() {
                                         ))}
                                     </Select>
                                 </h5> */}
-                                <h3 className='heading-sm mt-2'>{t('comparisonByTransitionRate')}</h3>
+                                <h3 className='heading-sm mt-2'>{t('comparisonByTeacherAndSchoolResources')}</h3>
                             </div>
                         </div>
                     </div>
