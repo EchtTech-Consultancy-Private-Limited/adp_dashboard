@@ -316,9 +316,8 @@ export default function TransitionBlockRateCompare() {
               <div className="row">
                 {selectedBlocks.map((block, index) => (
                   <div
-                    className={`col-sm-12 col-20 ${
-                      selectedBlocks.length === 1 ? "m-auto" : ""
-                    }`}
+                    className={`col-sm-12 col-20 ${selectedBlocks.length === 1 ? "m-auto" : ""
+                      }`}
                   >
                     {selectedBlocks.length === 1 ? (
                       <Card
@@ -340,9 +339,8 @@ export default function TransitionBlockRateCompare() {
                               <div className="d-flex">
                                 <div>
                                   <div
-                                    className={`number-card card-color-${
-                                      index + 1
-                                    }`}
+                                    className={`number-card card-color-${index + 1
+                                      }`}
                                   >
                                     {index + 1}
                                   </div>
