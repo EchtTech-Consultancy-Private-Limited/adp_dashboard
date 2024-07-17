@@ -1,62 +1,175 @@
+.dark-mode {
+    background: #000 !important;
+    min-height: 100vh;
 
-.dark-mode{
-   background: #000 !important;
-   min-height: 100vh;
-   ul li a, a,.header-top-skipwrap ul li a .select-wrap .form-select, button,.filter_drodown .select-box.from-control a.dropdown-toggle.nav-link .menu-sub-heading,.filter_drodown .list-group-item, button span, label.bg-grey2,.indicator-select .form-select{
-    color: #ff0 !important;
-   }
-   ul li, p,.heading-blue, .heading-sm,.right-card-sec .card-box-impact .impact-box-content .main-text-c,span,.heading-sm1,.form-control,.infrastructure-main-card .tab-for-graph table tr th, table tr td, div, .ag-ltr .ag-cell{color: #fff !important;}
-   .header-top,.header-top-skipwrap ul li a .select-wrap, .site-header,.menu-switch-tab, .header-dropdown-btn,.bg-grey,.main-card-home::after, .filter_drodown .filter-content,.filter_drodown,.filter_drodown .select-box.from-control li.nav-item.position-static,.right-card-sec .srid-card-se,.tab-for-graph .nav-tabs .nav-link,.form-control,table tr th, table tr td,.bg-grey2,.title-brd span.internalpagename,.ag-header-cell, .ag-tool-panel-wrapper, ul.highcharts-menu, .select-right select.form-select, .btn-banner{background: #000 !important;}
-   input:checked + .slider,.header-top-skipwrap ul li a .select-wrap, .menu-switch-tab,.header-dropdown-btn,.main-card-home::after,.filter_drodown,.filter_drodown .select-box.from-control li.nav-item.position-static,.right-card-sec .srid-card-se, .filter_drodown ul.dropdown-menu.show.animation, .btn-banner {border: 1px solid #fff;}
-   header.site-header {
-    border-top: 1px solid #545050;}
-   .menu-switch-tab .nav-tabs .nav-link.active,.tab-for-graph .nav-tabs .nav-item.show .nav-link, .tab-for-graph .nav-tabs .nav-link.active, .ag-side-bar.ag-unselectable.ag-focus-managed.ag-side-bar-right{background: #000;border: 1px solid #ff0 !important;}
-   .site-header .logo-wrap a img.logo-main{
-    background: #fff;
-    padding: 3px 10px;
-    border-radius: 10px;}
-    
-    .bg-white, .themes, .themes .themes-box-img .themes-box{background: #000 !important;}
-    .home-tab .nav-tabs .nav-item.show .nav-link, .home-tab .nav-tabs .nav-link.active {
+    ul li a,
+    a,
+    .header-top-skipwrap ul li a .select-wrap .form-select,
+    button,
+    .filter_drodown .select-box.from-control a.dropdown-toggle.nav-link .menu-sub-heading,
+    .filter_drodown .list-group-item,
+    button span,
+    label.bg-grey2,
+    .indicator-select .form-select {
+        color: #ff0 !important;
+    }
+
+    ul li,
+    p,
+    .heading-blue,
+    .heading-sm,
+    .right-card-sec .card-box-impact .impact-box-content .main-text-c,
+    span,
+    .heading-sm1,
+    .form-control,
+    .infrastructure-main-card .tab-for-graph table tr th,
+    table tr td,
+    div,
+    .ag-ltr .ag-cell {
+        color: #fff !important;
+    }
+
+    .header-top,
+    .header-top-skipwrap ul li a .select-wrap,
+    .site-header,
+    .menu-switch-tab,
+    .header-dropdown-btn,
+    .bg-grey,
+    .main-card-home::after,
+    .filter_drodown .filter-content,
+    .filter_drodown,
+    .filter_drodown .select-box.from-control li.nav-item.position-static,
+    .right-card-sec .srid-card-se,
+    .tab-for-graph .nav-tabs .nav-link,
+    .form-control,
+    table tr th,
+    table tr td,
+    .bg-grey2,
+    .title-brd span.internalpagename,
+    .ag-header-cell,
+    .ag-tool-panel-wrapper,
+    ul.highcharts-menu,
+    .select-right select.form-select,
+    .btn-banner {
+        background: #000 !important;
+    }
+
+    input:checked+.slider,
+    .header-top-skipwrap ul li a .select-wrap,
+    .menu-switch-tab,
+    .header-dropdown-btn,
+    .main-card-home::after,
+    .filter_drodown,
+    .filter_drodown .select-box.from-control li.nav-item.position-static,
+    .right-card-sec .srid-card-se,
+    .filter_drodown ul.dropdown-menu.show.animation,
+    .btn-banner {
+        border: 1px solid #fff;
+    }
+
+    header.site-header {
+        border-top: 1px solid #545050;
+    }
+
+    .menu-switch-tab .nav-tabs .nav-link.active,
+    .tab-for-graph .nav-tabs .nav-item.show .nav-link,
+    .tab-for-graph .nav-tabs .nav-link.active,
+    .ag-side-bar.ag-unselectable.ag-focus-managed.ag-side-bar-right {
+        background: #000;
+        border: 1px solid #ff0 !important;
+    }
+
+    .site-header .logo-wrap a img.logo-main {
+        background: #fff;
+        padding: 3px 10px;
+        border-radius: 10px;
+    }
+
+    .bg-white,
+    .themes,
+    .themes .themes-box-img .themes-box {
+        background: #000 !important;
+    }
+
+    .home-tab .nav-tabs .nav-item.show .nav-link,
+    .home-tab .nav-tabs .nav-link.active {
         color: #fff;
         background-color: #000000;
         border-color: #ff0;
         font-weight: 400;
     }
-    .home-tab .nav-tabs .nav-link{background: #585858;}
-    .devider-theme{display: none;}
-    .theme-border{border-color: #fff;}
-    .themes .themes-box-img .themes-box{
+
+    .home-tab .nav-tabs .nav-link {
+        background: #585858;
+    }
+
+    .devider-theme {
+        display: none;
+    }
+
+    .theme-border {
+        border-color: #fff;
+    }
+
+    .themes .themes-box-img .themes-box {
         border: 1px solid #fafafa;
         border-bottom: 0;
         border-radius: 20px 20px 0 0;
         padding: 15px 20px 5px;
 
     }
-    .themes, .footer, .footer .footer-bottom{
+
+    .themes,
+    .footer,
+    .footer .footer-bottom {
         background: #000;
         border-top: 1px solid #fff;
-               
+
     }
 
-    .card-box, .radio-button, .Comparison-select-group .antd-select .form-select, .comparison-box, .tab-box .tab-button.active, .tab-box .tab-button:last-child, .download-button, .ant-card-body, .comp-card{
+    .Comparison-select-group .antd-select .form-select,
+    .comparison-box,
+    .tab-box .tab-button.active,
+    .tab-box .tab-button:last-child,
+    .download-button,
+    .ant-card-body,
+    .comp-card,
+    .ag-row-even.ag-row-no-focus.ag-row.ag-row-level-0.ag-row-position-absolute.ag-row-first.ag-row-not-inline-editing.ag-row-hover,
+    .tab-box .tab-button:last-child,
+    .Comparison-select-group :where(.css-dev-only-do-not-override-98ntnt).ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
+        background: #000 !important;
+    }
+
+    .card-box,
+    .radio-button {
         background: #000 !important;
         border: 1px solid #ddd !important;
     }
 
-    .card-box .card-box{border: none !important;}
+    .card-box .card-box {
+        border: none !important;
+    }
 
-    .themes .themes-box-img .theme-shadow-box, .ag-row-even.ag-row-no-focus.ag-row.ag-row-level-0.ag-row-position-absolute.ag-row-first.ag-row-not-inline-editing.ag-row-hover, .tab-box .tab-button:last-child, .Comparison-select-group :where(.css-dev-only-do-not-override-98ntnt).ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector{
+    .themes .themes-box-img .theme-shadow-box {
         background: rgb(18 18 18 / 84%) !important;
     }
 
-    .download-button{
+    .download-button {
         color: #ff0;
     }
 
-    .themes .themes-box-img .content, .ag-center-cols-viewport, .multi-header-table .ag-row-animation .ag-row{
+    .themes .themes-box-img .content,
+    .ag-center-cols-viewport,
+    .multi-header-table .ag-row-animation .ag-row {
         background: rgba(18, 18, 18, 0.84) !important;
     }
-    .footer .footer-bottom .visitor-counter span{color: #000 !important;}
-    
+
+    .footer .footer-bottom .visitor-counter span {
+        color: #000 !important;
+    }
+
+    .ant-select-show-search:where(.css-p8b6i).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+        background: #000 !important;
+        border: none !important;
+    }
 }
