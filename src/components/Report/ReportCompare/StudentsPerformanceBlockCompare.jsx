@@ -22,6 +22,8 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BlankPage from "../BlankPage";
 import { ScrollToTopOnMount } from "../../../Scroll/ScrollToTopOnMount";
+import { useTranslation } from "react-i18next";
+
 const ArrowRenderer = ({ data }) => {
     const selectedOption = useSelector(
         (state) => state.reportAdpAbpType.selectedOption
@@ -69,6 +71,7 @@ const ArrowRenderer = ({ data }) => {
     return <span>{renderArrow()}</span>;
 };
 export default function StudentsPerformanceBlockCompare() {
+    const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
     const [aspirationalData, setAspirationalData] = useState([]);
     const selectedOption = useSelector(
@@ -111,7 +114,7 @@ export default function StudentsPerformanceBlockCompare() {
     }, [selectedAdpAbpOption]);
     // Initialize states and districts from JSON data
     useEffect(() => {
-        const structuredData = aspirationalData.reduce((acc, curr) => {
+        const structuredData = aspirationalData?.reduce((acc, curr) => {
             const stateIndex = acc.findIndex(
                 (st) => st.lgd_state_id === curr.lgd_state_id
             );
@@ -130,11 +133,11 @@ export default function StudentsPerformanceBlockCompare() {
                     ],
                 });
             } else {
-                const blockIndex = acc[stateIndex].blocks.findIndex(
+                const blockIndex = acc[stateIndex]?.blocks.findIndex(
                     (blk) => blk.lgd_block_id === curr.lgd_block_id
                 );
                 if (blockIndex === -1) {
-                    acc[stateIndex].blocks.push({
+                    acc[stateIndex]?.blocks.push({
                         lgd_block_id: curr?.lgd_block_id,
                         lgd_block_name: curr?.lgd_block_name,
                         total_school_cwsn: curr?.total_school_cwsn,
@@ -151,7 +154,7 @@ export default function StudentsPerformanceBlockCompare() {
 
     //   suggestion      [dispatch, aspirationalData]
 
-    // Handle state change
+    // Handle state change 
     const handleStateChange = (value) => {
         dispatch(selectState(value));
         dispatch(setselectedCompareBlocks([]));
@@ -219,7 +222,7 @@ export default function StudentsPerformanceBlockCompare() {
                                     </Select>
                                 </h5> */}
                                 <h3 className="heading-sm mt-2">
-                                    Comparison by Transition Rate
+                                {t('comparisonByStudentPerformance')}
                                 </h3>
                             </div>
                         </div>
@@ -236,7 +239,7 @@ export default function StudentsPerformanceBlockCompare() {
                         <div className="comparison-box">
                             <div className="row align-items-center">
                                 <div className="col-md-3">
-                                    <h5 className="sub-title">Select Block to Compare</h5>
+                                    <h5 className="sub-title">{t('selectBlockToCompare')}</h5>
                                 </div>
                                 <div className="col-md-6 Comparison-select-group">
                                     <div className="d-flex justify-content-between text-aligns-center antd-select">
@@ -246,12 +249,10 @@ export default function StudentsPerformanceBlockCompare() {
                                                 key={index}
                                                 onChange={(value) => handleBlockChange(value, index)}
                                                 style={{ width: "100%" }}
-                                                placeholder={`Add Block ${index + 1}`}
+                                                placeholder={`${t('addBlock')} ${index + 1}`}
                                                 mode="single"
                                                 showSearch
-                                                value={
-                                                    selectedBlocks[index]?.lgd_block_name || `Add Block`
-                                                }
+                                                value={selectedBlocks[index]?.lgd_block_name || `${t('addBlock')}`}
                                                 disabled={!selectedState}
                                             >
                                                 {getFilteredBlocks(index).map((block) => (
@@ -269,10 +270,10 @@ export default function StudentsPerformanceBlockCompare() {
                                 <div className="col-md-3">
                                     <div className="tab-box float-end">
                                         <button className="tab-button active">
-                                            <img src={card} alt="card" /> Card View
+                                            <img src={card} alt="card" />  {t('cardView')}
                                         </button>
                                         <button className="tab-button">
-                                            <img src={table} alt="Table" /> Table View
+                                            <img src={table} alt="Table" />  {t('tableView')}
                                         </button>
                                     </div>
                                 </div>
@@ -295,8 +296,7 @@ export default function StudentsPerformanceBlockCompare() {
                                                 }}
                                             >
                                                 <b>
-                                                    Please select one more district for comparison to
-                                                    enhance the analysis.
+                                                {t('selectOneMoreBlock')}
                                                 </b>
                                             </Card>
                                         ) : (

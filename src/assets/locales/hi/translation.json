@@ -75,9 +75,13 @@
    "selectOneMoreDistrict": "कृपया विश्लेषण को बढ़ाने के लिए तुलना के लिए एक और जिला चुनें।",
    "selectOneMoreBlock": "कृपया तुलना के लिए और एक ब्लॉक चुनें ताकि विश्लेषण में सुधार हो सके।",
    "selectDistrictToCompare": "तुलना करने के लिए जिला चुनें",
-    "cardView": "कार्ड दृश्य",
-      "addDistrict": "जिला जोड़ें",
-      "addBlock": "ब्लॉक जोड़ें"
+  "cardView": "कार्ड दृश्य",
+  "addDistrict": "जिला जोड़ें",
+    "addBlock": "ब्लॉक जोड़ें",
+    "comparisonByTeacherAndSchoolResources": "शिक्षक और स्कूल संसाधनों द्वारा तुलना",
+  "comparisonByStudentPerformance": "छात्र प्रदर्शन द्वारा तुलना",
+  "comparisonBySchoolInfrastructure": "स्कूल अवसंरचना द्वारा तुलना",
+   "selectBlockToCompare": "तुलना के लिए ब्लॉक चुनें"
       
 
 

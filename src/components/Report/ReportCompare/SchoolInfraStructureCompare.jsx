@@ -253,7 +253,7 @@ export default function SchoolInfraStructureCompare() {
                                     </Select>
                                 </h5> */}
                 <h3 className="heading-sm mt-2">
-           {t('comparisonByTransitionRate')}
+           {t('comparisonBySchoolInfrastructure')}
                 </h3>
               </div>
             </div>
