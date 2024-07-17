@@ -7,11 +7,11 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateToggleDark } from '../../redux/slice/darkLightModeSlice';
 import { useTranslation } from "react-i18next";
-import  {i18n} from '../i18next/i18n'  //Do not remove this line
+import { i18n } from '../i18next/i18n'  //Do not remove this line
 
 
 const Header = () => {
-const dispatch=useDispatch()
+  const dispatch = useDispatch()
   const toggleDarkMode = useSelector((state) => state.toggle.toggleDarkLight);
   const goToPageOnClick = () => {
     // navigate("/");
@@ -20,18 +20,20 @@ const dispatch=useDispatch()
   const location = useLocation()
   const pathName = location.pathname;
   const [showNavbar, setShowNavbar] = React.useState(false);
+  const [isShow, setIsShow] = useState(false);
 
   const handleShowNavbar = () => {
     setShowNavbar(!showNavbar);
+    setIsShow(!isShow);
   };
 
 
   const { t, i18n } = useTranslation();
   const changeLanguage = (e) => {
     const selectedLanguage = e.target.value;
-    localStorage.setItem("selectedLanguage", selectedLanguage); 
-    i18n.changeLanguage(selectedLanguage); 
-  
+    localStorage.setItem("selectedLanguage", selectedLanguage);
+    i18n.changeLanguage(selectedLanguage);
+
   };
   useEffect(() => {
     const savedLanguage = localStorage.getItem("selectedLanguage");
@@ -95,14 +97,14 @@ const dispatch=useDispatch()
 
                 <div className="header-top-skipwrap right-access-points">
                   <ul className='mb-0'>
-                   
+
                     <li>
                       <div className="theme-toggle">
                         <label className="switch" title="Dark Mode">
-                          <input className="switch-input"   type="checkbox"
+                          <input className="switch-input" type="checkbox"
                             id="mode"
                             checked={toggleDarkMode}
-                            onClick={toggleDarkTheme}/>
+                            onClick={toggleDarkTheme} />
                           <span data-on="On" data-off="Off" className="switch-label"></span>
                           <span className="switch-handle" title="Change Contrast"></span>
                         </label>
@@ -113,8 +115,8 @@ const dispatch=useDispatch()
                       <div className='select-right'>
                         <div className="select-wrap">
                           <select className="form-select Langchange"
-                             value={i18n.language}
-                             onChange={changeLanguage}>
+                            value={i18n.language}
+                            onChange={changeLanguage}>
                             <option value="en">Eng</option>
                             <option value="hi">हिन्दी</option>
                           </select>
@@ -154,8 +156,8 @@ const dispatch=useDispatch()
                   <Link to="" onClick={goToPageOnClick} className="logo-text ordernav-sm-2"> {t('aspirational')} <br />{t('districtProgramme')}  </Link>
 
                 </div>
-               
-                <div className="navbar-right">
+
+                <div className="navbar-right d-flex align-items-center">
                   <div className={`nav-elements  ${showNavbar && "active"}`}>
                     <ul className='mb-0'>
                       <li>
@@ -189,16 +191,14 @@ const dispatch=useDispatch()
                       <li>
                         <NavLink to="/contact">{t('contactUs')}</NavLink>
                       </li>
-                      <li>
-                        <div className='search-icon'>
-                          <img src={search} alt="search" />
-                        </div>
-                      </li>
                     </ul>
+                  </div>
+                  <div className='search-icon ms-3'>
+                    <img src={search} alt="search" />
                   </div>
                 </div>
 
-                <div className="menu-icon" onClick={handleShowNavbar}>
+                <div className={`menu-icon ${isShow ? 'show' : ''}`} onClick={handleShowNavbar}>
                   <Hamburger />
                 </div>
 
@@ -216,12 +216,8 @@ const dispatch=useDispatch()
 
 
 const Hamburger = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="52"
-    height="24"
-    viewBox="0 0 52 24"
-  >
+  <>
+  <svg xmlns="http://www.w3.org/2000/svg" width="52" height="24" viewBox="0 0 52 24" >
     <g id="Group_9" data-name="Group 9" transform="translate(-294 -47)">
       <rect
         id="Rectangle_3"
@@ -230,8 +226,7 @@ const Hamburger = () => (
         height="4"
         rx="2"
         transform="translate(304 47)"
-        fill="#574c4c"
-      />
+        fill="#574c4c"/>
       <rect
         id="Rectangle_5"
         data-name="Rectangle 5"
@@ -239,8 +234,7 @@ const Hamburger = () => (
         height="4"
         rx="2"
         transform="translate(304 67)"
-        fill="#574c4c"
-      />
+        fill="#574c4c" />
       <rect
         id="Rectangle_4"
         data-name="Rectangle 4"
@@ -248,10 +242,33 @@ const Hamburger = () => (
         height="4"
         rx="2"
         transform="translate(294 57)"
-        fill="#574c4c"
-      />
+        fill="#574c4c" />
     </g>
   </svg>
+  
+  <svg
+    width="40"
+    height="40"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M18 6L6 18"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M6 6L18 18"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+  </>
 );
 
 

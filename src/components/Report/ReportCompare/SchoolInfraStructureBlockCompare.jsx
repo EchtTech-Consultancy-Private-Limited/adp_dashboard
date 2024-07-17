@@ -22,6 +22,8 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BlankPage from "../BlankPage";
 import { ScrollToTopOnMount } from "../../../Scroll/ScrollToTopOnMount";
+import { useTranslation } from "react-i18next";
+
 const ArrowRenderer = ({ data }) => {
   const selectedOption = useSelector(
     (state) => state.reportAdpAbpType.selectedOption
@@ -70,7 +72,9 @@ const ArrowRenderer = ({ data }) => {
 };
 
 export default function SchoolInfraStructureBlockCompare() {
+  
   const dispatch = useDispatch();
+  const { t, i18n } = useTranslation();
   const [aspirationalData, setAspirationalData] = useState([]);
   const selectedOption = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareOption
@@ -222,7 +226,7 @@ export default function SchoolInfraStructureBlockCompare() {
                                     </Select>
                                 </h5> */}
                 <h3 className="heading-sm mt-2">
-                  Comparison by School Infrastructure
+                {t('comparisonBySchoolInfrastructure')}
                 </h3>
               </div>
             </div>
@@ -239,7 +243,7 @@ export default function SchoolInfraStructureBlockCompare() {
             <div className="comparison-box">
               <div className="row align-items-center">
                 <div className="col-md-3">
-                  <h5 className="sub-title">Select Block to Compare</h5>
+                  <h5 className="sub-title">{t('selectBlockToCompare')}</h5>
                 </div>
                 <div className="col-md-6 Comparison-select-group">
                   <div className="d-flex justify-content-between text-aligns-center antd-select">
@@ -249,12 +253,10 @@ export default function SchoolInfraStructureBlockCompare() {
                         key={index}
                         onChange={(value) => handleBlockChange(value, index)}
                         style={{ width: "100%" }}
-                        placeholder={`Add Block ${index + 1}`}
+                        placeholder={`${t('addBlock')} ${index + 1}`}
                         mode="single"
                         showSearch
-                        value={
-                          selectedBlocks[index]?.lgd_block_name || `Add Block`
-                        }
+                        value={selectedBlocks[index]?.lgd_block_name || `${t('addBlock')}`}
                         disabled={!selectedState}
                       >
                         {getFilteredBlocks(index).map((block) => (
@@ -272,10 +274,10 @@ export default function SchoolInfraStructureBlockCompare() {
                 <div className="col-md-3">
                   <div className="tab-box float-end">
                     <button className="tab-button active">
-                      <img src={card} alt="card" /> Card View
+                      <img src={card} alt="card" /> {t('cardView')}
                     </button>
                     <button className="tab-button">
-                      <img src={table} alt="Table" /> Table View
+                      <img src={table} alt="Table" />{t('tableView')}
                     </button>
                   </div>
                 </div>
@@ -299,8 +301,7 @@ export default function SchoolInfraStructureBlockCompare() {
                         }}
                       >
                         <b>
-                          Please select one more district for comparison to
-                          enhance the analysis.
+                          {t('selectOneMoreBlock')}
                         </b>
                       </Card>
                     ) : (

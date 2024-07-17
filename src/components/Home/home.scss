@@ -4,25 +4,23 @@
     height: 100vh;
     padding-top: 12px;
 
-    @media (max-width: 991px) {
+    @media (max-width: 767px) {
         padding-top: 0px;
-        height: 64vh;
+        // background: #2B9C9F;
+        background-position: right;
 
-        .overlay {
-            background: rgb(0 0 0 / 45%);
-            height: 64vh;
-            padding-top: 0px;
+        .mt-5{
+            margin-top: 1.5rem !important;
         }
     }
 }
 
 .ptb-70 {
-    padding: 50px 0;
+    padding: 35px 0;
 
     @media (max-width: 991px) {
         padding: 35px 0;
     }
-
 }
 
 .devider-theme {
@@ -52,8 +50,9 @@ img {
         height: 60vh;
     }
 
-    @media (max-width: 991px) {
-        height: 35vh;
+    @media (max-width: 767px) {
+        height: auto;
+        // padding-top: 5%;
     }
 
     h1 {
@@ -62,7 +61,7 @@ img {
         font-size: 50px;
         font-weight: 700;
         line-height: 1.2;
-        letter-spacing: 2px;
+        letter-spacing: 0px;
 
         @media (max-width:1599px) and (min-width: 1400px) {
             font-size: 45px;
@@ -73,7 +72,7 @@ img {
         }
 
         @media (max-width: 991px) {
-            font-size: 32px;
+            font-size: 37px;
             letter-spacing: normal;
         }
     }
@@ -303,10 +302,14 @@ img {
             }
 
             .theme-maintext {
-                font-size: 44px;
+                font-size: 48px;
                 font-weight: 700;
                 line-height: 1;
                 padding-top: 10px;
+
+                @media (max-width:1399px) and (min-width: 1024px) {
+                    font-size: 36px;
+                }
 
                 @media (max-width: 991px) {
                     font-size: 36px;
@@ -409,6 +412,7 @@ img {
                 color: #6a6767;
                 font-weight: 600;
                 margin-bottom: 6px;
+                font-size: 14px;
             }
 
             ul {
@@ -437,7 +441,7 @@ img {
                 color: #2B9C9F;
                 display: flex;
                 text-decoration: none;
-                font-size: 16px;
+                font-size: 15px;
                 align-items: center;
 
                 @media (max-width:1399px) and (min-width: 1024px) {
@@ -499,5 +503,10 @@ img {
 
     .d-none-mobile{
         display: none;
+    }
+
+    .mobile-image {
+        position: absolute;
+        bottom: 4%;
     }
 }
