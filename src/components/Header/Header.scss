@@ -127,16 +127,7 @@
         }
 
         @media (max-width: 991px) {
-            &:first-child {
-               ul{
-                li{
-                    // display: none;
-
-                    // &:first-child{display: block;border-right: 0;}
-                }
-               }
-            }
-
+           
             &:last-child {
                display: none;
             }
@@ -473,7 +464,7 @@
     .logo-wrap {
         @include d_flex_between;
         padding: 10px 0px;
-        align-items: normal;
+        // align-items: normal;
 
         .navbar-brand {
             padding: 0;
@@ -1130,7 +1121,7 @@ button.text-increment-btn {
 
 .nav-elements ul a {
     font-size: 15px;
-    font-weight: 500;
+    font-weight: bold;
     color: #000000;
     text-decoration: none;
 }
@@ -1138,7 +1129,7 @@ button.text-increment-btn {
 .nav-elements ul a.active {
     color: #FF9461;
     font-weight: 600;
-    font-size: 16px;
+    // font-size: 16px;
     position: relative;
 }
 

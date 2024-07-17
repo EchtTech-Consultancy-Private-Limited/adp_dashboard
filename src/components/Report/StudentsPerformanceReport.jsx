@@ -583,7 +583,7 @@ export default function StudentsPerformanceReport() {
                                             <div className="">
                                                 {/* <img src={download} alt="download" /> */}
                                                 <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
-                                                    <option className="option-hide">  {t('downloadReport')}{selectedYear}</option>
+                                                    <option className="option-hide">  {t('downloadReport')} {selectedYear}</option>
                                                     <option value="export_pdf">{t('downloadAsPdf')}</option>
                                                     <option value="export_excel">   {t('downloadAsExcel')}</option>
                                                 </select>
@@ -597,7 +597,7 @@ export default function StudentsPerformanceReport() {
                                     <div className="col-md-12">
                                         <div className="table-box mt-4">
                                             <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
-                                                style={{ width: "100%", height: 200 }} >
+                                                style={{ width: "100%", height: 300 }} >
                                                 {selectedState === "All State" ? <><CommonData /></> : <>
                                                     <AgGridReact
                                                         columnDefs={columns}
