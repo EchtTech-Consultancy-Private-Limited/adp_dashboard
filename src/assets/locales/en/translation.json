@@ -77,7 +77,9 @@
    "total": "Total",
    "district": "District",
    "selectOneMoreDistrict": "Please select one more district for comparison to enhance the analysis.",
+   "selectOneMoreBlock": "Please select one more Block for comparison to enhance the analysis.",
    "selectDistrictToCompare": "Select District to Compare",
      "cardView": "Card View",
-      "addDistrict": "Add District"
+      "addDistrict": "Add District",
+      "addBlock": "Add Block"
 }

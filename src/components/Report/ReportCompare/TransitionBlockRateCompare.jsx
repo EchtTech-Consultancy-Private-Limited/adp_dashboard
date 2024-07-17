@@ -22,6 +22,8 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BlankPage from "../BlankPage";
 import { ScrollToTopOnMount } from "../../../Scroll/ScrollToTopOnMount";
+import { useTranslation } from "react-i18next";
+
 const ArrowRenderer = ({ data }) => {
   const selectedOption = useSelector(
     (state) => state.reportAdpAbpType.selectedOption
@@ -69,6 +71,7 @@ const ArrowRenderer = ({ data }) => {
   return <span>{renderArrow()}</span>;
 };
 export default function TransitionBlockRateCompare() {
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const [aspirationalData, setAspirationalData] = useState([]);
   const selectedOption = useSelector(
@@ -133,7 +136,7 @@ export default function TransitionBlockRateCompare() {
           ],
         });
       } else {
-        const blockIndex = acc[stateIndex].blocks.findIndex(
+        const blockIndex = acc[stateIndex]?.blocks.findIndex(
           (blk) => blk.lgd_block_id === curr?.lgd_block_id
         );
         if (blockIndex === -1) {
@@ -244,7 +247,7 @@ export default function TransitionBlockRateCompare() {
                     checked={selectedOption === "upper_primary_to_secondary"}
                     onChange={handleOptionChange}
                   />
-                  <label htmlFor="radio11">Upper Primary to Secondary </label>
+                  <label htmlFor="radio11">{t('upperPrimaryToSecondary')}</label>
                 </div>
 
                 <div className="box-radio">
@@ -255,7 +258,7 @@ export default function TransitionBlockRateCompare() {
                     checked={selectedOption === "secondary_to_higher_secondary"}
                     onChange={handleOptionChange}
                   />
-                  <label htmlFor="radio22">Secondary to Higher Secondary</label>
+                  <label htmlFor="radio22">{t('secondaryToHigherSecondary')}</label>
                 </div>
               </div>
             </div>
@@ -277,12 +280,10 @@ export default function TransitionBlockRateCompare() {
                         key={index}
                         onChange={(value) => handleBlockChange(value, index)}
                         style={{ width: "100%" }}
-                        placeholder={`Add Block ${index + 1}`}
+                        placeholder={`${t('addBlock')} ${index + 1}`}
                         mode="single"
                         showSearch
-                        value={
-                          selectedBlocks[index]?.lgd_block_name || `Add Block`
-                        }
+                        value={selectedBlocks[index]?.lgd_block_name || `${t('addBlock')}`}
                         disabled={!selectedState}
                       >
                         {getFilteredBlocks(index).map((block) => (
@@ -300,10 +301,10 @@ export default function TransitionBlockRateCompare() {
                 <div className="col-md-3">
                   <div className="tab-box float-end">
                     <button className="tab-button active">
-                      <img src={card} alt="card" /> Card View
+                      <img src={card} alt="card" /> {t('cardView')}
                     </button>
                     <button className="tab-button">
-                      <img src={table} alt="Table" /> Table View
+                      <img src={table} alt="Table" /> {t('tableView')}
                     </button>
                   </div>
                 </div>
@@ -326,8 +327,7 @@ export default function TransitionBlockRateCompare() {
                         }}
                       >
                         <b>
-                          Please select one more district for comparison to
-                          enhance the analysis.
+                         {t('selectOneMoreBlock')}
                         </b>
                       </Card>
                     ) : (
