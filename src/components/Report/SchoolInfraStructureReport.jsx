@@ -31,8 +31,10 @@ import { Select } from "antd";
 import "jspdf-autotable";
 import { GlobalLoading } from "../GlobalLoading/GlobalLoading";
 import {
+  setgirdAPIForCommonData,
   setselectedOption,
   setSelectedYear,
+  SetSheetName,
   setUpdateStatus,
 } from "../../redux/slice/reportTypeSlice";
 import BlankPage from "./BlankPage";
@@ -49,6 +51,7 @@ import {
 import { ScrollToTopOnMount } from "../../Scroll/ScrollToTopOnMount";
 import SchoolInfraStructureCompare from "./ReportCompare/SchoolInfraStructureCompare";
 import SchoolInfraStructureBlockCompare from "./ReportCompare/SchoolInfraStructureBlockCompare";
+import { CommonData } from "./CommonData/CommonData";
 
 const ArrowRenderer = ({ data, value }) => {
   const selectedOption = useSelector(
@@ -107,7 +110,6 @@ export default function SchoolInfraStructureReport() {
   const [queryParameters] = useSearchParams();
   const id = queryParameters.get("id");
   const type = queryParameters.get("type");
-  const [gridApi, setGridApi] = useState();
   const [loading, setLoading] = useState(true);
   localStorage.setItem("selectedReport", "School Infrastructure");
   const { selectedState, selectedDistrict, selectedBlock } = useSelector(
@@ -115,41 +117,17 @@ export default function SchoolInfraStructureReport() {
   );
   const [aspirationalData, setAspirationalData] = useState([]);
   const [locationHeader, SetLocationHeader] = useState();
-  const [sheetName, SetSheetName] = useState()
-  const selectReportType = useSelector(
-    (state) => state.reportAdpAbpType.updateReportType
-  );
-  const selectedOption = useSelector(
-    (state) => state.reportAdpAbpType.selectedOption
-  );
-  const updateLoading = useSelector(
-    (state) => state.reportAdpAbpType.loadingStatus
-  );
+  const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
+  const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
   const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
   const states = useSelector((state) => state.locationAdp.states);
+  const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName)
+  const gridApi = useSelector((state) => state.reportAdpAbpType.girdAPIForCommonData);
   const savedReportName = localStorage.getItem("selectedReport");
   const report_name = savedReportName;
   const [data, setData] = useState([]);
-  const [allData, SetAllData]=useState([])
-  const [showFinalData, setShowFinalData]=useState([])
-  const flattenData = (data) => {
-    const flattened = [];
-  
-    data?.forEach(state => {
-      state.districts.forEach(district => {
-        district.blocks.forEach(block => {
-          flattened.push({
-            lgd_state_name: state.lgd_state_name,
-            lgd_district_name: district.lgd_district_name,
-            lgd_block_name: block.lgd_block_name,
-          });
-        });
-      });
-    });
-  
-    return flattened;
-  };
-  
+
+
   function resteData() {
     dispatch(selectState(SelectState));
     dispatch(selectDistrict(SelectDistrict));
@@ -161,9 +139,7 @@ export default function SchoolInfraStructureReport() {
     resteData();
   }, [dispatch]);
 
-  useEffect(()=>{
-    SetAllData(states)
-},[states])
+
   {
     /*...............update Location Header..............*/
   }
@@ -174,7 +150,7 @@ export default function SchoolInfraStructureReport() {
         selectedDistrict === SelectDistrict
       ) {
         SetLocationHeader("District");
-        SetSheetName("Aspirational District Programme")
+        dispatch(SetSheetName("Aspirational District Programme"));
       }
     } else if (selectReportType === "ABP_Report") {
       if (
@@ -189,7 +165,7 @@ export default function SchoolInfraStructureReport() {
       ) {
         SetLocationHeader("Block");
       }
-      SetSheetName("Aspirational Block Programme")
+      dispatch(SetSheetName("Aspirational Block Programme"));
     }
   }, [
     selectedState,
@@ -199,18 +175,8 @@ export default function SchoolInfraStructureReport() {
     selectReportType,
   ]);
 
-  {
-    /*...............Take data report wise..............*/
-  }
-  // useEffect(() => {
-  //   if (selectReportType === "ADP_Report") {
-  //     setAspirationalData(aspirationalAdpData);
-  //     resteData();
-  //   } else {
-  //     setAspirationalData(aspirationalAbpData);
-  //     resteData();
-  //   }
-  // }, [selectReportType]);
+  /*...............Take data report wise..............*/
+
   const combinedData = {
     "2020-21": {
       ADP_Report: aspirationalAdpData2020,
@@ -308,62 +274,52 @@ export default function SchoolInfraStructureReport() {
 
   const [columns, setColumn] = useState([
     {
-        headerName: "Serial Number",
-        field: "Serial Number",
-        hide: true,
-        suppressColumnsToolPanel: true,
-        suppressFiltersToolPanel: true,
+      headerName: "Serial Number",
+      field: "Serial Number",
+      hide: true,
+      suppressColumnsToolPanel: true,
+      suppressFiltersToolPanel: true,
     },
     {
-        headerName: "State",
-        field: "lgd_state_name",
+      headerName: locationHeader,
+      cellRenderer: ArrowRenderer,
+      field: "Location",
+    },
+
+    {
+      headerName: "Total number of Coed and Girls Schools",
+      field: "tot_school_girl_co_ed",
+      hide: false,
     },
     {
-        headerName: "District",
-        field: "lgd_district_name",
+      headerName: "Number of Schools having Functional girls toilets",
+      field: "total_no_of_fun_girls_toilet",
+      hide: false,
+    },
+
+    {
+      headerName: "Percentange of Schools having Functional Girls Toilets",
+      field: "functional_toilet_girls_percent",
+      cellRenderer: percentageRenderer,
+      hide: false,
+    },
+
+    {
+      headerName:
+        "Number of Schools having girls toilets in the ratio of 40:1",
+      field: "toilet_40",
+      hide: false,
     },
     {
-        headerName: "Block",
-        field: "lgd_block_name",
+      headerName: "Percent",
+      field: "sch_having_toilet_40_percent",
+      cellRenderer: percentageRenderer,
+      hide: false,
     },
 
-]);
-useEffect(() => {
-    if (selectedState === "All State") {
-        const columns = [
-            {
-                headerName: "Serial Number",
-                field: "Serial Number",
-                hide: true,
-                suppressColumnsToolPanel: true,
-                suppressFiltersToolPanel: true,
-            },
-            {
-                headerName: "State",
-                field: "lgd_state_name",
-            },
-            {
-                headerName: "District",
-                field: "lgd_district_name",
-            },
-        ];
-
-        if (selectReportType === "ABP_Report") {
-            columns.push({
-                headerName: "Block",
-                field: "lgd_block_name",
-            });
-        }
-
-        setColumn(columns);
-    }
-}, [selectedState, selectReportType]);
-  const handleOptionChange = (event) => {
-    dispatch(setselectedOption(event.target.value));
-  };
+  ]);
 
   useEffect(() => {
-    if (selectedState !== "All State") {
     if (selectedOption === "upper_primary_to_secondary") {
       setColumn([
         {
@@ -382,13 +338,11 @@ useEffect(() => {
         {
           headerName: "Total number of Coed and Girls Schools",
           field: "tot_school_girl_co_ed",
-          // cellRenderer: percentageRenderer,
           hide: false,
         },
         {
           headerName: "Number of Schools having Functional girls toilets",
           field: "total_no_of_fun_girls_toilet",
-          // cellRenderer: percentageRenderer,
           hide: false,
         },
 
@@ -430,13 +384,11 @@ useEffect(() => {
         {
           headerName: "Total number of Coed and Girls Schools",
           field: "tot_school_girl_co_ed",
-          // cellRenderer: percentageRenderer,
           hide: false,
         },
         {
           headerName: "Number of Schools having Functional girls toilets",
           field: "total_no_of_fun_girls_toilet",
-          // cellRenderer: percentageRenderer,
           hide: false,
         },
 
@@ -461,7 +413,7 @@ useEffect(() => {
         },
       ]);
     }
-  }
+
   }, [locationHeader, selectedOption, selectedState]);
 
   const compressData = useCallback((data, groupBy) => {
@@ -512,19 +464,6 @@ useEffect(() => {
     return compressData(data, "lgd_state_name");
   }, [data, selectedState, selectedDistrict, selectedBlock]);
 
-  useEffect(()=>{
-    if(selectedState !== "All State"){
-        setShowFinalData(compressedData)
-    }
-    else{
-        if (allData.length > 0) {
-            const flattenedData = flattenData(allData);
-            setShowFinalData(flattenedData);
-          }
-        
-    }
-        },[selectedState,data,allData , selectedDistrict, selectedBlock,])
-
   const defColumnDefs = useMemo(
     () => ({
       flex: 1,
@@ -540,168 +479,168 @@ useEffect(() => {
   );
 
   const onGridReady = useCallback((params) => {
-    setGridApi(params);
+    dispatch(setgirdAPIForCommonData(params))
   }, []);
   /*------------Export data to Excel and PDF-------------*/
   const getHeaderToExport = (gridApi) => {
     const columns = gridApi.api.getAllDisplayedColumns();
     const headerCellSerialNumber = {
-        text: "Serial Number",
-        headerName: "Serial Number",
-        bold: true,
-        margin: [0, 12, 0, 0],
+      text: "Serial Number",
+      headerName: "Serial Number",
+      bold: true,
+      margin: [0, 12, 0, 0],
     };
     const headerRow = columns.map((column) => {
-        const { field, headerName } = column.getColDef();
-        const sort = column.getSort();
-        const headerNameUppercase = field[0].toUpperCase() + field.slice(1);
-        const headerCell = {
-            text: headerNameUppercase + (sort ? ` (${sort})` : ""),
-            headerName: headerName,
-            bold: true,
-            margin: [0, 12, 0, 0],
-        };
-        return headerCell;
+      const { field, headerName } = column.getColDef();
+      const sort = column.getSort();
+      const headerNameUppercase = field[0].toUpperCase() + field.slice(1);
+      const headerCell = {
+        text: headerNameUppercase + (sort ? ` (${sort})` : ""),
+        headerName: headerName,
+        bold: true,
+        margin: [0, 12, 0, 0],
+      };
+      return headerCell;
     });
     headerRow.unshift(headerCellSerialNumber);
     return headerRow;
-};
-const getRowsToExport = (gridApi) => {
+  };
+  const getRowsToExport = (gridApi) => {
     const columns = gridApi.api.getAllDisplayedColumns();
     const getCellToExport = (column, node) => ({
-        text: gridApi.api.getValue(column, node) ?? "",
+      text: gridApi.api.getValue(column, node) ?? "",
     });
     const rowsToExport = [];
     gridApi.api.forEachNodeAfterFilterAndSort((node) => {
-        const rowToExport = [];
-        rowToExport.push({ text: rowsToExport.length + 1 });
-        columns.forEach((column) => {
-            rowToExport.push(getCellToExport(column, node));
-        });
-        rowsToExport.push(rowToExport);
+      const rowToExport = [];
+      rowToExport.push({ text: rowsToExport.length + 1 });
+      columns.forEach((column) => {
+        rowToExport.push(getCellToExport(column, node));
+      });
+      rowsToExport.push(rowToExport);
     });
     return rowsToExport;
-};
-const getDocument = (gridApi) => {
+  };
+  const getDocument = (gridApi) => {
     const headerRow = getHeaderToExport(gridApi);
     const rows = getRowsToExport(gridApi);
     const date = new Date();
     const formattedDate = new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
     }).format(date);
     const doc = new jsPDF({
-        orientation: "portrait",
-        unit: "in",
-        format: [20, 20],
+      orientation: "portrait",
+      unit: "in",
+      format: [20, 20],
     });
     // Function to add header
     const addHeader = () => {
-        doc.setFontSize(25);
-        doc.setTextColor("blue");
-        doc.setFont("bold");
-        doc.text(sheetName, 0.6, 0.5);
-        doc.setFontSize(20);
-        doc.setTextColor("blue");
-        doc.text(`Report Name: ${report_name}`, 0.6, 1.0);
-        doc.setFontSize(20);
-        doc.setTextColor("blue");
-        doc.text(`Report type : ${selectedState}`, 0.6, 1.5);
-        doc.setTextColor("blue");
-        doc.setFont("bold");
-        doc.text(`Report Year : ${selectedYear}`, doc.internal.pageSize.width - 2, 0.5, {
-            align: "right",
-        });
+      doc.setFontSize(25);
+      doc.setTextColor("blue");
+      doc.setFont("bold");
+      doc.text(sheetName, 0.6, 0.5);
+      doc.setFontSize(20);
+      doc.setTextColor("blue");
+      doc.text(`Report Name: ${report_name}`, 0.6, 1.0);
+      doc.setFontSize(20);
+      doc.setTextColor("blue");
+      doc.text(`Report type : ${selectedState}`, 0.6, 1.5);
+      doc.setTextColor("blue");
+      doc.setFont("bold");
+      doc.text(`Report Year : ${selectedYear}`, doc.internal.pageSize.width - 2, 0.5, {
+        align: "right",
+      });
 
-        doc.setFontSize(20);
-        doc.text(`Report generated on: ${formattedDate}`, doc.internal.pageSize.width - 2, 1.5, { align: "right" });
+      doc.setFontSize(20);
+      doc.text(`Report generated on: ${formattedDate}`, doc.internal.pageSize.width - 2, 1.5, { align: "right" });
     };
 
     // Function to add footer
     const addFooter = () => {
-        const pageCount = doc.internal.getNumberOfPages();
-        doc.setFontSize(10);
-        for (let i = 1; i <= pageCount; i++) {
-            doc.setPage(i);
-            doc.text(
-                `Page ${i} of ${pageCount}`,
-                doc.internal.pageSize.width - 1,
-                doc.internal.pageSize.height - 0.5,
-                { align: "right" }
-            );
-        }
+      const pageCount = doc.internal.getNumberOfPages();
+      doc.setFontSize(10);
+      for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        doc.text(
+          `Page ${i} of ${pageCount}`,
+          doc.internal.pageSize.width - 1,
+          doc.internal.pageSize.height - 0.5,
+          { align: "right" }
+        );
+      }
     };
     const table = [];
     table.push(headerRow.map((cell) => cell.headerName));
     rows.forEach((row) => {
-        table.push(row.map((cell) => cell.text));
+      table.push(row.map((cell) => cell.text));
     });
     addHeader();
     doc.autoTable({
-        head: [table[0]],
-        body: table.slice(1),
-        startY: 2.2,
-        didDrawPage: addFooter,
+      head: [table[0]],
+      body: table.slice(1),
+      startY: 2.2,
+      didDrawPage: addFooter,
     });
 
     const totalPages = doc.internal.getNumberOfPages();
     for (let i = 0; i < totalPages; i++) {
-        doc.setPage(i + 1);
-        doc.autoTable({
-            startY: 3.5,
-        });
+      doc.setPage(i + 1);
+      doc.autoTable({
+        startY: 3.5,
+      });
     }
     return doc;
-};
-const exportToPDF = () => {
+  };
+  const exportToPDF = () => {
     const doc = getDocument(gridApi);
     doc.save(`${report_name}.pdf`);
-};
-const exportToExcel = () => {
+  };
+  const exportToExcel = () => {
     if (gridApi) {
-        const allData = [];
-        const visibleColumns = gridApi.api.getAllDisplayedColumns();
-        const columnHeaders = visibleColumns.map((column) => ({
-            headerName: column.getColDef().headerName,
-            field: column.getColDef().field,
-        }));
-        columnHeaders.unshift({
-            headerName: "Serial Number",
-            field: "Serial Number",
-        });
-        gridApi.api.forEachNode((node, index) => {
-            const data = node.data;
-            const rowDataWithSerial = { ...data, "Serial Number": index + 1 };
-            allData.push(rowDataWithSerial);
-        });
-        const columnKeys = columnHeaders.map((column) => column.field);
-        const columnNames = columnHeaders.map((column) => column.headerName);
-        gridApi.api.exportDataAsExcel({
-            processCellCallback: (params) => {
-                return params.value;
-            },
-            rowData: allData,
-            fileName: report_name,
-            sheetName: sheetName,
-            columnKeys: columnKeys,
-            columnNames: columnNames,
-        });
+      const allData = [];
+      const visibleColumns = gridApi.api.getAllDisplayedColumns();
+      const columnHeaders = visibleColumns.map((column) => ({
+        headerName: column.getColDef().headerName,
+        field: column.getColDef().field,
+      }));
+      columnHeaders.unshift({
+        headerName: "Serial Number",
+        field: "Serial Number",
+      });
+      gridApi.api.forEachNode((node, index) => {
+        const data = node.data;
+        const rowDataWithSerial = { ...data, "Serial Number": index + 1 };
+        allData.push(rowDataWithSerial);
+      });
+      const columnKeys = columnHeaders.map((column) => column.field);
+      const columnNames = columnHeaders.map((column) => column.headerName);
+      gridApi.api.exportDataAsExcel({
+        processCellCallback: (params) => {
+          return params.value;
+        },
+        rowData: allData,
+        fileName: report_name,
+        sheetName: sheetName,
+        columnKeys: columnKeys,
+        columnNames: columnNames,
+      });
     }
-};
-const handleExportData = (e) => {
+  };
+  const handleExportData = (e) => {
     const { value } = e.target;
     if (value === "export_pdf") {
-        exportToPDF();
+      exportToPDF();
     }
     if (value === "export_excel") {
-        exportToExcel();
+      exportToExcel();
     }
     document.getElementById("export_data").selectedIndex = 0;
-};
+  };
 
   return (
     <>
@@ -711,97 +650,102 @@ const handleExportData = (e) => {
 
         <div className="container">
           <div className="row mt-4">
-           
-              <div className="col-md-12">
-                {loading && <GlobalLoading />}
-                <div className="card-box">
-                  <div className="row align-items-end">
-                    <div className="col-md-6">
-                      <div className="d-flex align-items-end">
-                        <div className="title-box">
-                          <h5 className="sub-title">
-                            {selectReportType === "ADP_Report"
-                              ? selectedDistrict !== SelectDistrict &&
-                                selectedDistrict !== AllDistrict
-                                ? `${selectedDistrict}`
-                                : selectedDistrict === AllDistrict
+
+            <div className="col-md-12">
+              {loading && <GlobalLoading />}
+              <div className="card-box">
+                <div className="row align-items-end">
+                  <div className="col-md-6">
+                    <div className="d-flex align-items-end">
+                      <div className="title-box">
+                        <h5 className="sub-title">
+                          {selectReportType === "ADP_Report"
+                            ? selectedDistrict !== SelectDistrict &&
+                              selectedDistrict !== AllDistrict
+                              ? `${selectedDistrict}`
+                              : selectedDistrict === AllDistrict
+                                ? `${selectedState} District's`
+                                : `${selectedState} District's`
+                            : selectReportType === "ABP_Report"
+                              ? selectedState !== SelectState
+                                ? selectedDistrict === SelectDistrict ||
+                                  selectedDistrict === AllDistrict
                                   ? `${selectedState} District's`
-                                  : `${selectedState} District's`
-                              : selectReportType === "ABP_Report"
-                                ? selectedState !== SelectState
-                                  ? selectedDistrict === SelectDistrict ||
-                                    selectedDistrict === AllDistrict
-                                    ? `${selectedState} District's`
-                                    : selectedBlock !== SelectBlock &&
-                                      selectedBlock !== AllBlock
-                                      ? `${selectedBlock}`
-                                      : `${selectedDistrict} Block's`
-                                  : selectedBlock
-                                : selectedBlock}
-                          </h5>
-                          <h3 className="heading-sm">{t('schoolInfrastructure')}</h3>
-                        </div>
-                        <div className="tab-box">
-                          <button className="tab-button active">
-                            <img src={table} alt="Table" /> Table View
-                          </button>
-                          <button className="tab-button">
-                            <img src={chart} alt="chart" /> Chart View
-                          </button>
-                        </div>
+                                  : selectedBlock !== SelectBlock &&
+                                    selectedBlock !== AllBlock
+                                    ? `${selectedBlock}`
+                                    : `${selectedDistrict} Block's`
+                                : selectedBlock
+                              : selectedBlock}
+                        </h5>
+                        <h3 className="heading-sm">School Infrastructure</h3>
                       </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="d-flex justify-content-end w-m-100">
-                       
-                        <div className="">
-                          {/* <img src={download} alt="download" /> */}
-                          <select
-                            id="export_data"
-                            className="form-select download-button"
-                            defaultValue={""}
-                            onChange={handleExportData}
-                          >
-                            <option className="option-hide">
-                              {" "}
-                              {t('downloadReport')}{selectedYear}
-                            </option>
-                            <option value="export_pdf">{t('downloadAsPdf')}</option>
-                            <option value="export_excel">
-                            {t('downloadAsExcel')}
-                            </option>
-                          </select>
-                        </div>
+                      <div className="tab-box">
+                        <button className="tab-button active">
+                          <img src={table} alt="Table" /> Table View
+                        </button>
+                        <button className="tab-button">
+                          <img src={chart} alt="chart" /> Chart View
+                        </button>
                       </div>
                     </div>
                   </div>
+                  <div className="col-md-6">
+                    <div className="d-flex justify-content-end w-m-100">
 
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="table-box mt-4">
-                        <div
-                          className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
-                          style={{ width: "100%", height: 200 }}
+                      <div className="">
+                        {/* <img src={download} alt="download" /> */}
+                        <select
+                          id="export_data"
+                          className="form-select download-button"
+                          defaultValue={""}
+                          onChange={handleExportData}
                         >
+                          <option className="option-hide">
+                            {" "}
+                            Download Report {selectedYear}
+                          </option>
+                          <option value="export_pdf">Download as PDF </option>
+                          <option value="export_excel">
+                            Download as Excel
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="table-box mt-4">
+                      <div
+                        className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
+                        style={{ width: "100%", height: 200 }}
+                      >
+                        {selectedState === "All State" ? <><CommonData /></> : <>
                           <AgGridReact
                             columnDefs={columns}
-                            rowData={showFinalData}
+                            rowData={compressedData}
                             defaultColDef={defColumnDefs}
                             onGridReady={onGridReady}
                           />
-                        </div>
+                        </>}
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-               {selectState !=="All State"?<>
-                {  selectReportType ==="ADP_Report"?
-               <SchoolInfraStructureCompare/>:
+            </div>
 
-<SchoolInfraStructureBlockCompare/>
-}</>:""
-}
+
+
+            {selectState !== "All State" ? <>
+              {selectReportType === "ADP_Report" ?
+                <SchoolInfraStructureCompare /> :
+
+                <SchoolInfraStructureBlockCompare />
+              }</> : ""
+            }
 
 
             {/* <TransitionRateCompare /> */}

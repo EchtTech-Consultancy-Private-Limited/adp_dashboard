@@ -11,7 +11,9 @@ const reportTypeSlice = createSlice({
         selectedReport:"Transition Rate",
         selectedCompareDistricts:[],
         selectedCompareBlock:[],
-        selectedYear:"2020-21"
+        selectedYear:"2020-21",
+        girdAPIForCommonData:[],
+        sheetName:""
     },
     reducers: {
       setUpdateReportType(state,action) {
@@ -41,8 +43,14 @@ const reportTypeSlice = createSlice({
       setSelectedYear(state,action) {
         state.selectedYear=action.payload;
       },
+      setgirdAPIForCommonData(state,action) {
+        state.girdAPIForCommonData=action.payload;
+      },
+      SetSheetName(state,action) {
+        state.sheetName=action.payload;
+      },
     },
   })
   
-  export const { setUpdateReportType,setUpdateStatus, setselectedOption,setselectedCompareOption,setselectedStateShow,setselectedReport,setselectedCompareDistricts,setselectedCompareBlocks,setSelectedYear } = reportTypeSlice.actions
+  export const { setUpdateReportType,setUpdateStatus, setselectedOption,setselectedCompareOption,setselectedStateShow,setselectedReport,setselectedCompareDistricts,setselectedCompareBlocks,setSelectedYear,setgirdAPIForCommonData,SetSheetName } = reportTypeSlice.actions
   export default reportTypeSlice.reducer
