@@ -755,7 +755,7 @@ export default function TransitionRateReport() {
                 <BannerReportFilter />
 
                 <div className="container">
-                    <div className="row mt-4">
+                    <div className="row mt-3">
                         <div className="col-md-12">
                             {loading && <GlobalLoading />}
                             <div className="card-box">
@@ -787,10 +787,10 @@ export default function TransitionRateReport() {
                                             </div>
                                             <div className="tab-box">
                                                 <button className="tab-button active">
-                                                    <img src={table} alt="Table" /> Table View
+                                                    <img src={table} alt="Table" /> <span>Table View</span>
                                                 </button>
                                                 <button className="tab-button">
-                                                    <img src={chart} alt="chart" /> Chart View
+                                                    <img src={chart} alt="chart" /> <span>Chart View</span>
                                                 </button>
                                             </div>
                                         </div>

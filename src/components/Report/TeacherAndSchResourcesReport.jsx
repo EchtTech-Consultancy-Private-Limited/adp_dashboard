@@ -585,7 +585,7 @@ export default function TeacherAndSchResourcesReport() {
                 <BannerReportFilter />
 
                 <div className="container">
-                    <div className="row mt-4">
+                    <div className="row mt-3">
                         <div className="col-md-12">
                             {loading && <GlobalLoading />}
                             <div className="card-box">

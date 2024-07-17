@@ -4,15 +4,27 @@
     background: url('../../assets/images/Reports_banner.svg');
     padding-top: 12px;
   
+    @media (max-width: 767px) {
+        padding-top:0;            
+    }
+
     .content-box {
         padding: 30px 0 20px;
 
+        @media (max-width: 767px) {
+            padding: 7px 0 7px;            
+        }
         .main-title {
             color: #fff;
             font-size: 30px;
             text-align: left;
             font-weight: 700;
             padding-left: 12px;
+
+            @media (max-width: 767px) {
+                font-size: 24px;
+                padding-left: 0;        
+            }
         }
 
         .brudcrumb-text {
@@ -26,7 +38,9 @@
             }
 
             @media (max-width: 991px) {
-                margin-bottom: 18px;
+                margin-bottom: 15px;
+                padding-left: 0;
+                font-size: 14px;
             }
         }
 
@@ -74,8 +88,11 @@
             }
             
             @media (max-width: 991px) {
-                margin-bottom: 10px;
+                margin-bottom: 12px;
                 margin-left: 0;
+                width: 48.4% !important;
+                height: 42px;
+                padding: 0.25rem 0.25rem 0.25rem 0.25rem;
             }
         }
         :where(.css-dev-only-do-not-override-98ntnt).ant-select .ant-select-selection-item{
@@ -128,8 +145,9 @@
         font-size: 12px;
     }
 
-    @media (max-width: 991px) {
-        margin-bottom: 10px;
+    @media (max-width: 767px) {
+        margin-bottom: 12px;
+        padding: 10px 30px;
     }
 
     .box-radio {
@@ -137,7 +155,7 @@
         align-items: center;
         @media (max-width: 991px) {
             &:first-child{
-                margin-bottom: 10px;
+                margin-bottom: 0px;
             }
         }
 
@@ -173,15 +191,25 @@
     }
 
     @media (max-width: 991px) {
-        padding: 20px 20px;
+        padding: 12px 12px;
         border-radius: 20px;
 
-        .d-flex.align-items-end {
-            display: block !important;
-            justify-content: start;
-        }
+        // .d-flex.align-items-end {
+        //     display: block !important;
+        //     justify-content: start;
+        // }
         .title-box {
-            margin-bottom: 15px;
+            margin-bottom: 0px;
+            width: 75%;
+        }
+
+        .d-flex.align-items-end {
+            align-items: center !important;
+        }
+
+        .radio-button .box-radio label {
+            cursor: pointer;
+            font-size: 14px;
         }
     }
 
@@ -198,7 +226,8 @@
         }
 
         @media (max-width: 991px) {
-            display: block;
+            margin-top: 10px;
+            padding: 10px;
         }
 
     }
@@ -224,8 +253,8 @@
 
     @media (max-width: 991px) {
         margin-left: 0;
-        width: 100%;
-        margin-bottom: 15px;
+        width: 25%;
+        margin-bottom: 0px;
     }
 
     .tab-button {
@@ -236,6 +265,8 @@
 
         @media (max-width: 991px) {
             padding: 7px;
+
+            span{display: none;}
         }
     
 
@@ -293,7 +324,7 @@
 
     @media (max-width: 991px) {
         width: 100% !important;
-        margin-top: 15px;
+        margin-top: 10px;
         margin-left: 0;
     }
 
@@ -596,6 +627,8 @@
         width: 100%;
     }
 }
+
+
 
 .blank-img{
     width: 120px;
