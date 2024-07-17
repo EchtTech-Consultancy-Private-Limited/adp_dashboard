@@ -739,7 +739,7 @@ const handleExportData = (e) => {
                                   : selectedBlock
                                 : selectedBlock}
                           </h5>
-                          <h3 className="heading-sm">School Infrastructure</h3>
+                          <h3 className="heading-sm">{t('schoolInfrastructure')}</h3>
                         </div>
                         <div className="tab-box">
                           <button className="tab-button active">
@@ -764,11 +764,11 @@ const handleExportData = (e) => {
                           >
                             <option className="option-hide">
                               {" "}
-                              Download Report {selectedYear}
+                              {t('downloadReport')}{selectedYear}
                             </option>
-                            <option value="export_pdf">Download as PDF </option>
+                            <option value="export_pdf">{t('downloadAsPdf')}</option>
                             <option value="export_excel">
-                              Download as Excel
+                            {t('downloadAsExcel')}
                             </option>
                           </select>
                         </div>
@@ -795,10 +795,7 @@ const handleExportData = (e) => {
                   </div>
                 </div>
               </div>
-
-           
-
-                   {selectState !=="All State"?<>
+               {selectState !=="All State"?<>
                 {  selectReportType ==="ADP_Report"?
                <SchoolInfraStructureCompare/>:
 

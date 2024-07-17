@@ -25,7 +25,6 @@ import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationa
 import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import { useTranslation } from "react-i18next";
 import { jsPDF } from "jspdf";
 import { Select } from "antd";
 import "jspdf-autotable";
@@ -48,6 +47,7 @@ import {
 import TransitionRateCompare from "./ReportCompare/TransitionRateCompare";
 import { ScrollToTopOnMount } from "../../Scroll/ScrollToTopOnMount";
 import TransitionBlockRateCompare from "./ReportCompare/TransitionBlockRateCompare";
+import { useTranslation } from "react-i18next";
 
 const ArrowRenderer = ({ data, value }) => {
     const selectedOption = useSelector(
@@ -783,14 +783,14 @@ export default function TransitionRateReport() {
                                                                 : selectedBlock
                                                             : selectedBlock}
                                                 </h5>
-                                                <h3 className="heading-sm">Transition Rate</h3>
+                                                <h3 className="heading-sm">{t('transitionRate')}</h3>
                                             </div>
                                             <div className="tab-box">
                                                 <button className="tab-button active">
-                                                    <img src={table} alt="Table" /> Table View
+                                                    <img src={table} alt="Table" /> {t('tableView')}
                                                 </button>
                                                 <button className="tab-button">
-                                                    <img src={chart} alt="chart" /> Chart View
+                                                    <img src={chart} alt="chart" /> {t('chartView')}
                                                 </button>
                                             </div>
                                         </div>
@@ -810,7 +810,7 @@ export default function TransitionRateReport() {
                                                             onChange={handleOptionChange}
                                                         />
                                                         <label htmlFor="radio4">
-                                                            Upper Primary to Secondary{" "}
+                                                           {t('upperPrimaryToSecondary')}{" "}
                                                         </label>
                                                     </div>
 
@@ -825,7 +825,7 @@ export default function TransitionRateReport() {
                                                             onChange={handleOptionChange}
                                                         />
                                                         <label htmlFor="radio5">
-                                                            Secondary to Higher Secondary
+                                                            {t('secondaryToHigherSecondary')}
                                                         </label>
                                                     </div>
                                                 </> : ""}
@@ -840,11 +840,11 @@ export default function TransitionRateReport() {
                                                 >
                                                     <option className="option-hide">
                                                         {" "}
-                                                        Download Report {selectedYear}
+                                                        {t('downloadReport')} {selectedYear}
                                                     </option>
-                                                    <option value="export_pdf">Download as PDF </option>
+                                                    <option value="export_pdf">{t('downloadAsPdf')}</option>
                                                     <option value="export_excel">
-                                                        Download as Excel
+                                                        {t('downloadAsExcel')}
                                                     </option>
                                                 </select>
                                             </div>

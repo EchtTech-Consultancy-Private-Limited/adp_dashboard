@@ -73,9 +73,12 @@
    "total": "कुल",
    "district": "जिला",
    "selectOneMoreDistrict": "कृपया विश्लेषण को बढ़ाने के लिए तुलना के लिए एक और जिला चुनें।",
+   "selectOneMoreBlock": "कृपया तुलना के लिए और एक ब्लॉक चुनें ताकि विश्लेषण में सुधार हो सके।",
    "selectDistrictToCompare": "तुलना करने के लिए जिला चुनें",
     "cardView": "कार्ड दृश्य",
-      "addDistrict": "जिला जोड़ें"
+      "addDistrict": "जिला जोड़ें",
+      "addBlock": "ब्लॉक जोड़ें"
+      
 
 
 }

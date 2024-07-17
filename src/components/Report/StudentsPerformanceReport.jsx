@@ -620,11 +620,11 @@ export default function StudentsPerformanceReport() {
                                                         ) : selectedBlock
                                                     )}
                                                 </h5>
-                                                <h3 className='heading-sm'>Student Performance</h3>
+                                                <h3 className='heading-sm'>{t('studentPerformance')}</h3>
                                             </div>
                                             <div className="tab-box">
-                                                <button className='tab-button active'><img src={table} alt="Table" /> Table View</button>
-                                                <button className='tab-button'><img src={chart} alt="chart" /> Chart View</button>
+                                                <button className='tab-button active'><img src={table} alt="Table" />{t('tableView')}</button>
+                                                <button className='tab-button'><img src={chart} alt="chart" /> {t('chartView')}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -652,9 +652,9 @@ export default function StudentsPerformanceReport() {
                                             <div className="">
                                                 {/* <img src={download} alt="download" /> */}
                                                 <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
-                                                    <option className="option-hide"> Download Report {selectedYear}</option>
-                                                    <option value="export_pdf">Download as PDF </option>
-                                                    <option value="export_excel">Download as Excel</option>
+                                                    <option className="option-hide">  {t('downloadReport')}{selectedYear}</option>
+                                                    <option value="export_pdf">{t('downloadAsPdf')}</option>
+                                                    <option value="export_excel">   {t('downloadAsExcel')}</option>
                                                 </select>
                                             </div>
                                         </div>
