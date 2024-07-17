@@ -161,7 +161,7 @@ export default function Themes() {
 
                                         <div className="link-box">
                                             <Link to="/student-performance" className="link" onClick={() => handleStudentPerformanceClick("ADP_Report")}>{t('seeADPReport')} <span className="material-icons-round">arrow_forward_ios</span></Link>
-                                            <Link to="/student-performance" className="link" onClick={() => handleStudentPerformanceClick("ABP_Report")}>{t('seeADPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link to="/student-performance" className="link" onClick={() => handleStudentPerformanceClick("ABP_Report")}>{t('seeABPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
                                         </div>
                                     </div>
 
