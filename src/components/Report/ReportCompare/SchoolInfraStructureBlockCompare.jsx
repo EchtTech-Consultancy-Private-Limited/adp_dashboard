@@ -155,8 +155,6 @@ export default function SchoolInfraStructureBlockCompare() {
 
     dispatch(setStates(structuredData));
   }, [dispatch]);
-
-
   // Handle district change
   const handleBlockChange = (value, position) => {
     const newSelectedBlocks = [...selectedBlocks];
@@ -228,9 +226,7 @@ export default function SchoolInfraStructureBlockCompare() {
             </div>
           </div>
           <div className="col-md-5">
-            <div className="d-flex w-m-100">
-           
-            </div>
+            <div className="d-flex w-m-100"></div>
           </div>
         </div>
 
