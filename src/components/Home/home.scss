@@ -4,14 +4,13 @@
     height: 100vh;
     padding-top: 12px;
 
-    @media (max-width: 991px) {
+    @media (max-width: 767px) {
         padding-top: 0px;
-        height: 64vh;
+        // background: #2B9C9F;
+        background-position: right;
 
-        .overlay {
-            background: rgb(0 0 0 / 45%);
-            height: 64vh;
-            padding-top: 0px;
+        .mt-5{
+            margin-top: 1.5rem !important;
         }
     }
 }
@@ -22,7 +21,6 @@
     @media (max-width: 991px) {
         padding: 35px 0;
     }
-
 }
 
 .devider-theme {
@@ -52,8 +50,9 @@ img {
         height: 60vh;
     }
 
-    @media (max-width: 991px) {
-        height: 35vh;
+    @media (max-width: 767px) {
+        height: auto;
+        // padding-top: 5%;
     }
 
     h1 {
@@ -73,7 +72,7 @@ img {
         }
 
         @media (max-width: 991px) {
-            font-size: 32px;
+            font-size: 37px;
             letter-spacing: normal;
         }
     }
@@ -499,5 +498,10 @@ img {
 
     .d-none-mobile{
         display: none;
+    }
+
+    .mobile-image {
+        position: absolute;
+        bottom: 4%;
     }
 }

@@ -533,7 +533,7 @@ export default function EnrollmentAndRetentionReport() {
             <BannerReportFilter />
            
             <div className="container">
-                <div className="row mt-5">
+                <div className="row mt-3">
 
                     {selectedState !== SelectState ?
                    
