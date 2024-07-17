@@ -24,6 +24,7 @@ import { SelectState } from "../../../constant/Constant";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BlankPage from "../BlankPage";
+import { t } from "i18next";
 const ArrowRenderer = ({ data }) => {
   const selectedOption = useSelector(
     (state) => state.reportAdpAbpType.selectedOption
@@ -252,7 +253,7 @@ export default function SchoolInfraStructureCompare() {
                                     </Select>
                                 </h5> */}
                 <h3 className="heading-sm mt-2">
-                  Comparison by School Infrastructure
+           {t('comparisonByTransitionRate')}
                 </h3>
               </div>
             </div>
@@ -269,7 +270,7 @@ export default function SchoolInfraStructureCompare() {
             <div className="comparison-box">
               <div className="row align-items-center">
                 <div className="col-md-3">
-                  <h5 className="sub-title">Select District to Compare</h5>
+                  <h5 className="sub-title">{t('selectDistrictToCompare')}</h5>
                 </div>
                 <div className="col-md-6 Comparison-select-group">
                   <div className="d-flex justify-content-between text-aligns-center antd-select">
@@ -279,13 +280,10 @@ export default function SchoolInfraStructureCompare() {
                         key={index}
                         onChange={(value) => handleDistrictChange(value, index)}
                         style={{ width: "100%" }}
-                        placeholder={`Add District ${index + 1}`}
+                        placeholder={`${t('addDistrict')} ${index + 1}`}
                         mode="single"
                         showSearch
-                        value={
-                          selectedDistricts[index]?.lgd_district_name ||
-                          `Add District`
-                        }
+                        value={selectedDistricts[index]?.lgd_district_name || `${t('addDistrict')}`}
                         disabled={!selectedState}
                       >
                         {getFilteredDistricts(index).map((district) => (
@@ -303,10 +301,10 @@ export default function SchoolInfraStructureCompare() {
                 <div className="col-md-3">
                   <div className="tab-box float-end">
                     <button className="tab-button active">
-                      <img src={card} alt="card" /> Card View
+                      <img src={card} alt="card" />{t('cardView')}
                     </button>
                     <button className="tab-button">
-                      <img src={table} alt="Table" /> Table View
+                      <img src={table} alt="Table" /> {t('tableView')}
                     </button>
                   </div>
                 </div>
@@ -330,8 +328,7 @@ export default function SchoolInfraStructureCompare() {
                         }}
                       >
                         <b>
-                          Please select one more district for comparison to
-                          enhance the analysis.
+                        {t('selectOneMoreDistrict')}
                         </b>
                       </Card>
                     ) : (

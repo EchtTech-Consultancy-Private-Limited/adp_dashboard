@@ -17,6 +17,8 @@ import { SelectState } from "../../../constant/Constant";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import BlankPage from "../BlankPage";
+import { useTranslation } from "react-i18next";
+
 const ArrowRenderer = ({ data }) => {
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
     const [arrowData, setArrowData] = useState(null);
@@ -49,7 +51,7 @@ const ArrowRenderer = ({ data }) => {
 
 
 export default function StudentsPerformanceCompare() {
-
+    const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
     const [aspirationalData, setAspirationalData] = useState([])
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedCompareOption);
@@ -214,7 +216,7 @@ export default function StudentsPerformanceCompare() {
                                         ))}
                                     </Select>
                                 </h5> */}
-                                <h3 className='heading-sm mt-2'>Comparison by Transition Rate</h3>
+                                <h3 className='heading-sm mt-2'>{t('comparisonByTransitionRate')}</h3>
                             </div>
                         </div>
                     </div>
@@ -232,7 +234,7 @@ export default function StudentsPerformanceCompare() {
                             <div className="row align-items-center">
                                 <div className="col-md-3">
                                     <h5 className='sub-title'>
-                                        Select District to Compare
+                                        {t('selectDistrictToCompare')}
                                     </h5>
                                 </div>
                                 <div className="col-md-6 Comparison-select-group">
@@ -246,13 +248,10 @@ export default function StudentsPerformanceCompare() {
                                                     handleDistrictChange(value, index)
                                                 }
                                                 style={{ width: "100%" }}
-                                                placeholder={`Add District ${index + 1}`}
+                                                placeholder={`${t('addDistrict')} ${index + 1}`}
                                                 mode="single"
                                                 showSearch
-                                                value={
-                                                    selectedDistricts[index]?.lgd_district_name ||
-                                                    `Add District`
-                                                }
+                                                value={selectedDistricts[index]?.lgd_district_name || `${t('addDistrict')}`}
                                                 disabled={!selectedState}
                                             >
                                                 {getFilteredDistricts(index).map((district) => (
@@ -270,8 +269,8 @@ export default function StudentsPerformanceCompare() {
                                 </div>
                                 <div className="col-md-3">
                                     <div className="tab-box float-end">
-                                        <button className='tab-button active'><img src={card} alt="card" /> Card View</button>
-                                        <button className='tab-button'><img src={table} alt="Table" /> Table View</button>
+                                        <button className='tab-button active'><img src={card} alt="card" /> {t('cardView')}</button>
+                                        <button className='tab-button'><img src={table} alt="Table" /> {t('tableView')}</button>
                                     </div>
                                 </div>
                             </div>
@@ -285,7 +284,7 @@ export default function StudentsPerformanceCompare() {
 
                                     {selectedDistricts.length === 1 ? (<Card style={{
                                         width: 300,
-                                    }}><b>Please select one more district for comparison to enhance the analysis.</b></Card>) : <> <div className="comp-card" key={index}>
+                                    }}><b>{t('selectOneMoreDistrict')}</b></Card>) : <> <div className="comp-card" key={index}>
                                         <div className="upper-card">
                                             <div className="d-flex align-items-center justify-content-between w-100">
                                                 <div className="d-flex">
