@@ -216,7 +216,7 @@ export default function StudentsPerformanceCompare() {
                                         ))}
                                     </Select>
                                 </h5> */}
-                                <h3 className='heading-sm mt-2'>{t('comparisonByTransitionRate')}</h3>
+                                <h3 className='heading-sm mt-2'>{t('comparisonByStudentPerformance')}</h3>
                             </div>
                         </div>
                     </div>
