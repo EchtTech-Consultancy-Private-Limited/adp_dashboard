@@ -44,7 +44,7 @@ import {
 import { ScrollToTopOnMount } from "../../Scroll/ScrollToTopOnMount";
 import SchoolInfraStructureCompare from "./ReportCompare/SchoolInfraStructureCompare";
 import SchoolInfraStructureBlockCompare from "./ReportCompare/SchoolInfraStructureBlockCompare";
-import { CommonData } from "./CommonData/CommonData";
+
 
 const ArrowRenderer = ({ data, value }) => {
   const selectedOption = useSelector(
