@@ -226,8 +226,8 @@ export default function Themes() {
                                         </div>
 
                                         <div className="link-box">
-                                            <Link to="/enrollment-retention" className="link" >{t('seeADPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
-                                            <Link to="/enrollment-retention" className="link" >{t('seeABPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link  className="link" >{t('seeADPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
+                                            <Link  className="link" >{t('seeABPReport')}<span className="material-icons-round">arrow_forward_ios</span></Link>
                                         </div>
                                     </div>
 
