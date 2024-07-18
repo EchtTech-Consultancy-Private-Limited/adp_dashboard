@@ -289,7 +289,7 @@ export default function SchoolInfraStructureReport() {
       hide: false,
     },
     {
-      headerName: "Percent",
+      headerName: "percentage of Schools having girls toilets in the ratio of 40:1",
       field: "sch_having_toilet_40_percent",
       cellRenderer: percentageRenderer,
       hide: false,
@@ -345,7 +345,7 @@ export default function SchoolInfraStructureReport() {
           hide: false,
         },
         {
-          headerName: "Percent",
+          headerName: "percentage of Schools having girls toilets in the ratio of 40:1",
           field: "sch_having_toilet_40_percent",
           cellRenderer: percentageRenderer,
           hide: false,
@@ -397,7 +397,7 @@ export default function SchoolInfraStructureReport() {
           hide: false,
         },
         {
-          headerName: "Percent",
+          headerName: "percentage of Schools having girls toilets in the ratio of 40:1",
           field: "sch_having_toilet_40_percent",
           cellRenderer: percentageRenderer,
           hide: false,
