@@ -77,11 +77,11 @@ export default function StudentsPerformanceReport() {
     const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
     const states = useSelector((state) => state.locationAdp.states);
     const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName);
-    const gridApi = useSelector((state) => state.reportAdpAbpType.girdAPIForCommonData);
+    const [gridApi, setGridApi] = useState()
     const savedReportName = localStorage.getItem('selectedReport');
     const report_name = savedReportName
     const [data, setData] = useState([]);
-
+    const [finalData, SetFinalData] = useState([])
     function resteData() {
         dispatch(selectState(SelectState));
         dispatch(selectDistrict(SelectDistrict));
@@ -99,8 +99,9 @@ export default function StudentsPerformanceReport() {
         if (selectReportType === "ADP_Report") {
             if (selectedState !== SelectState && selectedDistrict === SelectDistrict) {
                 SetLocationHeader("District")
-                dispatch(SetSheetName("Aspirational District Programme"));
+               
             }
+            dispatch(SetSheetName("Aspirational District Programme"));
         }
         else if ((selectReportType === "ABP_Report")) {
             if (selectedState !== SelectState && (selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict)) {
@@ -132,7 +133,6 @@ export default function StudentsPerformanceReport() {
     };
 
     useEffect(() => {
-        // Update the state based on the selected options
         const selectedData = combinedData[selectedYear][selectReportType];
         setAspirationalData(selectedData);
     }, [selectReportType, selectedYear]);
@@ -196,7 +196,13 @@ export default function StudentsPerformanceReport() {
     };
 
     const percentageRenderer = (params) => {
-        return `${params.value} %`;
+        const value = params.value;
+    
+        if (typeof value === 'number') {
+            return value.toFixed(2) + " "+ '%';
+        } else {
+            return value; 
+        }
     };
 
     const [columns, setColumn] = useState([
@@ -233,10 +239,58 @@ export default function StudentsPerformanceReport() {
 
     ]);
 
+    useEffect(() => {
+        if (selectedState === "All State") {
+            const columns = [
+                {
+                    headerName: "Serial Number",
+                    field: "Serial Number",
+                    hide: true,
+                    suppressColumnsToolPanel: true,
+                    suppressFiltersToolPanel: true,
+                },
+                {
+                    headerName: "State",
+                    field: "lgd_state_name",
+                },
+                {
+                    headerName: "District",
+                    field: "lgd_district_name",
+                },
+                ...(selectReportType === "ABP_Report" ? [{
+                    headerName: "Block",
+                    field: "lgd_block_name",
+                }] : []),
 
+
+                {
+                    headerName: "Number of Schools having teacher trained to teach CWSN",
+                    field: "total_school_cwsn",
+                    hide: false,
+                },
+
+                {
+                    headerName: "Total Number of Schools",
+                    field: "tot_school",
+                    hide: false,
+                },
+
+                {
+                    headerName: "% Schools with Teachers trained for teaching CWSN",
+                    field: "swsn_teacher_percent",
+                    cellRenderer: percentageRenderer,
+                    hide: false,
+                },
+            ]
+
+
+            setColumn(columns);
+        }
+    }, [selectedState, selectReportType])
 
     useEffect(() => {
-        if (selectedOption === "upper_primary_to_secondary") {
+        if (selectedState !== "All State") {
+
             setColumn([
                 {
                     headerName: "Serial Number",
@@ -269,42 +323,10 @@ export default function StudentsPerformanceReport() {
                     hide: false,
                 },
             ]);
-        } else if (selectedOption === "secondary_to_higher_secondary") {
-            setColumn([
-                {
-                    headerName: "Serial Number",
-                    field: "Serial Number",
-                    hide: true,
-                    suppressColumnsToolPanel: true,
-                    suppressFiltersToolPanel: true,
-                },
-                {
-                    headerName: locationHeader,
-                    cellRenderer: ArrowRenderer,
-                    field: "Location",
-                },
-                {
-                    headerName: "Number of Schools having teacher trained to teach CWSN",
-                    field: "total_school_cwsn",
-                    hide: false,
-                },
 
-                {
-                    headerName: "Total Number of Schools",
-                    field: "tot_school",
-                    hide: false,
-                },
-
-                {
-                    headerName: "% Schools with Teachers trained for teaching CWSN",
-                    field: "swsn_teacher_percent",
-                    cellRenderer: percentageRenderer,
-                    hide: false,
-                },
-            ]);
         }
 
-    }, [locationHeader, selectedOption]);
+    }, [locationHeader, selectedState]);
 
     const compressData = useCallback((data, groupBy) => {
         return data.reduce((acc, curr) => {
@@ -341,6 +363,15 @@ export default function StudentsPerformanceReport() {
         return compressData(data, "lgd_state_name");
     }, [data, selectedState, selectedDistrict, selectedBlock]);
 
+    useEffect(() => {
+        if (selectedState !== "All State") {
+            SetFinalData(compressedData)
+        }
+        else {
+            SetFinalData(aspirationalData)
+        }
+    }, [selectedState, data, selectedYear, aspirationalData])
+
     const defColumnDefs = useMemo(() => ({
         flex: 1,
         minWidth: 150,
@@ -354,7 +385,7 @@ export default function StudentsPerformanceReport() {
 
 
     const onGridReady = useCallback((params) => {
-        dispatch(setgirdAPIForCommonData(params))
+        setGridApi(params)
     }, []);
     /*------------Export data to Excel and PDF-------------*/
     const getHeaderToExport = (gridApi) => {
@@ -382,9 +413,13 @@ export default function StudentsPerformanceReport() {
     };
     const getRowsToExport = (gridApi) => {
         const columns = gridApi.api.getAllDisplayedColumns();
-        const getCellToExport = (column, node) => ({
-            text: gridApi.api.getValue(column, node) ?? "",
-        });
+        const getCellToExport = (column, node) => {
+            const value = gridApi.api.getValue(column, node);
+            if (typeof value === 'number') {
+                return { text: value.toFixed(2) };
+            }
+            return { text: value ?? "" };
+        };
         const rowsToExport = [];
         gridApi.api.forEachNodeAfterFilterAndSort((node) => {
             const rowToExport = [];
@@ -396,6 +431,7 @@ export default function StudentsPerformanceReport() {
         });
         return rowsToExport;
     };
+    
     const getDocument = (gridApi) => {
         const headerRow = getHeaderToExport(gridApi);
         const rows = getRowsToExport(gridApi);
@@ -598,14 +634,12 @@ export default function StudentsPerformanceReport() {
                                         <div className="table-box mt-4">
                                             <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
                                                 style={{ width: "100%", height: 300 }} >
-                                                {selectedState === "All State" ? <><CommonData /></> : <>
-                                                    <AgGridReact
-                                                        columnDefs={columns}
-                                                        rowData={compressedData}
-                                                        defaultColDef={defColumnDefs}
-                                                        onGridReady={onGridReady}
-                                                    />
-                                                </>}
+                                                <AgGridReact
+                                                    columnDefs={columns}
+                                                    rowData={finalData}
+                                                    defaultColDef={defColumnDefs}
+                                                    onGridReady={onGridReady}
+                                                />
                                             </div>
                                         </div>
                                     </div>

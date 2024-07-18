@@ -247,15 +247,16 @@ export default function SchoolInfraStructureBlockCompare() {
                 </div>
                 <div className="col-md-6 Comparison-select-group">
                   <div className="d-flex justify-content-between text-aligns-center antd-select">
-                    {[0, 1, 2, 3, 4].map((index) => (
-                      <Select
-                        className="form-select"
+                  {[...Array(MAX_BLOCKS)].map((_, index) => (
+                        <div key={index}>
+                          <Select
+                            className="form-select"
                         key={index}
                         onChange={(value) => handleBlockChange(value, index)}
                         style={{ width: "100%" }}
-                        placeholder={`${t('addBlock')} ${index + 1}`}
-                        mode="single"
-                        showSearch
+                            placeholder={`${t("addBlock")} ${index + 1}`}
+                            mode="single"
+                            showSearch
                         value={selectedBlocks[index]?.lgd_block_name || `${t('addBlock')}`}
                         disabled={!selectedState}
                       >
