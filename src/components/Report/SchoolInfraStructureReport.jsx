@@ -150,8 +150,9 @@ export default function SchoolInfraStructureReport() {
         selectedDistrict === SelectDistrict
       ) {
         SetLocationHeader("District");
-        dispatch(SetSheetName("Aspirational District Programme"));
       }
+      
+      dispatch(SetSheetName("Aspirational District Programme"));
     } else if (selectReportType === "ABP_Report") {
       if (
         selectedState !== SelectState &&
@@ -271,7 +272,7 @@ export default function SchoolInfraStructureReport() {
     const value = params.value;
 
     if (typeof value === 'number') {
-        return value.toFixed(2) + '%';
+        return value.toFixed(2) + " "+ '%';
     } else {
         return value; 
     }

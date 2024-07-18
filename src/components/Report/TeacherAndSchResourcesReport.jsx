@@ -102,8 +102,9 @@ export default function TeacherAndSchResourcesReport() {
         if (selectReportType === "ADP_Report") {
             if (selectedState !== SelectState && selectedDistrict === SelectDistrict) {
                 SetLocationHeader("District")
-                dispatch(SetSheetName("Aspirational District Programme"));
             }
+            
+            dispatch(SetSheetName("Aspirational District Programme"));
         }
         else if ((selectReportType === "ABP_Report")) {
             if (selectedState !== SelectState && (selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict)) {
@@ -202,7 +203,7 @@ export default function TeacherAndSchResourcesReport() {
         const value = params.value;
     
         if (typeof value === 'number') {
-            return value.toFixed(2) + '%';
+            return value.toFixed(2) + " "+ '%';
         } else {
             return value; 
         }
