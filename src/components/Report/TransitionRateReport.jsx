@@ -498,7 +498,7 @@ export default function TransitionRateReport() {
             enableValue: true,
             enableRowGroup: true,
             enablePivot: true,
-            sortable: true,
+            sortable: true, 
             filter: true,
             resizable: true,
         }),
