@@ -399,9 +399,13 @@ export default function TeacherAndSchResourcesReport() {
     };
     const getRowsToExport = (gridApi) => {
         const columns = gridApi.api.getAllDisplayedColumns();
-        const getCellToExport = (column, node) => ({
-            text: gridApi.api.getValue(column, node) ?? "",
-        });
+        const getCellToExport = (column, node) => {
+            const value = gridApi.api.getValue(column, node);
+            if (typeof value === 'number') {
+                return { text: value.toFixed(2) }; 
+            }
+            return { text: value ?? "" };
+        };
         const rowsToExport = [];
         gridApi.api.forEachNodeAfterFilterAndSort((node) => {
             const rowToExport = [];
@@ -413,6 +417,7 @@ export default function TeacherAndSchResourcesReport() {
         });
         return rowsToExport;
     };
+    
     const getDocument = (gridApi) => {
         const headerRow = getHeaderToExport(gridApi);
         const rows = getRowsToExport(gridApi);

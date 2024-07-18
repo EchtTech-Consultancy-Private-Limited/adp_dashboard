@@ -117,8 +117,8 @@ export default function TransitionRateReport() {
     const [gridApi, setGridApi] = useState()
     const states = useSelector((state) => state.locationAdp.states);
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
+    console.log(selectReportType, "selectReportType")
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
-    const updateLoading = useSelector((state) => state.reportAdpAbpType.loadingStatus);
     const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
     const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName)
     const savedReportName = localStorage.getItem("selectedReport");
@@ -558,7 +558,7 @@ export default function TransitionRateReport() {
             enableValue: true,
             enableRowGroup: true,
             enablePivot: true,
-            sortable: true,
+            sortable: true, 
             filter: true,
             resizable: true,
         }),

@@ -535,20 +535,25 @@ export default function SchoolInfraStructureReport() {
   };
   const getRowsToExport = (gridApi) => {
     const columns = gridApi.api.getAllDisplayedColumns();
-    const getCellToExport = (column, node) => ({
-      text: gridApi.api.getValue(column, node) ?? "",
-    });
+    const getCellToExport = (column, node) => {
+        const value = gridApi.api.getValue(column, node);
+        if (typeof value === 'number') {
+            return { text: value.toFixed(2) }; 
+        }
+        return { text: value ?? "" };
+    };
     const rowsToExport = [];
     gridApi.api.forEachNodeAfterFilterAndSort((node) => {
-      const rowToExport = [];
-      rowToExport.push({ text: rowsToExport.length + 1 });
-      columns.forEach((column) => {
-        rowToExport.push(getCellToExport(column, node));
-      });
-      rowsToExport.push(rowToExport);
+        const rowToExport = [];
+        rowToExport.push({ text: rowsToExport.length + 1 });
+        columns.forEach((column) => {
+            rowToExport.push(getCellToExport(column, node));
+        });
+        rowsToExport.push(rowToExport);
     });
     return rowsToExport;
-  };
+};
+
   const getDocument = (gridApi) => {
     const headerRow = getHeaderToExport(gridApi);
     const rows = getRowsToExport(gridApi);

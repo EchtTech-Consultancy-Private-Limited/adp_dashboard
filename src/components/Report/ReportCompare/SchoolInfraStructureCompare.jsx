@@ -274,29 +274,30 @@ export default function SchoolInfraStructureCompare() {
                 </div>
                 <div className="col-md-6 Comparison-select-group">
                   <div className="d-flex justify-content-between text-aligns-center antd-select">
-                    {[0, 1, 2, 3, 4].map((index) => (
-                      <Select
+                  {[...Array(MAX_DISTRICTS)].map((_, index) => (
+                <div key={index}>
+                    <Select
                         className="form-select"
-                        key={index}
                         onChange={(value) => handleDistrictChange(value, index)}
                         style={{ width: "100%" }}
                         placeholder={`${t('addDistrict')} ${index + 1}`}
                         mode="single"
                         showSearch
                         value={selectedDistricts[index]?.lgd_district_name || `${t('addDistrict')}`}
-                        disabled={!selectedState}
-                      >
-                        {getFilteredDistricts(index).map((district) => (
-                          <Select.Option
-                            key={district.lgd_district_id}
-                            value={district.lgd_district_name}
-                          >
-                            {district.lgd_district_name}
-                          </Select.Option>
+                        disabled={index > 0 && !selectedDistricts[index - 1]}
+                    >
+                        {getFilteredDistricts().map((district) => (
+                            <Select.Option
+                                key={district.lgd_district_id}
+                                value={district.lgd_district_name}
+                            >
+                                {district.lgd_district_name}
+                            </Select.Option>
                         ))}
-                      </Select>
-                    ))}
-                  </div>
+                    </Select>
+                </div>
+            ))} 
+             </div>
                 </div>
                 <div className="col-md-3">
                   <div className="tab-box float-end">
