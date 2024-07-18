@@ -14,11 +14,13 @@ import aspirationalAbpData from "../../aspirational-reports-data/aspirational.js
 import { Select } from 'antd';
 import { AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectKpi, SelectState } from '../../constant/Constant';
 import { selectComparisionDistrict } from '../../redux/slice/filterServicesComprisionSlice';
+import { useTranslation } from "react-i18next";
 
 export default function BannerReportFilter() {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
   const savedReportName = localStorage.getItem('selectedReport');
   const states = useSelector((state) => state.locationAdp.states);
   const districts = useSelector((state) => state.locationAdp.districts);
@@ -207,7 +209,7 @@ export default function BannerReportFilter() {
         <div className="content-box">
           <div className="row align-items-center">
             <div className="col-md-3">
-              <div className='main-title'>Reports </div>
+              <div className='main-title'>{t('reports')} </div>
               <div className="brudcrumb-text">Home / <span>{showBreadcomeAdpAbp}</span> / <span>{savedReportName}</span></div>
             </div>
             <div className="col-md-9">

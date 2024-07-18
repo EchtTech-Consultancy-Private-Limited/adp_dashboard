@@ -9,7 +9,7 @@ html {
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family:'Helvetica' !important;
     font-size: 16px;
     overflow-x: hidden;
     min-height: 100vh;
@@ -1061,7 +1061,7 @@ ul {
     }
 
     .logo-wrap a.top-logo img {
-        width: 235px;
+        width: 100%
     }
 
     .filter_drodown .select-box.from-control a.dropdown-toggle.nav-link {
@@ -1178,9 +1178,12 @@ g#bmap_graphics_layer {
     //     font-size: 0.7em !important;
     // }
 
-    .site-header .logo-wrap {
-        padding: 12px 0 14px;
-    }
+    // .site-header .logo-wrap {
+    //     padding: 12px 0 14px;
+    // }
+
+    .nav-elements ul a{font-size: 14px;}
+    .header-top{margin-bottom: 5px;}
 
     .header-dropdown-btn {
         font-size: 12px;
