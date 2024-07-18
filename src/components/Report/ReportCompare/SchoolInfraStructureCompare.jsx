@@ -387,7 +387,7 @@ export default function SchoolInfraStructureCompare() {
                             <div className="text-card">
                               <p>Percent</p>
                               <h6 className="sub-title">
-                                {district?.sch_having_toilet_40_percent}
+                                {district?.sch_having_toilet_40_percent?.toFixed(2)}
                               </h6>
                             </div>
                           </div>
