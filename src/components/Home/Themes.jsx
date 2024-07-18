@@ -84,7 +84,7 @@ export default function Themes() {
 
                                             <p>{t('kpitransitionRateBoysGirls')}</p>
                                             <ul>
-                                                <li>{t('percentageSchoolsAdequateToilets')}</li>
+                                                <li>{t('percentageSchoolsHavingTotalBoysGirls')}</li>
                                             </ul>
                                         </div>
 
@@ -117,7 +117,7 @@ export default function Themes() {
 
                                             <p>{t('kpiteacherSchoolResources')}</p>
                                             <ul>
-                                                <li>{t('percentageSchoolsAdequateToilets')}</li>
+                                                <li>{t('percentageSChoolsTeacherSchoolResources')}</li>
                                             </ul>
                                         </div>
 
@@ -155,7 +155,7 @@ export default function Themes() {
 
                                             <p>{t('kpistudentPerformance')}</p>
                                             <ul>
-                                                <li>{t('percentageSchoolsAdequateToilets')}</li>
+                                                <li>{t('percentageSchoolshavingTrainedCWSNTeachers')}</li>
                                             </ul>
                                         </div>
 
@@ -221,7 +221,7 @@ export default function Themes() {
 
                                             <p>{t('kpienrollmentRetention')}</p>
                                             <ul>
-                                                <li>{t('percentageSchoolsAdequateToilets')}</li>
+                                                <li>{t('percentageSchoolsEnrollmentRetention')}</li>
                                             </ul>
                                         </div>
 
