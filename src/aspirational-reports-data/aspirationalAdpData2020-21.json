@@ -39,7 +39,7 @@
       "swsn_teacher_percent": 0.8620689655172413,
       "toilet_40": 4212,
       "tot_school_girl_co_ed": 4618,
-      "%_2": 91.20831528800346,
+      "sch_having_toilet_40_percent": 91.20831528800346,
       "total_no_of_fun_girls_toilet": 3904,
       "tot_school_girl_co_ed_1": 4618,
       "functional_toilet_girls_percent": 84.53876136855781
@@ -84,7 +84,7 @@
       "swsn_teacher_percent": 1.0420346167432002,
       "toilet_40": 4506,
       "tot_school_girl_co_ed": 5576,
-      "%_2": 80.81061692969871,
+      "sch_having_toilet_40_percent": 80.81061692969871,
       "total_no_of_fun_girls_toilet": 3642,
       "tot_school_girl_co_ed_1": 5576,
       "functional_toilet_girls_percent": 65.31563845050215
@@ -129,7 +129,7 @@
       "swsn_teacher_percent": 1.3009540329575022,
       "toilet_40": 3061,
       "tot_school_girl_co_ed": 3425,
-      "%_2": 89.37226277372264,
+      "sch_having_toilet_40_percent": 89.37226277372264,
       "total_no_of_fun_girls_toilet": 2590,
       "tot_school_girl_co_ed_1": 3425,
       "functional_toilet_girls_percent": 75.62043795620438
@@ -174,7 +174,7 @@
       "swsn_teacher_percent": 0.9009009009009009,
       "toilet_40": 215,
       "tot_school_girl_co_ed": 222,
-      "%_2": 96.84684684684684,
+      "sch_having_toilet_40_percent": 96.84684684684684,
       "total_no_of_fun_girls_toilet": 180,
       "tot_school_girl_co_ed_1": 222,
       "functional_toilet_girls_percent": 81.08108108108108
@@ -219,7 +219,7 @@
       "swsn_teacher_percent": 7.467248908296943,
       "toilet_40": 1726,
       "tot_school_girl_co_ed": 2289,
-      "%_2": 75.40410659676715,
+      "sch_having_toilet_40_percent": 75.40410659676715,
       "total_no_of_fun_girls_toilet": 1674,
       "tot_school_girl_co_ed_1": 2289,
       "functional_toilet_girls_percent": 73.13237221494103
@@ -264,7 +264,7 @@
       "swsn_teacher_percent": 11.685655857434998,
       "toilet_40": 2302,
       "tot_school_girl_co_ed": 3418,
-      "%_2": 67.34932709186658,
+      "sch_having_toilet_40_percent": 67.34932709186658,
       "total_no_of_fun_girls_toilet": 2741,
       "tot_school_girl_co_ed_1": 3418,
       "functional_toilet_girls_percent": 80.1930953774137
@@ -309,7 +309,7 @@
       "swsn_teacher_percent": 14.8711943793911,
       "toilet_40": 1184,
       "tot_school_girl_co_ed": 1703,
-      "%_2": 69.52436876100998,
+      "sch_having_toilet_40_percent": 69.52436876100998,
       "total_no_of_fun_girls_toilet": 1337,
       "tot_school_girl_co_ed_1": 1703,
       "functional_toilet_girls_percent": 78.50851438637699
@@ -354,7 +354,7 @@
       "swsn_teacher_percent": 7.559331966012306,
       "toilet_40": 2035,
       "tot_school_girl_co_ed": 3410,
-      "%_2": 59.67741935483871,
+      "sch_having_toilet_40_percent": 59.67741935483871,
       "total_no_of_fun_girls_toilet": 2583,
       "tot_school_girl_co_ed_1": 3410,
       "functional_toilet_girls_percent": 75.74780058651027
@@ -399,7 +399,7 @@
       "swsn_teacher_percent": 10.836423568191183,
       "toilet_40": 1928,
       "tot_school_girl_co_ed": 2398,
-      "%_2": 80.40033361134279,
+      "sch_having_toilet_40_percent": 80.40033361134279,
       "total_no_of_fun_girls_toilet": 2070,
       "tot_school_girl_co_ed_1": 2398,
       "functional_toilet_girls_percent": 86.32193494578816
@@ -444,7 +444,7 @@
       "swsn_teacher_percent": 7.970749542961608,
       "toilet_40": 1322,
       "tot_school_girl_co_ed": 2728,
-      "%_2": 48.46041055718475,
+      "sch_having_toilet_40_percent": 48.46041055718475,
       "total_no_of_fun_girls_toilet": 1433,
       "tot_school_girl_co_ed_1": 2728,
       "functional_toilet_girls_percent": 52.529325513196476
@@ -489,7 +489,7 @@
       "swsn_teacher_percent": 5.878962536023055,
       "toilet_40": 1410,
       "tot_school_girl_co_ed": 1735,
-      "%_2": 81.26801152737752,
+      "sch_having_toilet_40_percent": 81.26801152737752,
       "total_no_of_fun_girls_toilet": 1481,
       "tot_school_girl_co_ed_1": 1735,
       "functional_toilet_girls_percent": 85.36023054755043
@@ -534,7 +534,7 @@
       "swsn_teacher_percent": 8.249721293199554,
       "toilet_40": 1454,
       "tot_school_girl_co_ed": 2689,
-      "%_2": 54.07214577910003,
+      "sch_having_toilet_40_percent": 54.07214577910003,
       "total_no_of_fun_girls_toilet": 2646,
       "tot_school_girl_co_ed_1": 2689,
       "functional_toilet_girls_percent": 98.40089252510226
@@ -579,7 +579,7 @@
       "swsn_teacher_percent": 6.595092024539877,
       "toilet_40": 1594,
       "tot_school_girl_co_ed": 2601,
-      "%_2": 61.28412149173394,
+      "sch_having_toilet_40_percent": 61.28412149173394,
       "total_no_of_fun_girls_toilet": 2511,
       "tot_school_girl_co_ed_1": 2601,
       "functional_toilet_girls_percent": 96.53979238754326
@@ -624,7 +624,7 @@
       "swsn_teacher_percent": 9.89413680781759,
       "toilet_40": 1632,
       "tot_school_girl_co_ed": 2445,
-      "%_2": 66.74846625766871,
+      "sch_having_toilet_40_percent": 66.74846625766871,
       "total_no_of_fun_girls_toilet": 2418,
       "tot_school_girl_co_ed_1": 2445,
       "functional_toilet_girls_percent": 98.8957055214724
@@ -669,7 +669,7 @@
       "swsn_teacher_percent": 6.497849976110846,
       "toilet_40": 952,
       "tot_school_girl_co_ed": 2090,
-      "%_2": 45.55023923444976,
+      "sch_having_toilet_40_percent": 45.55023923444976,
       "total_no_of_fun_girls_toilet": 2070,
       "tot_school_girl_co_ed_1": 2090,
       "functional_toilet_girls_percent": 99.04306220095694
@@ -714,7 +714,7 @@
       "swsn_teacher_percent": 14.210019267822736,
       "toilet_40": 2403,
       "tot_school_girl_co_ed": 4145,
-      "%_2": 57.973462002412546,
+      "sch_having_toilet_40_percent": 57.973462002412546,
       "total_no_of_fun_girls_toilet": 4077,
       "tot_school_girl_co_ed_1": 4145,
       "functional_toilet_girls_percent": 98.35946924004824
@@ -759,7 +759,7 @@
       "swsn_teacher_percent": 1.5313935681470139,
       "toilet_40": 1313,
       "tot_school_girl_co_ed": 1957,
-      "%_2": 67.09248850281043,
+      "sch_having_toilet_40_percent": 67.09248850281043,
       "total_no_of_fun_girls_toilet": 1956,
       "tot_school_girl_co_ed_1": 1957,
       "functional_toilet_girls_percent": 99.94890137966274
@@ -804,7 +804,7 @@
       "swsn_teacher_percent": 9.384384384384385,
       "toilet_40": 1309,
       "tot_school_girl_co_ed": 2659,
-      "%_2": 49.22903347122979,
+      "sch_having_toilet_40_percent": 49.22903347122979,
       "total_no_of_fun_girls_toilet": 2632,
       "tot_school_girl_co_ed_1": 2659,
       "functional_toilet_girls_percent": 98.98458066942459
@@ -849,7 +849,7 @@
       "swsn_teacher_percent": 22.150882825040128,
       "toilet_40": 559,
       "tot_school_girl_co_ed": 1243,
-      "%_2": 44.97184231697506,
+      "sch_having_toilet_40_percent": 44.97184231697506,
       "total_no_of_fun_girls_toilet": 1208,
       "tot_school_girl_co_ed_1": 1243,
       "functional_toilet_girls_percent": 97.18423169750604
@@ -894,7 +894,7 @@
       "swsn_teacher_percent": 3.331650681474003,
       "toilet_40": 1997,
       "tot_school_girl_co_ed": 3958,
-      "%_2": 50.45477513895907,
+      "sch_having_toilet_40_percent": 50.45477513895907,
       "total_no_of_fun_girls_toilet": 3769,
       "tot_school_girl_co_ed_1": 3958,
       "functional_toilet_girls_percent": 95.22486104092977
@@ -939,7 +939,7 @@
       "swsn_teacher_percent": 7.998171846435101,
       "toilet_40": 1192,
       "tot_school_girl_co_ed": 2183,
-      "%_2": 54.603756298671556,
+      "sch_having_toilet_40_percent": 54.603756298671556,
       "total_no_of_fun_girls_toilet": 2160,
       "tot_school_girl_co_ed_1": 2183,
       "functional_toilet_girls_percent": 98.9464040311498
@@ -984,7 +984,7 @@
       "swsn_teacher_percent": 17.03448275862069,
       "toilet_40": 1377,
       "tot_school_girl_co_ed": 2895,
-      "%_2": 47.56476683937824,
+      "sch_having_toilet_40_percent": 47.56476683937824,
       "total_no_of_fun_girls_toilet": 2806,
       "tot_school_girl_co_ed_1": 2895,
       "functional_toilet_girls_percent": 96.92573402417962
@@ -1029,7 +1029,7 @@
       "swsn_teacher_percent": 10.685805422647528,
       "toilet_40": 340,
       "tot_school_girl_co_ed": 627,
-      "%_2": 54.22647527910686,
+      "sch_having_toilet_40_percent": 54.22647527910686,
       "total_no_of_fun_girls_toilet": 610,
       "tot_school_girl_co_ed_1": 627,
       "functional_toilet_girls_percent": 97.28867623604465
@@ -1074,7 +1074,7 @@
       "swsn_teacher_percent": 6.882591093117409,
       "toilet_40": 1293,
       "tot_school_girl_co_ed": 2715,
-      "%_2": 47.6243093922652,
+      "sch_having_toilet_40_percent": 47.6243093922652,
       "total_no_of_fun_girls_toilet": 2656,
       "tot_school_girl_co_ed_1": 2715,
       "functional_toilet_girls_percent": 97.8268876611418
@@ -1119,7 +1119,7 @@
       "swsn_teacher_percent": 15.393794749403341,
       "toilet_40": 2350,
       "tot_school_girl_co_ed": 2459,
-      "%_2": 95.56730378202522,
+      "sch_having_toilet_40_percent": 95.56730378202522,
       "total_no_of_fun_girls_toilet": 2308,
       "tot_school_girl_co_ed_1": 2459,
       "functional_toilet_girls_percent": 93.85929239528264
@@ -1164,7 +1164,7 @@
       "swsn_teacher_percent": 12.592592592592592,
       "toilet_40": 636,
       "tot_school_girl_co_ed": 697,
-      "%_2": 91.24820659971306,
+      "sch_having_toilet_40_percent": 91.24820659971306,
       "total_no_of_fun_girls_toilet": 647,
       "tot_school_girl_co_ed_1": 697,
       "functional_toilet_girls_percent": 92.82639885222382
@@ -1209,7 +1209,7 @@
       "swsn_teacher_percent": 19.340659340659343,
       "toilet_40": 854,
       "tot_school_girl_co_ed": 865,
-      "%_2": 98.72832369942196,
+      "sch_having_toilet_40_percent": 98.72832369942196,
       "total_no_of_fun_girls_toilet": 865,
       "tot_school_girl_co_ed_1": 865,
       "functional_toilet_girls_percent": 100
@@ -1254,7 +1254,7 @@
       "swsn_teacher_percent": 9.514711501719527,
       "toilet_40": 2492,
       "tot_school_girl_co_ed": 2566,
-      "%_2": 97.116134060795,
+      "sch_having_toilet_40_percent": 97.116134060795,
       "total_no_of_fun_girls_toilet": 2473,
       "tot_school_girl_co_ed_1": 2566,
       "functional_toilet_girls_percent": 96.37568199532346
@@ -1299,7 +1299,7 @@
       "swsn_teacher_percent": 8.672735984666986,
       "toilet_40": 1991,
       "tot_school_girl_co_ed": 2057,
-      "%_2": 96.79144385026738,
+      "sch_having_toilet_40_percent": 96.79144385026738,
       "total_no_of_fun_girls_toilet": 2046,
       "tot_school_girl_co_ed_1": 2057,
       "functional_toilet_girls_percent": 99.46524064171123
@@ -1344,7 +1344,7 @@
       "swsn_teacher_percent": 17.25787166201674,
       "toilet_40": 2281,
       "tot_school_girl_co_ed": 2489,
-      "%_2": 91.64323021293693,
+      "sch_having_toilet_40_percent": 91.64323021293693,
       "total_no_of_fun_girls_toilet": 2436,
       "tot_school_girl_co_ed_1": 2489,
       "functional_toilet_girls_percent": 97.87063077541181
@@ -1389,7 +1389,7 @@
       "swsn_teacher_percent": 22.049689440993788,
       "toilet_40": 2138,
       "tot_school_girl_co_ed": 2221,
-      "%_2": 96.26294461954075,
+      "sch_having_toilet_40_percent": 96.26294461954075,
       "total_no_of_fun_girls_toilet": 2214,
       "tot_school_girl_co_ed_1": 2221,
       "functional_toilet_girls_percent": 99.68482665466006
@@ -1434,7 +1434,7 @@
       "swsn_teacher_percent": 6.578947368421052,
       "toilet_40": 556,
       "tot_school_girl_co_ed": 562,
-      "%_2": 98.93238434163702,
+      "sch_having_toilet_40_percent": 98.93238434163702,
       "total_no_of_fun_girls_toilet": 559,
       "tot_school_girl_co_ed_1": 562,
       "functional_toilet_girls_percent": 99.4661921708185
@@ -1479,7 +1479,7 @@
       "swsn_teacher_percent": 13.978168587022438,
       "toilet_40": 3118,
       "tot_school_girl_co_ed": 3267,
-      "%_2": 95.43924089378635,
+      "sch_having_toilet_40_percent": 95.43924089378635,
       "total_no_of_fun_girls_toilet": 3266,
       "tot_school_girl_co_ed_1": 3267,
       "functional_toilet_girls_percent": 99.96939087848179
@@ -1524,7 +1524,7 @@
       "swsn_teacher_percent": 5.628140703517588,
       "toilet_40": 929,
       "tot_school_girl_co_ed": 939,
-      "%_2": 98.93503727369543,
+      "sch_having_toilet_40_percent": 98.93503727369543,
       "total_no_of_fun_girls_toilet": 931,
       "tot_school_girl_co_ed_1": 939,
       "functional_toilet_girls_percent": 99.14802981895635
@@ -1569,7 +1569,7 @@
       "swsn_teacher_percent": 30.819815870232354,
       "toilet_40": 1741,
       "tot_school_girl_co_ed": 2265,
-      "%_2": 76.86534216335541,
+      "sch_having_toilet_40_percent": 76.86534216335541,
       "total_no_of_fun_girls_toilet": 2249,
       "tot_school_girl_co_ed_1": 2265,
       "functional_toilet_girls_percent": 99.29359823399558
@@ -1614,7 +1614,7 @@
       "swsn_teacher_percent": 24.473975636766333,
       "toilet_40": 835,
       "tot_school_girl_co_ed": 897,
-      "%_2": 93.08807134894091,
+      "sch_having_toilet_40_percent": 93.08807134894091,
       "total_no_of_fun_girls_toilet": 883,
       "tot_school_girl_co_ed_1": 897,
       "functional_toilet_girls_percent": 98.43924191750278
@@ -1659,7 +1659,7 @@
       "swsn_teacher_percent": 5.574912891986063,
       "toilet_40": 877,
       "tot_school_girl_co_ed": 1102,
-      "%_2": 79.58257713248639,
+      "sch_having_toilet_40_percent": 79.58257713248639,
       "total_no_of_fun_girls_toilet": 976,
       "tot_school_girl_co_ed_1": 1102,
       "functional_toilet_girls_percent": 88.56624319419237
@@ -1704,7 +1704,7 @@
       "swsn_teacher_percent": 7.200866269626421,
       "toilet_40": 1811,
       "tot_school_girl_co_ed": 1842,
-      "%_2": 98.31704668838219,
+      "sch_having_toilet_40_percent": 98.31704668838219,
       "total_no_of_fun_girls_toilet": 1820,
       "tot_school_girl_co_ed_1": 1842,
       "functional_toilet_girls_percent": 98.8056460369164
@@ -1749,7 +1749,7 @@
       "swsn_teacher_percent": 6.1615320566194836,
       "toilet_40": 2270,
       "tot_school_girl_co_ed": 2390,
-      "%_2": 94.97907949790795,
+      "sch_having_toilet_40_percent": 94.97907949790795,
       "total_no_of_fun_girls_toilet": 2255,
       "tot_school_girl_co_ed_1": 2390,
       "functional_toilet_girls_percent": 94.35146443514645
@@ -1794,7 +1794,7 @@
       "swsn_teacher_percent": 7.943067033976126,
       "toilet_40": 2054,
       "tot_school_girl_co_ed": 2169,
-      "%_2": 94.69801751959427,
+      "sch_having_toilet_40_percent": 94.69801751959427,
       "total_no_of_fun_girls_toilet": 2045,
       "tot_school_girl_co_ed_1": 2169,
       "functional_toilet_girls_percent": 94.28307976025818
@@ -1839,7 +1839,7 @@
       "swsn_teacher_percent": 12.751371115173674,
       "toilet_40": 1782,
       "tot_school_girl_co_ed": 2183,
-      "%_2": 81.63078332569857,
+      "sch_having_toilet_40_percent": 81.63078332569857,
       "total_no_of_fun_girls_toilet": 2152,
       "tot_school_girl_co_ed_1": 2183,
       "functional_toilet_girls_percent": 98.57993586807147
@@ -1884,7 +1884,7 @@
       "swsn_teacher_percent": 9.199134199134198,
       "toilet_40": 1448,
       "tot_school_girl_co_ed": 1844,
-      "%_2": 78.52494577006507,
+      "sch_having_toilet_40_percent": 78.52494577006507,
       "total_no_of_fun_girls_toilet": 1795,
       "tot_school_girl_co_ed_1": 1844,
       "functional_toilet_girls_percent": 97.34273318872017
@@ -1929,7 +1929,7 @@
       "swsn_teacher_percent": 7.961538461538462,
       "toilet_40": 2218,
       "tot_school_girl_co_ed": 2583,
-      "%_2": 85.86914440572977,
+      "sch_having_toilet_40_percent": 85.86914440572977,
       "total_no_of_fun_girls_toilet": 2290,
       "tot_school_girl_co_ed_1": 2583,
       "functional_toilet_girls_percent": 88.6566008517228
@@ -1974,7 +1974,7 @@
       "swsn_teacher_percent": 4.390243902439024,
       "toilet_40": 1226,
       "tot_school_girl_co_ed": 1637,
-      "%_2": 74.89309712889431,
+      "sch_having_toilet_40_percent": 74.89309712889431,
       "total_no_of_fun_girls_toilet": 1616,
       "tot_school_girl_co_ed_1": 1637,
       "functional_toilet_girls_percent": 98.71716554673182
@@ -2019,7 +2019,7 @@
       "swsn_teacher_percent": 9.760448521916413,
       "toilet_40": 3082,
       "tot_school_girl_co_ed": 3918,
-      "%_2": 78.66258295048493,
+      "sch_having_toilet_40_percent": 78.66258295048493,
       "total_no_of_fun_girls_toilet": 3896,
       "tot_school_girl_co_ed_1": 3918,
       "functional_toilet_girls_percent": 99.43848902501277
@@ -2064,7 +2064,7 @@
       "swsn_teacher_percent": 11.505922165820643,
       "toilet_40": 1370,
       "tot_school_girl_co_ed": 1766,
-      "%_2": 77.57644394110986,
+      "sch_having_toilet_40_percent": 77.57644394110986,
       "total_no_of_fun_girls_toilet": 1726,
       "tot_school_girl_co_ed_1": 1766,
       "functional_toilet_girls_percent": 97.73499433748584
@@ -2109,7 +2109,7 @@
       "swsn_teacher_percent": 4.385964912280701,
       "toilet_40": 1440,
       "tot_school_girl_co_ed": 1802,
-      "%_2": 79.91120976692564,
+      "sch_having_toilet_40_percent": 79.91120976692564,
       "total_no_of_fun_girls_toilet": 1689,
       "tot_school_girl_co_ed_1": 1802,
       "functional_toilet_girls_percent": 93.7291897891232
@@ -2154,7 +2154,7 @@
       "swsn_teacher_percent": 12.117291936179388,
       "toilet_40": 1816,
       "tot_school_girl_co_ed": 2313,
-      "%_2": 78.51275399913533,
+      "sch_having_toilet_40_percent": 78.51275399913533,
       "total_no_of_fun_girls_toilet": 2267,
       "tot_school_girl_co_ed_1": 2313,
       "functional_toilet_girls_percent": 98.01124081279723
@@ -2199,7 +2199,7 @@
       "swsn_teacher_percent": 11.957569913211186,
       "toilet_40": 912,
       "tot_school_girl_co_ed": 1017,
-      "%_2": 89.67551622418878,
+      "sch_having_toilet_40_percent": 89.67551622418878,
       "total_no_of_fun_girls_toilet": 961,
       "tot_school_girl_co_ed_1": 1017,
       "functional_toilet_girls_percent": 94.49360865290069
@@ -2244,7 +2244,7 @@
       "swsn_teacher_percent": 4.203718674211803,
       "toilet_40": 1006,
       "tot_school_girl_co_ed": 1226,
-      "%_2": 82.05546492659053,
+      "sch_having_toilet_40_percent": 82.05546492659053,
       "total_no_of_fun_girls_toilet": 1204,
       "tot_school_girl_co_ed_1": 1226,
       "functional_toilet_girls_percent": 98.20554649265905
@@ -2289,7 +2289,7 @@
       "swsn_teacher_percent": 13.8328530259366,
       "toilet_40": 557,
       "tot_school_girl_co_ed": 686,
-      "%_2": 81.19533527696792,
+      "sch_having_toilet_40_percent": 81.19533527696792,
       "total_no_of_fun_girls_toilet": 686,
       "tot_school_girl_co_ed_1": 686,
       "functional_toilet_girls_percent": 100
@@ -2334,7 +2334,7 @@
       "swsn_teacher_percent": 7.257383966244725,
       "toilet_40": 987,
       "tot_school_girl_co_ed": 1178,
-      "%_2": 83.78607809847199,
+      "sch_having_toilet_40_percent": 83.78607809847199,
       "total_no_of_fun_girls_toilet": 1162,
       "tot_school_girl_co_ed_1": 1178,
       "functional_toilet_girls_percent": 98.64176570458405
@@ -2379,7 +2379,7 @@
       "swsn_teacher_percent": 5.747126436781609,
       "toilet_40": 2238,
       "tot_school_girl_co_ed": 2951,
-      "%_2": 75.83869874618773,
+      "sch_having_toilet_40_percent": 75.83869874618773,
       "total_no_of_fun_girls_toilet": 2915,
       "tot_school_girl_co_ed_1": 2951,
       "functional_toilet_girls_percent": 98.78007455099966
@@ -2424,7 +2424,7 @@
       "swsn_teacher_percent": 7.870572802798426,
       "toilet_40": 1860,
       "tot_school_girl_co_ed": 2269,
-      "%_2": 81.97443807844866,
+      "sch_having_toilet_40_percent": 81.97443807844866,
       "total_no_of_fun_girls_toilet": 2102,
       "tot_school_girl_co_ed_1": 2269,
       "functional_toilet_girls_percent": 92.63992948435434
@@ -2469,7 +2469,7 @@
       "swsn_teacher_percent": 12.043301759133964,
       "toilet_40": 1859,
       "tot_school_girl_co_ed": 2190,
-      "%_2": 84.88584474885845,
+      "sch_having_toilet_40_percent": 84.88584474885845,
       "total_no_of_fun_girls_toilet": 2170,
       "tot_school_girl_co_ed_1": 2190,
       "functional_toilet_girls_percent": 99.08675799086758
@@ -2514,7 +2514,7 @@
       "swsn_teacher_percent": 9.176225234619395,
       "toilet_40": 763,
       "tot_school_girl_co_ed": 958,
-      "%_2": 79.64509394572025,
+      "sch_having_toilet_40_percent": 79.64509394572025,
       "total_no_of_fun_girls_toilet": 957,
       "tot_school_girl_co_ed_1": 958,
       "functional_toilet_girls_percent": 99.89561586638831
@@ -2559,7 +2559,7 @@
       "swsn_teacher_percent": 13.565777907998827,
       "toilet_40": 2793,
       "tot_school_girl_co_ed": 3363,
-      "%_2": 83.05084745762711,
+      "sch_having_toilet_40_percent": 83.05084745762711,
       "total_no_of_fun_girls_toilet": 3327,
       "tot_school_girl_co_ed_1": 3363,
       "functional_toilet_girls_percent": 98.92952720785013
@@ -2604,7 +2604,7 @@
       "swsn_teacher_percent": 5.5876685934489405,
       "toilet_40": 1162,
       "tot_school_girl_co_ed": 1544,
-      "%_2": 75.25906735751295,
+      "sch_having_toilet_40_percent": 75.25906735751295,
       "total_no_of_fun_girls_toilet": 1417,
       "tot_school_girl_co_ed_1": 1544,
       "functional_toilet_girls_percent": 91.77461139896373
@@ -2649,7 +2649,7 @@
       "swsn_teacher_percent": 9.528049866429207,
       "toilet_40": 993,
       "tot_school_girl_co_ed": 1105,
-      "%_2": 89.86425339366517,
+      "sch_having_toilet_40_percent": 89.86425339366517,
       "total_no_of_fun_girls_toilet": 1071,
       "tot_school_girl_co_ed_1": 1105,
       "functional_toilet_girls_percent": 96.92307692307692
@@ -2694,7 +2694,7 @@
       "swsn_teacher_percent": 53.492001560671085,
       "toilet_40": 2071,
       "tot_school_girl_co_ed": 2555,
-      "%_2": 81.05675146771037,
+      "sch_having_toilet_40_percent": 81.05675146771037,
       "total_no_of_fun_girls_toilet": 2497,
       "tot_school_girl_co_ed_1": 2555,
       "functional_toilet_girls_percent": 97.72994129158513
@@ -2739,7 +2739,7 @@
       "swsn_teacher_percent": 53.73134328358209,
       "toilet_40": 1181,
       "tot_school_girl_co_ed": 1602,
-      "%_2": 73.7203495630462,
+      "sch_having_toilet_40_percent": 73.7203495630462,
       "total_no_of_fun_girls_toilet": 1495,
       "tot_school_girl_co_ed_1": 1602,
       "functional_toilet_girls_percent": 93.32084893882646
@@ -2784,7 +2784,7 @@
       "swsn_teacher_percent": 17.6039119804401,
       "toilet_40": 378,
       "tot_school_girl_co_ed": 408,
-      "%_2": 92.64705882352942,
+      "sch_having_toilet_40_percent": 92.64705882352942,
       "total_no_of_fun_girls_toilet": 399,
       "tot_school_girl_co_ed_1": 408,
       "functional_toilet_girls_percent": 97.79411764705883
@@ -2829,7 +2829,7 @@
       "swsn_teacher_percent": 4.297427198190557,
       "toilet_40": 3242,
       "tot_school_girl_co_ed": 3416,
-      "%_2": 94.90632318501171,
+      "sch_having_toilet_40_percent": 94.90632318501171,
       "total_no_of_fun_girls_toilet": 3395,
       "tot_school_girl_co_ed_1": 3416,
       "functional_toilet_girls_percent": 99.38524590163934
@@ -2874,7 +2874,7 @@
       "swsn_teacher_percent": 6.605562579013906,
       "toilet_40": 2604,
       "tot_school_girl_co_ed": 3128,
-      "%_2": 83.24808184143222,
+      "sch_having_toilet_40_percent": 83.24808184143222,
       "total_no_of_fun_girls_toilet": 3119,
       "tot_school_girl_co_ed_1": 3128,
       "functional_toilet_girls_percent": 99.71227621483376
@@ -2919,7 +2919,7 @@
       "swsn_teacher_percent": 11.151079136690647,
       "toilet_40": 1842,
       "tot_school_girl_co_ed": 2182,
-      "%_2": 84.4179651695692,
+      "sch_having_toilet_40_percent": 84.4179651695692,
       "total_no_of_fun_girls_toilet": 2173,
       "tot_school_girl_co_ed_1": 2182,
       "functional_toilet_girls_percent": 99.58753437213565
@@ -2964,7 +2964,7 @@
       "swsn_teacher_percent": 3.205381875741987,
       "toilet_40": 2179,
       "tot_school_girl_co_ed": 2509,
-      "%_2": 86.84734954165006,
+      "sch_having_toilet_40_percent": 86.84734954165006,
       "total_no_of_fun_girls_toilet": 2505,
       "tot_school_girl_co_ed_1": 2509,
       "functional_toilet_girls_percent": 99.84057393383819
@@ -3009,7 +3009,7 @@
       "swsn_teacher_percent": 10.392967942088935,
       "toilet_40": 1528,
       "tot_school_girl_co_ed": 1872,
-      "%_2": 81.62393162393163,
+      "sch_having_toilet_40_percent": 81.62393162393163,
       "total_no_of_fun_girls_toilet": 1828,
       "tot_school_girl_co_ed_1": 1872,
       "functional_toilet_girls_percent": 97.64957264957265
@@ -3054,7 +3054,7 @@
       "swsn_teacher_percent": 7.814078814415629,
       "toilet_40": 2619,
       "tot_school_girl_co_ed": 2936,
-      "%_2": 89.20299727520435,
+      "sch_having_toilet_40_percent": 89.20299727520435,
       "total_no_of_fun_girls_toilet": 2898,
       "tot_school_girl_co_ed_1": 2936,
       "functional_toilet_girls_percent": 98.70572207084469
@@ -3099,7 +3099,7 @@
       "swsn_teacher_percent": 7.391511683357177,
       "toilet_40": 1775,
       "tot_school_girl_co_ed": 2089,
-      "%_2": 84.96888463379607,
+      "sch_having_toilet_40_percent": 84.96888463379607,
       "total_no_of_fun_girls_toilet": 2052,
       "tot_school_girl_co_ed_1": 2089,
       "functional_toilet_girls_percent": 98.22881761608426
@@ -3144,7 +3144,7 @@
       "swsn_teacher_percent": 8.032725920416512,
       "toilet_40": 2277,
       "tot_school_girl_co_ed": 2663,
-      "%_2": 85.50506947052196,
+      "sch_having_toilet_40_percent": 85.50506947052196,
       "total_no_of_fun_girls_toilet": 2593,
       "tot_school_girl_co_ed_1": 2663,
       "functional_toilet_girls_percent": 97.371385655276
@@ -3189,7 +3189,7 @@
       "swsn_teacher_percent": 8.81920627143557,
       "toilet_40": 1844,
       "tot_school_girl_co_ed": 2028,
-      "%_2": 90.92702169625247,
+      "sch_having_toilet_40_percent": 90.92702169625247,
       "total_no_of_fun_girls_toilet": 1707,
       "tot_school_girl_co_ed_1": 2028,
       "functional_toilet_girls_percent": 84.1715976331361
@@ -3234,7 +3234,7 @@
       "swsn_teacher_percent": 14.512253724171071,
       "toilet_40": 1706,
       "tot_school_girl_co_ed": 2060,
-      "%_2": 82.81553398058253,
+      "sch_having_toilet_40_percent": 82.81553398058253,
       "total_no_of_fun_girls_toilet": 1820,
       "tot_school_girl_co_ed_1": 2060,
       "functional_toilet_girls_percent": 88.3495145631068
@@ -3279,7 +3279,7 @@
       "swsn_teacher_percent": 28.820010875475806,
       "toilet_40": 1527,
       "tot_school_girl_co_ed": 1814,
-      "%_2": 84.17861080485116,
+      "sch_having_toilet_40_percent": 84.17861080485116,
       "total_no_of_fun_girls_toilet": 1737,
       "tot_school_girl_co_ed_1": 1814,
       "functional_toilet_girls_percent": 95.75523704520397
@@ -3324,7 +3324,7 @@
       "swsn_teacher_percent": 32.94713975380159,
       "toilet_40": 1208,
       "tot_school_girl_co_ed": 1374,
-      "%_2": 87.91848617176127,
+      "sch_having_toilet_40_percent": 87.91848617176127,
       "total_no_of_fun_girls_toilet": 1372,
       "tot_school_girl_co_ed_1": 1374,
       "functional_toilet_girls_percent": 99.85443959243085
@@ -3369,7 +3369,7 @@
       "swsn_teacher_percent": 3.4782608695652173,
       "toilet_40": 218,
       "tot_school_girl_co_ed": 230,
-      "%_2": 94.78260869565217,
+      "sch_having_toilet_40_percent": 94.78260869565217,
       "total_no_of_fun_girls_toilet": 175,
       "tot_school_girl_co_ed_1": 230,
       "functional_toilet_girls_percent": 76.08695652173914
@@ -3414,7 +3414,7 @@
       "swsn_teacher_percent": 4.513064133016627,
       "toilet_40": 1065,
       "tot_school_girl_co_ed": 1263,
-      "%_2": 84.32304038004752,
+      "sch_having_toilet_40_percent": 84.32304038004752,
       "total_no_of_fun_girls_toilet": 999,
       "tot_school_girl_co_ed_1": 1263,
       "functional_toilet_girls_percent": 79.09738717339667
@@ -3459,7 +3459,7 @@
       "swsn_teacher_percent": 2.3498694516971277,
       "toilet_40": 363,
       "tot_school_girl_co_ed": 382,
-      "%_2": 95.02617801047121,
+      "sch_having_toilet_40_percent": 95.02617801047121,
       "total_no_of_fun_girls_toilet": 360,
       "tot_school_girl_co_ed_1": 382,
       "functional_toilet_girls_percent": 94.24083769633508
@@ -3504,7 +3504,7 @@
       "swsn_teacher_percent": 5.185185185185185,
       "toilet_40": 91,
       "tot_school_girl_co_ed": 135,
-      "%_2": 67.4074074074074,
+      "sch_having_toilet_40_percent": 67.4074074074074,
       "total_no_of_fun_girls_toilet": 92,
       "tot_school_girl_co_ed_1": 135,
       "functional_toilet_girls_percent": 68.14814814814815
@@ -3549,7 +3549,7 @@
       "swsn_teacher_percent": 9.280377506881637,
       "toilet_40": 2244,
       "tot_school_girl_co_ed": 2532,
-      "%_2": 88.62559241706161,
+      "sch_having_toilet_40_percent": 88.62559241706161,
       "total_no_of_fun_girls_toilet": 2041,
       "tot_school_girl_co_ed_1": 2532,
       "functional_toilet_girls_percent": 80.60821484992101
@@ -3594,7 +3594,7 @@
       "swsn_teacher_percent": 12.269207861822514,
       "toilet_40": 1571,
       "tot_school_girl_co_ed": 1679,
-      "%_2": 93.56759976176295,
+      "sch_having_toilet_40_percent": 93.56759976176295,
       "total_no_of_fun_girls_toilet": 1542,
       "tot_school_girl_co_ed_1": 1679,
       "functional_toilet_girls_percent": 91.84038117927338
@@ -3639,7 +3639,7 @@
       "swsn_teacher_percent": 13.016710642040458,
       "toilet_40": 1061,
       "tot_school_girl_co_ed": 1135,
-      "%_2": 93.48017621145375,
+      "sch_having_toilet_40_percent": 93.48017621145375,
       "total_no_of_fun_girls_toilet": 1089,
       "tot_school_girl_co_ed_1": 1135,
       "functional_toilet_girls_percent": 95.94713656387665
@@ -3684,7 +3684,7 @@
       "swsn_teacher_percent": 11.55165840640488,
       "toilet_40": 2429,
       "tot_school_girl_co_ed": 2622,
-      "%_2": 92.63920671243325,
+      "sch_having_toilet_40_percent": 92.63920671243325,
       "total_no_of_fun_girls_toilet": 2324,
       "tot_school_girl_co_ed_1": 2622,
       "functional_toilet_girls_percent": 88.63463005339436
@@ -3729,7 +3729,7 @@
       "swsn_teacher_percent": 5.945366898768077,
       "toilet_40": 1781,
       "tot_school_girl_co_ed": 1866,
-      "%_2": 95.44480171489818,
+      "sch_having_toilet_40_percent": 95.44480171489818,
       "total_no_of_fun_girls_toilet": 1532,
       "tot_school_girl_co_ed_1": 1866,
       "functional_toilet_girls_percent": 82.10075026795283
@@ -3774,7 +3774,7 @@
       "swsn_teacher_percent": 9.261430246189919,
       "toilet_40": 2343,
       "tot_school_girl_co_ed": 2559,
-      "%_2": 91.55920281359906,
+      "sch_having_toilet_40_percent": 91.55920281359906,
       "total_no_of_fun_girls_toilet": 2213,
       "tot_school_girl_co_ed_1": 2559,
       "functional_toilet_girls_percent": 86.47909339585776
@@ -3819,7 +3819,7 @@
       "swsn_teacher_percent": 6.841339155749636,
       "toilet_40": 1234,
       "tot_school_girl_co_ed": 1374,
-      "%_2": 89.8107714701601,
+      "sch_having_toilet_40_percent": 89.8107714701601,
       "total_no_of_fun_girls_toilet": 1256,
       "tot_school_girl_co_ed_1": 1374,
       "functional_toilet_girls_percent": 91.41193595342067
@@ -3864,7 +3864,7 @@
       "swsn_teacher_percent": 7.591876208897485,
       "toilet_40": 1910,
       "tot_school_girl_co_ed": 2068,
-      "%_2": 92.3597678916828,
+      "sch_having_toilet_40_percent": 92.3597678916828,
       "total_no_of_fun_girls_toilet": 1885,
       "tot_school_girl_co_ed_1": 2068,
       "functional_toilet_girls_percent": 91.15087040618955
@@ -3909,7 +3909,7 @@
       "swsn_teacher_percent": 10.5742935278031,
       "toilet_40": 1023,
       "tot_school_girl_co_ed": 1096,
-      "%_2": 93.33941605839416,
+      "sch_having_toilet_40_percent": 93.33941605839416,
       "total_no_of_fun_girls_toilet": 995,
       "tot_school_girl_co_ed_1": 1096,
       "functional_toilet_girls_percent": 90.78467153284672
@@ -3954,7 +3954,7 @@
       "swsn_teacher_percent": 6.923076923076923,
       "toilet_40": 1938,
       "tot_school_girl_co_ed": 2077,
-      "%_2": 93.30765527202696,
+      "sch_having_toilet_40_percent": 93.30765527202696,
       "total_no_of_fun_girls_toilet": 1852,
       "tot_school_girl_co_ed_1": 2077,
       "functional_toilet_girls_percent": 89.16706788637457
@@ -3999,7 +3999,7 @@
       "swsn_teacher_percent": 11.272727272727273,
       "toilet_40": 1044,
       "tot_school_girl_co_ed": 1094,
-      "%_2": 95.42961608775137,
+      "sch_having_toilet_40_percent": 95.42961608775137,
       "total_no_of_fun_girls_toilet": 1094,
       "tot_school_girl_co_ed_1": 1094,
       "functional_toilet_girls_percent": 100
@@ -4044,7 +4044,7 @@
       "swsn_teacher_percent": 11.085180863477246,
       "toilet_40": 801,
       "tot_school_girl_co_ed": 845,
-      "%_2": 94.79289940828403,
+      "sch_having_toilet_40_percent": 94.79289940828403,
       "total_no_of_fun_girls_toilet": 845,
       "tot_school_girl_co_ed_1": 845,
       "functional_toilet_girls_percent": 100
@@ -4089,7 +4089,7 @@
       "swsn_teacher_percent": 8.971454463072044,
       "toilet_40": 1605,
       "tot_school_girl_co_ed": 2205,
-      "%_2": 72.78911564625851,
+      "sch_having_toilet_40_percent": 72.78911564625851,
       "total_no_of_fun_girls_toilet": 1672,
       "tot_school_girl_co_ed_1": 2205,
       "functional_toilet_girls_percent": 75.82766439909298
@@ -4134,7 +4134,7 @@
       "swsn_teacher_percent": 9.243243243243244,
       "toilet_40": 1300,
       "tot_school_girl_co_ed": 1850,
-      "%_2": 70.27027027027027,
+      "sch_having_toilet_40_percent": 70.27027027027027,
       "total_no_of_fun_girls_toilet": 1762,
       "tot_school_girl_co_ed_1": 1850,
       "functional_toilet_girls_percent": 95.24324324324324
@@ -4179,7 +4179,7 @@
       "swsn_teacher_percent": 7.643678160919539,
       "toilet_40": 1573,
       "tot_school_girl_co_ed": 1740,
-      "%_2": 90.40229885057471,
+      "sch_having_toilet_40_percent": 90.40229885057471,
       "total_no_of_fun_girls_toilet": 1472,
       "tot_school_girl_co_ed_1": 1740,
       "functional_toilet_girls_percent": 84.59770114942529
@@ -4224,7 +4224,7 @@
       "swsn_teacher_percent": 7.174887892376682,
       "toilet_40": 1761,
       "tot_school_girl_co_ed": 2230,
-      "%_2": 78.96860986547085,
+      "sch_having_toilet_40_percent": 78.96860986547085,
       "total_no_of_fun_girls_toilet": 1983,
       "tot_school_girl_co_ed_1": 2230,
       "functional_toilet_girls_percent": 88.9237668161435
@@ -4269,7 +4269,7 @@
       "swsn_teacher_percent": 10.354609929078014,
       "toilet_40": 1064,
       "tot_school_girl_co_ed": 1410,
-      "%_2": 75.46099290780141,
+      "sch_having_toilet_40_percent": 75.46099290780141,
       "total_no_of_fun_girls_toilet": 1226,
       "tot_school_girl_co_ed_1": 1410,
       "functional_toilet_girls_percent": 86.95035460992908
@@ -4314,7 +4314,7 @@
       "swsn_teacher_percent": 11.494252873563218,
       "toilet_40": 320,
       "tot_school_girl_co_ed": 337,
-      "%_2": 94.95548961424333,
+      "sch_having_toilet_40_percent": 94.95548961424333,
       "total_no_of_fun_girls_toilet": 335,
       "tot_school_girl_co_ed_1": 337,
       "functional_toilet_girls_percent": 99.40652818991099
@@ -4359,7 +4359,7 @@
       "swsn_teacher_percent": 75.98167539267016,
       "toilet_40": 1487,
       "tot_school_girl_co_ed": 1516,
-      "%_2": 98.08707124010554,
+      "sch_having_toilet_40_percent": 98.08707124010554,
       "total_no_of_fun_girls_toilet": 1507,
       "tot_school_girl_co_ed_1": 1516,
       "functional_toilet_girls_percent": 99.40633245382587
@@ -4404,7 +4404,7 @@
       "swsn_teacher_percent": 59.919493962047156,
       "toilet_40": 1687,
       "tot_school_girl_co_ed": 1716,
-      "%_2": 98.31002331002331,
+      "sch_having_toilet_40_percent": 98.31002331002331,
       "total_no_of_fun_girls_toilet": 1715,
       "tot_school_girl_co_ed_1": 1716,
       "functional_toilet_girls_percent": 99.94172494172494
@@ -4449,7 +4449,7 @@
       "swsn_teacher_percent": 11.323328785811732,
       "toilet_40": 1045,
       "tot_school_girl_co_ed": 1431,
-      "%_2": 73.02585604472397,
+      "sch_having_toilet_40_percent": 73.02585604472397,
       "total_no_of_fun_girls_toilet": 695,
       "tot_school_girl_co_ed_1": 1431,
       "functional_toilet_girls_percent": 48.56743535988819
@@ -4494,7 +4494,7 @@
       "swsn_teacher_percent": 11.079053664166185,
       "toilet_40": 1547,
       "tot_school_girl_co_ed": 1701,
-      "%_2": 90.94650205761316,
+      "sch_having_toilet_40_percent": 90.94650205761316,
       "total_no_of_fun_girls_toilet": 1223,
       "tot_school_girl_co_ed_1": 1701,
       "functional_toilet_girls_percent": 71.89888300999412
@@ -4539,7 +4539,7 @@
       "swsn_teacher_percent": 14.499532273152479,
       "toilet_40": 941,
       "tot_school_girl_co_ed": 1053,
-      "%_2": 89.36372269705602,
+      "sch_having_toilet_40_percent": 89.36372269705602,
       "total_no_of_fun_girls_toilet": 842,
       "tot_school_girl_co_ed_1": 1053,
       "functional_toilet_girls_percent": 79.96201329534662
@@ -4584,7 +4584,7 @@
       "swsn_teacher_percent": 3.968253968253968,
       "toilet_40": 734,
       "tot_school_girl_co_ed": 882,
-      "%_2": 83.21995464852607,
+      "sch_having_toilet_40_percent": 83.21995464852607,
       "total_no_of_fun_girls_toilet": 570,
       "tot_school_girl_co_ed_1": 882,
       "functional_toilet_girls_percent": 64.62585034013605
@@ -4629,7 +4629,7 @@
       "swsn_teacher_percent": 3.671545522202927,
       "toilet_40": 3031,
       "tot_school_girl_co_ed": 4030,
-      "%_2": 75.21091811414392,
+      "sch_having_toilet_40_percent": 75.21091811414392,
       "total_no_of_fun_girls_toilet": 3979,
       "tot_school_girl_co_ed_1": 4030,
       "functional_toilet_girls_percent": 98.73449131513648
@@ -4674,7 +4674,7 @@
       "swsn_teacher_percent": 4.994686503719448,
       "toilet_40": 2329,
       "tot_school_girl_co_ed": 2821,
-      "%_2": 82.5593761077632,
+      "sch_having_toilet_40_percent": 82.5593761077632,
       "total_no_of_fun_girls_toilet": 2659,
       "tot_school_girl_co_ed_1": 2821,
       "functional_toilet_girls_percent": 94.25735554767812
@@ -4719,7 +4719,7 @@
       "swsn_teacher_percent": 9.37794533459001,
       "toilet_40": 1523,
       "tot_school_girl_co_ed": 2119,
-      "%_2": 71.87352524775838,
+      "sch_having_toilet_40_percent": 71.87352524775838,
       "total_no_of_fun_girls_toilet": 2091,
       "tot_school_girl_co_ed_1": 2119,
       "functional_toilet_girls_percent": 98.67862199150542
@@ -4764,7 +4764,7 @@
       "swsn_teacher_percent": 7.633136094674556,
       "toilet_40": 1473,
       "tot_school_girl_co_ed": 1686,
-      "%_2": 87.36654804270462,
+      "sch_having_toilet_40_percent": 87.36654804270462,
       "total_no_of_fun_girls_toilet": 1600,
       "tot_school_girl_co_ed_1": 1686,
       "functional_toilet_girls_percent": 94.89916963226572
@@ -4809,7 +4809,7 @@
       "swsn_teacher_percent": 5.264564404061999,
       "toilet_40": 3142,
       "tot_school_girl_co_ed": 3735,
-      "%_2": 84.1231593038822,
+      "sch_having_toilet_40_percent": 84.1231593038822,
       "total_no_of_fun_girls_toilet": 3644,
       "tot_school_girl_co_ed_1": 3735,
       "functional_toilet_girls_percent": 97.5635876840696
@@ -4854,7 +4854,7 @@
       "swsn_teacher_percent": 5.080213903743315,
       "toilet_40": 1221,
       "tot_school_girl_co_ed": 1496,
-      "%_2": 81.61764705882352,
+      "sch_having_toilet_40_percent": 81.61764705882352,
       "total_no_of_fun_girls_toilet": 1475,
       "tot_school_girl_co_ed_1": 1496,
       "functional_toilet_girls_percent": 98.59625668449198
@@ -4899,7 +4899,7 @@
       "swsn_teacher_percent": 8.48729792147806,
       "toilet_40": 2715,
       "tot_school_girl_co_ed": 3462,
-      "%_2": 78.42287694974004,
+      "sch_having_toilet_40_percent": 78.42287694974004,
       "total_no_of_fun_girls_toilet": 3376,
       "tot_school_girl_co_ed_1": 3462,
       "functional_toilet_girls_percent": 97.5158867706528
@@ -4944,7 +4944,7 @@
       "swsn_teacher_percent": 4.9033643521832495,
       "toilet_40": 2391,
       "tot_school_girl_co_ed": 2793,
-      "%_2": 85.60687432867884,
+      "sch_having_toilet_40_percent": 85.60687432867884,
       "total_no_of_fun_girls_toilet": 2636,
       "tot_school_girl_co_ed_1": 2793,
       "functional_toilet_girls_percent": 94.37880415324025
@@ -4989,7 +4989,7 @@
       "swsn_teacher_percent": 9.332191780821917,
       "toilet_40": 1978,
       "tot_school_girl_co_ed": 2320,
-      "%_2": 85.25862068965517,
+      "sch_having_toilet_40_percent": 85.25862068965517,
       "total_no_of_fun_girls_toilet": 2263,
       "tot_school_girl_co_ed_1": 2320,
       "functional_toilet_girls_percent": 97.54310344827586
@@ -5034,7 +5034,7 @@
       "swsn_teacher_percent": 6.397896581945661,
       "toilet_40": 2020,
       "tot_school_girl_co_ed": 2260,
-      "%_2": 89.38053097345133,
+      "sch_having_toilet_40_percent": 89.38053097345133,
       "total_no_of_fun_girls_toilet": 2157,
       "tot_school_girl_co_ed_1": 2260,
       "functional_toilet_girls_percent": 95.4424778761062

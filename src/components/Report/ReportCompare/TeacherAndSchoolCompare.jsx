@@ -188,13 +188,13 @@ export default function TeacherAndSchoolCompare() {
 
 
     return (
-        <>
-            <div className="card-box">
-                <div className="row align-items-end">
-                    <div className="col-md-7">
-                        <div className="d-flex align-items-end">
-                            <div className="title-box">
-                                {/* <h5 className='sub-title'>State :
+      <>
+        <div className="card-box">
+          <div className="row align-items-end">
+            <div className="col-md-7">
+              <div className="d-flex align-items-center">
+                <div className="title-box">
+                  {/* <h5 className='sub-title'>State :
                                     <Select
                                         className='state-select'
                                         onChange={handleStateChange}
@@ -217,125 +217,151 @@ export default function TeacherAndSchoolCompare() {
                                         ))}
                                     </Select>
                                 </h5> */}
-                                <h3 className='heading-sm mt-2'>{t('comparisonByTeacherAndSchoolResources')}</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-5">
-                        <div className="d-flex w-m-100">
-                           
-                        </div>
-
-                    </div>
+                  <h3 className="heading-sm">
+                    {t("comparisonByTeacherAndSchoolResources")}
+                  </h3>
                 </div>
-
-                <div className="row">
-                    <div className="col-md-12">
-                        <div className="comparison-box">
-                            <div className="row align-items-center">
-                                <div className="col-md-3">
-                                    <h5 className='sub-title'>
-                                          {t('selectDistrictToCompare')}
-                                    </h5>
-                                </div>
-                                <div className="col-md-6 Comparison-select-group">
-                                    <div className="d-flex justify-content-between text-aligns-center antd-select">
-
-                                        {[0, 1, 2, 3, 4].map((index) => (
-                                            <Select
-                                                className="form-select"
-                                                key={index}
-                                                onChange={(value) =>
-                                                    handleDistrictChange(value, index)
-                                                }
-                                                style={{ width: "100%" }}
-                                                placeholder={`${t('addDistrict')} ${index + 1}`}
-                                                mode="single"
-                                                showSearch
-                                                value={selectedDistricts[index]?.lgd_district_name || `${t('addDistrict')}`}
-                                                disabled={!selectedState}
-                                            >
-                                                {getFilteredDistricts(index).map((district) => (
-                                                    <Select.Option
-                                                        key={district.lgd_district_id}
-                                                        value={district.lgd_district_name}
-                                                    >
-                                                        {district.lgd_district_name}
-                                                    </Select.Option>
-                                                ))}
-                                            </Select>
-                                        ))}
-
-                                    </div>
-                                </div>
-                                <div className="col-md-3">
-                                    <div className="tab-box float-end">
-                                        <button className='tab-button active'><img src={card} alt="card" /> {t('cardView')}</button>
-                                        <button className='tab-button'><img src={table} alt="Table" /> {t('tableView')}</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {selectedState !== SelectState ? (<div className="col-md-12 mt-4">
-                        <div className="row">
-                            {selectedDistricts.map((district, index) => (
-                                <div className={`col-sm-12 col-20 ${selectedDistricts.length === 1 ? "m-auto" : ""}`}>
-
-                                    {selectedDistricts.length === 1 ? (<Card style={{
-                                        width: 300,
-                                    }}><b>{t('selectOneMoreDistrict')}</b></Card>) : <> <div className="comp-card" key={index}>
-                                        <div className="upper-card">
-                                            <div className="d-flex align-items-center justify-content-between w-100">
-                                                <div className="d-flex">
-                                                    <div>
-                                                        <div className={`number-card card-color-${index + 1}`} >
-                                                            {index + 1}
-                                                        </div>
-                                                    </div>
-                                                    <div className="text-card">
-                                                        <p>District</p>
-                                                        <h6 className='sub-title'>
-                                                            {district.lgd_district_name}
-                                                        </h6>
-
-                                                    </div>
-                                                </div>
-                                                <div className="arrow-d"> <ArrowRenderer data={district} /></div>
-                                            </div>
-                                        </div>
-
-                                        <div className="lower-card">
-                                            <div className="text-card">
-                                                <p>{`PTR < 30`}</p>
-                                                <h6 className='sub-title'>
-                                                    {district?.u_ptr}
-                                                </h6>
-                                            </div>
-                                            <div className="text-card">
-                                                <p>Elementry School</p>
-                                                <h6 className='sub-title'>
-                                                    {district?.total_sch_ele}
-                                                </h6>
-                                            </div>
-                                            <div className="text-card">
-                                                <p>{`% PTR < 30`}</p>
-                                                <h6 className='sub-title'>
-                                                    {district?.ele_sch_percent?.toFixed(2)}
-                                                </h6>
-                                            </div>
-                                        </div>
-                                    </div></>}
-
-
-                                </div>
-                            ))}
-
-                        </div>
-                    </div>) : <BlankPage />}
-                </div>
+              </div>
             </div>
-        </>
-    )
+            <div className="col-md-5">
+              <div className="d-flex w-m-100"></div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-12">
+              <div className="comparison-box">
+                <div className="row align-items-center">
+                  <div className="col-md-3">
+                    <h5 className="sub-title">
+                      {t("selectDistrictToCompare")}
+                    </h5>
+                  </div>
+                  <div className="col-md-6 Comparison-select-group">
+                    <div className="d-flex justify-content-between text-aligns-center antd-select">
+                      {[...Array(MAX_DISTRICTS)].map((_, index) => (
+                        <div key={index}>
+                          <Select
+                            className="form-select"
+                            onChange={(value) =>
+                              handleDistrictChange(value, index)
+                            }
+                            style={{ width: "100%" }}
+                            placeholder={`${t("addDistrict")} ${index + 1}`}
+                            mode="single"
+                            showSearch
+                            value={
+                              selectedDistricts[index]?.lgd_district_name ||
+                              `${t("addDistrict")}`
+                            }
+                            disabled={
+                              index > 0 && !selectedDistricts[index - 1]
+                            }
+                          >
+                            {getFilteredDistricts().map((district) => (
+                              <Select.Option
+                                key={district.lgd_district_id}
+                                value={district.lgd_district_name}
+                              >
+                                {district.lgd_district_name}
+                              </Select.Option>
+                            ))}
+                          </Select>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="col-md-3">
+                    <div className="tab-box float-end">
+                      <button className="tab-button active">
+                        <img src={card} alt="card" /> {t("cardView")}
+                      </button>
+                      <button className="tab-button">
+                        <img src={table} alt="Table" /> {t("tableView")}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {selectedState !== SelectState ? (
+              <div className="col-md-12 mt-4">
+                <div className="row">
+                  {selectedDistricts.map((district, index) => (
+                    <div
+                      className={`col-sm-12 col-20 ${
+                        selectedDistricts.length === 1 ? "m-auto" : ""
+                      }`}
+                    >
+                      {selectedDistricts.length === 1 ? (
+                        <Card
+                          style={{
+                            width: 300,
+                          }}
+                        >
+                          <b>{t("selectOneMoreDistrict")}</b>
+                        </Card>
+                      ) : (
+                        <>
+                          {" "}
+                          <div className="comp-card" key={index}>
+                            <div className="upper-card">
+                              <div className="d-flex align-items-center justify-content-between w-100">
+                                <div className="d-flex">
+                                  <div>
+                                    <div
+                                      className={`number-card card-color-${
+                                        index + 1
+                                      }`}
+                                    >
+                                      {index + 1}
+                                    </div>
+                                  </div>
+                                  <div className="text-card">
+                                    <p>District</p>
+                                    <h6 className="sub-title">
+                                      {district.lgd_district_name}
+                                    </h6>
+                                  </div>
+                                </div>
+                                <div className="arrow-d">
+                                  {" "}
+                                  <ArrowRenderer data={district} />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="lower-card">
+                              <div className="text-card">
+                                <p>{`PTR < 30`}</p>
+                                <h6 className="sub-title">{district?.u_ptr}</h6>
+                              </div>
+                              <div className="text-card">
+                                <p>Elementry School</p>
+                                <h6 className="sub-title">
+                                  {district?.total_sch_ele}
+                                </h6>
+                              </div>
+                              <div className="text-card">
+                                <p>{`% PTR < 30`}</p>
+                                <h6 className="sub-title">
+                                  {district?.ele_sch_percent?.toFixed(2)}
+                                </h6>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <BlankPage />
+            )}
+          </div>
+        </div>
+      </>
+    );
 }
