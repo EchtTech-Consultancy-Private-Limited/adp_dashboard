@@ -220,7 +220,7 @@ export default function TeacherAndSchoolBlockCompare() {
                                         ))}
                                     </Select>
                                 </h5> */}
-                                <h3 className="heading-sm mt-2">
+                                <h3 className="heading-sm">
                                 {t('comparisonByTeacherAndSchoolResources')}
                                 </h3>
                             </div>

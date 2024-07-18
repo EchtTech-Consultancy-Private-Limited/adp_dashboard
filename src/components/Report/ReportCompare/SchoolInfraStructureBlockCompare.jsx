@@ -200,7 +200,7 @@ export default function SchoolInfraStructureBlockCompare() {
       <div className="card-box">
         <div className="row align-items-end">
           <div className="col-md-7">
-            <div className="d-flex align-items-end">
+            <div className="d-flex align-items-center">
               <div className="title-box">
                 {/* <h5 className='sub-title'>State :
                                     <Select
@@ -225,7 +225,7 @@ export default function SchoolInfraStructureBlockCompare() {
                                         ))}
                                     </Select>
                                 </h5> */}
-                <h3 className="heading-sm mt-2">
+                <h3 className="heading-sm">
                 {t('comparisonBySchoolInfrastructure')}
                 </h3>
               </div>
@@ -290,7 +290,7 @@ export default function SchoolInfraStructureBlockCompare() {
               <div className="row">
                 {selectedBlocks.map((block, index) => (
                   <div
-                    className={`col-sm-12 col-20 ${
+                    className={`col-sm-12 col-20 col-50-d ${
                       selectedBlocks.length === 1 ? "m-auto" : ""
                     }`}
                   >

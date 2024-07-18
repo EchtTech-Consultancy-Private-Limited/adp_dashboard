@@ -226,10 +226,11 @@
 
     .radio-button {
         background: #FAFAFA;
-        width: 68%;
+        width: 62%;
 
         @media (max-width:1599px) and (min-width: 1400px) {
             font-size: 14px;
+            width: 64%;
         }
 
         @media (max-width:1399px) and (min-width: 1024px) {
@@ -444,9 +445,15 @@
 
     .ag-ltr .ag-cell {
         border-right-width: 0px !important;
-        height: 30px !important;
-        line-height: 2.5;
+        height: 35px !important;
+        // line-height: 2.5;
     }
+
+    .ag-header-cell {
+        padding: 0 15px !important;
+    }
+
+    // .ag-row-animation .ag-row{height: 38px !important;}
 }
 
 .comparison-box {
@@ -588,8 +595,17 @@
         margin-top: 10px;
 
         .text-card {
-            padding-right: 15px;
+            padding-right: 8px;
+            padding-left: 8px;
             border-right: 2px solid #f1f1f1;
+
+            &:first-child {
+                padding-left: 0;
+            }
+
+            &:last-child {
+                padding-right: 0;
+            }
 
             @media (max-width: 991px) {
                 padding-right: 40px;
@@ -636,9 +652,10 @@
     float: right;
     justify-content: end;
 
-    .radio-button {
-        width: 85%;
-    }
+
+    // .radio-button {
+    //     width: 85%;
+    // }
 
     @media (max-width: 991px) {
         width: 100%;
