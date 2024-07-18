@@ -16,13 +16,6 @@ import {
     selectDistrict,
     selectState,
 } from "../../redux/slice/filterServicesSlice";
-import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
-import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
-import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json";
-// import aspirationalAbpData2021 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
-// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { jsPDF } from "jspdf";
@@ -112,12 +105,12 @@ export default function TransitionRateReport() {
     const [loading, setLoading] = useState(true);
     localStorage.setItem("selectedReport", "Transition Rate");
     const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
-    const [aspirationalData, setAspirationalData] = useState([]);
+    // const [aspirationalData, setAspirationalData] = useState([]);
+    const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
     const [locationHeader, SetLocationHeader] = useState();
     const [gridApi, setGridApi] = useState()
     const states = useSelector((state) => state.locationAdp.states);
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
-    console.log(selectReportType, "selectReportType")
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
     const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
     const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName)
@@ -173,27 +166,7 @@ export default function TransitionRateReport() {
 
     /*...............Take data report wise..............*/
 
-    const combinedData = {
-        "2020-21": {
-            ADP_Report: aspirationalAdpData2020,
-            ABP_Report: aspirationalAbpData,
-        },
-        "2021-22": {
-            ADP_Report: aspirationalAdpData2021,
-            ABP_Report: aspirationalAbpData,
-        },
-        "2022-23": {
-            ADP_Report: aspirationalAdpData2022,
-            ABP_Report: aspirationalAbpData,
-        },
-    };
-
-    useEffect(() => {
-        const selectedData = combinedData[selectedYear][selectReportType];
-        if (selectedData) {
-            setAspirationalData(selectedData);
-        }
-    }, [selectReportType, selectedYear]);
+  
 
     useEffect(() => {
         let filteredData = aspirationalData;

@@ -11,6 +11,7 @@ import {
     setselectedCompareOption,
     setUpdateReportType,
     setselectedCompareBlocks,
+    setAspirationalAllData,
 } from "../../../redux/slice/reportTypeSlice";
 import aspirationalAbpData from "../../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../../aspirational-reports-data/aspirationalDistrict.json";
@@ -73,7 +74,7 @@ const ArrowRenderer = ({ data }) => {
 export default function TeacherAndSchoolBlockCompare() {
     const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
-    const [aspirationalData, setAspirationalData] = useState([]);
+    const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
     const selectedOption = useSelector(
         (state) => state.reportAdpAbpType.selectedCompareOption
     );
@@ -103,19 +104,19 @@ export default function TeacherAndSchoolBlockCompare() {
 
     useEffect(() => {
         // dispatch(setUpdateReportType('ADP_Report'));
-        setAspirationalData(aspirationalAdpData);
+        dispatch(setAspirationalAllData(aspirationalAdpData));
     }, [dispatch]);
     useEffect(() => {
         if (selectedAdpAbpOption === "ADP_Report") {
-            setAspirationalData(aspirationalAdpData);
+            dispatch(setAspirationalAllData(aspirationalAdpData));
         } else {
-            setAspirationalData(aspirationalAbpData);
+            dispatch(setAspirationalAllData(aspirationalAbpData));
         }
     }, [selectedAdpAbpOption]);
     // Initialize states and districts from JSON data
     useEffect(() => {
         const structuredData = aspirationalData?.reduce((acc, curr) => {
-            const stateIndex = acc.findIndex(
+            const stateIndex = acc?.findIndex(
                 (st) => st.lgd_state_id === curr?.lgd_state_id
             );
             if (stateIndex === -1) {
@@ -133,7 +134,7 @@ export default function TeacherAndSchoolBlockCompare() {
                     ],
                 });
             } else {
-                const blockIndex = acc[stateIndex]?.blocks.findIndex(
+                const blockIndex = acc[stateIndex]?.blocks?.findIndex(
                     (blk) => blk.lgd_block_id === curr?.lgd_block_id
                 );
                 if (blockIndex === -1) {
