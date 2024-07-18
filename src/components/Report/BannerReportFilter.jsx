@@ -4,13 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { selectBlock, selectDistrict, selectState, setStates } from '../../redux/slice/filterServicesSlice';
 import { setselectedCompareBlocks, setselectedCompareDistricts, setselectedOption, setselectedReport, setSelectedYear, setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTypeSlice';
-// import aspirationalAbpData2020 from "../../aspirational-reports-data/2020-21/aspirationalAbpData.json";
-import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json"
-// import aspirationalAbpData from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
-// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
-import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import { Select } from 'antd';
 import { AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectKpi, SelectState } from '../../constant/Constant';
 import { selectComparisionDistrict } from '../../redux/slice/filterServicesComprisionSlice';
@@ -32,7 +25,7 @@ export default function BannerReportFilter() {
   const selectedReport = useSelector((state) => state.reportAdpAbpType.selectedReport);
   const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
   const [showBreadcomeAdpAbp, setShowBreadcomeAdpAbp] = useState();
-  const [aspirationalData, setAspirationalData] = useState([]);
+  const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
   const disableSelectedState = selectedState === "All State";
   const disableSelectedDistrict = selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict;
 
@@ -44,20 +37,7 @@ export default function BannerReportFilter() {
     dispatch(selectBlock(SelectBlock));
     dispatch(setselectedOption(selectedOptionConst));
   }
-  const combinedData = {
-    "2020-21": {
-      ADP_Report: aspirationalAdpData2020,
-      ABP_Report: aspirationalAbpData,
-    },
-    "2021-22": {
-      ADP_Report: aspirationalAdpData2021,
-      ABP_Report: aspirationalAbpData,
-    },
-    "2022-23": {
-      ADP_Report: aspirationalAdpData2022,
-      ABP_Report: aspirationalAbpData,
-    },
-  };
+
 
   useEffect(() => {
 
@@ -73,16 +53,6 @@ export default function BannerReportFilter() {
     }
   }, [dispatch, selectedOption])
   useEffect(() => {
-    // Update the state based on the selected options
-    let selectedData;
-    if (selectedOption) {
-      selectedData = combinedData[selectedYear][selectedOption];
-    }
-
-    if (selectedData) {
-
-      setAspirationalData(selectedData);
-    }
     if (selectedOption === "ADP_Report") {
       setShowBreadcomeAdpAbp("ADP Report")
       resteData()
@@ -91,7 +61,7 @@ export default function BannerReportFilter() {
       setShowBreadcomeAdpAbp("ABP Report")
       resteData()
     }
-  }, [selectedOption, selectedYear]);
+  }, [selectedOption]);
 
   useEffect(() => {
     const savedReportName = localStorage.getItem('selectedReport');
@@ -236,12 +206,23 @@ export default function BannerReportFilter() {
                 </div>
                 <div className="col-md-9">
                   <div className="d-flex justify-content-between text-aligns-center antd-select">
-                    {/* Year select option */}
-                    <Select onChange={handleYearChange} style={{ width: "100%" }} placeholder="Academic Year" mode="single" showSearch className="form-select" value={selectedYear}>
-                      <Select.Option key="2020-21" value="2020-21">2020 - 21</Select.Option>
-                      <Select.Option key="2021-22" value="2021-22">2021 - 22</Select.Option>
-                      <Select.Option key="2022-23" value="2022-23">2022 - 23</Select.Option>
+                    <Select
+                      onChange={handleYearChange}
+                      style={{ width: "100%" }}
+                      placeholder="Academic Year"
+                      mode="single"
+                      showSearch
+                      className="form-select"
+                      value={selectedYear}
+                    >
+                      {["2020-21", "2021-22", "2022-23"].map((year, index) => (
+                        <Select.Option key={index} value={year}>
+                          {year.replace("-", " - ")}
+                        </Select.Option>
+                      ))}
                     </Select>
+
+
                     {/* State select option */}
                     <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="All State" mode="single" showSearch value={selectedState || "All State"} className="form-select">
                       <Select.Option key="All State" value={SelectState}>All State</Select.Option>

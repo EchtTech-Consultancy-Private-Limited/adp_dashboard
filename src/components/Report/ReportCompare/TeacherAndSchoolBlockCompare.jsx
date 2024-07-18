@@ -11,6 +11,7 @@ import {
     setselectedCompareOption,
     setUpdateReportType,
     setselectedCompareBlocks,
+    setAspirationalAllData,
 } from "../../../redux/slice/reportTypeSlice";
 import aspirationalAbpData from "../../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../../aspirational-reports-data/aspirationalDistrict.json";
@@ -73,7 +74,7 @@ const ArrowRenderer = ({ data }) => {
 export default function TeacherAndSchoolBlockCompare() {
     const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
-    const [aspirationalData, setAspirationalData] = useState([]);
+    const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
     const selectedOption = useSelector(
         (state) => state.reportAdpAbpType.selectedCompareOption
     );
@@ -103,19 +104,19 @@ export default function TeacherAndSchoolBlockCompare() {
 
     useEffect(() => {
         // dispatch(setUpdateReportType('ADP_Report'));
-        setAspirationalData(aspirationalAdpData);
+        dispatch(setAspirationalAllData(aspirationalAdpData));
     }, [dispatch]);
     useEffect(() => {
         if (selectedAdpAbpOption === "ADP_Report") {
-            setAspirationalData(aspirationalAdpData);
+            dispatch(setAspirationalAllData(aspirationalAdpData));
         } else {
-            setAspirationalData(aspirationalAbpData);
+            dispatch(setAspirationalAllData(aspirationalAbpData));
         }
     }, [selectedAdpAbpOption]);
     // Initialize states and districts from JSON data
     useEffect(() => {
         const structuredData = aspirationalData?.reduce((acc, curr) => {
-            const stateIndex = acc.findIndex(
+            const stateIndex = acc?.findIndex(
                 (st) => st.lgd_state_id === curr?.lgd_state_id
             );
             if (stateIndex === -1) {
@@ -133,7 +134,7 @@ export default function TeacherAndSchoolBlockCompare() {
                     ],
                 });
             } else {
-                const blockIndex = acc[stateIndex]?.blocks.findIndex(
+                const blockIndex = acc[stateIndex]?.blocks?.findIndex(
                     (blk) => blk.lgd_block_id === curr?.lgd_block_id
                 );
                 if (blockIndex === -1) {
@@ -190,14 +191,14 @@ export default function TeacherAndSchoolBlockCompare() {
     };
 
     return (
-        <>
-            <ScrollToTopOnMount />
-            <div className="card-box">
-                <div className="row align-items-end">
-                    <div className="col-md-7">
-                        <div className="d-flex align-items-end">
-                            <div className="title-box">
-                                {/* <h5 className='sub-title'>State :
+      <>
+        <ScrollToTopOnMount />
+        <div className="card-box">
+          <div className="row align-items-end">
+            <div className="col-md-7">
+              <div className="d-flex align-items-center">
+                <div className="title-box">
+                  {/* <h5 className='sub-title'>State :
                                     <Select
                                         className='state-select'
                                         onChange={handleStateChange}
@@ -220,145 +221,150 @@ export default function TeacherAndSchoolBlockCompare() {
                                         ))}
                                     </Select>
                                 </h5> */}
-                                <h3 className="heading-sm mt-2">
-                                {t('comparisonByTeacherAndSchoolResources')}
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-5">
-                        <div className="d-flex w-m-100">
-                          
-                        </div>
-                    </div>
+                  <h3 className="heading-sm mt-2">
+                    {t("comparisonByTeacherAndSchoolResources")}
+                  </h3>
                 </div>
-
-                <div className="row">
-                    <div className="col-md-12">
-                        <div className="comparison-box">
-                            <div className="row align-items-center">
-                                <div className="col-md-3">
-                                    <h5 className="sub-title">{t('selectBlockToCompare')}</h5>
-                                </div>
-                                <div className="col-md-6 Comparison-select-group">
-                                    <div className="d-flex justify-content-between text-aligns-center antd-select">
-                                        {[0, 1, 2, 3, 4].map((index) => (
-                                            <Select
-                                                className="form-select"
-                                                key={index}
-                                                onChange={(value) => handleBlockChange(value, index)}
-                                                style={{ width: "100%" }}
-                                                placeholder={`${t('addBlock')} ${index + 1}`}
-                                                mode="single"
-                                                showSearch
-                                                value={selectedBlocks[index]?.lgd_block_name || `${t('addBlock')}`}
-                                                disabled={!selectedState}
-                                            >
-                                                {getFilteredBlocks(index).map((block) => (
-                                                    <Select.Option
-                                                        key={block.lgd_block_id}
-                                                        value={block.lgd_block_name}
-                                                    >
-                                                        {block.lgd_block_name}
-                                                    </Select.Option>
-                                                ))}
-                                            </Select>
-                                        ))}
-                                    </div>
-                                </div>
-                                <div className="col-md-3">
-                                    <div className="tab-box float-end">
-                                        <button className="tab-button active">
-                                            <img src={card} alt="card" />  {t('cardView')}
-                                        </button>
-                                        <button className="tab-button">
-                                            <img src={table} alt="Table" /> {t('tableView')}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {selectedState !== SelectState ? (
-                        <div className="col-md-12 mt-4">
-                            <div className="row">
-                                {selectedBlocks.map((block, index) => (
-                                    <div
-                                        className={`col-sm-12 col-20 ${selectedBlocks.length === 1 ? "m-auto" : ""
-                                            }`}
-                                    >
-                                        {selectedBlocks.length === 1 ? (
-                                            <Card
-                                                style={{
-                                                    width: 300,
-                                                }}
-                                            >
-                                                <b>
-                                                {t('selectOneMoreBlock')}
-                                                </b>
-                                            </Card>
-                                        ) : (
-                                            <>
-                                                {" "}
-                                                <div className="comp-card" key={index}>
-                                                    <div className="upper-card">
-                                                        <div className="d-flex align-items-center justify-content-between w-100">
-                                                            <div className="d-flex">
-                                                                <div>
-                                                                    <div
-                                                                        className={`number-card card-color-${index + 1
-                                                                            }`}
-                                                                    >
-                                                                        {index + 1}
-                                                                    </div>
-                                                                </div>
-                                                                <div className="text-card">
-                                                                    <p>Block</p>
-                                                                    <h6 className="sub-title">
-                                                                        {block.lgd_block_name}
-                                                                    </h6>
-                                                                </div>
-                                                            </div>
-                                                            <div className="arrow-d">
-                                                                {" "}
-                                                                <ArrowRenderer data={block} />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="lower-card">
-                                                        <div className="text-card">
-                                                            <p>{`PTR < 30`}</p>
-                                                            <h6 className='sub-title'>
-                                                                {block?.u_ptr}
-                                                            </h6>
-                                                        </div>
-                                                        <div className="text-card">
-                                                            <p>Elementry School</p>
-                                                            <h6 className='sub-title'>
-                                                                {block?.total_sch_ele}
-                                                            </h6>
-                                                        </div>
-                                                        <div className="text-card">
-                                                            <p>{`% PTR < 30`}</p>
-                                                            <h6 className='sub-title'>
-                                                                {block?.ele_sch_percent?.toFixed(2)}
-                                                            </h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    ) : (
-                        <BlankPage />
-                    )}
-                </div>
+              </div>
             </div>
-        </>
+            <div className="col-md-5">
+              <div className="d-flex w-m-100"></div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-12">
+              <div className="comparison-box">
+                <div className="row align-items-center">
+                  <div className="col-md-3">
+                    <h5 className="sub-title">{t("selectBlockToCompare")}</h5>
+                  </div>
+                  <div className="col-md-6 Comparison-select-group">
+                    <div className="d-flex justify-content-between text-aligns-center antd-select">
+                      {[...Array(MAX_BLOCKS)].map((_, index) => (
+                        <div key={index}>
+                          <Select
+                            className="form-select"
+                            onChange={(value) =>
+                              handleBlockChange(value, index)
+                            }
+                            style={{ width: "100%" }}
+                            placeholder={`${t("addBlock")} ${index + 1}`}
+                            mode="single"
+                            showSearch
+                            value={
+                              selectedBlocks[index]?.lgd_block_name ||
+                              `${t("addBlock")}`
+                            }
+                            disabled={
+                              !selectedState ||
+                              (index > 0 && !selectedBlocks[index - 1])
+                            }
+                          >
+                            {getFilteredBlocks(index).map((block) => (
+                              <Select.Option
+                                key={block.lgd_block_id}
+                                value={block.lgd_block_name}
+                              >
+                                {block.lgd_block_name}
+                              </Select.Option>
+                            ))}
+                          </Select>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="col-md-3">
+                    <div className="tab-box float-end">
+                      <button className="tab-button active">
+                        <img src={card} alt="card" /> {t("cardView")}
+                      </button>
+                      <button className="tab-button">
+                        <img src={table} alt="Table" /> {t("tableView")}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {selectedState !== SelectState ? (
+              <div className="col-md-12 mt-4">
+                <div className="row">
+                  {selectedBlocks.map((block, index) => (
+                    <div
+                      className={`col-sm-12 col-20 ${
+                        selectedBlocks.length === 1 ? "m-auto" : ""
+                      }`}
+                    >
+                      {selectedBlocks.length === 1 ? (
+                        <Card
+                          style={{
+                            width: 300,
+                          }}
+                        >
+                          <b>{t("selectOneMoreBlock")}</b>
+                        </Card>
+                      ) : (
+                        <>
+                          {" "}
+                          <div className="comp-card" key={index}>
+                            <div className="upper-card">
+                              <div className="d-flex align-items-center justify-content-between w-100">
+                                <div className="d-flex">
+                                  <div>
+                                    <div
+                                      className={`number-card card-color-${
+                                        index + 1
+                                      }`}
+                                    >
+                                      {index + 1}
+                                    </div>
+                                  </div>
+                                  <div className="text-card">
+                                    <p>Block</p>
+                                    <h6 className="sub-title">
+                                      {block.lgd_block_name}
+                                    </h6>
+                                  </div>
+                                </div>
+                                <div className="arrow-d">
+                                  {" "}
+                                  <ArrowRenderer data={block} />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="lower-card">
+                              <div className="text-card">
+                                <p>{`PTR < 30`}</p>
+                                <h6 className="sub-title">{block?.u_ptr}</h6>
+                              </div>
+                              <div className="text-card">
+                                <p>Elementry School</p>
+                                <h6 className="sub-title">
+                                  {block?.total_sch_ele}
+                                </h6>
+                              </div>
+                              <div className="text-card">
+                                <p>{`% PTR < 30`}</p>
+                                <h6 className="sub-title">
+                                  {block?.ele_sch_percent?.toFixed(2)}
+                                </h6>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <BlankPage />
+            )}
+          </div>
+        </div>
+      </>
     );
 }

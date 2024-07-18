@@ -16,13 +16,6 @@ import {
   selectDistrict,
   selectState,
 } from "../../redux/slice/filterServicesSlice";
-import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
-import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
-import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json"
-// import aspirationalAbpData2021 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
-// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { useTranslation } from "react-i18next";
@@ -51,7 +44,7 @@ import {
 import { ScrollToTopOnMount } from "../../Scroll/ScrollToTopOnMount";
 import SchoolInfraStructureCompare from "./ReportCompare/SchoolInfraStructureCompare";
 import SchoolInfraStructureBlockCompare from "./ReportCompare/SchoolInfraStructureBlockCompare";
-import { CommonData } from "./CommonData/CommonData";
+
 
 const ArrowRenderer = ({ data, value }) => {
   const selectedOption = useSelector(
@@ -115,18 +108,18 @@ export default function SchoolInfraStructureReport() {
   const { selectedState, selectedDistrict, selectedBlock } = useSelector(
     (state) => state.locationAdp
   );
-  const [aspirationalData, setAspirationalData] = useState([]);
   const [locationHeader, SetLocationHeader] = useState();
+  const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
   const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
   const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
   const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
   const states = useSelector((state) => state.locationAdp.states);
   const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName)
-  const gridApi = useSelector((state) => state.reportAdpAbpType.girdAPIForCommonData);
+  const [gridApi, setGridApi] = useState()
   const savedReportName = localStorage.getItem("selectedReport");
   const report_name = savedReportName;
   const [data, setData] = useState([]);
-
+  const [finalData, SetFinalData] = useState([])
 
   function resteData() {
     dispatch(selectState(SelectState));
@@ -150,8 +143,9 @@ export default function SchoolInfraStructureReport() {
         selectedDistrict === SelectDistrict
       ) {
         SetLocationHeader("District");
-        dispatch(SetSheetName("Aspirational District Programme"));
       }
+      
+      dispatch(SetSheetName("Aspirational District Programme"));
     } else if (selectReportType === "ABP_Report") {
       if (
         selectedState !== SelectState &&
@@ -175,28 +169,7 @@ export default function SchoolInfraStructureReport() {
     selectReportType,
   ]);
 
-  /*...............Take data report wise..............*/
-
-  const combinedData = {
-    "2020-21": {
-      ADP_Report: aspirationalAdpData2020,
-      ABP_Report: aspirationalAbpData,
-    },
-    "2021-22": {
-      ADP_Report: aspirationalAdpData2021,
-      ABP_Report: aspirationalAbpData,
-    },
-    "2022-23": {
-      ADP_Report: aspirationalAdpData2022,
-      ABP_Report: aspirationalAbpData,
-    },
-  };
-
-  useEffect(() => {
-    // Update the state based on the selected options
-    const selectedData = combinedData[selectedYear][selectReportType];
-    setAspirationalData(selectedData);
-  }, [selectReportType, selectedYear]);
+  
   useEffect(() => {
     let filteredData = aspirationalData;
 
@@ -269,8 +242,13 @@ export default function SchoolInfraStructureReport() {
   };
 
   const percentageRenderer = (params) => {
-    return `${params.value} %`;
-  };
+    const value = params.value;
+    if (typeof value === 'number') {
+        return value.toFixed(2) + " "+ '%';
+    } else {
+        return value; 
+    }
+};
 
   const [columns, setColumn] = useState([
     {
@@ -311,7 +289,7 @@ export default function SchoolInfraStructureReport() {
       hide: false,
     },
     {
-      headerName: "Percent",
+      headerName: "percentage of Schools having girls toilets in the ratio of 40:1",
       field: "sch_having_toilet_40_percent",
       cellRenderer: percentageRenderer,
       hide: false,
@@ -320,7 +298,66 @@ export default function SchoolInfraStructureReport() {
   ]);
 
   useEffect(() => {
-    if (selectedOption === "upper_primary_to_secondary") {
+    if (selectedState === "All State") {
+      const columns = [
+        {
+          headerName: "Serial Number",
+          field: "Serial Number",
+          hide: true,
+          suppressColumnsToolPanel: true,
+          suppressFiltersToolPanel: true,
+        },
+        {
+          headerName: "State",
+          field: "lgd_state_name",
+        },
+        {
+          headerName: "District",
+          field: "lgd_district_name",
+        },
+        ...(selectReportType === "ABP_Report" ? [{
+          headerName: "Block",
+          field: "lgd_block_name",
+        }] : []),
+
+        {
+          headerName: "Total number of Coed and Girls Schools",
+          field: "tot_school_girl_co_ed",
+          hide: false,
+        },
+        {
+          headerName: "Number of Schools having Functional girls toilets",
+          field: "total_no_of_fun_girls_toilet",
+          hide: false,
+        },
+
+        {
+          headerName: "Percentange of Schools having Functional Girls Toilets",
+          field: "functional_toilet_girls_percent",
+          cellRenderer: percentageRenderer,
+          hide: false,
+        },
+
+        {
+          headerName:
+            "Number of Schools having girls toilets in the ratio of 40:1",
+          field: "toilet_40",
+          hide: false,
+        },
+        {
+          headerName: "percentage of Schools having girls toilets in the ratio of 40:1",
+          field: "sch_having_toilet_40_percent",
+          cellRenderer: percentageRenderer,
+          hide: false,
+        },
+      ];
+
+      setColumn(columns);
+    }
+  }, [selectedState, selectReportType])
+  useEffect(() => {
+    if (selectedState !== "All State") {
+
       setColumn([
         {
           headerName: "Serial Number",
@@ -360,61 +397,16 @@ export default function SchoolInfraStructureReport() {
           hide: false,
         },
         {
-          headerName: "Percent",
+          headerName: "percentage of Schools having girls toilets in the ratio of 40:1",
           field: "sch_having_toilet_40_percent",
           cellRenderer: percentageRenderer,
           hide: false,
         },
       ]);
-    } else if (selectedOption === "secondary_to_higher_secondary") {
-      setColumn([
-        {
-          headerName: "Serial Number",
-          field: "Serial Number",
-          hide: true,
-          suppressColumnsToolPanel: true,
-          suppressFiltersToolPanel: true,
-        },
-        {
-          headerName: locationHeader,
-          cellRenderer: ArrowRenderer,
-          field: "Location",
-        },
 
-        {
-          headerName: "Total number of Coed and Girls Schools",
-          field: "tot_school_girl_co_ed",
-          hide: false,
-        },
-        {
-          headerName: "Number of Schools having Functional girls toilets",
-          field: "total_no_of_fun_girls_toilet",
-          hide: false,
-        },
-
-        {
-          headerName: "Percentange of Schools having Functional Girls Toilets",
-          field: "functional_toilet_girls_percent",
-          cellRenderer: percentageRenderer,
-          hide: false,
-        },
-
-        {
-          headerName:
-            "Number of Schools having girls toilets in the ratio of 40:1",
-          field: "toilet_40",
-          hide: false,
-        },
-        {
-          headerName: "Percent",
-          field: "sch_having_toilet_40_percent",
-          cellRenderer: percentageRenderer,
-          hide: false,
-        },
-      ]);
     }
 
-  }, [locationHeader, selectedOption, selectedState]);
+  }, [locationHeader, selectedState]);
 
   const compressData = useCallback((data, groupBy) => {
     return data.reduce((acc, curr) => {
@@ -464,6 +456,15 @@ export default function SchoolInfraStructureReport() {
     return compressData(data, "lgd_state_name");
   }, [data, selectedState, selectedDistrict, selectedBlock]);
 
+  useEffect(() => {
+    if (selectedState !== "All State") {
+      SetFinalData(compressedData)
+    }
+    else {
+      SetFinalData(aspirationalData)
+    }
+  }, [selectedState, data, selectedYear, aspirationalData])
+
   const defColumnDefs = useMemo(
     () => ({
       flex: 1,
@@ -479,7 +480,7 @@ export default function SchoolInfraStructureReport() {
   );
 
   const onGridReady = useCallback((params) => {
-    dispatch(setgirdAPIForCommonData(params))
+    setGridApi(params)
   }, []);
   /*------------Export data to Excel and PDF-------------*/
   const getHeaderToExport = (gridApi) => {
@@ -507,20 +508,25 @@ export default function SchoolInfraStructureReport() {
   };
   const getRowsToExport = (gridApi) => {
     const columns = gridApi.api.getAllDisplayedColumns();
-    const getCellToExport = (column, node) => ({
-      text: gridApi.api.getValue(column, node) ?? "",
-    });
+    const getCellToExport = (column, node) => {
+        const value = gridApi.api.getValue(column, node);
+        if (typeof value === 'number') {
+            return { text: value.toFixed(2) }; 
+        }
+        return { text: value ?? "" };
+    };
     const rowsToExport = [];
     gridApi.api.forEachNodeAfterFilterAndSort((node) => {
-      const rowToExport = [];
-      rowToExport.push({ text: rowsToExport.length + 1 });
-      columns.forEach((column) => {
-        rowToExport.push(getCellToExport(column, node));
-      });
-      rowsToExport.push(rowToExport);
+        const rowToExport = [];
+        rowToExport.push({ text: rowsToExport.length + 1 });
+        columns.forEach((column) => {
+            rowToExport.push(getCellToExport(column, node));
+        });
+        rowsToExport.push(rowToExport);
     });
     return rowsToExport;
-  };
+};
+
   const getDocument = (gridApi) => {
     const headerRow = getHeaderToExport(gridApi);
     const rows = getRowsToExport(gridApi);
@@ -703,11 +709,11 @@ export default function SchoolInfraStructureReport() {
                         >
                           <option className="option-hide">
                             {" "}
-                           {t('downloadReport')} {selectedYear}
+                            {t('downloadReport')} {selectedYear}
                           </option>
                           <option value="export_pdf">{t('downloadAsPdf')} </option>
                           <option value="export_excel">
-                        {t('downloadAsExcel')}
+                            {t('downloadAsExcel')}
                           </option>
                         </select>
                       </div>
@@ -722,14 +728,12 @@ export default function SchoolInfraStructureReport() {
                         className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
                         style={{ width: "100%", height: 300 }}
                       >
-                        {selectedState === "All State" ? <><CommonData /></> : <>
-                          <AgGridReact
-                            columnDefs={columns}
-                            rowData={compressedData}
-                            defaultColDef={defColumnDefs}
-                            onGridReady={onGridReady}
-                          />
-                        </>}
+                        <AgGridReact
+                          columnDefs={columns}
+                          rowData={finalData}
+                          defaultColDef={defColumnDefs}
+                          onGridReady={onGridReady}
+                        />
                       </div>
                     </div>
                   </div>
@@ -738,12 +742,12 @@ export default function SchoolInfraStructureReport() {
             </div>
 
             {selectedState !== "All State" ? <>
-                            {selectReportType === "ADP_Report" ?
-                                <SchoolInfraStructureCompare /> :
-                                <SchoolInfraStructureBlockCompare />
+              {selectReportType === "ADP_Report" ?
+                <SchoolInfraStructureCompare /> :
+                <SchoolInfraStructureBlockCompare />
 
-                            }
-                        </> : ""}
+              }
+            </> : ""}
 
             {/* <TransitionRateCompare /> */}
           </div>

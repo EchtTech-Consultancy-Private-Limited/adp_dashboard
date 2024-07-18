@@ -28,12 +28,12 @@ export default function AboutUs() {
   }, []);
 
   return (
-    <section className="about-us ptb-70 bg-white" data-aos="fade-up">
+    <section className="about-us ptb-70 bg-white">
       <div className="container">
         <div className="row">
-          <h2 className="heading-blue">{t("aboutTitle")}</h2>
+          <h2 className="heading-blue" data-aos="fade-up-left">{t("aboutTitle")}</h2>
           <div className="col-md-10 m-auto">
-            <div className="home-tab">
+            <div className="home-tab" data-aos="fade-up">
               <Tabs defaultActiveKey="Aspirational District Programme">
                 <Tab
                   eventKey="Aspirational District Programme"

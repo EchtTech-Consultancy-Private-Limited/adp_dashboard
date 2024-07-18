@@ -9,13 +9,13 @@ html {
 }
 
 body {
-    font-family:'Helvetica' !important;
+    font-family: 'Helvetica' !important;
     font-size: 16px;
     overflow-x: hidden;
     min-height: 100vh;
     background: $light-grey !important;
 
-    &.DecreaseFont{
+    &.DecreaseFont {
         font-size: 14px !important;
 
         @media (max-width: 1399px) {
@@ -23,7 +23,7 @@ body {
         }
     }
 
-    &.AverageFont{
+    &.AverageFont {
         font-size: 16px !important;
 
         @media (max-width: 1399px) {
@@ -31,7 +31,7 @@ body {
         }
     }
 
-    &.MaxFont{
+    &.MaxFont {
         font-size: 18px !important;
 
         @media (max-width: 1399px) {
@@ -206,7 +206,7 @@ ul {
     font-weight: 500;
     margin-bottom: 2px;
 
-   
+
     @media (max-width:1499px) and (min-width: 1024px) {
         font-size: 14px;
     }
@@ -985,16 +985,28 @@ ul {
 }
 
 .bg-grey2 {
-    background:#F2F0F0;
+    background: #F2F0F0;
 }
+
 @media (min-width: 1200px) {
-    .container, .container-lg, .container-md, .container-sm, .container-xl {
+
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl {
         max-width: 1200px !important;
     }
 }
 
 @media (min-width: 1400px) {
-    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl,
+    .container-xxl {
         max-width: 1450px !important;
     }
 }
@@ -1120,39 +1132,44 @@ ul {
         padding: 10px 12px !important;
     }
 
-    .select-infra.button-group-filter select.form-select{
+    .select-infra.button-group-filter select.form-select {
         font-size: 14px !important;
         padding: 10px 20px;
     }
 
-    .header-bar{
-        .box-circle-r {      
+    .header-bar {
+        .box-circle-r {
             right: -9% !important;
         }
-    
+
     }
 
-    .esri-map-draw{height: 700px; width:100%;}
-g#bmap_graphics_layer {
-    transform: translate(-20px, -130px);
-}
+    .esri-map-draw {
+        height: 700px;
+        width: 100%;
+    }
+
+    g#bmap_graphics_layer {
+        transform: translate(-20px, -130px);
+    }
 
 }
 
 @media (max-width:1399px) and (min-width: 1024px) {
 
-    .header-bar{
-        .box-circle-r {      
+    .header-bar {
+        .box-circle-r {
             right: -12% !important;
         }
-    
+
     }
 
-    .select-infra.button-group-filter select.form-select{
+    .select-infra.button-group-filter select.form-select {
         font-size: 12px !important;
         padding: 5px 10px;
         height: 30px;
     }
+
     body {
         font-size: 12px;
     }
@@ -1182,8 +1199,13 @@ g#bmap_graphics_layer {
     //     padding: 12px 0 14px;
     // }
 
-    .nav-elements ul a{font-size: 14px;}
-    .header-top{margin-bottom: 5px;}
+    .nav-elements ul a {
+        font-size: 14px;
+    }
+
+    .header-top {
+        margin-bottom: 5px;
+    }
 
     .header-dropdown-btn {
         font-size: 12px;
@@ -1191,7 +1213,7 @@ g#bmap_graphics_layer {
     }
 
     .logo-wrap a.top-logo img {
-        width: 200px;
+        width: 100%;
     }
 
     .header-top-skipwrap ul li:first-child {
@@ -1332,31 +1354,45 @@ g#bmap_graphics_layer {
         transform: translate(-76%, -20.9%) !important;
     }
 
-    .infrastructure-main-card .tab-for-graph .blue-strip{padding: 14px 0 !important;margin-bottom: 10px;}
+    .infrastructure-main-card .tab-for-graph .blue-strip {
+        padding: 14px 0 !important;
+        margin-bottom: 10px;
+    }
+
     .bg-grey2.pb-4.pt-0.header-bar.tab-for-graph {
         padding-bottom: 14px !important;
     }
+
     .ptb-30 {
         padding: 25px 0;
     }
-    h4.brudcrumb_heading{margin-bottom: 12px !important;font-size: 14px !important;}
 
-    .Side_filter{
+    h4.brudcrumb_heading {
+        margin-bottom: 12px !important;
+        font-size: 14px !important;
+    }
+
+    .Side_filter {
         height: 45px !important;
         width: 45px !important;
+
         span.material-icons-round {
             font-size: 30px !important;
         }
     }
 
-    .custmize-filter-column{
+    .custmize-filter-column {
         width: 250px !important;
     }
 
-    .esri-map-draw{height: 700px; width:100%;}
-g#bmap_graphics_layer {
-    transform: translate(0px, -160px);
-}
+    .esri-map-draw {
+        height: 700px;
+        width: 100%;
+    }
+
+    g#bmap_graphics_layer {
+        transform: translate(0px, -160px);
+    }
 
 }
 
@@ -1433,14 +1469,15 @@ g#bmap_graphics_layer {
         margin-right: 0px;
     }
 
-    .filter_drodown.small-filter-box .select-box.from-control li.nav-item.position-static:first-child ul.dropdown-menu.show.animation, .filter_drodown .select-box.from-control li.nav-item.position-static:first-child ul.dropdown-menu.show.animation {
+    .filter_drodown.small-filter-box .select-box.from-control li.nav-item.position-static:first-child ul.dropdown-menu.show.animation,
+    .filter_drodown .select-box.from-control li.nav-item.position-static:first-child ul.dropdown-menu.show.animation {
         transform: translate(-8%, -21.9%) !important;
-        width: 320px !important;        
+        width: 320px !important;
     }
 
-   .filter_drodown.small-filter-box .select-box.from-control li.nav-item.position-static:last-child ul.dropdown-menu.show.animation {
+    .filter_drodown.small-filter-box .select-box.from-control li.nav-item.position-static:last-child ul.dropdown-menu.show.animation {
         transform: translate(-56%, -22.5%) !important;
-        width: 320px !important;        
+        width: 320px !important;
     }
 
     .filter_drodown .select-box.from-control {
@@ -1448,11 +1485,14 @@ g#bmap_graphics_layer {
         opacity: 1;
         transition: all 0.3s ease-out;
     }
-    .filter_drodown .filter-content{padding: 10px;}
+
+    .filter_drodown .filter-content {
+        padding: 10px;
+    }
 
 
-   
-    
+
+
 
 }
 
@@ -1603,11 +1643,18 @@ h4.brudcrumb_heading {
     display: none;
 }
 
-.ag-header-cell-comp-wrapper .ag-header-cell-text{white-space: break-spaces;}
+.ag-header-cell-comp-wrapper .ag-header-cell-text {
+    white-space: break-spaces;
+
+    @media (max-width: 1499px) and (min-width: 1024px) {
+        font-size: 11px;
+    }
+
+}
 
 // side-filter
 
-.Side_filter{
+.Side_filter {
     height: 60px;
     width: 60px;
     background: #113689;
@@ -1629,7 +1676,7 @@ h4.brudcrumb_heading {
     }
 }
 
-.custmize-filter-column{
+.custmize-filter-column {
     .heading-sm.main-title {
         padding: 15px 20px;
         background: #113689;
@@ -1637,19 +1684,22 @@ h4.brudcrumb_heading {
         border-top-left-radius: 10px;
         color: #fff;
         font-size: 18px;
+
         @media (max-width:1599px) and (min-width: 1361px) {
             font-size: 15px !important;
             padding: 10px 20px;
         }
-        @media (max-width:1399px) and (min-width: 1024px){
+
+        @media (max-width:1399px) and (min-width: 1024px) {
             font-size: 15px;
             padding: 10px 20px;
         }
     }
+
     .box-cont-cust {
         padding: 25px 20px;
 
-        @media (max-width:1599px) and (min-width: 1024px){
+        @media (max-width:1599px) and (min-width: 1024px) {
             padding: 10px;
         }
 
@@ -1663,16 +1713,18 @@ h4.brudcrumb_heading {
                 padding-left: 10px;
                 color: #000;
 
-                @media (max-width:1399px) and (min-width: 1024px){
+                @media (max-width:1399px) and (min-width: 1024px) {
                     font-size: 10px;
                 }
             }
         }
     }
+
     :where(.css-dev-only-do-not-override-djtmh8).ant-select-single {
         font-size: 14px;
         height: 22px;
-        @media (max-width:1399px) and (min-width: 1024px){
+
+        @media (max-width:1399px) and (min-width: 1024px) {
             height: 15px;
         }
     }
@@ -1685,26 +1737,29 @@ h4.brudcrumb_heading {
     }
 
     :focus-visible {
-        outline:none;
+        outline: none;
     }
 
     span.ant-select-selection-item {
         color: #000;
         font-weight: 700 !important;
-        @media (max-width:1399px) and (min-width: 1024px){
+
+        @media (max-width:1399px) and (min-width: 1024px) {
             font-size: 12px;
         }
     }
 
 }
 
-:where(.css-dev-only-do-not-override-djtmh8).ant-select-dropdown{z-index: 9999999999999999999 !important;}
+:where(.css-dev-only-do-not-override-djtmh8).ant-select-dropdown {
+    z-index: 9999999999999999999 !important;
+}
 
-@media (min-width:1700px){
+@media (min-width:1700px) {
     .loader-center {
         width: 90%;
         left: 35%;
-    }    
+    }
 }
 
 

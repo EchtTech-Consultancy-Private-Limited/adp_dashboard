@@ -69,7 +69,9 @@ const Header = () => {
   const toggleDarkTheme = () => {
     dispatch(updateToggleDark(!toggleDarkMode));
   };
-
+const handleChange=()=>{
+  
+}
 
   return (
 
@@ -103,6 +105,7 @@ const Header = () => {
                         <label className="switch" title="Dark Mode">
                           <input className="switch-input" type="checkbox"
                             id="mode"
+                            onChange={handleChange}
                             checked={toggleDarkMode}
                             onClick={toggleDarkTheme} />
                           <span data-on="On" data-off="Off" className="switch-label"></span>
