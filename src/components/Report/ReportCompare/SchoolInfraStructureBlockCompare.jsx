@@ -251,25 +251,30 @@ export default function SchoolInfraStructureBlockCompare() {
                         <div key={index}>
                           <Select
                             className="form-select"
-                        key={index}
-                        onChange={(value) => handleBlockChange(value, index)}
-                        style={{ width: "100%" }}
+                            onChange={(value) =>
+                              handleBlockChange(value, index)
+                            }
+                            style={{ width: "100%" }}
                             placeholder={`${t("addBlock")} ${index + 1}`}
                             mode="single"
                             showSearch
-                        value={selectedBlocks[index]?.lgd_block_name || `${t('addBlock')}`}
-                        disabled={!selectedState}
-                      >
-                        {getFilteredBlocks(index).map((block) => (
-                          <Select.Option
-                            key={block.lgd_block_id}
-                            value={block.lgd_block_name}
+                            value={
+                              selectedBlocks[index]?.lgd_block_name ||
+                              `${t("addBlock")}`
+                            }
+                            disabled={!selectedState || (index > 0 && !selectedBlocks[index - 1])}
                           >
-                            {block.lgd_block_name}
-                          </Select.Option>
-                        ))}
-                      </Select>
-                    ))}
+                            {getFilteredBlocks(index).map((block) => (
+                              <Select.Option
+                                key={block.lgd_block_id}
+                                value={block.lgd_block_name}
+                              >
+                                {block.lgd_block_name}
+                              </Select.Option>
+                            ))}
+                          </Select>
+                        </div>
+                      ))}
                   </div>
                 </div>
                 <div className="col-md-3">
