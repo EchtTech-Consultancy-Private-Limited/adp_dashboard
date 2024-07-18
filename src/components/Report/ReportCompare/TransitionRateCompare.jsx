@@ -250,7 +250,7 @@ export default function TransitionRateCompare() {
                     </div>
                 </div>
 
-                <div className="row">
+                <div className="row"> 
                     <div className="col-md-12">
                         <div className="comparison-box">
                             <div className="row align-items-center">
