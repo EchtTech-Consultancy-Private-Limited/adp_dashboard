@@ -12,28 +12,18 @@ import "ag-grid-community/styles/ag-theme-material.css";
 import { useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectBlock, selectDistrict, selectState } from '../../redux/slice/filterServicesSlice'
-import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
-import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
-import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json"
-// import aspirationalAbpData2021 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
-// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { useTranslation } from "react-i18next";
 import { jsPDF } from "jspdf";
-import { Select } from 'antd';
 import 'jspdf-autotable';
 import { GlobalLoading } from '../GlobalLoading/GlobalLoading'
-import { setgirdAPIForCommonData, setselectedOption, setSelectedYear, SetSheetName, setUpdateStatus } from '../../redux/slice/reportTypeSlice'
-import BlankPage from './BlankPage'
+import { setselectedOption, setSelectedYear, SetSheetName } from '../../redux/slice/reportTypeSlice'
 import { AllBlock, AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
-// import TransitionRateCompare from './TransitionRateCompare'
 import { ScrollToTopOnMount } from '../../Scroll/ScrollToTopOnMount'
 import TeacherAndSchoolCompare from './ReportCompare/TeacherAndSchoolCompare'
 import TeacherAndSchoolBlockCompare from './ReportCompare/TeacherAndSchoolBlockCompare'
-import { CommonData } from './CommonData/CommonData'
+
 
 const ArrowRenderer = ({ data, value }) => {
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
@@ -72,8 +62,8 @@ export default function TeacherAndSchResourcesReport() {
     const [loading, setLoading] = useState(true);
     localStorage.setItem('selectedReport', "Teacher and School Resources");
     const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
-    const [aspirationalData, setAspirationalData] = useState([])
     const [locationHeader, SetLocationHeader] = useState();
+    const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType)
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption)
     const updateLoading = useSelector((state) => state.reportAdpAbpType.loadingStatus)
@@ -103,7 +93,7 @@ export default function TeacherAndSchResourcesReport() {
             if (selectedState !== SelectState && selectedDistrict === SelectDistrict) {
                 SetLocationHeader("District")
             }
-            
+
             dispatch(SetSheetName("Aspirational District Programme"));
         }
         else if ((selectReportType === "ABP_Report")) {
@@ -120,26 +110,7 @@ export default function TeacherAndSchResourcesReport() {
 
     {/*...............Take data report wise..............*/ }
 
-    const combinedData = {
-        "2020-21": {
-            ADP_Report: aspirationalAdpData2020,
-            ABP_Report: aspirationalAbpData,
-        },
-        "2021-22": {
-            ADP_Report: aspirationalAdpData2021,
-            ABP_Report: aspirationalAbpData,
-        },
-        "2022-23": {
-            ADP_Report: aspirationalAdpData2022,
-            ABP_Report: aspirationalAbpData,
-        },
-    };
 
-    useEffect(() => {
-        // Update the state based on the selected options
-        const selectedData = combinedData[selectedYear][selectReportType];
-        setAspirationalData(selectedData);
-    }, [selectReportType, selectedYear]);
     useEffect(() => {
         let filteredData = aspirationalData;
 
@@ -201,11 +172,11 @@ export default function TeacherAndSchResourcesReport() {
 
     const percentageRenderer = (params) => {
         const value = params.value;
-    
+
         if (typeof value === 'number') {
-            return value.toFixed(2) + " "+ '%';
+            return value.toFixed(2) + " " + '%';
         } else {
-            return value; 
+            return value;
         }
     };
 
@@ -272,46 +243,46 @@ export default function TeacherAndSchResourcesReport() {
                     hide: false,
                 }
             ];
-    
+
             setColumn(columns);
         }
-    }, [selectedState,selectReportType]);
-    
+    }, [selectedState, selectReportType]);
+
     useEffect(() => {
         if (selectedState !== "All State") {
-           
-                setColumn([
-                    {
-                        headerName: "Serial Number",
-                        field: "Serial Number",
-                        hide: true,
-                        suppressColumnsToolPanel: true,
-                        suppressFiltersToolPanel: true,
-                    },
-                    {
-                        headerName: locationHeader,
-                        cellRenderer: ArrowRenderer,
-                        field: "Location",
-                    },
-                    {
-                        headerName: "Number of Elementary Schools having PTR less than equal to 30",
-                        field: "u_ptr",
-                        hide: false,
-                    },
-                    {
-                        headerName: "Number of Elementary Schools ",
-                        field: "total_sch_ele",
-                        hide: false,
-                    },
-                    {
-                        headerName: "Percentage of elementary schools having PTR less than equal to 30",
-                        field: "ele_sch_percent",
-                        cellRenderer: percentageRenderer,
-                        hide: false,
-                    }
-                ]);
-            }
-        
+
+            setColumn([
+                {
+                    headerName: "Serial Number",
+                    field: "Serial Number",
+                    hide: true,
+                    suppressColumnsToolPanel: true,
+                    suppressFiltersToolPanel: true,
+                },
+                {
+                    headerName: locationHeader,
+                    cellRenderer: ArrowRenderer,
+                    field: "Location",
+                },
+                {
+                    headerName: "Number of Elementary Schools having PTR less than equal to 30",
+                    field: "u_ptr",
+                    hide: false,
+                },
+                {
+                    headerName: "Number of Elementary Schools ",
+                    field: "total_sch_ele",
+                    hide: false,
+                },
+                {
+                    headerName: "Percentage of elementary schools having PTR less than equal to 30",
+                    field: "ele_sch_percent",
+                    cellRenderer: percentageRenderer,
+                    hide: false,
+                }
+            ]);
+        }
+
 
     }, [locationHeader, selectedState]);
 
@@ -335,7 +306,7 @@ export default function TeacherAndSchResourcesReport() {
         }, []);
     }, []);
 
-  
+
     const compressedData = useMemo(() => {
         if (selectedState && selectedState !== SelectState) {
             if (
@@ -403,7 +374,7 @@ export default function TeacherAndSchResourcesReport() {
         const getCellToExport = (column, node) => {
             const value = gridApi.api.getValue(column, node);
             if (typeof value === 'number') {
-                return { text: value.toFixed(2) }; 
+                return { text: value.toFixed(2) };
             }
             return { text: value ?? "" };
         };
@@ -418,7 +389,7 @@ export default function TeacherAndSchResourcesReport() {
         });
         return rowsToExport;
     };
-    
+
     const getDocument = (gridApi) => {
         const headerRow = getHeaderToExport(gridApi);
         const rows = getRowsToExport(gridApi);
