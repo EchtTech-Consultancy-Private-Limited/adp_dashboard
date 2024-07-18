@@ -16,13 +16,6 @@ import {
   selectDistrict,
   selectState,
 } from "../../redux/slice/filterServicesSlice";
-import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
-import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
-import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json"
-// import aspirationalAbpData2021 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
-// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { useTranslation } from "react-i18next";
@@ -51,7 +44,7 @@ import {
 import { ScrollToTopOnMount } from "../../Scroll/ScrollToTopOnMount";
 import SchoolInfraStructureCompare from "./ReportCompare/SchoolInfraStructureCompare";
 import SchoolInfraStructureBlockCompare from "./ReportCompare/SchoolInfraStructureBlockCompare";
-import { CommonData } from "./CommonData/CommonData";
+
 
 const ArrowRenderer = ({ data, value }) => {
   const selectedOption = useSelector(
@@ -115,8 +108,8 @@ export default function SchoolInfraStructureReport() {
   const { selectedState, selectedDistrict, selectedBlock } = useSelector(
     (state) => state.locationAdp
   );
-  const [aspirationalData, setAspirationalData] = useState([]);
   const [locationHeader, SetLocationHeader] = useState();
+  const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
   const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
   const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
   const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
@@ -150,8 +143,9 @@ export default function SchoolInfraStructureReport() {
         selectedDistrict === SelectDistrict
       ) {
         SetLocationHeader("District");
-        dispatch(SetSheetName("Aspirational District Programme"));
       }
+      
+      dispatch(SetSheetName("Aspirational District Programme"));
     } else if (selectReportType === "ABP_Report") {
       if (
         selectedState !== SelectState &&
@@ -175,27 +169,7 @@ export default function SchoolInfraStructureReport() {
     selectReportType,
   ]);
 
-  /*...............Take data report wise..............*/
-
-  const combinedData = {
-    "2020-21": {
-      ADP_Report: aspirationalAdpData2020,
-      ABP_Report: aspirationalAbpData,
-    },
-    "2021-22": {
-      ADP_Report: aspirationalAdpData2021,
-      ABP_Report: aspirationalAbpData,
-    },
-    "2022-23": {
-      ADP_Report: aspirationalAdpData2022,
-      ABP_Report: aspirationalAbpData,
-    },
-  };
-
-  useEffect(() => {
-    const selectedData = combinedData[selectedYear][selectReportType];
-    setAspirationalData(selectedData);
-  }, [selectReportType, selectedYear]);
+  
   useEffect(() => {
     let filteredData = aspirationalData;
 
@@ -269,9 +243,8 @@ export default function SchoolInfraStructureReport() {
 
   const percentageRenderer = (params) => {
     const value = params.value;
-
     if (typeof value === 'number') {
-        return value.toFixed(2) + '%';
+        return value.toFixed(2) + " "+ '%';
     } else {
         return value; 
     }
@@ -316,7 +289,7 @@ export default function SchoolInfraStructureReport() {
       hide: false,
     },
     {
-      headerName: "Percent",
+      headerName: "percentage of Schools having girls toilets in the ratio of 40:1",
       field: "sch_having_toilet_40_percent",
       cellRenderer: percentageRenderer,
       hide: false,
@@ -372,7 +345,7 @@ export default function SchoolInfraStructureReport() {
           hide: false,
         },
         {
-          headerName: "Percent",
+          headerName: "percentage of Schools having girls toilets in the ratio of 40:1",
           field: "sch_having_toilet_40_percent",
           cellRenderer: percentageRenderer,
           hide: false,
@@ -424,7 +397,7 @@ export default function SchoolInfraStructureReport() {
           hide: false,
         },
         {
-          headerName: "Percent",
+          headerName: "percentage of Schools having girls toilets in the ratio of 40:1",
           field: "sch_having_toilet_40_percent",
           cellRenderer: percentageRenderer,
           hide: false,

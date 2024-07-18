@@ -6,6 +6,7 @@ import {
   setStates,
 } from "../../../redux/slice/filterServicesComprisionSlice";
 import {
+  setAspirationalAllData,
   setselectedCompareDistricts,
   setselectedCompareOption,
   setUpdateReportType,
@@ -74,7 +75,7 @@ const ArrowRenderer = ({ data }) => {
 
 export default function SchoolInfraStructureCompare() {
   const dispatch = useDispatch();
-  const [aspirationalData, setAspirationalData] = useState([]);
+  const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
   const selectedOption = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareOption
   );
@@ -101,16 +102,9 @@ export default function SchoolInfraStructureCompare() {
 
   useEffect(() => {
     // dispatch(setUpdateReportType('ADP_Report'));
-    setAspirationalData(aspirationalAdpData);
+    dispatch(setAspirationalAllData(aspirationalAdpData));
   }, [dispatch]);
-  //    useEffect(() => {
-  //      if (selectedAdpAbpOption === "ADP_Report") {
-  //        setAspirationalData(aspirationalAdpData)
-  //      }
-  //      else {
-  //        setAspirationalData(aspirationalAbpData)
-  //      }
-  //    }, [selectedAdpAbpOption])
+
 
   const combinedData = {
     "2020-21": {
@@ -130,14 +124,14 @@ export default function SchoolInfraStructureCompare() {
   useEffect(() => {
     const selectedData = combinedData[selectedYear][selectedAdpAbpOption];
     if (selectedData) {
-      setAspirationalData(selectedData);
+      setAspirationalAllData(selectedData);
     }
   }, [selectedAdpAbpOption, selectedYear]);
 
   // Initialize states and districts from JSON data
   useEffect(() => {
     const structuredData = aspirationalData.reduce((acc, curr) => {
-      const stateIndex = acc.findIndex(
+      const stateIndex = acc?.findIndex(
         (st) => st.lgd_state_id === curr?.lgd_state_id
       );
       if (stateIndex === -1) {
@@ -158,7 +152,7 @@ export default function SchoolInfraStructureCompare() {
           ],
         });
       } else {
-        const districtIndex = acc[stateIndex].districts.findIndex(
+        const districtIndex = acc[stateIndex].districts?.findIndex(
           (dist) => dist.lgd_district_id === curr?.lgd_district_id
         );
         if (districtIndex === -1) {
@@ -227,7 +221,7 @@ export default function SchoolInfraStructureCompare() {
       <div className="card-box">
         <div className="row align-items-end">
           <div className="col-md-7">
-            <div className="d-flex align-items-end">
+            <div className="d-flex align-items-center">
               <div className="title-box">
                 {/* <h5 className='sub-title'>State :
                                     <Select
@@ -252,7 +246,7 @@ export default function SchoolInfraStructureCompare() {
                                         ))}
                                     </Select>
                                 </h5> */}
-                <h3 className="heading-sm mt-2">
+                <h3 className="heading-sm">
            {t('comparisonBySchoolInfrastructure')}
                 </h3>
               </div>
@@ -318,7 +312,7 @@ export default function SchoolInfraStructureCompare() {
               <div className="row">
                 {selectedDistricts.map((district, index) => (
                   <div
-                    className={`col-sm-12 col-20 ${
+                    className={`col-sm-12 col-20 col-50-d${
                       selectedDistricts.length === 1 ? "m-auto" : ""
                     }`}
                   >

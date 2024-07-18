@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectDistrict, selectState, setStates } from "../../../redux/slice/filterServicesComprisionSlice";
-import { setselectedCompareDistricts, setselectedCompareOption, setUpdateReportType } from "../../../redux/slice/reportTypeSlice";
+import { setAspirationalAllData, setselectedCompareDistricts, setselectedCompareOption, setUpdateReportType } from "../../../redux/slice/reportTypeSlice";
 import aspirationalAbpData from "../../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../../aspirational-reports-data/aspirationalDistrict.json";
 import aspirationalAdpData2020 from "../../../aspirational-reports-data/aspirationalAdpData2020-21.json"
@@ -53,7 +53,7 @@ const ArrowRenderer = ({ data }) => {
 export default function StudentsPerformanceCompare() {
     const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
-    const [aspirationalData, setAspirationalData] = useState([])
+    const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedCompareOption);
     const selectedAdpAbpOption = useSelector((state) => state.reportAdpAbpType.updateReportType);
     const MAX_DISTRICTS = 5;
@@ -72,17 +72,9 @@ export default function StudentsPerformanceCompare() {
 
 
     useEffect(() => {
-        // dispatch(setUpdateReportType('ADP_Report'));
-        setAspirationalData(aspirationalAdpData)
+        dispatch(setAspirationalAllData(aspirationalAdpData))
     }, [dispatch]);
-    //    useEffect(() => {
-    //      if (selectedAdpAbpOption === "ADP_Report") {
-    //        setAspirationalData(aspirationalAdpData)
-    //      }
-    //      else {
-    //        setAspirationalData(aspirationalAbpData)
-    //      }
-    //    }, [selectedAdpAbpOption])
+    
 
 
     const combinedData = {
@@ -104,14 +96,14 @@ export default function StudentsPerformanceCompare() {
         const selectedData = combinedData[selectedYear][selectedAdpAbpOption];
         if (selectedData) {
 
-            setAspirationalData(selectedData);
+            setAspirationalAllData(selectedData);
         }
     }, [selectedAdpAbpOption, selectedYear]);
 
     // Initialize states and districts from JSON data
     useEffect(() => {
         const structuredData = aspirationalData.reduce((acc, curr) => {
-            const stateIndex = acc.findIndex(
+            const stateIndex = acc?.findIndex(
                 (st) => st.lgd_state_id === curr.lgd_state_id
             );
             if (stateIndex === -1) {
@@ -130,7 +122,7 @@ export default function StudentsPerformanceCompare() {
                     ],
                 });
             } else {
-                const districtIndex = acc[stateIndex].districts.findIndex(
+                const districtIndex = acc[stateIndex].districts?.findIndex(
                     (dist) => dist.lgd_district_id === curr?.lgd_district_id
                 );
                 if (districtIndex === -1) {
@@ -191,7 +183,7 @@ export default function StudentsPerformanceCompare() {
         <div className="card-box">
           <div className="row align-items-end">
             <div className="col-md-7">
-              <div className="d-flex align-items-end">
+              <div className="d-flex align-items-center">
                 <div className="title-box">
                   {/* <h5 className='sub-title'>State :
                                     <Select
@@ -216,7 +208,7 @@ export default function StudentsPerformanceCompare() {
                                         ))}
                                     </Select>
                                 </h5> */}
-                  <h3 className="heading-sm mt-2">
+                  <h3 className="heading-sm">
                     {t("comparisonByStudentPerformance")}
                   </h3>
                 </div>
