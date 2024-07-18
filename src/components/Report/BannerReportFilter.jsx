@@ -236,12 +236,23 @@ export default function BannerReportFilter() {
                 </div>
                 <div className="col-md-9">
                   <div className="d-flex justify-content-between text-aligns-center antd-select">
-                    {/* Year select option */}
-                    <Select onChange={handleYearChange} style={{ width: "100%" }} placeholder="Academic Year" mode="single" showSearch className="form-select" value={selectedYear}>
-                      <Select.Option key="2020-21" value="2020-21">2020 - 21</Select.Option>
-                      <Select.Option key="2021-22" value="2021-22">2021 - 22</Select.Option>
-                      <Select.Option key="2022-23" value="2022-23">2022 - 23</Select.Option>
+                    <Select
+                      onChange={handleYearChange}
+                      style={{ width: "100%" }}
+                      placeholder="Academic Year"
+                      mode="single"
+                      showSearch
+                      className="form-select"
+                      value={selectedYear}
+                    >
+                      {["2020-21", "2021-22", "2022-23"].map((year, index) => (
+                        <Select.Option key={index} value={year}>
+                          {year.replace("-", " - ")}
+                        </Select.Option>
+                      ))}
                     </Select>
+
+
                     {/* State select option */}
                     <Select onChange={handleStateChange} style={{ width: "100%" }} placeholder="All State" mode="single" showSearch value={selectedState || "All State"} className="form-select">
                       <Select.Option key="All State" value={SelectState}>All State</Select.Option>
