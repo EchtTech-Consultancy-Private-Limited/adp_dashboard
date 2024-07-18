@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
+import { useDispatch,useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Transition from '../../assets/images/Transition_Rate.png'
 import Teacher from '../../assets/images/Teacher_School.png'
@@ -6,16 +7,29 @@ import Student from '../../assets/images/Student_performance.png'
 import Infrastructure from '../../assets/images/School_infrastructure.png'
 import Enrollment from '../../assets/images/Enrollment_retention.png'
 import devider from '../../assets/images/devider.svg'
-import { useDispatch } from 'react-redux'
 import { setselectedReport, setUpdateReportType } from '../../redux/slice/reportTypeSlice'
+import aspirationalAdpData2020 from '../../aspirational-reports-data/aspirationalAdpData2020-21.json'
+import  aspirationalAbpData from "../../aspirational-reports-data/aspirational.json"
+import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json"
+import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json"
 import { useTranslation } from "react-i18next";
 import AOS from "aos";
 import "aos/dist/aos.css";
-
+import AdpCountTotalAverage from '../../utils/AdpTotalAverage'
+import AbpCountTotalAverage from '../../utils/AbpTotalAverage'
 
 export default function Themes() {
+    const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
+    const selectedAdpAbpOption = useSelector((state) => state.reportAdpAbpType.updateReportType);
+
+
+
+
     const { t, i18n } = useTranslation();
     const dispatch = useDispatch()
+    const [aspirationalData, setAspirationalData] = useState({ADP_Report: [],
+        ABP_Report: []})
+
     const handleTransitionClick = (reportType) => {
         dispatch(setUpdateReportType(reportType));
         dispatch(setselectedReport("Transition Rate"));
@@ -37,6 +51,8 @@ export default function Themes() {
     //     dispatch(setselectedReport("Enrollment and Retention"));
     // };
 
+
+
     useEffect(() => {
         AOS.init({
           disable: "phone",
@@ -44,6 +60,105 @@ export default function Themes() {
           easing: "ease-out-cubic",
         });
       }, []);
+
+    //  get the districts Count start
+
+      let DistrictSet = new Set();
+      aspirationalData.ADP_Report.forEach(item => {
+        DistrictSet.add(item.lgd_district_name);
+      });
+      let numberOfUniqueDistricts = DistrictSet.size;
+    //  get the district Count end
+
+ 
+    //  get the blocks Count start
+
+let blockSet = new Set();
+aspirationalData.ABP_Report.forEach(item => {
+  blockSet.add(item.lgd_block_name);
+});
+let numberOfUniqueBlockes = blockSet.size;
+
+    //  get the blocks Count end
+
+        
+    // combinedData the data Year 20,21,22 start
+
+      const combinedData = {
+        "2020-21": {
+            ADP_Report: aspirationalAdpData2020,
+            ABP_Report: aspirationalAbpData,
+        },
+        "2021-22": {
+            ADP_Report: aspirationalAdpData2021,
+            ABP_Report: aspirationalAbpData,
+        },
+        "2022-23": {
+            ADP_Report: aspirationalAdpData2022,
+            ABP_Report: aspirationalAbpData,
+        },
+    };
+
+
+
+
+    useEffect(() => {
+        const yearData = combinedData[selectedYear];
+        if (yearData) {
+            const adpData = yearData.ADP_Report;
+            const abpData = yearData.ABP_Report;
+    
+            // Combine or handle both reports as needed
+            if (adpData && abpData) {
+                setAspirationalData({
+                    ADP_Report: adpData,
+                    ABP_Report: abpData,
+                });
+            } else {
+                console.warn('Data for the selected year or reports is missing');
+            }
+        }
+    }, [selectedAdpAbpOption, selectedYear]);
+
+
+    console.log("aspirationalData====>",aspirationalData);
+
+
+    // combinedData the data Year 20,21,22 end
+
+
+    // useEffect(() => {
+    //     const selectedData = combinedData[selectedYear][selectedAdpAbpOption];
+    //     if (selectedData) {
+
+    //         setAspirationalData(selectedData);
+    //     }
+    // }, [selectedAdpAbpOption, selectedYear]);
+
+
+
+
+          
+            //    Transition  rate  Adp Data 
+                          
+  let AdpAllStateAverage=    AdpCountTotalAverage(aspirationalData.ADP_Report,numberOfUniqueDistricts);
+ 
+                        //    Transition  rate  Abp Data 
+
+  let AbpAllStateAverage=AbpCountTotalAverage(aspirationalData.ABP_Report,numberOfUniqueBlockes );
+            
+
+                //    calculate   Transition rate Averge 
+  let TotalTransitionRateAdp_Abp = ((AdpAllStateAverage[0]?.Sec_Upri_Total + AbpAllStateAverage[0]?.Sec_Upri_Total) / 2).toFixed(2);
+
+
+
+ console.log("TotalAdp_Abp", TotalTransitionRateAdp_Abp)
+
+
+                              
+
+
 
     return (
         <section className='themes ptb-70 position-relative'>
@@ -71,7 +186,7 @@ export default function Themes() {
                                         {t('transitionRateBoysGirls')}
                                         </div>
                                         <div className="theme-maintext">
-                                            67.5%
+                                            {TotalTransitionRateAdp_Abp}%
                                         </div>
                                         <div className="theme-subtext">
                                         {t('allStates')}
@@ -84,7 +199,7 @@ export default function Themes() {
 
                                             <p>{t('kpitransitionRateBoysGirls')}</p>
                                             <ul>
-                                                <li>{t('percentageSchoolsAdequateToilets')}</li>
+                                                <li>{t('percentageSchoolsHavingTotalBoysGirls')}</li>
                                             </ul>
                                         </div>
 
@@ -117,7 +232,7 @@ export default function Themes() {
 
                                             <p>{t('kpiteacherSchoolResources')}</p>
                                             <ul>
-                                                <li>{t('percentageSchoolsAdequateToilets')}</li>
+                                                <li>{t('percentageSChoolsTeacherSchoolResources')}</li>
                                             </ul>
                                         </div>
 
@@ -155,7 +270,7 @@ export default function Themes() {
 
                                             <p>{t('kpistudentPerformance')}</p>
                                             <ul>
-                                                <li>{t('percentageSchoolsAdequateToilets')}</li>
+                                                <li>{t('percentageSchoolshavingTrainedCWSNTeachers')}</li>
                                             </ul>
                                         </div>
 
@@ -221,7 +336,7 @@ export default function Themes() {
 
                                             <p>{t('kpienrollmentRetention')}</p>
                                             <ul>
-                                                <li>{t('percentageSchoolsAdequateToilets')}</li>
+                                                <li>{t('percentageSchoolsEnrollmentRetention')}</li>
                                             </ul>
                                         </div>
 

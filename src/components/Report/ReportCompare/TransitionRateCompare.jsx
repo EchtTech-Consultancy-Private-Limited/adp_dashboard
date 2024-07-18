@@ -105,6 +105,8 @@ export default function TransitionRateCompare() {
         }
     }, [selectedAdpAbpOption, selectedYear]);
 
+    
+
     // Initialize states and districts from JSON data
     useEffect(() => {
         const structuredData = aspirationalData.reduce((acc, curr) => {

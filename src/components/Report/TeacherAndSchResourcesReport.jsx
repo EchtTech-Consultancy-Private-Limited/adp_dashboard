@@ -566,7 +566,7 @@ export default function TeacherAndSchResourcesReport() {
                                     <div className="col-md-12">
                                         <div className="table-box mt-4">
                                             <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
-                                                style={{ width: "100%", height: 200 }} >
+                                                style={{ width: "100%", height: 300 }} >
                                                 {selectedState === "All State" ? <><CommonData /></> : <>
                                                     <AgGridReact
                                                         columnDefs={columns}

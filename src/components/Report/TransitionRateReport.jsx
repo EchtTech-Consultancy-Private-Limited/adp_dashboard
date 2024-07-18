@@ -491,6 +491,11 @@ export default function TransitionRateReport() {
     }, [data, selectedState, selectedDistrict, selectedBlock]);
 
 
+
+console.log()
+
+
+
     const defColumnDefs = useMemo(
         () => ({
             flex: 1,
