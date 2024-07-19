@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { Element } from "react-scroll";
 
 export default function AboutUs() {
   const { t, i18n } = useTranslation();
@@ -28,8 +29,10 @@ export default function AboutUs() {
   }, []);
 
   return (
+    
     <section className="about-us ptb-70 bg-white">
-      <div className="container">
+      <Element name="aboutSection">
+      <div className="container"id="aboutSection">
         <div className="row">
           <h2 className="heading-blue" data-aos="fade-up-left">{t("aboutTitle")}</h2>
           <div className="col-md-10 m-auto">
@@ -83,6 +86,7 @@ export default function AboutUs() {
           </div>
         </div>
       </div>
+      </Element>
     </section>
   );
 }

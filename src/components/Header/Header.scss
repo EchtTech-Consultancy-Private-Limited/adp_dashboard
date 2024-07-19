@@ -1132,7 +1132,12 @@ button.text-increment-btn {
     // font-size: 16px;
     position: relative;
 }
-
+.nav-elements ul ScrollLink.active {
+    color: #FF9461;
+    font-weight: 600;
+    // font-size: 16px;
+    position: relative;
+}
 .search-icon img {
     width: 36px;
     background: #F3F3F3;

@@ -118,6 +118,7 @@ export default function TransitionRateReport() {
     const report_name = savedReportName;
     const [data, setData] = useState([]);
     const [finalData, SetFinalData] = useState([])
+    console.log(finalData, "finalData")
     function resteData() {
         dispatch(selectState(SelectState));
         dispatch(selectDistrict(SelectDistrict));
@@ -205,6 +206,7 @@ export default function TransitionRateReport() {
 
         // dispatch(setUpdateStatus(false))
     }, [selectedState, selectedDistrict, selectedBlock]);
+   
     const getLocationName = (item) => {
         if (selectReportType === "ABP_Report") {
             if (
