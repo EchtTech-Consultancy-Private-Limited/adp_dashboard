@@ -263,7 +263,11 @@
         padding: 0 10px;
 
         @media (max-width: 767px) {
-            padding: 0 0px;            
+            padding: 0 0px;  
+            
+            .search-icon.ms-3 {
+                margin-left: 40px !important;
+            }
         }
 
         .top-logo {

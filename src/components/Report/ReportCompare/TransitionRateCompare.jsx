@@ -70,8 +70,8 @@ export default function TransitionRateCompare() {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
 
-  const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
-  const yearWiseData=useSelector((state)=>state.reportAdpAbpType.selectedDataAllYear)
+  const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
+  const yearWiseData = useSelector((state) => state.reportAdpAbpType.selectedDataAllYear)
   const selectedOption = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareOption
   );
@@ -102,7 +102,7 @@ export default function TransitionRateCompare() {
   // useEffect(() => {
   //   dispatch(setAspirationalAllData(yearWiseData));
   // }, [dispatch,selectedYear,aspirationalData]);
- 
+
 
   useEffect(() => {
     const structuredData = aspirationalData.reduce((acc, curr) => {
@@ -180,7 +180,7 @@ export default function TransitionRateCompare() {
       (district) =>
         district &&
         district.lgd_district_name !==
-          selectedDistricts[position]?.lgd_district_name
+        selectedDistricts[position]?.lgd_district_name
     );
     return districts.filter(
       (district) =>
@@ -267,43 +267,43 @@ export default function TransitionRateCompare() {
           <div className="col-md-12">
             <div className="comparison-box">
               <div className="row align-items-center">
-                <div className="col-md-3">
+                <div className="col-md-3 order_1">
                   <h5 className="sub-title">{t("selectDistrictToCompare")}</h5>
                 </div>
-                <div className="col-md-6 Comparison-select-group">
+                <div className="col-md-6 Comparison-select-group order_3">
                   <div className="d-flex justify-content-between text-aligns-center antd-select">
-                  {[...Array(MAX_DISTRICTS)].map((_, index) => (
-                <div key={index}>
-                    <Select
-                        className="form-select"
-                        onChange={(value) => handleDistrictChange(value, index)}
-                        style={{ width: "100%" }}
-                        placeholder={`${t('addDistrict')} ${index + 1}`}
-                        mode="single"
-                        showSearch
-                        value={selectedDistricts[index]?.lgd_district_name || `${t('addDistrict')}`}
-                        disabled={index > 0 && !selectedDistricts[index - 1]}
-                    >
-                        {getFilteredDistricts().map((district) => (
+                    {[...Array(MAX_DISTRICTS)].map((_, index) => (
+                      <div key={index}>
+                        <Select
+                          className="form-select"
+                          onChange={(value) => handleDistrictChange(value, index)}
+                          style={{ width: "100%" }}
+                          placeholder={`${t('addDistrict')} ${index + 1}`}
+                          mode="single"
+                          showSearch
+                          value={selectedDistricts[index]?.lgd_district_name || `${t('addDistrict')}`}
+                          disabled={index > 0 && !selectedDistricts[index - 1]}
+                        >
+                          {getFilteredDistricts().map((district) => (
                             <Select.Option
-                                key={district.lgd_district_id}
-                                value={district.lgd_district_name}
+                              key={district.lgd_district_id}
+                              value={district.lgd_district_name}
                             >
-                                {district.lgd_district_name}
+                              {district.lgd_district_name}
                             </Select.Option>
-                        ))}
-                    </Select>
+                          ))}
+                        </Select>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-            ))} 
-             </div>
-                </div>
-                <div className="col-md-3">
+                <div className="col-md-3 order_2">
                   <div className="tab-box float-end">
                     <button className="tab-button active">
-                      <img src={card} alt="card" /> {t("cardView")}
+                      <img src={card} alt="card" /> <span>{t('cardView')}</span>
                     </button>
                     <button className="tab-button">
-                      <img src={table} alt="Table" /> {t("tableView")}
+                      <img src={table} alt="Table" /> <span>{t('tableView')}</span>
                     </button>
                   </div>
                 </div>
@@ -316,9 +316,8 @@ export default function TransitionRateCompare() {
               <div className="row">
                 {selectedDistricts.map((district, index) => (
                   <div
-                    className={`col-sm-12 col-20 ${
-                      selectedDistricts.length === 1 ? "m-auto" : ""
-                    }`}
+                    className={`col-sm-12 col-20 ${selectedDistricts.length === 1 ? "m-auto" : ""
+                      }`}
                   >
                     {selectedDistricts.length === 1 ? (
                       <Card
@@ -337,9 +336,8 @@ export default function TransitionRateCompare() {
                               <div className="d-flex">
                                 <div>
                                   <div
-                                    className={`number-card card-color-${
-                                      index + 1
-                                    }`}
+                                    className={`number-card card-color-${index + 1
+                                      }`}
                                   >
                                     {index + 1}
                                   </div>

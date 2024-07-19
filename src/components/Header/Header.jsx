@@ -207,12 +207,12 @@ const Header = () => {
                         ) : null}
                       </li>
 
-                      <li>
+                      {/* <li>
                         <NavLink to="/news">{t('newsAndArticles')}</NavLink>
                       </li>
                       <li>
                         <NavLink to="/insights">{t('insights')}</NavLink>
-                      </li>
+                      </li> */}
                       <li>
                         <NavLink to="/contact">{t('contactUs')}</NavLink>
                       </li>
