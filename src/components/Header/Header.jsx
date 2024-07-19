@@ -95,7 +95,7 @@ const Header = () => {
                   <ul className='ps-0 mb-0'>
                     <li><Link to='#'>{t('sitemap')}</Link></li>
                     <li><Link to='#' onClick={handleClickScroll}> {t('skipToMainContent')}</Link></li>
-                    <li><Link to='#'>{t('screenReaderAccess')}</Link></li>
+                    <li><Link to='/screen-reader-access'>{t('screenReaderAccess')}</Link></li>
                   </ul>
                 </div>
 
@@ -191,7 +191,7 @@ const Header = () => {
                       </li>}
 
                       <li>
-                        {pathName === "/" ? (
+                        {pathName === "/" || pathName === "/screen-reader-access" ? (
                           <NavLink to="/transition-rate">{t('reports')}</NavLink>
                         ) : pathName === "/transition-rate" ? (
                           <NavLink to="/transition-rate">{t('reports')}</NavLink>
