@@ -122,11 +122,11 @@ export default function SchoolInfraStructureReport() {
   const [finalData, SetFinalData] = useState([])
 
   function resteData() {
-    dispatch(selectState(SelectState));
-    dispatch(selectDistrict(SelectDistrict));
-    dispatch(selectBlock(SelectBlock));
+    // dispatch(selectState(SelectState));
+    // dispatch(selectDistrict(SelectDistrict));
+    // dispatch(selectBlock(SelectBlock));
     dispatch(setselectedOption(selectedOptionConst));
-    dispatch(setSelectedYear(intialYear))
+    // dispatch(setSelectedYear(intialYear))
   }
   useEffect(() => {
     resteData();
@@ -206,7 +206,7 @@ export default function SchoolInfraStructureReport() {
     setLoading(false);
 
     // dispatch(setUpdateStatus(false))
-  }, [selectedState, selectedDistrict, selectedBlock]);
+  }, [selectedState, selectedDistrict, selectedBlock,aspirationalData]);
   const getLocationName = (item) => {
     if (selectReportType === "ABP_Report") {
       if (

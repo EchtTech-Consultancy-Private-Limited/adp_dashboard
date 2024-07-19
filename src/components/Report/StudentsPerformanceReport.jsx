@@ -72,11 +72,11 @@ export default function StudentsPerformanceReport() {
     const [data, setData] = useState([]);
     const [finalData, SetFinalData] = useState([])
     function resteData() {
-        dispatch(selectState(SelectState));
-        dispatch(selectDistrict(SelectDistrict));
-        dispatch(selectBlock(SelectBlock));
+        // dispatch(selectState(SelectState));
+        // dispatch(selectDistrict(SelectDistrict));
+        // dispatch(selectBlock(SelectBlock));
         dispatch(setselectedOption(selectedOptionConst));
-        dispatch(setSelectedYear(intialYear))
+        // dispatch(setSelectedYear(intialYear))
     }
     useEffect(() => {
         resteData()
@@ -134,7 +134,7 @@ export default function StudentsPerformanceReport() {
         setLoading(false)
 
         // dispatch(setUpdateStatus(false))
-    }, [selectedState, selectedDistrict, selectedBlock]);
+    }, [selectedState, selectedDistrict, selectedBlock,aspirationalData]);
     const getLocationName = (item) => {
         if (selectReportType === "ABP_Report") {
             if (selectedBlock && selectedBlock !== AllBlock && selectedBlock !== SelectBlock) {
@@ -340,7 +340,7 @@ export default function StudentsPerformanceReport() {
         else {
             SetFinalData(aspirationalData)
         }
-    }, [selectedState, data, selectedYear, aspirationalData])
+    }, [selectedState, data, aspirationalData])
 
     const defColumnDefs = useMemo(() => ({
         flex: 1,

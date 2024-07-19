@@ -11,7 +11,7 @@ const reportTypeSlice = createSlice({
         selectedReport:"Transition Rate",
         selectedCompareDistricts:[],
         selectedCompareBlock:[],
-        selectedYear:"2020-21",
+        selectedYear:"2022-23",
         girdAPIForCommonData:null,
         sheetName:"",
         handleExportData:null,

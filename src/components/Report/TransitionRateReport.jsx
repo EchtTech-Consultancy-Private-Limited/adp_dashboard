@@ -119,11 +119,11 @@ export default function TransitionRateReport() {
     const [data, setData] = useState([]);
     const [finalData, SetFinalData] = useState([])
     function resteData() {
-        dispatch(selectState(SelectState));
-        dispatch(selectDistrict(SelectDistrict));
-        dispatch(selectBlock(SelectBlock));
-        dispatch(setselectedOption(selectedOptionConst));
-        dispatch(setSelectedYear(intialYear));
+        // dispatch(selectState(SelectState));
+        // dispatch(selectDistrict(SelectDistrict));
+        // dispatch(selectBlock(SelectBlock));
+       // dispatch(setselectedOption(selectedOptionConst));
+        //  dispatch(setSelectedYear(intialYear));
     }
     useEffect(() => {
         resteData();
@@ -162,6 +162,7 @@ export default function TransitionRateReport() {
         selectedDistrict,
         SelectDistrict,
         selectedOption,
+        selectReportType
     ]);
 
     /*...............Take data report wise..............*/
@@ -170,7 +171,6 @@ export default function TransitionRateReport() {
 
     useEffect(() => {
         let filteredData = aspirationalData;
-
         if (selectedState && selectedState !== SelectState) {
             filteredData = filteredData.filter(
                 (item) => item.lgd_state_name === selectedState
@@ -204,7 +204,8 @@ export default function TransitionRateReport() {
         setLoading(false);
 
         // dispatch(setUpdateStatus(false))
-    }, [selectedState, selectedDistrict, selectedBlock]);
+    }, [selectedState, selectedDistrict, selectedBlock,aspirationalData,selectReportType]);
+  
     const getLocationName = (item) => {
         if (selectReportType === "ABP_Report") {
             if (
@@ -361,7 +362,7 @@ export default function TransitionRateReport() {
 
             setColumn(columns);
         }
-    }, [selectedState, selectReportType])
+    }, [selectedState])
 
 
     const handleOptionChange = (event) => {
@@ -516,7 +517,6 @@ export default function TransitionRateReport() {
         }
         return compressData(data, "lgd_state_name");
     }, [data, selectedState, selectedDistrict, selectedBlock]);
-
     useEffect(() => {
         if (selectedState !== "All State") {
             SetFinalData(compressedData)
@@ -524,7 +524,7 @@ export default function TransitionRateReport() {
         else {
             SetFinalData(aspirationalData)
         }
-    }, [selectedState, data, selectedYear, aspirationalData])
+    }, [selectedState, data, aspirationalData])
     const defColumnDefs = useMemo(
         () => ({
             flex: 1,
