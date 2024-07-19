@@ -52,11 +52,10 @@
 
                 a {
                     @include d_flex_between;
-                    font-size: 0.813em;
+                    font-size: 0.913em;
                     color: $white !important;
                     font-weight: 400;
                     text-decoration: none;
-                    // min-height: 20px;
 
                     @media (max-width: 767px) {
                         color: #000 !important;
@@ -127,9 +126,9 @@
         }
 
         @media (max-width: 991px) {
-           
+
             &:last-child {
-               display: none;
+                display: none;
             }
         }
 
@@ -263,7 +262,11 @@
         padding: 0 10px;
 
         @media (max-width: 767px) {
-            padding: 0 0px;            
+            padding: 0 0px;
+
+            .search-icon.ms-3 {
+                margin-left: 40px !important;
+            }
         }
 
         .top-logo {
@@ -273,7 +276,7 @@
             margin-right: 13px;
 
             @media (max-width: 767px) {
-                width:auto;
+                width: auto;
                 padding-right: 0px;
                 margin-right: 0px;
                 border-right: none;
@@ -282,7 +285,7 @@
 
         .logo-text {
             font-size: 19px;
-            color:#239da1;
+            color: #239da1;
             text-decoration: none;
             text-align: left;
             font-weight: 600;
@@ -1124,6 +1127,11 @@ button.text-increment-btn {
     font-weight: bold;
     color: #000000;
     text-decoration: none;
+    transition: all .3s ease-in-out;
+
+    &:hover {
+        color: #FF9461;
+    }
 }
 
 .nav-elements ul a.active {
@@ -1132,7 +1140,12 @@ button.text-increment-btn {
     // font-size: 16px;
     position: relative;
 }
-
+.nav-elements ul ScrollLink.active {
+    color: #FF9461;
+    font-weight: 600;
+    // font-size: 16px;
+    position: relative;
+}
 .search-icon img {
     width: 36px;
     background: #F3F3F3;
@@ -1164,15 +1177,22 @@ button.text-increment-btn {
         z-index: 9;
 
         svg {
-            width: 30px;  
-            
-            &:last-child{display: none;}
+            width: 30px;
+
+            &:last-child {
+                display: none;
+            }
         }
 
 
-        &.show{
-            svg:first-child{display: none;}
-            svg:last-child{display: block;}
+        &.show {
+            svg:first-child {
+                display: none;
+            }
+
+            svg:last-child {
+                display: block;
+            }
         }
     }
 
@@ -1186,7 +1206,7 @@ button.text-increment-btn {
         transition: all 0.3s ease-in;
         overflow: hidden;
 
-        ul{
+        ul {
             padding: 0px 0;
             padding-top: 40%;
         }
@@ -1319,6 +1339,16 @@ button.text-increment-btn {
 }
 
 .select-right {
+
+    .select-wrap {
+        select.form-select {
+            &.Langchange {
+                width: 65px;
+                padding-left: 0;
+            }
+        }
+    }
+
     select.form-select {
         background: #2b9c9f;
         color: #fff;
@@ -1332,6 +1362,11 @@ button.text-increment-btn {
         &:focus {
             box-shadow: none;
             border-color: #fff;
+        }
+
+        &.Langchange {
+            width: 50px;
+            padding-left: 4px;
         }
     }
 

@@ -122,11 +122,11 @@ export default function SchoolInfraStructureReport() {
   const [finalData, SetFinalData] = useState([])
 
   function resteData() {
-    dispatch(selectState(SelectState));
-    dispatch(selectDistrict(SelectDistrict));
-    dispatch(selectBlock(SelectBlock));
+    // dispatch(selectState(SelectState));
+    // dispatch(selectDistrict(SelectDistrict));
+    // dispatch(selectBlock(SelectBlock));
     dispatch(setselectedOption(selectedOptionConst));
-    dispatch(setSelectedYear(intialYear))
+    // dispatch(setSelectedYear(intialYear))
   }
   useEffect(() => {
     resteData();
@@ -206,7 +206,7 @@ export default function SchoolInfraStructureReport() {
     setLoading(false);
 
     // dispatch(setUpdateStatus(false))
-  }, [selectedState, selectedDistrict, selectedBlock]);
+  }, [selectedState, selectedDistrict, selectedBlock,aspirationalData]);
   const getLocationName = (item) => {
     if (selectReportType === "ABP_Report") {
       if (
@@ -689,10 +689,10 @@ export default function SchoolInfraStructureReport() {
                       </div>
                       <div className="tab-box">
                         <button className="tab-button active">
-                          <img src={table} alt="Table" /> {t('tableView')}
+                          <img src={table} alt="Table" /> <span>{t('tableView')}</span>
                         </button>
                         <button className="tab-button">
-                          <img src={chart} alt="chart" />{t('chartView')}
+                          <img src={chart} alt="chart" /> <span>{t('chartView')}</span>
                         </button>
                       </div>
                     </div>

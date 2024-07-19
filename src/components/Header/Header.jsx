@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateToggleDark } from '../../redux/slice/darkLightModeSlice';
 import { useTranslation } from "react-i18next";
 import { i18n } from '../i18next/i18n'  //Do not remove this line
+import { Link as ScrollLink } from 'react-scroll';
 
 
 const Header = () => {
@@ -70,9 +71,9 @@ const Header = () => {
   const toggleDarkTheme = () => {
     dispatch(updateToggleDark(!toggleDarkMode));
   };
-const handleChange=()=>{
-  
-}
+  const handleChange = () => {
+
+  }
 
   return (
 
@@ -94,7 +95,7 @@ const handleChange=()=>{
                   <ul className='ps-0 mb-0'>
                     <li><Link to='#'>{t('sitemap')}</Link></li>
                     <li><Link to='#' onClick={handleClickScroll}> {t('skipToMainContent')}</Link></li>
-                    <li><Link to='#'>{t('screenReaderAccess')}</Link></li>
+                    <li><Link to='/screen-reader-access'>{t('screenReaderAccess')}</Link></li>
                   </ul>
                 </div>
 
@@ -167,11 +168,30 @@ const handleChange=()=>{
                       <li>
                         <NavLink to="/">{t('home')}</NavLink>
                       </li>
+                      {pathName === "/" ? <li>
+                        <ScrollLink
+                          to="aboutSection"
+                          smooth={true}
+                          duration={500}
+                          offset={-70}
+                        >
+                          {t('about_us')}
+                        </ScrollLink>
+
+                      </li> : <li>
+                        <Link
+                          to="/"
+                          smooth={true}
+                          duration={500}
+                          offset={-70}
+                        >
+                          {t('about_us')}
+                        </Link>
+                       
+                      </li>}
+
                       <li>
-                        <NavLink to="/about">{t('about_us')}</NavLink>
-                      </li>
-                      <li>
-                        {pathName === "/" ? (
+                        {pathName === "/" || pathName === "/screen-reader-access" ? (
                           <NavLink to="/transition-rate">{t('reports')}</NavLink>
                         ) : pathName === "/transition-rate" ? (
                           <NavLink to="/transition-rate">{t('reports')}</NavLink>
@@ -186,12 +206,12 @@ const handleChange=()=>{
                         ) : null}
                       </li>
 
-                      <li>
+                      {/* <li>
                         <NavLink to="/news">{t('newsAndArticles')}</NavLink>
                       </li>
                       <li>
                         <NavLink to="/insights">{t('insights')}</NavLink>
-                      </li>
+                      </li> */}
                       <li>
                         <NavLink to="/contact">{t('contactUs')}</NavLink>
                       </li>
@@ -221,57 +241,57 @@ const handleChange=()=>{
 
 const Hamburger = () => (
   <>
-  <svg xmlns="http://www.w3.org/2000/svg" width="52" height="24" viewBox="0 0 52 24" >
-    <g id="Group_9" data-name="Group 9" transform="translate(-294 -47)">
-      <rect
-        id="Rectangle_3"
-        data-name="Rectangle 3"
-        width="42"
-        height="4"
-        rx="2"
-        transform="translate(304 47)"
-        fill="#574c4c"/>
-      <rect
-        id="Rectangle_5"
-        data-name="Rectangle 5"
-        width="42"
-        height="4"
-        rx="2"
-        transform="translate(304 67)"
-        fill="#574c4c" />
-      <rect
-        id="Rectangle_4"
-        data-name="Rectangle 4"
-        width="52"
-        height="4"
-        rx="2"
-        transform="translate(294 57)"
-        fill="#574c4c" />
-    </g>
-  </svg>
-  
-  <svg
-    width="40"
-    height="40"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M18 6L6 18"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M6 6L18 18"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="52" height="24" viewBox="0 0 52 24" >
+      <g id="Group_9" data-name="Group 9" transform="translate(-294 -47)">
+        <rect
+          id="Rectangle_3"
+          data-name="Rectangle 3"
+          width="42"
+          height="4"
+          rx="2"
+          transform="translate(304 47)"
+          fill="#574c4c" />
+        <rect
+          id="Rectangle_5"
+          data-name="Rectangle 5"
+          width="42"
+          height="4"
+          rx="2"
+          transform="translate(304 67)"
+          fill="#574c4c" />
+        <rect
+          id="Rectangle_4"
+          data-name="Rectangle 4"
+          width="52"
+          height="4"
+          rx="2"
+          transform="translate(294 57)"
+          fill="#574c4c" />
+      </g>
+    </svg>
+
+    <svg
+      width="40"
+      height="40"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M18 6L6 18"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M6 6L18 18"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   </>
 );
 

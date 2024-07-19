@@ -12,7 +12,7 @@
         padding: 20px 0 20px;
 
         @media (max-width: 767px) {
-            padding: 7px 0 7px;
+            padding: 9px 0 7px;
         }
 
         .main-title {
@@ -98,7 +98,7 @@
             @media (max-width: 991px) {
                 margin-bottom: 12px;
                 margin-left: 0;
-                width: 100% !important;
+                width: 48.5% !important;
                 height: 42px;
                 padding: 0.25rem 0.25rem 0.25rem 0.25rem;
             }
@@ -452,9 +452,21 @@
 
     .ag-header-cell {
         padding: 0 15px !important;
-    }
+
+        @media (max-width: 991px) {
+            padding: 0 5px !important;
+        }
+
+    }  
+  
 
     // .ag-row-animation .ag-row{height: 38px !important;}
+}
+
+@media (max-width: 991px) {
+    .multi-header-table .ag-header-row.ag-header-row-column{
+    font-size: 11px !important;
+    }
 }
 
 .ant-select-show-search:where(.css-p8b6i).ant-select:not(.ant-select-customize-input) .ant-select-selector{border: 0 !important;}
@@ -476,6 +488,33 @@
 
         .col-sm-12.col-20.m-auto {
             margin: unset !important;
+        }
+
+        .Comparison-select-group {
+            .antd-select{
+
+                display: block !important;
+
+                .form-select{
+                    width: 46.5% !important;
+                    float: left;
+                    margin-right: 10px;                   
+                }
+            }
+        }
+
+        .order_1{
+            order: 1;
+            width: 70%;
+            .sub-title{margin-bottom: 0;}
+        }
+        .order_2{
+            order: 2;
+            width: 30%;
+        }
+        .order_3{
+            order: 3;
+            margin-top: 10px;
         }
     }
 
@@ -508,6 +547,11 @@
     @media (max-width: 991px) {
         width: 100% !important;
         margin-bottom: 15px;
+
+        .comp-card .lower-card .text-card {
+            padding-right: 0px;
+            margin-right: 5px;
+        }
     }
 }
 

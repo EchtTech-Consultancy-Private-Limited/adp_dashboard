@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { Element } from "react-scroll";
 
 export default function AboutUs() {
   const { t, i18n } = useTranslation();
@@ -28,8 +29,10 @@ export default function AboutUs() {
   }, []);
 
   return (
+    
     <section className="about-us ptb-70 bg-white">
-      <div className="container">
+      <Element name="aboutSection">
+      <div className="container"id="aboutSection">
         <div className="row">
           <h2 className="heading-blue" data-aos="fade-up-left">{t("aboutTitle")}</h2>
           <div className="col-md-10 m-auto">
@@ -46,8 +49,7 @@ export default function AboutUs() {
                   </div>
                   <div
                     className="d-flex justify-content-center"
-                    onClick={() => handleClick("ADP_Report")}
-                  >
+                    onClick={() => handleClick("ADP_Report")}>
                     <Link to="/transition-rate" className="btn-banner">
                       {t("seeReport")}{" "}
                       <span className="material-icons-round">
@@ -58,17 +60,16 @@ export default function AboutUs() {
                 </Tab>
                 <Tab
                   eventKey="Aspirational Block Programme"
-                  title={t('aspirationalBlockProgramme')}
-                >
+                  title={t('aspirationalBlockProgramme')}>
                   <div className="tab-text text-center">
-                    <p>{t("section1")}</p>
-                    <p>{t("section2")}</p>
-                    <p>{t("section3")}</p>
+                    <p>{t("section4")}</p>
+                    <p>{t("section5")}</p>
+                    <p>{t("section6")}</p>
+                    <p>{t("section7")}</p>
                   </div>
                   <div
                     className="d-flex justify-content-center"
-                    onClick={() => handleClick("ABP_Report")}
-                  >
+                    onClick={() => handleClick("ABP_Report")}>
                     <Link to="/transition-rate" className="btn-banner">
                       {" "}
                       {t("seeReport")}
@@ -83,6 +84,7 @@ export default function AboutUs() {
           </div>
         </div>
       </div>
+      </Element>
     </section>
   );
 }

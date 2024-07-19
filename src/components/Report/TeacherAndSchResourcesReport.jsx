@@ -77,11 +77,11 @@ export default function TeacherAndSchResourcesReport() {
     const [finalData, SetFinalData] = useState([])
 
     function resteData() {
-        dispatch(selectState(SelectState));
-        dispatch(selectDistrict(SelectDistrict));
-        dispatch(selectBlock(SelectBlock));
+        // dispatch(selectState(SelectState));
+        // dispatch(selectDistrict(SelectDistrict));
+        // dispatch(selectBlock(SelectBlock));
         dispatch(setselectedOption(selectedOptionConst));
-        dispatch(setSelectedYear(intialYear))
+        // dispatch(setSelectedYear(intialYear))
     }
     useEffect(() => {
         resteData()
@@ -139,7 +139,7 @@ export default function TeacherAndSchResourcesReport() {
         setLoading(false)
 
         // dispatch(setUpdateStatus(false))
-    }, [selectedState, selectedDistrict, selectedBlock]);
+    }, [selectedState, selectedDistrict, selectedBlock,aspirationalData]);
     const getLocationName = (item) => {
         if (selectReportType === "ABP_Report") {
             if (selectedBlock && selectedBlock !== AllBlock && selectedBlock !== SelectBlock) {
@@ -551,8 +551,8 @@ export default function TeacherAndSchResourcesReport() {
                                                 <h3 className='heading-sm'>{t('teacherSchoolResources')}</h3>
                                             </div>
                                             <div className="tab-box">
-                                                <button className='tab-button active'><img src={table} alt="Table" /> {t('tableView')}</button>
-                                                <button className='tab-button'><img src={chart} alt="chart" /> {t('chartView')}</button>
+                                                <button className='tab-button active'><img src={table} alt="Table" /> <span>{t('tableView')}</span></button>
+                                                <button className='tab-button'><img src={chart} alt="chart" /> <span>{t('chartView')}</span></button>
                                             </div>
                                         </div>
                                     </div>
