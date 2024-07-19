@@ -539,23 +539,26 @@ export default function StudentsPerformanceReport() {
                                     <div className="col-md-6">
                                         <div className="d-flex align-items-end">
                                             <div className="title-box">
-                                                <h5 className='sub-title'>
-                                                    {selectReportType === "ADP_Report" ? (
-                                                        selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict ?
-                                                            `${selectedDistrict}` :
-                                                            selectedDistrict === AllDistrict ?
-                                                                `${selectedState} District's` : `${selectedState} District's`
-                                                    ) : (
-                                                        selectReportType === "ABP_Report" ? (
-                                                            selectedState !== SelectState ? (
-                                                                selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict ?
-                                                                    `${selectedState} District's` :
-                                                                    selectedBlock !== SelectBlock && selectedBlock !== AllBlock ?
-                                                                        `${selectedBlock}` :
-                                                                        `${selectedDistrict} Block's`
-                                                            ) : selectedBlock
-                                                        ) : selectedBlock
-                                                    )}
+                                                <h5 className="sub-title">
+                                                    {selectReportType === "ADP_Report"
+                                                        ? selectedState === "All State"
+                                                            ? "All State"
+                                                            : selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict
+                                                                ? `${selectedDistrict}`
+                                                                : selectedDistrict === AllDistrict
+                                                                    ? `${selectedState} District's`
+                                                                    : `${selectedState} District's`
+                                                        : selectReportType === "ABP_Report"
+                                                            ? selectedState === "All State"
+                                                                ? "All State"
+                                                                : selectedState !== SelectState
+                                                                    ? selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict
+                                                                        ? `${selectedState} District's`
+                                                                        : selectedBlock !== SelectBlock && selectedBlock !== AllBlock
+                                                                            ? `${selectedBlock}`
+                                                                            : `${selectedDistrict} Block's`
+                                                                    : selectedBlock
+                                                            : selectedBlock}
                                                 </h5>
                                                 <h3 className='heading-sm'>{t('studentPerformance')}</h3>
                                             </div>

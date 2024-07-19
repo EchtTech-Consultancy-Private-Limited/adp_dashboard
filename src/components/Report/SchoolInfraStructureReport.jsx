@@ -109,7 +109,7 @@ export default function SchoolInfraStructureReport() {
     (state) => state.locationAdp
   );
   const [locationHeader, SetLocationHeader] = useState();
-  const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
+  const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
   const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
   const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
   const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
@@ -144,7 +144,7 @@ export default function SchoolInfraStructureReport() {
       ) {
         SetLocationHeader("District");
       }
-      
+
       dispatch(SetSheetName("Aspirational District Programme"));
     } else if (selectReportType === "ABP_Report") {
       if (
@@ -169,7 +169,7 @@ export default function SchoolInfraStructureReport() {
     selectReportType,
   ]);
 
-  
+
   useEffect(() => {
     let filteredData = aspirationalData;
 
@@ -244,11 +244,11 @@ export default function SchoolInfraStructureReport() {
   const percentageRenderer = (params) => {
     const value = params.value;
     if (typeof value === 'number') {
-        return value.toFixed(2) + " "+ '%';
+      return value.toFixed(2) + " " + '%';
     } else {
-        return value; 
+      return value;
     }
-};
+  };
 
   const [columns, setColumn] = useState([
     {
@@ -509,23 +509,23 @@ export default function SchoolInfraStructureReport() {
   const getRowsToExport = (gridApi) => {
     const columns = gridApi.api.getAllDisplayedColumns();
     const getCellToExport = (column, node) => {
-        const value = gridApi.api.getValue(column, node);
-        if (typeof value === 'number') {
-            return { text: value.toFixed(2) }; 
-        }
-        return { text: value ?? "" };
+      const value = gridApi.api.getValue(column, node);
+      if (typeof value === 'number') {
+        return { text: value.toFixed(2) };
+      }
+      return { text: value ?? "" };
     };
     const rowsToExport = [];
     gridApi.api.forEachNodeAfterFilterAndSort((node) => {
-        const rowToExport = [];
-        rowToExport.push({ text: rowsToExport.length + 1 });
-        columns.forEach((column) => {
-            rowToExport.push(getCellToExport(column, node));
-        });
-        rowsToExport.push(rowToExport);
+      const rowToExport = [];
+      rowToExport.push({ text: rowsToExport.length + 1 });
+      columns.forEach((column) => {
+        rowToExport.push(getCellToExport(column, node));
+      });
+      rowsToExport.push(rowToExport);
     });
     return rowsToExport;
-};
+  };
 
   const getDocument = (gridApi) => {
     const headerRow = getHeaderToExport(gridApi);
@@ -666,22 +666,23 @@ export default function SchoolInfraStructureReport() {
                       <div className="title-box">
                         <h5 className="sub-title">
                           {selectReportType === "ADP_Report"
-                            ? selectedDistrict !== SelectDistrict &&
-                              selectedDistrict !== AllDistrict
-                              ? `${selectedDistrict}`
-                              : selectedDistrict === AllDistrict
-                                ? `${selectedState} District's`
-                                : `${selectedState} District's`
-                            : selectReportType === "ABP_Report"
-                              ? selectedState !== SelectState
-                                ? selectedDistrict === SelectDistrict ||
-                                  selectedDistrict === AllDistrict
+                            ? selectedState === "All State"
+                              ? "All State"
+                              : selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict
+                                ? `${selectedDistrict}`
+                                : selectedDistrict === AllDistrict
                                   ? `${selectedState} District's`
-                                  : selectedBlock !== SelectBlock &&
-                                    selectedBlock !== AllBlock
-                                    ? `${selectedBlock}`
-                                    : `${selectedDistrict} Block's`
-                                : selectedBlock
+                                  : `${selectedState} District's`
+                            : selectReportType === "ABP_Report"
+                              ? selectedState === "All State"
+                                ? "All State"
+                                : selectedState !== SelectState
+                                  ? selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict
+                                    ? `${selectedState} District's`
+                                    : selectedBlock !== SelectBlock && selectedBlock !== AllBlock
+                                      ? `${selectedBlock}`
+                                      : `${selectedDistrict} Block's`
+                                  : selectedBlock
                               : selectedBlock}
                         </h5>
                         <h3 className="heading-sm">{t('schoolInfrastructure')}</h3>
