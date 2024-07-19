@@ -106,7 +106,7 @@ export default function TransitionRateReport() {
     localStorage.setItem("selectedReport", "Transition Rate");
     const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
     // const [aspirationalData, setAspirationalData] = useState([]);
-    const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
+    const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
     const [locationHeader, SetLocationHeader] = useState();
     const [gridApi, setGridApi] = useState()
     const states = useSelector((state) => state.locationAdp.states);
@@ -139,7 +139,7 @@ export default function TransitionRateReport() {
             ) {
                 SetLocationHeader("District");
             }
-            
+
             dispatch(SetSheetName("Aspirational District Programme"));
         } else if (selectReportType === "ABP_Report") {
             if (
@@ -166,7 +166,7 @@ export default function TransitionRateReport() {
 
     /*...............Take data report wise..............*/
 
-  
+
 
     useEffect(() => {
         let filteredData = aspirationalData;
@@ -241,11 +241,11 @@ export default function TransitionRateReport() {
 
     const percentageRenderer = (params) => {
         const value = params.value;
-    
+
         if (typeof value === 'number') {
-            return value.toFixed(2) + " "+ '%';
+            return value.toFixed(2) + " " + '%';
         } else {
-            return value; 
+            return value;
         }
     };
     const [columns, setColumn] = useState([
@@ -311,7 +311,7 @@ export default function TransitionRateReport() {
                     ]
                 },
                 {
-                    headerName: "Primary to Upper Primary",
+                    headerName: "Upper Primary To Secondary",
                     children: [
                         {
                             headerName: "Boys",
@@ -334,7 +334,7 @@ export default function TransitionRateReport() {
                     ]
                 },
                 {
-                    headerName: "Secondary to Heigher Secondary",
+                    headerName: "Secondary To Higher Secondary",
                     children: [
                         {
                             headerName: "Boys",
@@ -356,12 +356,12 @@ export default function TransitionRateReport() {
                         }
                     ]
                 },
-                
+
             ];
 
             setColumn(columns);
         }
-    }, [selectedState,selectReportType])
+    }, [selectedState, selectReportType])
 
 
     const handleOptionChange = (event) => {
@@ -532,7 +532,7 @@ export default function TransitionRateReport() {
             enableValue: true,
             enableRowGroup: true,
             enablePivot: true,
-            sortable: true, 
+            sortable: true,
             filter: true,
             resizable: true,
         }),
@@ -730,22 +730,23 @@ export default function TransitionRateReport() {
                                             <div className="title-box">
                                                 <h5 className="sub-title">
                                                     {selectReportType === "ADP_Report"
-                                                        ? selectedDistrict !== SelectDistrict &&
-                                                            selectedDistrict !== AllDistrict
-                                                            ? `${selectedDistrict}`
-                                                            : selectedDistrict === AllDistrict
-                                                                ? `${selectedState} District's`
-                                                                : `${selectedState} District's`
-                                                        : selectReportType === "ABP_Report"
-                                                            ? selectedState !== SelectState
-                                                                ? selectedDistrict === SelectDistrict ||
-                                                                    selectedDistrict === AllDistrict
+                                                        ? selectedState === "All State"
+                                                            ? "All State"
+                                                            : selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict
+                                                                ? `${selectedDistrict}`
+                                                                : selectedDistrict === AllDistrict
                                                                     ? `${selectedState} District's`
-                                                                    : selectedBlock !== SelectBlock &&
-                                                                        selectedBlock !== AllBlock
-                                                                        ? `${selectedBlock}`
-                                                                        : `${selectedDistrict} Block's`
-                                                                : selectedBlock
+                                                                    : `${selectedState} District's`
+                                                        : selectReportType === "ABP_Report"
+                                                            ? selectedState === "All State"
+                                                                ? "All State"
+                                                                : selectedState !== SelectState
+                                                                    ? selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict
+                                                                        ? `${selectedState} District's`
+                                                                        : selectedBlock !== SelectBlock && selectedBlock !== AllBlock
+                                                                            ? `${selectedBlock}`
+                                                                            : `${selectedDistrict} Block's`
+                                                                    : selectedBlock
                                                             : selectedBlock}
                                                 </h5>
                                                 <h3 className="heading-sm">{t('transitionRate')}</h3>
