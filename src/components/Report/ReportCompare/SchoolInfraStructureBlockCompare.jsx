@@ -239,10 +239,10 @@ export default function SchoolInfraStructureBlockCompare() {
           <div className="col-md-12">
             <div className="comparison-box">
               <div className="row align-items-center">
-                <div className="col-md-3">
+                <div className="col-md-3 order_1">
                   <h5 className="sub-title">{t('selectBlockToCompare')}</h5>
                 </div>
-                <div className="col-md-6 Comparison-select-group">
+                <div className="col-md-6 Comparison-select-group order_3">
                   <div className="d-flex justify-content-between text-aligns-center antd-select">
                   {[...Array(MAX_BLOCKS)].map((_, index) => (
                         <div key={index}>
@@ -274,13 +274,13 @@ export default function SchoolInfraStructureBlockCompare() {
                       ))}
                   </div>
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-3 order_2">
                   <div className="tab-box float-end">
                     <button className="tab-button active">
-                      <img src={card} alt="card" /> {t('cardView')}
+                      <img src={card} alt="card" /> <span>{t('cardView')}</span>
                     </button>
                     <button className="tab-button">
-                      <img src={table} alt="Table" />{t('tableView')}
+                      <img src={table} alt="Table" /> <span>{t('tableView')}</span>
                     </button>
                   </div>
                 </div>

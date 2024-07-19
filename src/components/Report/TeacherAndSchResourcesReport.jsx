@@ -548,8 +548,8 @@ export default function TeacherAndSchResourcesReport() {
                                                 <h3 className='heading-sm'>{t('teacherSchoolResources')}</h3>
                                             </div>
                                             <div className="tab-box">
-                                                <button className='tab-button active'><img src={table} alt="Table" /> {t('tableView')}</button>
-                                                <button className='tab-button'><img src={chart} alt="chart" /> {t('chartView')}</button>
+                                                <button className='tab-button active'><img src={table} alt="Table" /> <span>{t('tableView')}</span></button>
+                                                <button className='tab-button'><img src={chart} alt="chart" /> <span>{t('chartView')}</span></button>
                                             </div>
                                         </div>
                                     </div>

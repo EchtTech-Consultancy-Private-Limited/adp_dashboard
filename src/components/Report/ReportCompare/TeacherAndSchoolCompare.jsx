@@ -224,12 +224,12 @@ export default function TeacherAndSchoolCompare() {
             <div className="col-md-12">
               <div className="comparison-box">
                 <div className="row align-items-center">
-                  <div className="col-md-3">
+                  <div className="col-md-3 order_1">
                     <h5 className="sub-title">
                       {t("selectDistrictToCompare")}
                     </h5>
                   </div>
-                  <div className="col-md-6 Comparison-select-group">
+                  <div className="col-md-6 Comparison-select-group order_3">
                     <div className="d-flex justify-content-between text-aligns-center antd-select">
                       {[...Array(MAX_DISTRICTS)].map((_, index) => (
                         <div key={index}>
@@ -263,14 +263,14 @@ export default function TeacherAndSchoolCompare() {
                       ))}
                     </div>
                   </div>
-                  <div className="col-md-3">
+                  <div className="col-md-3 order_2">
                     <div className="tab-box float-end">
-                      <button className="tab-button active">
-                        <img src={card} alt="card" /> {t("cardView")}
-                      </button>
-                      <button className="tab-button">
-                        <img src={table} alt="Table" /> {t("tableView")}
-                      </button>
+                    <button className="tab-button active">
+                      <img src={card} alt="card" /> <span>{t('cardView')}</span>
+                    </button>
+                    <button className="tab-button">
+                      <img src={table} alt="Table" /> <span>{t('tableView')}</span>
+                    </button>
                     </div>
                   </div>
                 </div>
