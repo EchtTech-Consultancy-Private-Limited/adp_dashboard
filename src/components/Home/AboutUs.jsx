@@ -28,7 +28,7 @@ export default function AboutUs() {
   }, []);
 
   return (
-    <section className="about-us ptb-70 bg-white">
+    <section className="about-us ptb-70 bg-white" id="about">
       <div className="container">
         <div className="row">
           <h2 className="heading-blue" data-aos="fade-up-left">{t("aboutTitle")}</h2>
