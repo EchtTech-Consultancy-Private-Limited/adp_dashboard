@@ -11,6 +11,7 @@ import {
   setselectedCompareOption,
   setUpdateReportType,
   setselectedCompareBlocks,
+  setAspirationalAllData,
 } from "../../../redux/slice/reportTypeSlice";
 import aspirationalAbpData from "../../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../../aspirational-reports-data/aspirationalDistrict.json";
@@ -32,9 +33,9 @@ const ArrowRenderer = ({ data }) => {
 
   useEffect(() => {
     if (selectedOption === "upper_primary_to_secondary") {
-      setArrowData(data.upri_t);
+      setArrowData(data?.upri_t);
     } else {
-      setArrowData(data.sec_t);
+      setArrowData(data?.sec_t);
     }
   }, [selectedOption, data]);
 
@@ -73,7 +74,8 @@ const ArrowRenderer = ({ data }) => {
 export default function TransitionBlockRateCompare() {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
-  const [aspirationalData, setAspirationalData] = useState([]);
+
+  const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
   const selectedOption = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareOption
   );
@@ -103,19 +105,19 @@ export default function TransitionBlockRateCompare() {
 
   useEffect(() => {
     // dispatch(setUpdateReportType('ADP_Report'));
-    setAspirationalData(aspirationalAdpData);
+    dispatch(setAspirationalAllData(aspirationalAdpData));
   }, [dispatch]);
   useEffect(() => {
     if (selectedAdpAbpOption === "ADP_Report") {
-      setAspirationalData(aspirationalAdpData);
+      dispatch(setAspirationalAllData(aspirationalAdpData));
     } else {
-      setAspirationalData(aspirationalAbpData);
+      dispatch(setAspirationalAllData(aspirationalAbpData));
     }
   }, [selectedAdpAbpOption]);
   // Initialize states and districts from JSON data
   useEffect(() => {
     const structuredData = aspirationalData?.reduce((acc, curr) => {
-      const stateIndex = acc.findIndex(
+      const stateIndex = acc?.findIndex(
         (st) => st.lgd_state_id === curr?.lgd_state_id
       );
       if (stateIndex === -1) {
@@ -136,7 +138,7 @@ export default function TransitionBlockRateCompare() {
           ],
         });
       } else {
-        const blockIndex = acc[stateIndex]?.blocks.findIndex(
+        const blockIndex = acc[stateIndex]?.blocks?.findIndex(
           (blk) => blk.lgd_block_id === curr?.lgd_block_id
         );
         if (blockIndex === -1) {
@@ -163,7 +165,7 @@ export default function TransitionBlockRateCompare() {
   // Handle state change
   const handleStateChange = (value) => {
     dispatch(selectState(value));
-    dispatch(setselectedCompareBlocks([]));
+    dispatch(([]));
   };
 
   // Handle district change
@@ -171,7 +173,7 @@ export default function TransitionBlockRateCompare() {
     const newSelectedBlocks = [...selectedBlocks];
     const blockData = aspirationalData.find(
       (block) =>
-        block.lgd_block_name === value && block.lgd_state_name === selectedState
+        block?.lgd_block_name === value && block.lgd_state_name === selectedState
     );
     if (blockData) {
       newSelectedBlocks[position] = blockData;
@@ -187,11 +189,11 @@ export default function TransitionBlockRateCompare() {
     const selected = selectedBlocks.filter(
       (block) =>
         block &&
-        block.lgd_block_name !== selectedBlocks[position]?.lgd_block_name
+        block?.lgd_block_name !== selectedBlocks[position]?.lgd_block_name
     );
     return blocks.filter(
       (block) =>
-        !selected.map((d) => d.lgd_block_name).includes(block.lgd_block_name)
+        !selected.map((d) => d?.lgd_block_name).includes(block?.lgd_block_name)
     );
   };
 
@@ -354,7 +356,7 @@ export default function TransitionBlockRateCompare() {
                                 <div className="text-card">
                                   <p>Block</p>
                                   <h6 className="sub-title">
-                                    {block.lgd_block_name}
+                                    {block?.lgd_block_name}
                                   </h6>
                                 </div>
                               </div>

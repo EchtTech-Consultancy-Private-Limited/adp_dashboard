@@ -4,13 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { selectBlock, selectDistrict, selectState, setStates } from '../../redux/slice/filterServicesSlice';
 import { setselectedCompareBlocks, setselectedCompareDistricts, setselectedOption, setselectedReport, setSelectedYear, setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTypeSlice';
-// import aspirationalAbpData2020 from "../../aspirational-reports-data/2020-21/aspirationalAbpData.json";
-import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json"
-// import aspirationalAbpData from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
-// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
-import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import { Select } from 'antd';
 import { AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectKpi, SelectState } from '../../constant/Constant';
 import { selectComparisionDistrict } from '../../redux/slice/filterServicesComprisionSlice';
@@ -32,7 +25,7 @@ export default function BannerReportFilter() {
   const selectedReport = useSelector((state) => state.reportAdpAbpType.selectedReport);
   const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
   const [showBreadcomeAdpAbp, setShowBreadcomeAdpAbp] = useState();
-  const [aspirationalData, setAspirationalData] = useState([]);
+  const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
   const disableSelectedState = selectedState === "All State";
   const disableSelectedDistrict = selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict;
 
@@ -44,20 +37,7 @@ export default function BannerReportFilter() {
     dispatch(selectBlock(SelectBlock));
     dispatch(setselectedOption(selectedOptionConst));
   }
-  const combinedData = {
-    "2020-21": {
-      ADP_Report: aspirationalAdpData2020,
-      ABP_Report: aspirationalAbpData,
-    },
-    "2021-22": {
-      ADP_Report: aspirationalAdpData2021,
-      ABP_Report: aspirationalAbpData,
-    },
-    "2022-23": {
-      ADP_Report: aspirationalAdpData2022,
-      ABP_Report: aspirationalAbpData,
-    },
-  };
+
 
   useEffect(() => {
 
@@ -73,16 +53,6 @@ export default function BannerReportFilter() {
     }
   }, [dispatch, selectedOption])
   useEffect(() => {
-    // Update the state based on the selected options
-    let selectedData;
-    if (selectedOption) {
-      selectedData = combinedData[selectedYear][selectedOption];
-    }
-
-    if (selectedData) {
-
-      setAspirationalData(selectedData);
-    }
     if (selectedOption === "ADP_Report") {
       setShowBreadcomeAdpAbp("ADP Report")
       resteData()
@@ -91,7 +61,7 @@ export default function BannerReportFilter() {
       setShowBreadcomeAdpAbp("ABP Report")
       resteData()
     }
-  }, [selectedOption, selectedYear]);
+  }, [selectedOption]);
 
   useEffect(() => {
     const savedReportName = localStorage.getItem('selectedReport');
