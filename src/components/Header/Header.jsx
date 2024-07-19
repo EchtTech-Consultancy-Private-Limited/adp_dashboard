@@ -94,7 +94,7 @@ const handleChange=()=>{
                   <ul className='ps-0 mb-0'>
                     <li><Link to='#'>{t('sitemap')}</Link></li>
                     <li><Link to='#' onClick={handleClickScroll}> {t('skipToMainContent')}</Link></li>
-                    <li><Link to='#'>{t('screenReaderAccess')}</Link></li>
+                    <li><Link to='/screen-reader-access'>{t('screenReaderAccess')}</Link></li>
                   </ul>
                 </div>
 

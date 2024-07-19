@@ -5,6 +5,7 @@ import TeacherAndSchResourcesReport from '../components/Report/TeacherAndSchReso
 import StudentsPerformanceReport from '../components/Report/StudentsPerformanceReport';
 import SchoolInfraStructureReport from '../components/Report/SchoolInfraStructureReport';
 import EnrollmentAndRetentionReport from '../components/Report/EnrollmentAndRetentionReport';
+import ScreenReader from '../pages/ScreenReader';
 
 export const routes = (
    
@@ -16,6 +17,7 @@ export const routes = (
         <Route exact path="/student-performance" element={<StudentsPerformanceReport />} />
         <Route exact path="/school-infrastructure" element={<SchoolInfraStructureReport />} />
         <Route exact path="/enrollment-retention" element={<EnrollmentAndRetentionReport />} />
+        <Route exact path="/screen-reader-access" element={<ScreenReader/>} />
 
         <Route path="/*" element={<Navigate to="/" />} />
         {/* <Route path="/report" element={<TransitionRateReport/>} /> */}
