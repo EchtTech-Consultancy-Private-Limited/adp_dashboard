@@ -32,36 +32,24 @@ export default function BannerReportFilter() {
   // Combine the data from multiple JSON files
 
   function resteData() {
-    dispatch(selectState(SelectState));
+    // dispatch(selectState(SelectState));
     dispatch(selectDistrict(SelectDistrict));
     dispatch(selectBlock(SelectBlock));
-    dispatch(setselectedOption(selectedOptionConst));
+    // dispatch(setselectedOption(selectedOptionConst));
   }
 
 
-  useEffect(() => {
-
-    if (selectedOption === "ADP_Report") {
-
-      dispatch(setSelectedYear(intialYear))
-      resteData()
-    }
-    else {
-
-      dispatch(setSelectedYear(intialYear))
-      resteData()
-    }
-  }, [dispatch, selectedOption])
+ 
   useEffect(() => {
     if (selectedOption === "ADP_Report") {
       setShowBreadcomeAdpAbp("ADP Report")
-      resteData()
+       resteData()
     }
     else {
       setShowBreadcomeAdpAbp("ABP Report")
-      resteData()
+       resteData()
     }
-  }, [selectedOption]);
+  }, [selectedOption,selectedYear]);
 
   useEffect(() => {
     const savedReportName = localStorage.getItem('selectedReport');
@@ -71,7 +59,7 @@ export default function BannerReportFilter() {
   }, [dispatch]);
 
   const handleReportChange = (value) => {
-    dispatch(setUpdateReportType('ADP_Report'));
+   // dispatch(setUpdateReportType('ADP_Report'));
     localStorage.setItem('selectedReport', value);
     dispatch(setselectedReport(value));
     switch (value) {
@@ -144,7 +132,6 @@ export default function BannerReportFilter() {
       dispatch(setStates(structuredData));
     }
   }, [aspirationalData, dispatch]);
-
   const handleOptionChange = (event) => {
 
     dispatch(setUpdateReportType(event.target.value));
@@ -167,9 +154,9 @@ export default function BannerReportFilter() {
 
   const handleYearChange = (value) => {
     dispatch(setSelectedYear(value));
-    dispatch(selectState("All State"));
-    dispatch(setselectedCompareDistricts([]));
-    dispatch(setselectedCompareBlocks([]))
+    // dispatch(selectState("All State"));
+    // dispatch(setselectedCompareDistricts([]));
+    // dispatch(setselectedCompareBlocks([]))
   };
 
   return (

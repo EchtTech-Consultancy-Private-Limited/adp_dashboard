@@ -20,7 +20,6 @@ const Header = () => {
   }
   const location = useLocation()
   const pathName = location.pathname;
-  console.log(pathName, "pathName")
   const [showNavbar, setShowNavbar] = React.useState(false);
   const [isShow, setIsShow] = useState(false);
 

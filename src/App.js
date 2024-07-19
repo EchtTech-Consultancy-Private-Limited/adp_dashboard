@@ -11,6 +11,7 @@ import aspirationalAdpData2022 from "./aspirational-reports-data/aspirationalAdp
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { setAspirationalAllData, setselectedDataAllYear } from './redux/slice/reportTypeSlice';
+import { selectState,selectDistrict,selectBlock } from './redux/slice/filterServicesSlice'; 
 function App() {
   const dispatch = useDispatch()
   const toggleDarkMode = useSelector((state) => state.toggle.toggleDarkLight);
@@ -18,6 +19,7 @@ function App() {
   const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
   const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
   const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
+
   useEffect(() => {
     if (toggleDarkMode) {
       localStorage.setItem("dark-mode", "true");
@@ -50,8 +52,7 @@ function App() {
       dispatch(setselectedDataAllYear(selectedData))
       dispatch(setAspirationalAllData(selectedData));
     }
-  }, [selectReportType, selectedYear,selectedState,selectedDistrict,selectedBlock]);
-
+  }, [selectReportType, selectedState,selectedDistrict,selectedBlock,selectedYear,]);
   return (
     <div className="App">
       <HashRouter>
