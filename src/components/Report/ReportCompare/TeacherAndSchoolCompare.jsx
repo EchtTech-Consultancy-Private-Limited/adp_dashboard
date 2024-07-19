@@ -184,7 +184,7 @@ export default function TeacherAndSchoolCompare() {
         <div className="card-box">
           <div className="row align-items-end">
             <div className="col-md-7">
-              <div className="d-flex align-items-end">
+              <div className="d-flex align-items-center">
                 <div className="title-box">
                   {/* <h5 className='sub-title'>State :
                                     <Select
@@ -209,7 +209,7 @@ export default function TeacherAndSchoolCompare() {
                                         ))}
                                     </Select>
                                 </h5> */}
-                  <h3 className="heading-sm mt-2">
+                  <h3 className="heading-sm">
                     {t("comparisonByTeacherAndSchoolResources")}
                   </h3>
                 </div>

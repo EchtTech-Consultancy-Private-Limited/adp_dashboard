@@ -206,8 +206,8 @@ export default function TransitionBlockRateCompare() {
       <ScrollToTopOnMount />
       <div className="card-box">
         <div className="row align-items-end">
-          <div className="col-md-7">
-            <div className="d-flex align-items-end">
+          <div className="col-md-5">
+            <div className="d-flex align-items-center">
               <div className="title-box">
                 {/* <h5 className='sub-title'>State :
                                     <Select
@@ -232,13 +232,13 @@ export default function TransitionBlockRateCompare() {
                                         ))}
                                     </Select>
                                 </h5> */}
-                <h3 className="heading-sm mt-2">
+                <h3 className="heading-sm">
                 {t('comparisonByTransitionRate')}
                 </h3>
               </div>
             </div>
           </div>
-          <div className="col-md-5">
+          <div className="col-md-7">
             <div className="d-flex w-m-100">
               <div className="radio-button">
                 <div className="box-radio">
