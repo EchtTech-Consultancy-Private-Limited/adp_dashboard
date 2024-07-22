@@ -11,30 +11,20 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectBlock,
-  selectDistrict,
-  selectState,
-} from "../../redux/slice/filterServicesSlice";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { useTranslation } from "react-i18next";
 import { jsPDF } from "jspdf";
-import { Select } from "antd";
 import "jspdf-autotable";
 import { GlobalLoading } from "../GlobalLoading/GlobalLoading";
 import {
-  setgirdAPIForCommonData,
+  SetFinalData,
   setselectedOption,
-  setSelectedYear,
   SetSheetName,
-  setUpdateStatus,
 } from "../../redux/slice/reportTypeSlice";
-import BlankPage from "./BlankPage";
 import {
   AllBlock,
   AllDistrict,
-  intialYear,
   SelectBlock,
   SelectDistrict,
   selectedOptionConst,
@@ -119,8 +109,8 @@ export default function SchoolInfraStructureReport() {
   const savedReportName = localStorage.getItem("selectedReport");
   const report_name = savedReportName;
   const [data, setData] = useState([]);
-  const [finalData, SetFinalData] = useState([])
-
+  const finalData= useSelector((state) => state.reportAdpAbpType.finalData)
+  // const [finalData, SetFinalData] = useState([]
   function resteData() {
     // dispatch(selectState(SelectState));
     // dispatch(selectDistrict(SelectDistrict));
@@ -165,6 +155,7 @@ export default function SchoolInfraStructureReport() {
     selectedState,
     SelectState,
     selectedDistrict,
+    selectedBlock,
     SelectDistrict,
     selectReportType,
   ]);
@@ -410,60 +401,66 @@ export default function SchoolInfraStructureReport() {
 
   const compressData = useCallback((data, groupBy) => {
     return data.reduce((acc, curr) => {
-      let groupKey = curr[groupBy];
-      let group = acc.find((item) => item[groupBy] === groupKey);
-      // let state = acc.find((item) => item.lgd_state_name === curr.lgd_state_name);
+      const groupKey = curr[groupBy];
+      let group = acc.find(item => item[groupBy] === groupKey);
+      
       if (group) {
-        group.tot_school_girl_co_ed += curr?.tot_school_girl_co_ed;
-        group.total_no_of_fun_girls_toilet += curr?.total_no_of_fun_girls_toilet;
-        group.toilet_40 += curr?.toilet_40;
+        group.tot_school_girl_co_ed += curr?.tot_school_girl_co_ed || 0;
+        group.total_no_of_fun_girls_toilet += curr?.total_no_of_fun_girls_toilet || 0;
+        group.toilet_40 += curr?.toilet_40 || 0;
+  
+        const totalSchools = group.tot_school_girl_co_ed;
+        const totalToilet40 = group.toilet_40;
+  
         group.functional_toilet_girls_percent = parseFloat(
-          (curr?.functional_toilet_girls_percent)
-        )?.toFixed(2);
+          curr?.functional_toilet_girls_percent || 0
+        ).toFixed(2);
+  
         group.sch_having_toilet_40_percent = parseFloat(
-          (group.toilet_40 * 100) / group.tot_school_girl_co_ed
-        )?.toFixed(2);
+          (totalToilet40 * 100) / totalSchools
+        ).toFixed(2);
       } else {
+        const totalSchools = curr?.tot_school_girl_co_ed || 0;
+        const totalToilet40 = curr?.toilet_40 || 0;
+  
         acc.push({
           ...curr,
           lgd_state_name: curr.lgd_state_name,
-          tot_school_girl_co_ed: curr?.tot_school_girl_co_ed,
-          total_no_of_fun_girls_toilet: curr?.total_no_of_fun_girls_toilet,
-          toilet_40: curr?.toilet_40,
+          tot_school_girl_co_ed: totalSchools,
+          total_no_of_fun_girls_toilet: curr?.total_no_of_fun_girls_toilet || 0,
+          toilet_40: totalToilet40,
           functional_toilet_girls_percent: parseFloat(
-            (curr.functional_toilet_girls_percent)
-          )?.toFixed(2),
+            curr.functional_toilet_girls_percent || 0
+          ).toFixed(2),
           sch_having_toilet_40_percent: parseFloat(
-            (curr.toilet_40 * 100) / curr.tot_school_girl_co_ed
-          )?.toFixed(2),
+            (totalToilet40 * 100) / totalSchools
+          ).toFixed(2),
         });
       }
+      
       return acc;
     }, []);
   }, []);
+  
 
   const compressedData = useMemo(() => {
     if (selectedState && selectedState !== SelectState) {
-      if (
-        selectedDistrict &&
-        selectedDistrict !== AllDistrict &&
-        selectedDistrict !== SelectDistrict
-      ) {
-        return compressData(data, "lgd_block_name");
-      }
-      return compressData(data, "lgd_district_name");
+        if (selectedDistrict && selectedDistrict !== AllDistrict && selectedDistrict !== SelectDistrict) {
+            return compressData(data, "lgd_block_name");
+        }
+        return compressData(data, "lgd_district_name");
     }
     return compressData(data, "lgd_state_name");
-  }, [data, selectedState, selectedDistrict, selectedBlock]);
-
+}, [data, selectedState, selectedDistrict, selectedBlock]);
   useEffect(() => {
     if (selectedState !== "All State") {
-      SetFinalData(compressedData)
+        dispatch(SetFinalData(compressedData))
     }
+    
     else {
-      SetFinalData(aspirationalData)
+        dispatch(SetFinalData(aspirationalData))
     }
-  }, [selectedState, data, selectedYear, aspirationalData])
+}, [selectedState, data, aspirationalData,selectReportType])
 
   const defColumnDefs = useMemo(
     () => ({

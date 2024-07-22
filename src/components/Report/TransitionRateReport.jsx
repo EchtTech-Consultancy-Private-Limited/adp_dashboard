@@ -23,6 +23,7 @@ import { Select } from "antd";
 import "jspdf-autotable";
 import { GlobalLoading } from "../GlobalLoading/GlobalLoading";
 import {
+    SetFinalData,
     setgirdAPIForCommonData,
     setselectedOption,
     setSelectedYear,
@@ -117,17 +118,19 @@ export default function TransitionRateReport() {
     const savedReportName = localStorage.getItem("selectedReport");
     const report_name = savedReportName;
     const [data, setData] = useState([]);
-    const [finalData, SetFinalData] = useState([])
+    // const [finalData, SetFinalData] = useState([])
+    const finalData = useSelector((state) => state.reportAdpAbpType.finalData)
+  
     function resteData() {
         // dispatch(selectState(SelectState));
         // dispatch(selectDistrict(SelectDistrict));
         // dispatch(selectBlock(SelectBlock));
-       // dispatch(setselectedOption(selectedOptionConst));
+        // dispatch(setselectedOption(selectedOptionConst));
         //  dispatch(setSelectedYear(intialYear));
     }
-    useEffect(() => {
-        resteData();
-    }, [dispatch]);
+    // useEffect(() => {
+    //     resteData();
+    // }, [dispatch]);
 
     /*...............update Location Header..............*/
 
@@ -161,6 +164,8 @@ export default function TransitionRateReport() {
         SelectState,
         selectedDistrict,
         SelectDistrict,
+        selectedBlock,
+        selectBlock,
         selectedOption,
         selectReportType
     ]);
@@ -204,8 +209,8 @@ export default function TransitionRateReport() {
         setLoading(false);
 
         // dispatch(setUpdateStatus(false))
-    }, [selectedState, selectedDistrict, selectedBlock,aspirationalData,selectReportType]);
-  
+    }, [selectedState, selectedDistrict, selectedBlock, aspirationalData]);
+
     const getLocationName = (item) => {
         if (selectReportType === "ABP_Report") {
             if (
@@ -362,7 +367,7 @@ export default function TransitionRateReport() {
 
             setColumn(columns);
         }
-    }, [selectedState])
+    }, [selectedState, selectReportType])
 
 
     const handleOptionChange = (event) => {
@@ -519,12 +524,13 @@ export default function TransitionRateReport() {
     }, [data, selectedState, selectedDistrict, selectedBlock]);
     useEffect(() => {
         if (selectedState !== "All State") {
-            SetFinalData(compressedData)
+            dispatch(SetFinalData(compressedData))
         }
+
         else {
-            SetFinalData(aspirationalData)
+            dispatch(SetFinalData(aspirationalData))
         }
-    }, [selectedState, data, aspirationalData])
+    }, [selectedState, data, aspirationalData, selectReportType])
     const defColumnDefs = useMemo(
         () => ({
             flex: 1,

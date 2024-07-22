@@ -228,7 +228,7 @@ const Header = () => {
                               smooth={true}
                               duration={500}
                               offset={-70}
-                              // className='active'
+                              //  className='active'
                             >
                               {t("about_us")}
                             </ScrollLink>

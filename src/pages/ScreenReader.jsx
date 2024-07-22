@@ -5,11 +5,11 @@ export default function ScreenReader() {
    
     return (
         <>
-            <section className='internal-banner-bg pb-4'>
+            {/* <section className='internal-banner-bg pb-4'>
                 <div className="container pb-2">
                     <Header />
                 </div>
-            </section>
+            </section> */}
             <section className="bg-grey ptb-70" id='content'>
                 <div className="container">
                     <div className="row">
