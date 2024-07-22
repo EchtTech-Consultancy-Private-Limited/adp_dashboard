@@ -30,7 +30,7 @@ export default function AboutUs() {
 
   return (
     
-    <section className="about-us ptb-70 bg-white">
+    <section className="about-us ptb-70 bg-white" id="about-us">
       <Element name="aboutSection">
       <div className="container"id="aboutSection">
         <div className="row">

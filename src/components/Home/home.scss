@@ -4,11 +4,21 @@
     height: 100vh;
     padding-top: 12px;
 
+    margin-top: -14vh;
+
+    @media (max-width:1599px) and (min-width: 1400px) {
+        margin-top: -17vh;
+    }
+
+    @media (max-width:1399px) and (min-width: 1024px) {
+        margin-top: -21vh;
+    }
+
     @media (max-width: 767px) {
         padding-top: 0px;
         // background: #2B9C9F;
         background-position: right;
-
+        margin-top: -18vh;
         .mt-5{
             margin-top: 1.5rem !important;
         }
@@ -39,19 +49,19 @@ img {
 .banner-text {
     display: flex;
     align-items: center;
-    height: 66vh;
+    height: 100vh;
     justify-content: left;
 
     @media (max-width:1599px) and (min-width: 1400px) {
-        height: 68vh;
+        height: 93vh;
     }
 
     @media (max-width:1399px) and (min-width: 1024px) {
-        height: 60vh;
+        height: 95vh;
     }
 
     @media (max-width: 767px) {
-        height: auto;
+        height: 72vh;
         // padding-top: 5%;
     }
 

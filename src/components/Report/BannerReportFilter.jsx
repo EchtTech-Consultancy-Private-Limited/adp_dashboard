@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../Header/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { selectBlock, selectDistrict, selectState, setStates } from '../../redux/slice/filterServicesSlice';
@@ -162,7 +161,6 @@ export default function BannerReportFilter() {
   return (
     <section className='internal-banner-bg'>
       <div className="container">
-        <Header />
         <div className="content-box">
           <div className="row align-items-center">
             <div className="col-md-3">

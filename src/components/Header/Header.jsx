@@ -19,7 +19,7 @@ const Header = () => {
 
   const handleAboutClick = () => {
     if (pathName !== "/") {
-       navigate("/");
+      navigate("/");
       // Delay scrolling to allow time for the navigation to complete
       setTimeout(() => {
         document.getElementById('aboutSection').scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
@@ -86,214 +86,221 @@ const Header = () => {
   const handleChange = () => {
 
   }
- 
+
   return (
+
     <>
-      <div className="header-top">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <div className="header-top-content">
-                {/* <div className="header-top-skipwrap top-date-time">
+      
+        <div className="header-top header-bg">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="header-top-content">
+                  {/* <div className="header-top-skipwrap top-date-time">
                   <ul>
                     <li>{formatDateString(currentDateTime)}</li>
                     <li><a href="#">{currentDateTime.toLocaleTimeString()}</a></li>
                   </ul>
                 </div> */}
 
-                <div className="header-top-skipwrap">
-                  <ul className="ps-0 mb-0">
-                    <li>
-                      <Link to="#">{t("sitemap")}</Link>
-                    </li>
-                    <li>
-                      <Link to="#" onClick={handleClickScroll}>
-                        {" "}
-                        {t("skipToMainContent")}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/screen-reader-access">
-                        {t("screenReaderAccess")}
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
+                  <div className="header-top-skipwrap">
+                    <ul className="ps-0 mb-0">
+                      <li>
+                        <Link to="#">{t("sitemap")}</Link>
+                      </li>
+                      <li>
+                        <Link to="#" onClick={handleClickScroll}>
+                          {" "}
+                          {t("skipToMainContent")}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/screen-reader-access">
+                          {t("screenReaderAccess")}
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
 
-                <div className="header-top-skipwrap right-access-points">
-                  <ul className="mb-0">
-                    <li>
-                      <div className="theme-toggle">
-                        <label className="switch" title="Dark Mode">
-                          <input
-                            className="switch-input"
-                            type="checkbox"
-                            id="mode"
-                            onChange={handleChange}
-                            checked={toggleDarkMode}
-                            onClick={toggleDarkTheme}
-                          />
-                          <span
-                            data-on="On"
-                            data-off="Off"
-                            className="switch-label"
-                          ></span>
-                          <span
-                            className="switch-handle"
-                            title="Change Contrast"
-                          ></span>
-                        </label>
-                      </div>
-                    </li>
-
-                    <li>
-                      <div className="select-right">
-                        <div className="select-wrap">
-                          <select
-                            className="form-select Langchange"
-                            value={i18n.language}
-                            onChange={changeLanguage}
-                          >
-                            <option value="en">Eng</option>
-                            <option value="hi">हिन्दी</option>
-                          </select>
+                  <div className="header-top-skipwrap right-access-points">
+                    <ul className="mb-0">
+                      <li>
+                        <div className="theme-toggle">
+                          <label className="switch" title="Dark Mode">
+                            <input
+                              className="switch-input"
+                              type="checkbox"
+                              id="mode"
+                              onChange={handleChange}
+                              checked={toggleDarkMode}
+                              onClick={toggleDarkTheme}
+                            />
+                            <span
+                              data-on="On"
+                              data-off="Off"
+                              className="switch-label"
+                            ></span>
+                            <span
+                              className="switch-handle"
+                              title="Change Contrast"
+                            ></span>
+                          </label>
                         </div>
-                      </div>
-                    </li>
+                      </li>
 
-                    <li>
-                      <div>
+                      <li>
                         <div className="select-right">
-                          <select
-                            className="form-select Langchange"
-                            onChange={changeSizeByBtn}
-                          >
-                            <option value="average">{t("gradeA")}</option>
-                            <option value="max">{t("gradeAPlus")}</option>
-                            <option value="normal">{t("gradeAMinus")}</option>
-                          </select>
+                          <div className="select-wrap">
+                            <select
+                              className="form-select Langchange"
+                              value={i18n.language}
+                              onChange={changeLanguage}
+                            >
+                              <option value="en">Eng</option>
+                              <option value="hi">हिन्दी</option>
+                            </select>
+                          </div>
                         </div>
-                      </div>
-                    </li>
-                  </ul>
+                      </li>
+
+                      <li>
+                        <div>
+                          <div className="select-right">
+                            <select
+                              className="form-select Langchange"
+                              onChange={changeSizeByBtn}
+                            >
+                              <option value="average">{t("gradeA")}</option>
+                              <option value="max">{t("gradeAPlus")}</option>
+                              <option value="normal">{t("gradeAMinus")}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <header className="site-header">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <nav className="navbar navbar-expand-lg">
-                <div className="logo-wrap">
-                  <Link
-                    to=""
-                    onClick={goToPageOnClick}
-                    className="top-logo ordernav-sm-1"
-                  >
-                    {" "}
-                    <img
-                      src={ministry}
-                      alt="logo"
-                      className="img-fluid logo-main"
-                    />
-                  </Link>
-                  <Link
-                    to=""
-                    onClick={goToPageOnClick}
-                    className="logo-text ordernav-sm-2"
-                  >
-                    {" "}
-                    {t("aspirational")} <br />
-                    {t("districtProgramme")}{" "}
-                  </Link>
-                </div>
+        <header className="site-header header-bg">
+          <div className="container">
+            <div className="header-bottom">
+            <div className="row">
+              <div className="col-md-12">
+                <nav className="navbar navbar-expand-lg">
+                  <div className="logo-wrap">
+                    <Link
+                      to=""
+                      onClick={goToPageOnClick}
+                      className="top-logo ordernav-sm-1"
+                    >
+                      {" "}
+                      <img
+                        src={ministry}
+                        alt="logo"
+                        className="img-fluid logo-main"
+                      />
+                    </Link>
+                    <Link
+                      to=""
+                      onClick={goToPageOnClick}
+                      className="logo-text ordernav-sm-2"
+                    >
+                      {" "}
+                      {t("aspirational")} <br />
+                      {t("districtProgramme")}{" "}
+                    </Link>
+                  </div>
 
-                <div className="navbar-right d-flex align-items-center">
-                  <div className={`nav-elements  ${showNavbar && "active"}`}>
-                    <ul className="mb-0">
-                      <li>
-                        <NavLink to="/">{t("home")}</NavLink>
-                      </li>
-                      {pathName === "/" ? (
+                  <div className="navbar-right d-flex align-items-center">
+                    <div className={`nav-elements  ${showNavbar && "active"}`}>
+                      <ul className="mb-0">
                         <li>
-                          <ScrollLink
-                            to="aboutSection"
-                            smooth={true}
-                            duration={500}
-                            offset={-70}
-                          >
-                            {t("about_us")}
-                          </ScrollLink>
+                          <NavLink to="/">{t("home")}</NavLink>
                         </li>
-                      ) : (
+                        {pathName === "/" ? (
+                          <li>
+                            <ScrollLink
+                              to="aboutSection"
+                              smooth={true}
+                              duration={500}
+                              offset={-70}
+                              // className='active'
+                            >
+                              {t("about_us")}
+                            </ScrollLink>
+                          </li>
+                        ) : (
+                          <li>
+                            <Link to="/" onClick={handleAboutClick}>
+                              {t("about_us")}
+                            </Link>
+                          </li>
+                        )}
+
                         <li>
-                          <Link to="/" onClick={handleAboutClick}>
-                            {t("about_us")}
-                          </Link>
+                          {pathName === "/" ||
+                            pathName === "/screen-reader-access" ? (
+                            <NavLink to="/transition-rate">
+                              {t("reports")}
+                            </NavLink>
+                          ) : pathName === "/transition-rate" ? (
+                            <NavLink to="/transition-rate">
+                              {t("reports")}
+                            </NavLink>
+                          ) : pathName === "/teacher-and-school-resources" ? (
+                            <NavLink to="/teacher-and-school-resources">
+                              {t("reports")}
+                            </NavLink>
+                          ) : pathName === "/student-performance" ? (
+                            <NavLink to="/student-performance">
+                              {t("reports")}
+                            </NavLink>
+                          ) : pathName === "/school-infrastructure" ? (
+                            <NavLink to="/school-infrastructure">
+                              {t("reports")}
+                            </NavLink>
+                          ) : pathName === "/enrollment-retention" ? (
+                            <NavLink to="/enrollment-retention">
+                              {t("reports")}
+                            </NavLink>
+                          ) : null}
                         </li>
-                      )}
 
-                      <li>
-                        {pathName === "/" ||
-                        pathName === "/screen-reader-access" ? (
-                          <NavLink to="/transition-rate">
-                            {t("reports")}
-                          </NavLink>
-                        ) : pathName === "/transition-rate" ? (
-                          <NavLink to="/transition-rate">
-                            {t("reports")}
-                          </NavLink>
-                        ) : pathName === "/teacher-and-school-resources" ? (
-                          <NavLink to="/teacher-and-school-resources">
-                            {t("reports")}
-                          </NavLink>
-                        ) : pathName === "/student-performance" ? (
-                          <NavLink to="/student-performance">
-                            {t("reports")}
-                          </NavLink>
-                        ) : pathName === "/school-infrastructure" ? (
-                          <NavLink to="/school-infrastructure">
-                            {t("reports")}
-                          </NavLink>
-                        ) : pathName === "/enrollment-retention" ? (
-                          <NavLink to="/enrollment-retention">
-                            {t("reports")}
-                          </NavLink>
-                        ) : null}
-                      </li>
-
-                      {/* <li>
+                        {/* <li>
                         <NavLink to="/news">{t('newsAndArticles')}</NavLink>
                       </li>
                       <li>
                         <NavLink to="/insights">{t('insights')}</NavLink>
                       </li> */}
-                      <li>
-                        <NavLink to="/contact">{t("contactUs")}</NavLink>
-                      </li>
-                    </ul>
+                        <li>
+                          <NavLink to="/contact">{t("contactUs")}</NavLink>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="search-icon ms-3">
+                      <img src={search} alt="search" />
+                    </div>
                   </div>
-                  <div className="search-icon ms-3">
-                    <img src={search} alt="search" />
-                  </div>
-                </div>
 
-                <div
-                  className={`menu-icon ${isShow ? "show" : ""}`}
-                  onClick={handleShowNavbar}
-                >
-                  <Hamburger />
-                </div>
-              </nav>
+                  <div
+                    className={`menu-icon ${isShow ? "show" : ""}`}
+                    onClick={handleShowNavbar}
+                  >
+                    <Hamburger />
+                  </div>
+                </nav>
+              </div>
             </div>
           </div>
-        </div>
-      </header>
+          </div>
+        </header>
+      
     </>
+
   );
 };
 

@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import Header from "../Header/Header";
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import AOS from "aos";
@@ -21,7 +20,7 @@ export default function Banners() {
     <section className="bg-home position-relative">
       <div className="overlay">
         <div className="container">
-          <Header />
+          
           <div className="row mt-5 align-items-center">
             <div className="col-md-7">
 
