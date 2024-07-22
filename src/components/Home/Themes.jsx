@@ -119,7 +119,6 @@ export default function Themes() {
     }
   }, [selectedAdpAbpOption, selectedYear]);
 
-  console.log("aspirationalData====>", aspirationalData);
 
   // combinedData the data Year 20,21,22 end
 
@@ -144,8 +143,7 @@ export default function Themes() {
     aspirationalData.ABP_Report,
     numberOfUniqueBlockes
   );
- console.log("AdpAllStateAverage",AdpAllStateAverage)
- console.log("AbpAllStateAverage",AbpAllStateAverage)
+
 
   //    calculate   Transition rate Averge
   let TotalTransitionRateAdp_Abp = (
@@ -171,7 +169,7 @@ let TotalSchoolPerformanceAdp_Abp = (
 
 //   let TotalTeacherAndschoolAdp_Abp   =AdpAllStateAverage
 
-//   console.log("TotalAdp_Abp", TotalTransitionRateAdp_Abp);
+
 
   return (
     <section className="themes ptb-70 position-relative">

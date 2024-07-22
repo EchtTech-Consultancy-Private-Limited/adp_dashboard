@@ -165,6 +165,7 @@ export default function SchoolInfraStructureReport() {
     selectedState,
     SelectState,
     selectedDistrict,
+    selectedBlock,
     SelectDistrict,
     selectReportType,
   ]);
@@ -463,7 +464,7 @@ export default function SchoolInfraStructureReport() {
     else {
       SetFinalData(aspirationalData)
     }
-  }, [selectedState, data, selectedYear, aspirationalData])
+  }, [selectedState, data, aspirationalData])
 
   const defColumnDefs = useMemo(
     () => ({

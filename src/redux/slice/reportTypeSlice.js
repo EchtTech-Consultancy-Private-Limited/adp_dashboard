@@ -16,7 +16,8 @@ const reportTypeSlice = createSlice({
         sheetName:"",
         handleExportData:null,
         aspirationalAllData:[],
-        selectedDataAllYear:[]
+        selectedDataAllYear:[],
+        finalData:[]
     },
     reducers: {
       setUpdateReportType(state,action) {
@@ -62,10 +63,12 @@ const reportTypeSlice = createSlice({
       },
       setselectedDataAllYear(state,action) {
         state.selectedDataAllYear=action.payload;
-
+      },
+      SetFinalData(state,action) {
+        state.finalData=action.payload;
       },
     },
   })
   
-  export const { setUpdateReportType,setUpdateStatus, setselectedOption,setselectedCompareOption,setselectedStateShow,setselectedReport,setselectedCompareDistricts,setselectedCompareBlocks,setSelectedYear,setgirdAPIForCommonData,SetSheetName,SethandleExportData, setAspirationalAllData,setselectedDataAllYear } = reportTypeSlice.actions
+  export const { setUpdateReportType,setUpdateStatus, setselectedOption,setselectedCompareOption,setselectedStateShow,setselectedReport,setselectedCompareDistricts,setselectedCompareBlocks,setSelectedYear,setgirdAPIForCommonData,SetSheetName,SethandleExportData, setAspirationalAllData,setselectedDataAllYear,SetFinalData } = reportTypeSlice.actions
   export default reportTypeSlice.reducer

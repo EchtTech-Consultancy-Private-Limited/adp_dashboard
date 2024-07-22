@@ -106,7 +106,7 @@ export default function TeacherAndSchResourcesReport() {
             dispatch(SetSheetName("Aspirational Block Programme"));
         }
 
-    }, [selectedState, SelectState, selectedDistrict, SelectDistrict, selectReportType])
+    }, [selectedState, SelectState, selectedDistrict, SelectDistrict,selectedBlock, selectReportType])
 
     {/*...............Take data report wise..............*/ }
 
