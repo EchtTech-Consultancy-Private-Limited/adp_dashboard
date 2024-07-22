@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../Header/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { selectBlock, selectDistrict, selectState, setStates } from '../../redux/slice/filterServicesSlice';
+import { selectBlock, selectDistrict, selectState, setBlocks, setDistricts, setStates } from '../../redux/slice/filterServicesSlice';
 import { setselectedCompareBlocks, setselectedCompareDistricts, setselectedOption, setselectedReport, setSelectedYear, setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTypeSlice';
 import { Select } from 'antd';
 import { AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectKpi, SelectState } from '../../constant/Constant';
@@ -21,36 +20,45 @@ export default function BannerReportFilter() {
   const selectedState = useSelector((state) => state.locationAdp.selectedState);
   const selectedDistrict = useSelector((state) => state.locationAdp.selectedDistrict);
   const selectedBlock = useSelector((state) => state.locationAdp.selectedBlock);
-  const selectedOption = useSelector((state) => state.reportAdpAbpType.updateReportType);
+  const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
   const selectedReport = useSelector((state) => state.reportAdpAbpType.selectedReport);
   const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
   const [showBreadcomeAdpAbp, setShowBreadcomeAdpAbp] = useState();
   const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
+  const finalData= useSelector((state) => state.reportAdpAbpType.finalData)
   const disableSelectedState = selectedState === "All State";
   const disableSelectedDistrict = selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict;
 
   // Combine the data from multiple JSON files
 
-  function resteData() {
-    // dispatch(selectState(SelectState));
-    dispatch(selectDistrict(SelectDistrict));
-    dispatch(selectBlock(SelectBlock));
-    // dispatch(setselectedOption(selectedOptionConst));
-  }
+  // function resteData() {
+  //   // dispatch(selectState(SelectState));
+   
+  //   // dispatch(setselectReportType(selectReportTypeConst));
+  // }
+
 
 
  
   useEffect(() => {
-    if (selectedOption === "ADP_Report") {
+    if (selectReportType === "ADP_Report") {
       setShowBreadcomeAdpAbp("ADP Report")
-       resteData()
+      //  resteData()
+       
     }
     else {
       setShowBreadcomeAdpAbp("ABP Report")
-       resteData()
+      //  resteData()
     }
-  }, [selectedOption,selectedYear]);
+  }, [selectReportType,selectedYear]);
 
+  // If data is not match then reset the State also
+//   useEffect(()=>{
+//     if(finalData.length===0){
+//       dispatch(selectState(SelectState));
+//  }
+//   }, [finalData])
+  
   useEffect(() => {
     const savedReportName = localStorage.getItem('selectedReport');
     if (savedReportName) {
@@ -87,6 +95,7 @@ export default function BannerReportFilter() {
     if (aspirationalData.length > 0) {
       const structuredData = aspirationalData.reduce((acc, curr) => {
         const stateIndex = acc.findIndex((st) => st.lgd_state_id === curr.lgd_state_id);
+        
         if (stateIndex === -1) {
           acc.push({
             lgd_state_id: curr.lgd_state_id,
@@ -108,6 +117,7 @@ export default function BannerReportFilter() {
           const districtIndex = acc[stateIndex].districts.findIndex(
             (dist) => dist.lgd_district_id === curr.lgd_district_id
           );
+          
           if (districtIndex === -1) {
             acc[stateIndex].districts.push({
               lgd_district_id: curr.lgd_district_id,
@@ -128,12 +138,26 @@ export default function BannerReportFilter() {
         }
         return acc;
       }, []);
-
+      
       dispatch(setStates(structuredData));
+  
+      const updatedDistricts = structuredData.find(st => st.lgd_state_name === selectedState)?.districts || [];
+      
+      if (selectReportType === "ADP_Report") {
+        dispatch(setDistricts(updatedDistricts));
+        dispatch(selectBlock(SelectBlock));
+      } else {
+        const updatedBlocks = updatedDistricts.find(dist => dist.lgd_district_name === selectedDistrict)?.blocks || [];
+        dispatch(setDistricts(updatedDistricts));
+        dispatch(setBlocks(updatedBlocks));
+      }
     }
-  }, [aspirationalData, dispatch]);
+  }, [aspirationalData, selectReportType, selectedState, selectedDistrict, dispatch]);
+  
+  
   const handleOptionChange = (event) => {
-
+    dispatch(selectDistrict(SelectDistrict));
+    dispatch(selectBlock(SelectBlock));
     dispatch(setUpdateReportType(event.target.value));
   };
 
@@ -142,7 +166,8 @@ export default function BannerReportFilter() {
     dispatch(setselectedCompareDistricts([]));
     dispatch(setselectedCompareBlocks([]))
   };
-
+ 
+  
   const handleDistrictChange = (value) => {
     dispatch(selectDistrict(value));
     dispatch(setselectedCompareBlocks([]));
@@ -162,7 +187,6 @@ export default function BannerReportFilter() {
   return (
     <section className='internal-banner-bg'>
       <div className="container">
-        <Header />
         <div className="content-box">
           <div className="row align-items-center">
             <div className="col-md-3">
@@ -177,7 +201,7 @@ export default function BannerReportFilter() {
                       <input type="radio"
                         value="ADP_Report"
                         id="radio1"
-                        checked={selectedOption === "ADP_Report"}
+                        checked={selectReportType === "ADP_Report"}
                         onChange={handleOptionChange} />
                       <label htmlFor="radio1">ADP Report</label>
                     </div>
@@ -185,7 +209,7 @@ export default function BannerReportFilter() {
                       <input type="radio"
                         value="ABP_Report"
                         id="radio2"
-                        checked={selectedOption === "ABP_Report"}
+                        checked={selectReportType === "ABP_Report"}
                         onChange={handleOptionChange} />
                       <label htmlFor="radio2">ABP Report</label>
                     </div>
@@ -229,7 +253,7 @@ export default function BannerReportFilter() {
                       ))}
                     </Select>
                     {/* Block select option */}
-                    {selectedOption === "ADP_Report" ? "" :
+                    {selectReportType === "ADP_Report" ? "" :
                       <Select onChange={handleBlockChange} style={{ width: "100%" }} placeholder="All Block" mode="single" showSearch value={selectedBlock || SelectBlock} className="form-select">
                         <Select.Option key="All Block" value="All Block" disabled={disableSelectedDistrict || disableSelectedState}>All Block</Select.Option>
                         {blocks.map((block) => (

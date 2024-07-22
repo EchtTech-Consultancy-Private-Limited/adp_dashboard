@@ -23,6 +23,7 @@ import { Select } from "antd";
 import "jspdf-autotable";
 import { GlobalLoading } from "../GlobalLoading/GlobalLoading";
 import {
+    SetFinalData,
     setgirdAPIForCommonData,
     setselectedOption,
     setSelectedYear,
@@ -117,17 +118,19 @@ export default function TransitionRateReport() {
     const savedReportName = localStorage.getItem("selectedReport");
     const report_name = savedReportName;
     const [data, setData] = useState([]);
-    const [finalData, SetFinalData] = useState([])
+    // const [finalData, SetFinalData] = useState([])
+    const finalData = useSelector((state) => state.reportAdpAbpType.finalData)
+  
     function resteData() {
         // dispatch(selectState(SelectState));
         // dispatch(selectDistrict(SelectDistrict));
         // dispatch(selectBlock(SelectBlock));
-       // dispatch(setselectedOption(selectedOptionConst));
+        // dispatch(setselectedOption(selectedOptionConst));
         //  dispatch(setSelectedYear(intialYear));
     }
-    useEffect(() => {
-        resteData();
-    }, [dispatch]);
+    // useEffect(() => {
+    //     resteData();
+    // }, [dispatch]);
 
     /*...............update Location Header..............*/
 
@@ -161,6 +164,8 @@ export default function TransitionRateReport() {
         SelectState,
         selectedDistrict,
         SelectDistrict,
+        selectedBlock,
+        selectBlock,
         selectedOption,
         selectReportType
     ]);
@@ -204,8 +209,8 @@ export default function TransitionRateReport() {
         setLoading(false);
 
         // dispatch(setUpdateStatus(false))
-    }, [selectedState, selectedDistrict, selectedBlock,aspirationalData,selectReportType]);
-  
+    }, [selectedState, selectedDistrict, selectedBlock, aspirationalData]);
+
     const getLocationName = (item) => {
         if (selectReportType === "ABP_Report") {
             if (
@@ -362,7 +367,7 @@ export default function TransitionRateReport() {
 
             setColumn(columns);
         }
-    }, [selectedState])
+    }, [selectedState, selectReportType])
 
 
     const handleOptionChange = (event) => {
@@ -519,12 +524,13 @@ export default function TransitionRateReport() {
     }, [data, selectedState, selectedDistrict, selectedBlock]);
     useEffect(() => {
         if (selectedState !== "All State") {
-            SetFinalData(compressedData)
+            dispatch(SetFinalData(compressedData))
         }
+
         else {
-            SetFinalData(aspirationalData)
+            dispatch(SetFinalData(aspirationalData))
         }
-    }, [selectedState, data, aspirationalData])
+    }, [selectedState, data, aspirationalData, selectReportType])
     const defColumnDefs = useMemo(
         () => ({
             flex: 1,
@@ -719,12 +725,12 @@ export default function TransitionRateReport() {
             <section>
                 <BannerReportFilter />
 
-                <div className="container">
+                <div className="container" >
                     <div className="row mt-3">
                         <div className="col-md-12">
                             {loading && <GlobalLoading />}
                             <div className="card-box">
-                                <div className="row align-items-end">
+                                <div className="row align-items-end" >
                                     <div className={selectedState !== "All State" ? "col-md-5" : "col-md-6"}>
                                         <div className="d-flex align-items-end">
                                             <div className="title-box">
@@ -821,7 +827,7 @@ export default function TransitionRateReport() {
                                 <div className="row">
                                     <div className="col-md-12">
                                         <div className="table-box mt-4">
-                                            <div
+                                            <div id="content"
                                                 className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
                                                 style={{ width: "100%", height: 300 }}
                                             >

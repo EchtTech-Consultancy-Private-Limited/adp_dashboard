@@ -18,7 +18,7 @@ import { useTranslation } from "react-i18next";
 import { jsPDF } from "jspdf";
 import 'jspdf-autotable';
 import { GlobalLoading } from '../GlobalLoading/GlobalLoading'
-import { setselectedOption, setSelectedYear, SetSheetName } from '../../redux/slice/reportTypeSlice'
+import { SetFinalData, setselectedOption, setSelectedYear, SetSheetName } from '../../redux/slice/reportTypeSlice'
 import { AllBlock, AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
 import { ScrollToTopOnMount } from '../../Scroll/ScrollToTopOnMount'
 import TeacherAndSchoolCompare from './ReportCompare/TeacherAndSchoolCompare'
@@ -73,9 +73,10 @@ export default function TeacherAndSchResourcesReport() {
     const [gridApi, setGridApi] = useState()
     const savedReportName = localStorage.getItem('selectedReport');
     const report_name = savedReportName
+    const finalData= useSelector((state) => state.reportAdpAbpType.finalData)
     const [data, setData] = useState([]);
-    const [finalData, SetFinalData] = useState([])
-
+    // const [finalData, SetFinalData] = useState([])
+ 
     function resteData() {
         // dispatch(selectState(SelectState));
         // dispatch(selectDistrict(SelectDistrict));
@@ -106,7 +107,7 @@ export default function TeacherAndSchResourcesReport() {
             dispatch(SetSheetName("Aspirational Block Programme"));
         }
 
-    }, [selectedState, SelectState, selectedDistrict, SelectDistrict, selectReportType])
+    }, [selectedState, SelectState, selectedDistrict, SelectDistrict,selectedBlock, selectReportType])
 
     {/*...............Take data report wise..............*/ }
 
@@ -323,12 +324,13 @@ export default function TeacherAndSchResourcesReport() {
 
     useEffect(() => {
         if (selectedState !== "All State") {
-            SetFinalData(compressedData)
+            dispatch(SetFinalData(compressedData))
         }
+        
         else {
-            SetFinalData(aspirationalData)
+            dispatch(SetFinalData(aspirationalData))
         }
-    }, [selectedState, data, selectedYear, aspirationalData])
+    }, [selectedState, data, aspirationalData,selectReportType])
 
     const defColumnDefs = useMemo(() => ({
         flex: 1,
@@ -575,7 +577,7 @@ export default function TeacherAndSchResourcesReport() {
                                 <div className="row">
                                     <div className="col-md-12">
                                         <div className="table-box mt-4">
-                                            <div className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
+                                            <div id="content" className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
                                                 style={{ width: "100%", height: 300 }} >
                                                 <AgGridReact
                                                     columnDefs={columns}
