@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../Header/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { selectBlock, selectDistrict, selectState, setDistricts, setStates } from '../../redux/slice/filterServicesSlice';
+import { selectBlock, selectDistrict, selectState, setBlocks, setDistricts, setStates } from '../../redux/slice/filterServicesSlice';
 import { setselectedCompareBlocks, setselectedCompareDistricts, setselectedOption, setselectedReport, setSelectedYear, setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTypeSlice';
 import { Select } from 'antd';
 import { AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectKpi, SelectState } from '../../constant/Constant';
@@ -20,7 +19,6 @@ export default function BannerReportFilter() {
   const blocks = useSelector((state) => state.locationAdp.blocks);
   const selectedState = useSelector((state) => state.locationAdp.selectedState);
   const selectedDistrict = useSelector((state) => state.locationAdp.selectedDistrict);
-  console.log(districts, "districts")
   const selectedBlock = useSelector((state) => state.locationAdp.selectedBlock);
   const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
   const selectedReport = useSelector((state) => state.reportAdpAbpType.selectedReport);
@@ -41,11 +39,13 @@ export default function BannerReportFilter() {
   }
 
 
+
  
   useEffect(() => {
     if (selectReportType === "ADP_Report") {
       setShowBreadcomeAdpAbp("ADP Report")
        resteData()
+       
     }
     else {
       setShowBreadcomeAdpAbp("ABP Report")
@@ -53,6 +53,13 @@ export default function BannerReportFilter() {
     }
   }, [selectReportType,selectedYear]);
 
+  // If data is not match then reset the State also
+//   useEffect(()=>{
+//     if(finalData.length===0){
+//       dispatch(selectState(SelectState));
+//  }
+//   }, [finalData])
+  
   useEffect(() => {
     const savedReportName = localStorage.getItem('selectedReport');
     if (savedReportName) {
@@ -89,6 +96,7 @@ export default function BannerReportFilter() {
     if (aspirationalData.length > 0) {
       const structuredData = aspirationalData.reduce((acc, curr) => {
         const stateIndex = acc.findIndex((st) => st.lgd_state_id === curr.lgd_state_id);
+        
         if (stateIndex === -1) {
           acc.push({
             lgd_state_id: curr.lgd_state_id,
@@ -110,6 +118,7 @@ export default function BannerReportFilter() {
           const districtIndex = acc[stateIndex].districts.findIndex(
             (dist) => dist.lgd_district_id === curr.lgd_district_id
           );
+          
           if (districtIndex === -1) {
             acc[stateIndex].districts.push({
               lgd_district_id: curr.lgd_district_id,
@@ -130,16 +139,28 @@ export default function BannerReportFilter() {
         }
         return acc;
       }, []);
-      dispatch(setStates(structuredData));
       
+      dispatch(setStates(structuredData));
+  
+      const updatedDistricts = structuredData.find(st => st.lgd_state_name === selectedState)?.districts || [];
+      
+      if (selectReportType === "ADP_Report") {
+        dispatch(setDistricts(updatedDistricts));
+        dispatch(selectBlock(SelectBlock));
+      } else {
+        const updatedBlocks = updatedDistricts.find(dist => dist.lgd_district_name === selectedDistrict)?.blocks || [];
+        dispatch(setDistricts(updatedDistricts));
+        dispatch(setBlocks(updatedBlocks));
+      }
     }
-  }, [aspirationalData,selectReportType, dispatch]);
+  }, [aspirationalData, selectReportType, selectedState, selectedDistrict, dispatch]);
+  
+  
   const handleOptionChange = (event) => {
     dispatch(setUpdateReportType(event.target.value));
   };
 
   const handleStateChange = (value) => {
-    console.log(value, "value");
     dispatch(selectState(value));
     dispatch(setselectedCompareDistricts([]));
     dispatch(setselectedCompareBlocks([]))
@@ -165,7 +186,6 @@ export default function BannerReportFilter() {
   return (
     <section className='internal-banner-bg'>
       <div className="container">
-        <Header />
         <div className="content-box">
           <div className="row align-items-center">
             <div className="col-md-3">

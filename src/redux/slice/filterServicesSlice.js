@@ -15,11 +15,9 @@ const filterServicesSlice = createSlice({
   initialState,
   reducers: {
     setStates: (state, action) => {
-      // console.log(action.payload, "action.payload")
       state.states = action.payload;
     },
     setDistricts: (state, action) => {
-      console.log(action.payload, "action.payload")
       state.districts = action.payload;
     },
     setBlocks: (state, action) => {

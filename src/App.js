@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { setAspirationalAllData, setselectedDataAllYear } from './redux/slice/reportTypeSlice';
 import { selectState,selectDistrict,selectBlock } from './redux/slice/filterServicesSlice'; 
+import Header from './components/Header/Header';
 function App() {
   const dispatch = useDispatch()
   const toggleDarkMode = useSelector((state) => state.toggle.toggleDarkLight);
@@ -53,10 +54,12 @@ function App() {
       dispatch(setAspirationalAllData(selectedData));
     }
   }, [selectReportType, selectedState,selectedDistrict,selectedBlock,selectedYear,]);
+
+  
   return (
     <div className="App">
       <HashRouter>
-
+       <Header/>
         {routes}
         <Footer />
       </HashRouter>

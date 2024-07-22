@@ -119,13 +119,13 @@ export default function TransitionRateReport() {
     const report_name = savedReportName;
     const [data, setData] = useState([]);
     // const [finalData, SetFinalData] = useState([])
-    const finalData= useSelector((state) => state.reportAdpAbpType.finalData)
-    console.log(finalData, "finalData")
+    const finalData = useSelector((state) => state.reportAdpAbpType.finalData)
+  
     function resteData() {
         // dispatch(selectState(SelectState));
         // dispatch(selectDistrict(SelectDistrict));
         // dispatch(selectBlock(SelectBlock));
-       // dispatch(setselectedOption(selectedOptionConst));
+        // dispatch(setselectedOption(selectedOptionConst));
         //  dispatch(setSelectedYear(intialYear));
     }
     // useEffect(() => {
@@ -209,8 +209,8 @@ export default function TransitionRateReport() {
         setLoading(false);
 
         // dispatch(setUpdateStatus(false))
-    }, [selectedState, selectedDistrict, selectedBlock,aspirationalData]);
-  
+    }, [selectedState, selectedDistrict, selectedBlock, aspirationalData]);
+
     const getLocationName = (item) => {
         if (selectReportType === "ABP_Report") {
             if (
@@ -367,7 +367,7 @@ export default function TransitionRateReport() {
 
             setColumn(columns);
         }
-    }, [selectedState,selectReportType])
+    }, [selectedState, selectReportType])
 
 
     const handleOptionChange = (event) => {
@@ -526,11 +526,11 @@ export default function TransitionRateReport() {
         if (selectedState !== "All State") {
             dispatch(SetFinalData(compressedData))
         }
-        
+
         else {
             dispatch(SetFinalData(aspirationalData))
         }
-    }, [selectedState, data, aspirationalData,selectReportType])
+    }, [selectedState, data, aspirationalData, selectReportType])
     const defColumnDefs = useMemo(
         () => ({
             flex: 1,
