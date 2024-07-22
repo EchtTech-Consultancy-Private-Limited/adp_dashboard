@@ -20,12 +20,12 @@ const Header = () => {
   const handleAboutClick = () => {
     if (pathName !== "/") {
       navigate("/");
-      // Delay scrolling to allow time for the navigation to complete
       setTimeout(() => {
-        document.getElementById('aboutSection').scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
-      }, 500); // Adjust the timeout duration as needed
+        document.getElementById('aboutSection').scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest', offset:"-140" });
+      }, 500); 
     }
   };
+
   const goToPageOnClick = () => {
     // navigate("/");
     window.location.href = window.location.origin;
@@ -227,7 +227,7 @@ const Header = () => {
                               to="aboutSection"
                               smooth={true}
                               duration={500}
-                              offset={-70}
+                              offset={-140}
                               //  className='active'
                             >
                               {t("about_us")}

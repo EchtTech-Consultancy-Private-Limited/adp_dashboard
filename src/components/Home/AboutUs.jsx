@@ -30,6 +30,8 @@ export default function AboutUs() {
 
   return (
     
+    <>
+      <div id="content"></div>
     <section className="about-us ptb-70 bg-white" id="about-us">
       <Element name="aboutSection">
       <div className="container"id="aboutSection">
@@ -86,5 +88,6 @@ export default function AboutUs() {
       </div>
       </Element>
     </section>
+    </>
   );
 }

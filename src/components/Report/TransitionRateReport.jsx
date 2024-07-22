@@ -725,12 +725,12 @@ export default function TransitionRateReport() {
             <section>
                 <BannerReportFilter />
 
-                <div className="container">
+                <div className="container" >
                     <div className="row mt-3">
                         <div className="col-md-12">
                             {loading && <GlobalLoading />}
                             <div className="card-box">
-                                <div className="row align-items-end">
+                                <div className="row align-items-end" >
                                     <div className={selectedState !== "All State" ? "col-md-5" : "col-md-6"}>
                                         <div className="d-flex align-items-end">
                                             <div className="title-box">
@@ -827,7 +827,7 @@ export default function TransitionRateReport() {
                                 <div className="row">
                                     <div className="col-md-12">
                                         <div className="table-box mt-4">
-                                            <div
+                                            <div id="content"
                                                 className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
                                                 style={{ width: "100%", height: 300 }}
                                             >
