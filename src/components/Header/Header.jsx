@@ -6,6 +6,7 @@ import search from '../../assets/images/search.png';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateToggleDark } from '../../redux/slice/darkLightModeSlice';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import { i18n } from '../i18next/i18n'  //Do not remove this line
 import { Link as ScrollLink } from 'react-scroll';
@@ -14,6 +15,17 @@ import { Link as ScrollLink } from 'react-scroll';
 const Header = () => {
   const dispatch = useDispatch()
   const toggleDarkMode = useSelector((state) => state.toggle.toggleDarkLight);
+  const navigate = useNavigate();
+
+  const handleAboutClick = () => {
+    if (pathName !== "/") {
+       navigate("/");
+      // Delay scrolling to allow time for the navigation to complete
+      setTimeout(() => {
+        document.getElementById('aboutSection').scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+      }, 500); // Adjust the timeout duration as needed
+    }
+  };
   const goToPageOnClick = () => {
     // navigate("/");
     window.location.href = window.location.origin;
@@ -74,11 +86,9 @@ const Header = () => {
   const handleChange = () => {
 
   }
-
+ 
   return (
-
     <>
-
       <div className="header-top">
         <div className="container">
           <div className="row">
@@ -92,36 +102,58 @@ const Header = () => {
                 </div> */}
 
                 <div className="header-top-skipwrap">
-                  <ul className='ps-0 mb-0'>
-                    <li><Link to='#'>{t('sitemap')}</Link></li>
-                    <li><Link to='#' onClick={handleClickScroll}> {t('skipToMainContent')}</Link></li>
-                    <li><Link to='/screen-reader-access'>{t('screenReaderAccess')}</Link></li>
+                  <ul className="ps-0 mb-0">
+                    <li>
+                      <Link to="#">{t("sitemap")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#" onClick={handleClickScroll}>
+                        {" "}
+                        {t("skipToMainContent")}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/screen-reader-access">
+                        {t("screenReaderAccess")}
+                      </Link>
+                    </li>
                   </ul>
                 </div>
 
                 <div className="header-top-skipwrap right-access-points">
-                  <ul className='mb-0'>
-
+                  <ul className="mb-0">
                     <li>
                       <div className="theme-toggle">
                         <label className="switch" title="Dark Mode">
-                          <input className="switch-input" type="checkbox"
+                          <input
+                            className="switch-input"
+                            type="checkbox"
                             id="mode"
                             onChange={handleChange}
                             checked={toggleDarkMode}
-                            onClick={toggleDarkTheme} />
-                          <span data-on="On" data-off="Off" className="switch-label"></span>
-                          <span className="switch-handle" title="Change Contrast"></span>
+                            onClick={toggleDarkTheme}
+                          />
+                          <span
+                            data-on="On"
+                            data-off="Off"
+                            className="switch-label"
+                          ></span>
+                          <span
+                            className="switch-handle"
+                            title="Change Contrast"
+                          ></span>
                         </label>
                       </div>
                     </li>
 
                     <li>
-                      <div className='select-right'>
+                      <div className="select-right">
                         <div className="select-wrap">
-                          <select className="form-select Langchange"
+                          <select
+                            className="form-select Langchange"
                             value={i18n.language}
-                            onChange={changeLanguage}>
+                            onChange={changeLanguage}
+                          >
                             <option value="en">Eng</option>
                             <option value="hi">हिन्दी</option>
                           </select>
@@ -131,15 +163,16 @@ const Header = () => {
 
                     <li>
                       <div>
-                        <div className='select-right'>
-                          <select className="form-select Langchange" onChange={changeSizeByBtn}>
-                            <option value="average">{t('gradeA')}</option>
-                            <option value="max">{t('gradeAPlus')}</option>
-                            <option value="normal">{t('gradeAMinus')}</option>
+                        <div className="select-right">
+                          <select
+                            className="form-select Langchange"
+                            onChange={changeSizeByBtn}
+                          >
+                            <option value="average">{t("gradeA")}</option>
+                            <option value="max">{t("gradeAPlus")}</option>
+                            <option value="normal">{t("gradeAMinus")}</option>
                           </select>
-
                         </div>
-
                       </div>
                     </li>
                   </ul>
@@ -156,53 +189,80 @@ const Header = () => {
             <div className="col-md-12">
               <nav className="navbar navbar-expand-lg">
                 <div className="logo-wrap">
-                  <Link to="" onClick={goToPageOnClick} className="top-logo ordernav-sm-1"> <img src={ministry} alt="logo" className="img-fluid logo-main" />
+                  <Link
+                    to=""
+                    onClick={goToPageOnClick}
+                    className="top-logo ordernav-sm-1"
+                  >
+                    {" "}
+                    <img
+                      src={ministry}
+                      alt="logo"
+                      className="img-fluid logo-main"
+                    />
                   </Link>
-                  <Link to="" onClick={goToPageOnClick} className="logo-text ordernav-sm-2"> {t('aspirational')} <br />{t('districtProgramme')}  </Link>
-
+                  <Link
+                    to=""
+                    onClick={goToPageOnClick}
+                    className="logo-text ordernav-sm-2"
+                  >
+                    {" "}
+                    {t("aspirational")} <br />
+                    {t("districtProgramme")}{" "}
+                  </Link>
                 </div>
 
                 <div className="navbar-right d-flex align-items-center">
                   <div className={`nav-elements  ${showNavbar && "active"}`}>
-                    <ul className='mb-0'>
+                    <ul className="mb-0">
                       <li>
-                        <NavLink to="/">{t('home')}</NavLink>
+                        <NavLink to="/">{t("home")}</NavLink>
                       </li>
-                      {pathName === "/" ? <li>
-                        <ScrollLink
-                          to="aboutSection"
-                          smooth={true}
-                          duration={500}
-                          offset={-70}
-                        >
-                          {t('about_us')}
-                        </ScrollLink>
-
-                      </li> : <li>
-                        <Link
-                          to="/"
-                          smooth={true}
-                          duration={500}
-                          offset={-70}
-                        >
-                          {t('about_us')}
-                        </Link>
-                       
-                      </li>}
+                      {pathName === "/" ? (
+                        <li>
+                          <ScrollLink
+                            to="aboutSection"
+                            smooth={true}
+                            duration={500}
+                            offset={-70}
+                          >
+                            {t("about_us")}
+                          </ScrollLink>
+                        </li>
+                      ) : (
+                        <li>
+                          <Link to="/" onClick={handleAboutClick}>
+                            {t("about_us")}
+                          </Link>
+                        </li>
+                      )}
 
                       <li>
-                        {pathName === "/" || pathName === "/screen-reader-access" ? (
-                          <NavLink to="/transition-rate">{t('reports')}</NavLink>
+                        {pathName === "/" ||
+                        pathName === "/screen-reader-access" ? (
+                          <NavLink to="/transition-rate">
+                            {t("reports")}
+                          </NavLink>
                         ) : pathName === "/transition-rate" ? (
-                          <NavLink to="/transition-rate">{t('reports')}</NavLink>
+                          <NavLink to="/transition-rate">
+                            {t("reports")}
+                          </NavLink>
                         ) : pathName === "/teacher-and-school-resources" ? (
-                          <NavLink to="/teacher-and-school-resources">{t('reports')}</NavLink>
+                          <NavLink to="/teacher-and-school-resources">
+                            {t("reports")}
+                          </NavLink>
                         ) : pathName === "/student-performance" ? (
-                          <NavLink to="/student-performance">{t('reports')}</NavLink>
+                          <NavLink to="/student-performance">
+                            {t("reports")}
+                          </NavLink>
                         ) : pathName === "/school-infrastructure" ? (
-                          <NavLink to="/school-infrastructure">{t('reports')}</NavLink>
+                          <NavLink to="/school-infrastructure">
+                            {t("reports")}
+                          </NavLink>
                         ) : pathName === "/enrollment-retention" ? (
-                          <NavLink to="/enrollment-retention">{t('reports')}</NavLink>
+                          <NavLink to="/enrollment-retention">
+                            {t("reports")}
+                          </NavLink>
                         ) : null}
                       </li>
 
@@ -213,31 +273,29 @@ const Header = () => {
                         <NavLink to="/insights">{t('insights')}</NavLink>
                       </li> */}
                       <li>
-                        <NavLink to="/contact">{t('contactUs')}</NavLink>
+                        <NavLink to="/contact">{t("contactUs")}</NavLink>
                       </li>
                     </ul>
                   </div>
-                  <div className='search-icon ms-3'>
+                  <div className="search-icon ms-3">
                     <img src={search} alt="search" />
                   </div>
                 </div>
 
-                <div className={`menu-icon ${isShow ? 'show' : ''}`} onClick={handleShowNavbar}>
+                <div
+                  className={`menu-icon ${isShow ? "show" : ""}`}
+                  onClick={handleShowNavbar}
+                >
                   <Hamburger />
                 </div>
-
               </nav>
             </div>
           </div>
         </div>
       </header>
-
     </>
-
   );
 };
-
-
 
 const Hamburger = () => (
   <>
