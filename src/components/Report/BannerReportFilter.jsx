@@ -31,12 +31,11 @@ export default function BannerReportFilter() {
 
   // Combine the data from multiple JSON files
 
-  function resteData() {
-    // dispatch(selectState(SelectState));
-    dispatch(selectDistrict(SelectDistrict));
-    dispatch(selectBlock(SelectBlock));
-    // dispatch(setselectReportType(selectReportTypeConst));
-  }
+  // function resteData() {
+  //   // dispatch(selectState(SelectState));
+   
+  //   // dispatch(setselectReportType(selectReportTypeConst));
+  // }
 
 
 
@@ -44,12 +43,12 @@ export default function BannerReportFilter() {
   useEffect(() => {
     if (selectReportType === "ADP_Report") {
       setShowBreadcomeAdpAbp("ADP Report")
-       resteData()
+      //  resteData()
        
     }
     else {
       setShowBreadcomeAdpAbp("ABP Report")
-       resteData()
+      //  resteData()
     }
   }, [selectReportType,selectedYear]);
 
@@ -157,6 +156,8 @@ export default function BannerReportFilter() {
   
   
   const handleOptionChange = (event) => {
+    dispatch(selectDistrict(SelectDistrict));
+    dispatch(selectBlock(SelectBlock));
     dispatch(setUpdateReportType(event.target.value));
   };
 
