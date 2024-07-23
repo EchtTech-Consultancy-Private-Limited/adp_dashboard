@@ -31,14 +31,6 @@ export default function BannerReportFilter() {
 
   // Combine the data from multiple JSON files
 
-  // function resteData() {
-  //   // dispatch(selectState(SelectState));
-   
-  //   // dispatch(setselectReportType(selectReportTypeConst));
-  // }
-
-
-
  
   useEffect(() => {
     if (selectReportType === "ADP_Report") {
