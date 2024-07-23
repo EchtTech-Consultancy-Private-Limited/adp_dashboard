@@ -1,58 +1,25 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import BannerReportFilter from './BannerReportFilter'
-import download from '../../assets/images/download.svg'
 import table from '../../assets/images/table.svg'
 import chart from '../../assets/images/bar-chart.svg'
-import card from '../../assets/images/card-list.svg'
 import './report.scss'
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
 import { useDispatch, useSelector } from 'react-redux'
-import { selectBlock, selectDistrict, selectState } from '../../redux/slice/filterServicesSlice'
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { useTranslation } from "react-i18next";
 import { jsPDF } from "jspdf";
 import 'jspdf-autotable';
 import { GlobalLoading } from '../GlobalLoading/GlobalLoading'
-import { SetFinalData, setselectedOption, setSelectedYear, SetSheetName } from '../../redux/slice/reportTypeSlice'
+import { SetFinalData, setselectedOption, SetSheetName } from '../../redux/slice/reportTypeSlice'
 import { AllBlock, AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
 import { ScrollToTopOnMount } from '../../Scroll/ScrollToTopOnMount'
 import StudentsPerformanceCompare from './ReportCompare/StudentsPerformanceCompare'
 import StudentsPerformanceBlockCompare from './ReportCompare/StudentsPerformanceBlockCompare'
+import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 
 
-const ArrowRenderer = ({ data, value }) => {
-    const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
-    const [arrowData, setArrowData] = useState([]);
-
-    useEffect(() => {
-        if (selectedOption === "upper_primary_to_secondary") {
-            setArrowData(data.upri_t);
-        } else {
-            setArrowData(data.sec_t);
-        }
-    }, [selectedOption, data]);
-
-    const renderArrow = () => {
-        if (selectedOption === "upper_primary_to_secondary" && arrowData >= 70 && arrowData <= 100) {
-            return <ArrowUpwardIcon style={{ color: 'green', marginLeft: '5px', fontSize: "14px" }} />;
-        } else if (selectedOption !== "upper_primary_to_secondary" && arrowData >= 40 && arrowData <= 100) {
-            return <ArrowUpwardIcon style={{ color: 'green', marginLeft: '5px', fontSize: "14px" }} />;
-        } else {
-            return <ArrowDownwardIcon style={{ color: 'red', marginLeft: '5px', fontSize: "14px" }} />;
-        }
-    };
-
-    return (
-        <span>
-            {value}
-            {renderArrow()}
-        </span>
-    );
-};
 export default function StudentsPerformanceReport() {
     const dispatch = useDispatch()
     const { t, i18n } = useTranslation();
@@ -70,7 +37,7 @@ export default function StudentsPerformanceReport() {
     const savedReportName = localStorage.getItem('selectedReport');
     const report_name = savedReportName
     const [data, setData] = useState([]);
-    const finalData= useSelector((state) => state.reportAdpAbpType.finalData)
+    const finalData = useSelector((state) => state.reportAdpAbpType.finalData)
     // const [finalData, SetFinalData] = useState([])
 
     function resteData() {
@@ -136,7 +103,7 @@ export default function StudentsPerformanceReport() {
         setLoading(false)
 
         // dispatch(setUpdateStatus(false))
-    }, [selectedState, selectedDistrict, selectedBlock,aspirationalData]);
+    }, [selectedState, selectedDistrict, selectedBlock, aspirationalData, selectReportType]);
     const getLocationName = (item) => {
         if (selectReportType === "ABP_Report") {
             if (selectedBlock && selectedBlock !== AllBlock && selectedBlock !== SelectBlock) {
@@ -228,10 +195,12 @@ export default function StudentsPerformanceReport() {
                 {
                     headerName: "District",
                     field: "lgd_district_name",
+                    cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
                 },
                 ...(selectReportType === "ABP_Report" ? [{
                     headerName: "Block",
                     field: "lgd_block_name",
+                    cellRenderer: ArrowRenderer,
                 }] : []),
 
 
@@ -271,11 +240,49 @@ export default function StudentsPerformanceReport() {
                     suppressColumnsToolPanel: true,
                     suppressFiltersToolPanel: true,
                 },
-                {
-                    headerName: locationHeader,
-                    cellRenderer: ArrowRenderer,
-                    field: "Location",
-                },
+
+                ...(selectReportType === "ADP_Report"
+                    ? [
+                        {
+                            headerName: "District",
+                            cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
+                            field: "lgd_district_name",
+                        },
+                    ]
+                    : []),
+
+                ...(selectedState !== "All State" &&
+                    selectReportType === "ABP_Report" &&
+                    (selectedDistrict === SelectDistrict ||
+                        selectedDistrict === AllDistrict)
+                    ? [
+                        {
+                            headerName: "District",
+                            cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
+                            field: "lgd_district_name",
+                        },
+                    ]
+                    : []),
+
+
+                // {
+                //     headerName: locationHeader,
+                //     cellRenderer: ArrowRenderer,
+                //     field: "Location",
+                // },
+
+                ...(selectReportType === "ABP_Report"
+                    ? [
+                        {
+                            headerName: "Block",
+                            cellRenderer: ArrowRenderer,
+                            field: "lgd_block_name",
+                        },
+                    ]
+                    : []),
+
+
+
                 {
                     headerName: "Number of Schools having teacher trained to teach CWSN",
                     field: "total_school_cwsn",
@@ -298,7 +305,9 @@ export default function StudentsPerformanceReport() {
 
         }
 
-    }, [locationHeader, selectedState]);
+    }, [locationHeader, selectedState, selectedOption,
+        selectedDistrict,
+        selectReportType,]);
 
     const compressData = useCallback((data, groupBy) => {
         return data.reduce((acc, curr) => {
@@ -336,14 +345,21 @@ export default function StudentsPerformanceReport() {
     }, [data, selectedState, selectedDistrict, selectedBlock]);
 
     useEffect(() => {
-        if (selectedState !== "All State") {
+        if (selectedState !== "All State" && selectReportType === "ADP_Report") {
             dispatch(SetFinalData(compressedData))
         }
-        
+
+        else if (
+            selectedState !== "All State" &&
+            selectReportType === "ABP_Report"
+        ) {
+            dispatch(SetFinalData(data));
+        }
+
         else {
             dispatch(SetFinalData(aspirationalData))
         }
-    }, [selectedState, data, aspirationalData,selectReportType])
+    }, [selectedState, data, aspirationalData, selectReportType])
 
     const defColumnDefs = useMemo(() => ({
         flex: 1,

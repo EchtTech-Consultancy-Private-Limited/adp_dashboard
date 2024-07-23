@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import BannerReportFilter from "./BannerReportFilter";
-import download from "../../assets/images/download.svg";
 import table from "../../assets/images/table.svg";
 import chart from "../../assets/images/bar-chart.svg";
-import card from "../../assets/images/card-list.svg";
 import "./report.scss";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
@@ -11,92 +9,27 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    selectBlock,
-    selectDistrict,
-    selectState,
-} from "../../redux/slice/filterServicesSlice";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { jsPDF } from "jspdf";
-import { Select } from "antd";
 import "jspdf-autotable";
 import { GlobalLoading } from "../GlobalLoading/GlobalLoading";
 import {
     SetFinalData,
-    setgirdAPIForCommonData,
     setselectedOption,
-    setSelectedYear,
     SetSheetName,
-    setUpdateStatus,
 } from "../../redux/slice/reportTypeSlice";
-import BlankPage from "./BlankPage";
+
 import {
     AllBlock,
     AllDistrict,
-    intialYear,
     SelectBlock,
     SelectDistrict,
-    selectedOptionConst,
     SelectState,
 } from "../../constant/Constant";
 import TransitionRateCompare from "./ReportCompare/TransitionRateCompare";
 import { ScrollToTopOnMount } from "../../Scroll/ScrollToTopOnMount";
 import TransitionBlockRateCompare from "./ReportCompare/TransitionBlockRateCompare";
 import { useTranslation } from "react-i18next";
-import { CommonData } from "./CommonData/CommonData";
-
-const ArrowRenderer = ({ data, value }) => {
-    const selectedOption = useSelector(
-        (state) => state.reportAdpAbpType.selectedOption
-    );
-    const [arrowData, setArrowData] = useState([]);
-
-    useEffect(() => {
-        if (selectedOption === "upper_primary_to_secondary") {
-            setArrowData(data.upri_t);
-        } else {
-            setArrowData(data.sec_t);
-        }
-    }, [selectedOption, data]);
-
-    const renderArrow = () => {
-        if (
-            selectedOption === "upper_primary_to_secondary" &&
-            arrowData >= 70 &&
-            arrowData <= 100
-        ) {
-            return (
-                <ArrowUpwardIcon
-                    style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        } else if (
-            selectedOption !== "upper_primary_to_secondary" &&
-            arrowData >= 40 &&
-            arrowData <= 100
-        ) {
-            return (
-                <ArrowUpwardIcon
-                    style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        } else {
-            return (
-                <ArrowDownwardIcon
-                    style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        }
-    };
-
-    return (
-        <span>
-            {value}
-            {renderArrow()}
-        </span>
-    );
-};
+import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 export default function TransitionRateReport() {
     const dispatch = useDispatch();
     const { t, i18n } = useTranslation();
@@ -105,22 +38,32 @@ export default function TransitionRateReport() {
     const type = queryParameters.get("type");
     const [loading, setLoading] = useState(true);
     localStorage.setItem("selectedReport", "Transition Rate");
-    const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
+    const { selectedState, selectedDistrict, selectedBlock } = useSelector(
+        (state) => state.locationAdp
+    );
     // const [aspirationalData, setAspirationalData] = useState([]);
-    const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
+    const aspirationalData = useSelector(
+        (state) => state.reportAdpAbpType.aspirationalAllData
+    );
     const [locationHeader, SetLocationHeader] = useState();
-    const [gridApi, setGridApi] = useState()
+    const [gridApi, setGridApi] = useState();
     const states = useSelector((state) => state.locationAdp.states);
-    const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
-    const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
-    const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
-    const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName)
+    const selectReportType = useSelector(
+        (state) => state.reportAdpAbpType.updateReportType
+    );
+    const selectedOption = useSelector(
+        (state) => state.reportAdpAbpType.selectedOption
+    );
+    const selectedYear = useSelector(
+        (state) => state.reportAdpAbpType.selectedYear
+    );
+    const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName);
     const savedReportName = localStorage.getItem("selectedReport");
     const report_name = savedReportName;
     const [data, setData] = useState([]);
-    // const [finalData, SetFinalData] = useState([])
-    const finalData = useSelector((state) => state.reportAdpAbpType.finalData)
-  
+    // const [filteredData, setFilteredData] = useState([]);
+    // const [finalData, SetFinalData] = useState([]);
+    const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
     function resteData() {
         // dispatch(selectState(SelectState));
         // dispatch(selectDistrict(SelectDistrict));
@@ -128,9 +71,9 @@ export default function TransitionRateReport() {
         // dispatch(setselectedOption(selectedOptionConst));
         //  dispatch(setSelectedYear(intialYear));
     }
-    // useEffect(() => {
-    //     resteData();
-    // }, [dispatch]);
+    useEffect(() => {
+        resteData();
+    }, [dispatch]);
 
     /*...............update Location Header..............*/
 
@@ -164,15 +107,11 @@ export default function TransitionRateReport() {
         SelectState,
         selectedDistrict,
         SelectDistrict,
-        selectedBlock,
-        selectBlock,
         selectedOption,
-        selectReportType
+        selectReportType,
     ]);
 
     /*...............Take data report wise..............*/
-
-
 
     useEffect(() => {
         let filteredData = aspirationalData;
@@ -209,7 +148,28 @@ export default function TransitionRateReport() {
         setLoading(false);
 
         // dispatch(setUpdateStatus(false))
-    }, [selectedState, selectedDistrict, selectedBlock, aspirationalData]);
+    }, [
+        selectedState,
+        selectedDistrict,
+        selectedBlock,
+        aspirationalData,
+        selectReportType,
+    ]);
+
+    // useEffect(() => {
+    //   if (selectedState) {
+    //     const filtered = aspirationalData
+    //       .filter((item) => item.lgd_state_name === selectedState)
+    //       .map((item) => ({
+    //         ...item,
+    //         lgd_block_name: item.lgd_block_name,
+    //         lgd_district_name: item.lgd_district_name,
+    //       }));
+    //     setFilteredData(filtered);
+    //   } else {
+    //     setFilteredData([]);
+    //   }
+    // }, [selectedState, aspirationalData]);
 
     const getLocationName = (item) => {
         if (selectReportType === "ABP_Report") {
@@ -248,8 +208,8 @@ export default function TransitionRateReport() {
     const percentageRenderer = (params) => {
         const value = params.value;
 
-        if (typeof value === 'number') {
-            return value.toFixed(2) + " " + '%';
+        if (typeof value === "number") {
+            return value.toFixed(2) + " " + "%";
         } else {
             return value;
         }
@@ -267,6 +227,15 @@ export default function TransitionRateReport() {
             cellRenderer: ArrowRenderer,
             field: "Location",
         },
+
+        ...(selectReportType === "ABP_Report"
+            ? [
+                {
+                    headerName: "Block",
+                    field: "lgd_block_name",
+                },
+            ]
+            : []),
 
         {
             headerName: "Boys",
@@ -308,13 +277,19 @@ export default function TransitionRateReport() {
                         {
                             headerName: "District",
                             field: "lgd_district_name",
+                            cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
                         },
 
-                        ...(selectReportType === "ABP_Report" ? [{
-                            headerName: "Block",
-                            field: "lgd_block_name",
-                        }] : [])
-                    ]
+                        ...(selectReportType === "ABP_Report"
+                            ? [
+                                {
+                                    headerName: "Block",
+                                    field: "lgd_block_name",
+                                    cellRenderer: ArrowRenderer,
+                                },
+                            ]
+                            : []),
+                    ],
                 },
                 {
                     headerName: "Upper Primary To Secondary",
@@ -336,8 +311,8 @@ export default function TransitionRateReport() {
                             field: "upri_t",
                             cellRenderer: percentageRenderer,
                             hide: false,
-                        }
-                    ]
+                        },
+                    ],
                 },
                 {
                     headerName: "Secondary To Higher Secondary",
@@ -359,16 +334,14 @@ export default function TransitionRateReport() {
                             field: "sec_t",
                             cellRenderer: percentageRenderer,
                             hide: false,
-                        }
-                    ]
+                        },
+                    ],
                 },
-
             ];
 
             setColumn(columns);
         }
-    }, [selectedState, selectReportType])
-
+    }, [selectedState, selectReportType]);
 
     const handleOptionChange = (event) => {
         dispatch(setselectedOption(event.target.value));
@@ -385,11 +358,42 @@ export default function TransitionRateReport() {
                         suppressColumnsToolPanel: true,
                         suppressFiltersToolPanel: true,
                     },
-                    {
-                        headerName: locationHeader,
-                        cellRenderer: ArrowRenderer,
-                        field: "Location",
-                    },
+                    ...(selectReportType === "ADP_Report"
+                        ? [
+                            {
+                                headerName: "District",
+                                field: "lgd_district_name",
+                                cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
+                            },
+                        ]
+                        : []),
+                    ...(selectedState !== "All State" &&
+                        selectReportType === "ABP_Report" &&
+                        (selectedDistrict === SelectDistrict ||
+                            selectedDistrict === AllDistrict)
+                        ? [
+                            {
+                                headerName: "District",
+                                field: "lgd_district_name",
+                                cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
+                            },
+                        ]
+                        : []),
+                    //   {
+                    //     headerName: locationHeader,
+                    //     cellRenderer: ArrowRenderer,
+                    //     field: "Location",
+                    //   },
+
+                    ...(selectReportType === "ABP_Report"
+                        ? [
+                            {
+                                headerName: "Block",
+                                field: "lgd_block_name",
+                                cellRenderer: ArrowRenderer,
+                            },
+                        ]
+                        : []),
                     {
                         headerName: "Boys",
                         field: "upri_b",
@@ -418,11 +422,44 @@ export default function TransitionRateReport() {
                         suppressColumnsToolPanel: true,
                         suppressFiltersToolPanel: true,
                     },
-                    {
-                        headerName: locationHeader,
-                        cellRenderer: ArrowRenderer,
-                        field: "Location",
-                    },
+
+                    ...(selectReportType === "ADP_Report"
+                        ? [
+                            {
+                                headerName: "District",
+                                field: "lgd_district_name",
+                                cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
+                            },
+                        ]
+                        : []),
+                    ...(selectedState !== "All State" &&
+                        selectReportType === "ABP_Report" &&
+                        (selectedDistrict === SelectDistrict ||
+                            selectedDistrict === AllDistrict)
+                        ? [
+                            {
+                                headerName: "District",
+                                field: "lgd_district_name",
+                                cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
+                            },
+                        ]
+                        : []),
+                    //   {
+                    //     headerName: locationHeader,
+                    //     cellRenderer: ArrowRenderer,
+                    //     field: "Location",
+                    //   },
+
+                    ...(selectReportType === "ABP_Report"
+                        ? [
+                            {
+                                headerName: "Block",
+                                field: "lgd_block_name",
+                                cellRenderer: ArrowRenderer,
+                            },
+                        ]
+                        : []),
+
                     {
                         headerName: "Boys",
                         field: "sec_b",
@@ -444,9 +481,13 @@ export default function TransitionRateReport() {
                 ]);
             }
         }
-
-
-    }, [locationHeader, selectedOption, selectedState]);
+    }, [
+        locationHeader,
+        selectedState,
+        selectedOption,
+        selectedDistrict,
+        selectReportType,
+    ]);
     const compressData = useCallback((data, groupBy) => {
         if (data) {
             return data.reduce((acc, curr) => {
@@ -522,15 +563,20 @@ export default function TransitionRateReport() {
         }
         return compressData(data, "lgd_state_name");
     }, [data, selectedState, selectedDistrict, selectedBlock]);
-    useEffect(() => {
-        if (selectedState !== "All State") {
-            dispatch(SetFinalData(compressedData))
-        }
 
-        else {
-            dispatch(SetFinalData(aspirationalData))
+
+    useEffect(() => {
+        if (selectedState !== "All State" && selectReportType === "ADP_Report") {
+            dispatch(SetFinalData(compressedData));
+        } else if (
+            selectedState !== "All State" &&
+            selectReportType === "ABP_Report"
+        ) {
+            dispatch(SetFinalData(data));
+        } else {
+            dispatch(SetFinalData(aspirationalData));
         }
-    }, [selectedState, data, aspirationalData, selectReportType])
+    }, [selectedState, data, aspirationalData, selectReportType]);
     const defColumnDefs = useMemo(
         () => ({
             flex: 1,
@@ -546,7 +592,7 @@ export default function TransitionRateReport() {
     );
 
     const onGridReady = useCallback((params) => {
-        setGridApi(params)
+        setGridApi(params);
     }, []);
     /*------------Export data to Excel and PDF-------------*/
     const getHeaderToExport = (gridApi) => {
@@ -725,20 +771,25 @@ export default function TransitionRateReport() {
             <section>
                 <BannerReportFilter />
 
-                <div className="container" >
+                <div className="container">
                     <div className="row mt-3">
                         <div className="col-md-12">
                             {loading && <GlobalLoading />}
                             <div className="card-box">
-                                <div className="row align-items-end" >
-                                    <div className={selectedState !== "All State" ? "col-md-5" : "col-md-6"}>
+                                <div className="row align-items-end">
+                                    <div
+                                        className={
+                                            selectedState !== "All State" ? "col-md-5" : "col-md-6"
+                                        }
+                                    >
                                         <div className="d-flex align-items-end">
                                             <div className="title-box">
                                                 <h5 className="sub-title">
                                                     {selectReportType === "ADP_Report"
                                                         ? selectedState === "All State"
                                                             ? "All State"
-                                                            : selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict
+                                                            : selectedDistrict !== SelectDistrict &&
+                                                                selectedDistrict !== AllDistrict
                                                                 ? `${selectedDistrict}`
                                                                 : selectedDistrict === AllDistrict
                                                                     ? `${selectedState} District's`
@@ -747,60 +798,84 @@ export default function TransitionRateReport() {
                                                             ? selectedState === "All State"
                                                                 ? "All State"
                                                                 : selectedState !== SelectState
-                                                                    ? selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict
+                                                                    ? selectedDistrict === SelectDistrict ||
+                                                                        selectedDistrict === AllDistrict
                                                                         ? `${selectedState} District's`
-                                                                        : selectedBlock !== SelectBlock && selectedBlock !== AllBlock
+                                                                        : selectedBlock !== SelectBlock &&
+                                                                            selectedBlock !== AllBlock
                                                                             ? `${selectedBlock}`
                                                                             : `${selectedDistrict} Block's`
                                                                     : selectedBlock
                                                             : selectedBlock}
                                                 </h5>
-                                                <h3 className="heading-sm">{t('transitionRate')}</h3>
+                                                <h3 className="heading-sm">{t("transitionRate")}</h3>
                                             </div>
                                             <div className="tab-box">
                                                 <button className="tab-button active">
-                                                    <img src={table} alt="Table" /> <span>{t('tableView')}</span>
+                                                    <img src={table} alt="Table" />{" "}
+                                                    <span>{t("tableView")}</span>
                                                 </button>
                                                 <button className="tab-button">
-                                                    <img src={chart} alt="chart" /> <span>{t('chartView')}</span>
+                                                    <img src={chart} alt="chart" />{" "}
+                                                    <span>{t("chartView")}</span>
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className={selectedState !== "All State" ? "col-md-7" : "col-md-6"}>
-                                        <div className={selectedState !== "All State" ? "d-flex w-m-100" : "d-flex w-m-100 justify-content-end"}>
-                                            <div className={selectedState !== "All State" ? "radio-button" : ""}>
-                                                {selectedState !== "All State" ? <>
-                                                    <div className="box-radio">
-                                                        <input
-                                                            type="radio"
-                                                            id="radio4"
-                                                            value="upper_primary_to_secondary"
-                                                            checked={
-                                                                selectedOption === "upper_primary_to_secondary"
-                                                            }
-                                                            onChange={handleOptionChange}
-                                                        />
-                                                        <label htmlFor="radio4">
-                                                            {t('upperPrimaryToSecondary')}{" "}
-                                                        </label>
-                                                    </div>
+                                    <div
+                                        className={
+                                            selectedState !== "All State" ? "col-md-7" : "col-md-6"
+                                        }
+                                    >
+                                        <div
+                                            className={
+                                                selectedState !== "All State"
+                                                    ? "d-flex w-m-100"
+                                                    : "d-flex w-m-100 justify-content-end"
+                                            }
+                                        >
+                                            <div
+                                                className={
+                                                    selectedState !== "All State" ? "radio-button" : ""
+                                                }
+                                            >
+                                                {selectedState !== "All State" ? (
+                                                    <>
+                                                        <div className="box-radio">
+                                                            <input
+                                                                type="radio"
+                                                                id="radio4"
+                                                                value="upper_primary_to_secondary"
+                                                                checked={
+                                                                    selectedOption ===
+                                                                    "upper_primary_to_secondary"
+                                                                }
+                                                                onChange={handleOptionChange}
+                                                            />
+                                                            <label htmlFor="radio4">
+                                                                {t("upperPrimaryToSecondary")}{" "}
+                                                            </label>
+                                                        </div>
 
-                                                    <div className="box-radio">
-                                                        <input
-                                                            type="radio"
-                                                            id="radio5"
-                                                            value="secondary_to_higher_secondary"
-                                                            checked={
-                                                                selectedOption === "secondary_to_higher_secondary"
-                                                            }
-                                                            onChange={handleOptionChange}
-                                                        />
-                                                        <label htmlFor="radio5">
-                                                            {t('secondaryToHigherSecondary')}
-                                                        </label>
-                                                    </div>
-                                                </> : ""}
+                                                        <div className="box-radio">
+                                                            <input
+                                                                type="radio"
+                                                                id="radio5"
+                                                                value="secondary_to_higher_secondary"
+                                                                checked={
+                                                                    selectedOption ===
+                                                                    "secondary_to_higher_secondary"
+                                                                }
+                                                                onChange={handleOptionChange}
+                                                            />
+                                                            <label htmlFor="radio5">
+                                                                {t("secondaryToHigherSecondary")}
+                                                            </label>
+                                                        </div>
+                                                    </>
+                                                ) : (
+                                                    ""
+                                                )}
                                             </div>
                                             <div className="">
                                                 {/* <img src={download} alt="download" /> */}
@@ -812,11 +887,13 @@ export default function TransitionRateReport() {
                                                 >
                                                     <option className="option-hide">
                                                         {" "}
-                                                        {t('downloadReport')} {selectedYear}
+                                                        {t("downloadReport")} {selectedYear}
                                                     </option>
-                                                    <option value="export_pdf">{t('downloadAsPdf')}</option>
+                                                    <option value="export_pdf">
+                                                        {t("downloadAsPdf")}
+                                                    </option>
                                                     <option value="export_excel">
-                                                        {t('downloadAsExcel')}
+                                                        {t("downloadAsExcel")}
                                                     </option>
                                                 </select>
                                             </div>
@@ -827,7 +904,7 @@ export default function TransitionRateReport() {
                                 <div className="row">
                                     <div className="col-md-12">
                                         <div className="table-box mt-4">
-                                            <div id="content"
+                                            <div
                                                 className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
                                                 style={{ width: "100%", height: 300 }}
                                             >
@@ -837,7 +914,6 @@ export default function TransitionRateReport() {
                                                     defaultColDef={defColumnDefs}
                                                     onGridReady={onGridReady}
                                                 />
-
                                             </div>
                                         </div>
                                     </div>
