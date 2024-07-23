@@ -21,10 +21,24 @@ const Header = () => {
     if (pathName !== "/") {
       navigate("/");
       setTimeout(() => {
-        document.getElementById('aboutSection').scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest', offset:"-140" });
-      }, 500); 
+        scrollToElement('aboutSection', -140);
+      }, 500); // Adjust this duration if needed
     }
   };
+  
+  const scrollToElement = (id, offset) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset + offset;
+  
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+  
 
   const goToPageOnClick = () => {
     // navigate("/");
@@ -73,10 +87,15 @@ const Header = () => {
   const handleClickScroll = () => {
     const element = document.getElementById('content');
     if (element) {
-      // 👇 Will scroll smoothly to the top of the next section
-      element.scrollIntoView({ behavior: 'smooth' });
+      const offset = -140;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY + offset;
+      window.scrollTo({
+        top: elementPosition,
+        behavior: 'smooth'
+      });
     }
   };
+  
 
 
 
