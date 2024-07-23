@@ -385,7 +385,7 @@ export default function SchoolInfraStructureCompare() {
                               </h6>
                             </div>
                             <div className="text-card">
-                              <p>Percent</p>
+                              <p>percentage of Schools having girls toilets in the ratio of 40:1</p>
                               <h6 className="sub-title">
                                 {district?.sch_having_toilet_40_percent?.toFixed(2)}
                               </h6>

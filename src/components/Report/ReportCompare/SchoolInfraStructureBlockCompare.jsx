@@ -364,7 +364,7 @@ export default function SchoolInfraStructureBlockCompare() {
                               <h6 className="sub-title">{block?.toilet_40}</h6>
                             </div>
                             <div className="text-card">
-                              <p>Percent</p>
+                              <p>percentage of Schools having girls toilets in the ratio of 40:1</p>
                               <h6 className="sub-title">
                                 {block?.sch_having_toilet_40_percent?.toFixed(
                                   2

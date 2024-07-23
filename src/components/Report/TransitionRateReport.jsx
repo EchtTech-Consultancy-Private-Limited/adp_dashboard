@@ -51,6 +51,7 @@ export default function TransitionRateReport() {
     const selectReportType = useSelector(
         (state) => state.reportAdpAbpType.updateReportType
     );
+    console.log(selectReportType, "selectReportType")
     const selectedOption = useSelector(
         (state) => state.reportAdpAbpType.selectedOption
     );
@@ -921,17 +922,16 @@ export default function TransitionRateReport() {
                             </div>
                         </div>
 
-                        {selectedState !== "All State" ? (
-                            <>
-                                {selectReportType === "ADP_Report" ? (
-                                    <TransitionRateCompare />
-                                ) : (
-                                    <TransitionBlockRateCompare />
-                                )}
-                            </>
-                        ) : (
-                            ""
-                        )}
+                        {
+                            selectedState !== "All State" && selectReportType === "ADP_Report" ? (
+                                <TransitionRateCompare />
+                            ) : (selectedState !== "All State" && selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) && selectReportType === "ABP_Report" ? (
+                                <TransitionBlockRateCompare />
+                            ) : (
+                                ""
+                            )
+                        }
+
                     </div>
                 </div>
             </section>

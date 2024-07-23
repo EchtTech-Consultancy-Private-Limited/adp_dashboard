@@ -640,13 +640,16 @@ export default function StudentsPerformanceReport() {
 
 
                         </div>
-                        {selectedState !== "All State" ? <>
-                            {selectReportType === "ADP_Report" ?
-                                <StudentsPerformanceCompare /> :
+                      
+                        {
+                            selectedState !== "All State" && selectReportType === "ADP_Report" ? (
+                                <StudentsPerformanceCompare />
+                            ) : (selectedState !== "All State" && selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) && selectReportType === "ABP_Report" ? (
                                 <StudentsPerformanceBlockCompare />
-
-                            }
-                        </> : ""}
+                            ) : (
+                                ""
+                            )
+                        }
                     </div>
                 </div>
             </section>
