@@ -3,7 +3,6 @@ import BannerReportFilter from "./BannerReportFilter";
 import download from "../../assets/images/download.svg";
 import table from "../../assets/images/table.svg";
 import chart from "../../assets/images/bar-chart.svg";
-import card from "../../assets/images/card-list.svg";
 import "./report.scss";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
@@ -11,8 +10,6 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { useTranslation } from "react-i18next";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
@@ -30,63 +27,12 @@ import {
   selectedOptionConst,
   SelectState,
 } from "../../constant/Constant";
-// import TransitionRateCompare from "./TransitionRateCompare";
 import { ScrollToTopOnMount } from "../../Scroll/ScrollToTopOnMount";
 import SchoolInfraStructureCompare from "./ReportCompare/SchoolInfraStructureCompare";
 import SchoolInfraStructureBlockCompare from "./ReportCompare/SchoolInfraStructureBlockCompare";
+import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 
 
-const ArrowRenderer = ({ data, value }) => {
-  const selectedOption = useSelector(
-    (state) => state.reportAdpAbpType.selectedOption
-  );
-  const [arrowData, setArrowData] = useState([]);
-
-  useEffect(() => {
-    if (selectedOption === "upper_primary_to_secondary") {
-      setArrowData(data.upri_t);
-    } else {
-      setArrowData(data.sec_t);
-    }
-  }, [selectedOption, data]);
-
-  const renderArrow = () => {
-    if (
-      selectedOption === "upper_primary_to_secondary" &&
-      arrowData >= 70 &&
-      arrowData <= 100
-    ) {
-      return (
-        <ArrowUpwardIcon
-          style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-        />
-      );
-    } else if (
-      selectedOption !== "upper_primary_to_secondary" &&
-      arrowData >= 40 &&
-      arrowData <= 100
-    ) {
-      return (
-        <ArrowUpwardIcon
-          style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-        />
-      );
-    } else {
-      return (
-        <ArrowDownwardIcon
-          style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-        />
-      );
-    }
-  };
-
-  return (
-    <span>
-      {value}
-      {renderArrow()}
-    </span>
-  );
-};
 export default function SchoolInfraStructureReport() {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
@@ -109,7 +55,7 @@ export default function SchoolInfraStructureReport() {
   const savedReportName = localStorage.getItem("selectedReport");
   const report_name = savedReportName;
   const [data, setData] = useState([]);
-  const finalData= useSelector((state) => state.reportAdpAbpType.finalData)
+  const finalData = useSelector((state) => state.reportAdpAbpType.finalData)
   // const [finalData, SetFinalData] = useState([]
   function resteData() {
     // dispatch(selectState(SelectState));
@@ -197,7 +143,7 @@ export default function SchoolInfraStructureReport() {
     setLoading(false);
 
     // dispatch(setUpdateStatus(false))
-  }, [selectedState, selectedDistrict, selectedBlock,aspirationalData]);
+  }, [selectedState, selectedDistrict, selectedBlock, aspirationalData]);
   const getLocationName = (item) => {
     if (selectReportType === "ABP_Report") {
       if (
@@ -305,10 +251,12 @@ export default function SchoolInfraStructureReport() {
         {
           headerName: "District",
           field: "lgd_district_name",
+          cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
         },
         ...(selectReportType === "ABP_Report" ? [{
           headerName: "Block",
           field: "lgd_block_name",
+          cellRenderer: ArrowRenderer,
         }] : []),
 
         {
@@ -360,25 +308,25 @@ export default function SchoolInfraStructureReport() {
 
         ...(selectReportType === "ADP_Report"
           ? [
-              {
-                headerName: "District",
-                cellRenderer: ArrowRenderer,
-                field: "lgd_district_name",
-              },
-            ]
+            {
+              headerName: "District",
+              cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
+              field: "lgd_district_name",
+            },
+          ]
           : []),
 
         ...(selectedState !== "All State" &&
-        selectReportType === "ABP_Report" &&
-        (selectedDistrict === SelectDistrict ||
-          selectedDistrict === AllDistrict)
+          selectReportType === "ABP_Report" &&
+          (selectedDistrict === SelectDistrict ||
+            selectedDistrict === AllDistrict)
           ? [
-              {
-                headerName: "District",
-                cellRenderer: ArrowRenderer,
-                field: "lgd_district_name",
-              },
-            ]
+            {
+              headerName: "District",
+              cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
+              field: "lgd_district_name",
+            },
+          ]
           : []),
 
 
@@ -393,12 +341,12 @@ export default function SchoolInfraStructureReport() {
 
         ...(selectReportType === "ABP_Report"
           ? [
-              {
-                headerName: "Block",
-                cellRenderer: ArrowRenderer,
-                field: "lgd_block_name",
-              },
-            ]
+            {
+              headerName: "Block",
+              cellRenderer: ArrowRenderer,
+              field: "lgd_block_name",
+            },
+          ]
           : []),
 
 
@@ -445,26 +393,26 @@ export default function SchoolInfraStructureReport() {
     return data.reduce((acc, curr) => {
       const groupKey = curr[groupBy];
       let group = acc.find(item => item[groupBy] === groupKey);
-      
+
       if (group) {
         group.tot_school_girl_co_ed += curr?.tot_school_girl_co_ed || 0;
         group.total_no_of_fun_girls_toilet += curr?.total_no_of_fun_girls_toilet || 0;
         group.toilet_40 += curr?.toilet_40 || 0;
-  
+
         const totalSchools = group.tot_school_girl_co_ed;
         const totalToilet40 = group.toilet_40;
-  
+
         group.functional_toilet_girls_percent = parseFloat(
           curr?.functional_toilet_girls_percent || 0
         ).toFixed(2);
-  
+
         group.sch_having_toilet_40_percent = parseFloat(
           (totalToilet40 * 100) / totalSchools
         ).toFixed(2);
       } else {
         const totalSchools = curr?.tot_school_girl_co_ed || 0;
         const totalToilet40 = curr?.toilet_40 || 0;
-  
+
         acc.push({
           ...curr,
           lgd_state_name: curr.lgd_state_name,
@@ -479,36 +427,36 @@ export default function SchoolInfraStructureReport() {
           ).toFixed(2),
         });
       }
-      
+
       return acc;
     }, []);
   }, []);
-  
+
 
   const compressedData = useMemo(() => {
     if (selectedState && selectedState !== SelectState) {
-        if (selectedDistrict && selectedDistrict !== AllDistrict && selectedDistrict !== SelectDistrict) {
-            return compressData(data, "lgd_block_name");
-        }
-        return compressData(data, "lgd_district_name");
+      if (selectedDistrict && selectedDistrict !== AllDistrict && selectedDistrict !== SelectDistrict) {
+        return compressData(data, "lgd_block_name");
+      }
+      return compressData(data, "lgd_district_name");
     }
     return compressData(data, "lgd_state_name");
-}, [data, selectedState, selectedDistrict, selectedBlock]);
+  }, [data, selectedState, selectedDistrict, selectedBlock]);
   useEffect(() => {
-    if (selectedState !== "All State"  && selectReportType === "ADP_Report") {
-        dispatch(SetFinalData(compressedData))
+    if (selectedState !== "All State" && selectReportType === "ADP_Report") {
+      dispatch(SetFinalData(compressedData))
     }
     else if (
       selectedState !== "All State" &&
       selectReportType === "ABP_Report"
-    ){
+    ) {
       dispatch(SetFinalData(data));
     }
-    
+
     else {
-        dispatch(SetFinalData(aspirationalData))
+      dispatch(SetFinalData(aspirationalData))
     }
-}, [selectedState, data, aspirationalData,selectReportType])
+  }, [selectedState, data, aspirationalData, selectReportType])
 
   const defColumnDefs = useMemo(
     () => ({
