@@ -697,17 +697,16 @@ export default function TeacherAndSchResourcesReport() {
                                 </div>
                             </div>
                         </div>
-                        {selectedState !== "All State" ? (
-                            <>
-                                {selectReportType === "ADP_Report" ? (
-                                    <TeacherAndSchoolCompare />
-                                ) : (
-                                    <TeacherAndSchoolBlockCompare />
-                                )}
-                            </>
-                        ) : (
-                            ""
-                        )}
+
+                        {
+                            selectedState !== "All State" && selectReportType === "ADP_Report" ? (
+                                <TeacherAndSchoolCompare />
+                            ) : (selectedState !== "All State" && selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) && selectReportType === "ABP_Report" ? (
+                                <TeacherAndSchoolBlockCompare />
+                            ) : (
+                                ""
+                            )
+                        }
                     </div>
                 </div>
             </section>

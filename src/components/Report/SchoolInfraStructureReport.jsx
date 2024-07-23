@@ -734,16 +734,15 @@ export default function SchoolInfraStructureReport() {
                 </div>
               </div>
             </div>
-
-            {selectedState !== "All State" ? <>
-              {selectReportType === "ADP_Report" ?
-                <SchoolInfraStructureCompare /> :
+            {
+              selectedState !== "All State" && selectReportType === "ADP_Report" ? (
+                <SchoolInfraStructureCompare />
+              ) : (selectedState !== "All State" && selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) && selectReportType === "ABP_Report" ? (
                 <SchoolInfraStructureBlockCompare />
-
-              }
-            </> : ""}
-
-            {/* <TransitionRateCompare /> */}
+              ) : (
+                ""
+              )
+            }
           </div>
         </div>
       </section>
