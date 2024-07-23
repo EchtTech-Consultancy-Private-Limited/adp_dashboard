@@ -54,6 +54,8 @@ function App() {
       dispatch(setAspirationalAllData(selectedData));
     }
   }, [selectReportType, selectedState,selectedDistrict,selectedBlock,selectedYear,]);
+
+  
   return (
     <div className="App">
       <HashRouter>

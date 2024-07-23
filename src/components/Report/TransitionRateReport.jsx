@@ -406,7 +406,7 @@ export default function TransitionRateReport() {
 
       setColumn(columns);
     }
-  }, [selectedState]);
+  }, [selectedState,selectReportType]);
 
 
   const handleOptionChange = (event) => {
@@ -424,11 +424,27 @@ export default function TransitionRateReport() {
             suppressColumnsToolPanel: true,
             suppressFiltersToolPanel: true,
           },
-          {
-            headerName: locationHeader,
-            cellRenderer: ArrowRenderer,
-            field: "Location",
-          },
+          ...(selectReportType === "ADP_Report"
+            ? [
+                {
+                    headerName: "District",
+                    field: "lgd_district_name",
+                  },
+              ]
+            : []),
+            ...(selectedState !== "All State" && selectReportType === "ABP_Report" && (selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict)
+            ? [
+                {
+                    headerName: "District",
+                    field: "lgd_district_name",
+                  },
+              ]
+            : []),
+        //   {
+        //     headerName: locationHeader,
+        //     cellRenderer: ArrowRenderer,
+        //     field: "Location",
+        //   },
 
           ...(selectReportType === "ABP_Report"
             ? [
@@ -466,11 +482,28 @@ export default function TransitionRateReport() {
             suppressColumnsToolPanel: true,
             suppressFiltersToolPanel: true,
           },
-          {
-            headerName: locationHeader,
-            cellRenderer: ArrowRenderer,
-            field: "Location",
-          },
+         
+          ...(selectReportType === "ADP_Report"
+            ? [
+                {
+                    headerName: "District",
+                    field: "lgd_district_name",
+                  },
+              ]
+            : []),
+            ...(selectedState !== "All State" && selectReportType === "ABP_Report" && (selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict)
+            ? [
+                {
+                    headerName: "District",
+                    field: "lgd_district_name",
+                  },
+              ]
+            : []),
+        //   {
+        //     headerName: locationHeader,
+        //     cellRenderer: ArrowRenderer,
+        //     field: "Location",
+        //   },
 
           ...(selectReportType === "ABP_Report"
             ? [
@@ -502,7 +535,7 @@ export default function TransitionRateReport() {
         ]);
       }
     }
-  }, [locationHeader, selectedOption, selectedState, selectReportType]);
+  }, [locationHeader, selectedOption, selectedState,selectedDistrict, selectReportType]);
   const compressData = useCallback((data, groupBy) => {
     if (data) {
       return data.reduce((acc, curr) => {
@@ -578,7 +611,7 @@ export default function TransitionRateReport() {
     }
     return compressData(data, "lgd_state_name");
   }, [data, selectedState, selectedDistrict, selectedBlock]);
-
+  
   useEffect(() => {
     if (selectedState !== "All State" && selectReportType === "ADP_Report") {
       SetFinalData(compressedData);
@@ -586,7 +619,7 @@ export default function TransitionRateReport() {
       selectedState !== "All State" &&
       selectReportType === "ABP_Report"
     ) {
-      SetFinalData(filteredData);
+      SetFinalData(data);
     } else {
       SetFinalData(aspirationalData);
     }
