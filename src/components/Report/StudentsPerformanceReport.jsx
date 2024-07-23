@@ -22,9 +22,37 @@ import { AllBlock, AllDistrict, intialYear, SelectBlock, SelectDistrict, selecte
 import { ScrollToTopOnMount } from '../../Scroll/ScrollToTopOnMount'
 import StudentsPerformanceCompare from './ReportCompare/StudentsPerformanceCompare'
 import StudentsPerformanceBlockCompare from './ReportCompare/StudentsPerformanceBlockCompare'
-import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 
 
+const ArrowRenderer = ({ data, value }) => {
+    const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
+    const [arrowData, setArrowData] = useState([]);
+
+    useEffect(() => {
+        if (selectedOption === "upper_primary_to_secondary") {
+            setArrowData(data.upri_t);
+        } else {
+            setArrowData(data.sec_t);
+        }
+    }, [selectedOption, data]);
+
+    const renderArrow = () => {
+        if (selectedOption === "upper_primary_to_secondary" && arrowData >= 70 && arrowData <= 100) {
+            return <ArrowUpwardIcon style={{ color: 'green', marginLeft: '5px', fontSize: "14px" }} />;
+        } else if (selectedOption !== "upper_primary_to_secondary" && arrowData >= 40 && arrowData <= 100) {
+            return <ArrowUpwardIcon style={{ color: 'green', marginLeft: '5px', fontSize: "14px" }} />;
+        } else {
+            return <ArrowDownwardIcon style={{ color: 'red', marginLeft: '5px', fontSize: "14px" }} />;
+        }
+    };
+
+    return (
+        <span>
+            {value}
+            {renderArrow()}
+        </span>
+    );
+};
 export default function StudentsPerformanceReport() {
     const dispatch = useDispatch()
     const { t, i18n } = useTranslation();
@@ -42,7 +70,7 @@ export default function StudentsPerformanceReport() {
     const savedReportName = localStorage.getItem('selectedReport');
     const report_name = savedReportName
     const [data, setData] = useState([]);
-    const finalData = useSelector((state) => state.reportAdpAbpType.finalData)
+    const finalData= useSelector((state) => state.reportAdpAbpType.finalData)
     // const [finalData, SetFinalData] = useState([])
 
     function resteData() {
@@ -108,7 +136,7 @@ export default function StudentsPerformanceReport() {
         setLoading(false)
 
         // dispatch(setUpdateStatus(false))
-    }, [selectedState, selectedDistrict, selectedBlock, aspirationalData]);
+    }, [selectedState, selectedDistrict, selectedBlock,aspirationalData]);
     const getLocationName = (item) => {
         if (selectReportType === "ABP_Report") {
             if (selectedBlock && selectedBlock !== AllBlock && selectedBlock !== SelectBlock) {
@@ -200,12 +228,10 @@ export default function StudentsPerformanceReport() {
                 {
                     headerName: "District",
                     field: "lgd_district_name",
-                    cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
                 },
                 ...(selectReportType === "ABP_Report" ? [{
                     headerName: "Block",
                     field: "lgd_block_name",
-                    cellRenderer: ArrowRenderer,
                 }] : []),
 
 
@@ -313,11 +339,11 @@ export default function StudentsPerformanceReport() {
         if (selectedState !== "All State") {
             dispatch(SetFinalData(compressedData))
         }
-
+        
         else {
             dispatch(SetFinalData(aspirationalData))
         }
-    }, [selectedState, data, aspirationalData, selectReportType])
+    }, [selectedState, data, aspirationalData,selectReportType])
 
     const defColumnDefs = useMemo(() => ({
         flex: 1,
