@@ -42,7 +42,7 @@ export default function StudentsPerformanceReport() {
     const savedReportName = localStorage.getItem('selectedReport');
     const report_name = savedReportName
     const [data, setData] = useState([]);
-    const finalData= useSelector((state) => state.reportAdpAbpType.finalData)
+    const finalData = useSelector((state) => state.reportAdpAbpType.finalData)
     // const [finalData, SetFinalData] = useState([])
 
     function resteData() {
@@ -108,7 +108,7 @@ export default function StudentsPerformanceReport() {
         setLoading(false)
 
         // dispatch(setUpdateStatus(false))
-    }, [selectedState, selectedDistrict, selectedBlock,aspirationalData]);
+    }, [selectedState, selectedDistrict, selectedBlock, aspirationalData]);
     const getLocationName = (item) => {
         if (selectReportType === "ABP_Report") {
             if (selectedBlock && selectedBlock !== AllBlock && selectedBlock !== SelectBlock) {
@@ -313,11 +313,11 @@ export default function StudentsPerformanceReport() {
         if (selectedState !== "All State") {
             dispatch(SetFinalData(compressedData))
         }
-        
+
         else {
             dispatch(SetFinalData(aspirationalData))
         }
-    }, [selectedState, data, aspirationalData,selectReportType])
+    }, [selectedState, data, aspirationalData, selectReportType])
 
     const defColumnDefs = useMemo(() => ({
         flex: 1,
