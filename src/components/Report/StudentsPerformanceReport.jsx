@@ -136,7 +136,7 @@ export default function StudentsPerformanceReport() {
         setLoading(false)
 
         // dispatch(setUpdateStatus(false))
-    }, [selectedState, selectedDistrict, selectedBlock,aspirationalData]);
+    }, [selectedState, selectedDistrict, selectedBlock,aspirationalData,selectReportType]);
     const getLocationName = (item) => {
         if (selectReportType === "ABP_Report") {
             if (selectedBlock && selectedBlock !== AllBlock && selectedBlock !== SelectBlock) {
@@ -271,11 +271,52 @@ export default function StudentsPerformanceReport() {
                     suppressColumnsToolPanel: true,
                     suppressFiltersToolPanel: true,
                 },
-                {
-                    headerName: locationHeader,
-                    cellRenderer: ArrowRenderer,
-                    field: "Location",
-                },
+
+                ...(selectReportType === "ADP_Report"
+                    ? [
+                        {
+                          headerName: "District",
+                          cellRenderer: ArrowRenderer,
+
+                          field: "lgd_district_name",
+                        },
+                      ]
+                    : []),
+          
+                  ...(selectedState !== "All State" &&
+                  selectReportType === "ABP_Report" &&
+                  (selectedDistrict === SelectDistrict ||
+                    selectedDistrict === AllDistrict)
+                    ? [
+                        {
+                          headerName: "District",
+                          cellRenderer: ArrowRenderer,
+
+                          field: "lgd_district_name",
+                        },
+                      ]
+                    : []),
+          
+
+                // {
+                //     headerName: locationHeader,
+                //     cellRenderer: ArrowRenderer,
+                //     field: "Location",
+                // },
+
+                ...(selectReportType === "ABP_Report"
+                    ? [
+                        {
+                          headerName: "Block",
+                          cellRenderer: ArrowRenderer,
+
+                          field: "lgd_block_name",
+                        },
+                      ]
+                    : []),
+          
+
+
                 {
                     headerName: "Number of Schools having teacher trained to teach CWSN",
                     field: "total_school_cwsn",
@@ -298,7 +339,9 @@ export default function StudentsPerformanceReport() {
 
         }
 
-    }, [locationHeader, selectedState]);
+    }, [locationHeader, selectedState,   selectedOption,
+        selectedDistrict,
+        selectReportType,]);
 
     const compressData = useCallback((data, groupBy) => {
         return data.reduce((acc, curr) => {
@@ -336,9 +379,16 @@ export default function StudentsPerformanceReport() {
     }, [data, selectedState, selectedDistrict, selectedBlock]);
 
     useEffect(() => {
-        if (selectedState !== "All State") {
+        if (selectedState !== "All State" && selectReportType === "ADP_Report" ) {
             dispatch(SetFinalData(compressedData))
         }
+
+        else if (
+            selectedState !== "All State" &&
+            selectReportType === "ABP_Report"
+          ) {
+            dispatch(SetFinalData(data));
+          }
         
         else {
             dispatch(SetFinalData(aspirationalData))
