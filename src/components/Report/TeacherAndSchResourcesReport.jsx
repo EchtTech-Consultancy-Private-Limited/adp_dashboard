@@ -23,36 +23,8 @@ import { AllBlock, AllDistrict, intialYear, SelectBlock, SelectDistrict, selecte
 import { ScrollToTopOnMount } from '../../Scroll/ScrollToTopOnMount'
 import TeacherAndSchoolCompare from './ReportCompare/TeacherAndSchoolCompare'
 import TeacherAndSchoolBlockCompare from './ReportCompare/TeacherAndSchoolBlockCompare'
+import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 
-
-const ArrowRenderer = ({ data, value }) => {
-    const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
-    const [arrowData, setArrowData] = useState([]);
-    useEffect(() => {
-        if (selectedOption === "upper_primary_to_secondary") {
-            setArrowData(data.upri_t);
-        } else {
-            setArrowData(data.sec_t);
-        }
-    }, [selectedOption, data]);
-
-    const renderArrow = () => {
-        if (selectedOption === "upper_primary_to_secondary" && arrowData >= 70 && arrowData <= 100) {
-            return <ArrowUpwardIcon style={{ color: 'green', marginLeft: '5px', fontSize: "14px" }} />;
-        } else if (selectedOption !== "upper_primary_to_secondary" && arrowData >= 40 && arrowData <= 100) {
-            return <ArrowUpwardIcon style={{ color: 'green', marginLeft: '5px', fontSize: "14px" }} />;
-        } else {
-            return <ArrowDownwardIcon style={{ color: 'red', marginLeft: '5px', fontSize: "14px" }} />;
-        }
-    };
-
-    return (
-        <span>
-            {value}
-            {renderArrow()}
-        </span>
-    );
-};
 export default function TeacherAndSchResourcesReport() {
     const dispatch = useDispatch()
     const { t, i18n } = useTranslation();
@@ -222,10 +194,13 @@ export default function TeacherAndSchResourcesReport() {
                 {
                     headerName: "District",
                     field: "lgd_district_name",
+                    cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
+                    
                 },
                 ...(selectReportType === "ABP_Report" ? [{
                     headerName: "Block",
                     field: "lgd_block_name",
+                    cellRenderer: ArrowRenderer,
                 }] : []),
                 {
                     headerName: "Number of Elementary Schools having PTR less than equal to 30",

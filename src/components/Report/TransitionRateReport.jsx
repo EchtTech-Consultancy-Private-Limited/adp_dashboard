@@ -16,8 +16,7 @@ import {
     selectDistrict,
     selectState,
 } from "../../redux/slice/filterServicesSlice";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+
 import { jsPDF } from "jspdf";
 import { Select } from "antd";
 import "jspdf-autotable";
@@ -45,58 +44,8 @@ import { ScrollToTopOnMount } from "../../Scroll/ScrollToTopOnMount";
 import TransitionBlockRateCompare from "./ReportCompare/TransitionBlockRateCompare";
 import { useTranslation } from "react-i18next";
 import { CommonData } from "./CommonData/CommonData";
+import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 
-const ArrowRenderer = ({ data, value }) => {
-    const selectedOption = useSelector(
-        (state) => state.reportAdpAbpType.selectedOption
-    );
-    const [arrowData, setArrowData] = useState([]);
-
-    useEffect(() => {
-        if (selectedOption === "upper_primary_to_secondary") {
-            setArrowData(data.upri_t);
-        } else {
-            setArrowData(data.sec_t);
-        }
-    }, [selectedOption, data]);
-
-    const renderArrow = () => {
-        if (
-            selectedOption === "upper_primary_to_secondary" &&
-            arrowData >= 70 &&
-            arrowData <= 100
-        ) {
-            return (
-                <ArrowUpwardIcon
-                    style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        } else if (
-            selectedOption !== "upper_primary_to_secondary" &&
-            arrowData >= 40 &&
-            arrowData <= 100
-        ) {
-            return (
-                <ArrowUpwardIcon
-                    style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        } else {
-            return (
-                <ArrowDownwardIcon
-                    style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        }
-    };
-
-    return (
-        <span>
-            {value}
-            {renderArrow()}
-        </span>
-    );
-};
 export default function TransitionRateReport() {
     const dispatch = useDispatch();
     const { t, i18n } = useTranslation();
@@ -308,11 +257,14 @@ export default function TransitionRateReport() {
                         {
                             headerName: "District",
                             field: "lgd_district_name",
+                            cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
+                            
                         },
 
                         ...(selectReportType === "ABP_Report" ? [{
                             headerName: "Block",
                             field: "lgd_block_name",
+                            cellRenderer: ArrowRenderer,
                         }] : [])
                     ]
                 },
