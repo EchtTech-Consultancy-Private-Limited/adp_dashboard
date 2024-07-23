@@ -23,6 +23,7 @@ import { Select } from "antd";
 import "jspdf-autotable";
 import { GlobalLoading } from "../GlobalLoading/GlobalLoading";
 import {
+  SetFinalData,
   setgirdAPIForCommonData,
   setselectedOption,
   setSelectedYear,
@@ -127,8 +128,9 @@ export default function TransitionRateReport() {
   const savedReportName = localStorage.getItem("selectedReport");
   const report_name = savedReportName;
   const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
-  const [finalData, SetFinalData] = useState([]);
+  // const [filteredData, setFilteredData] = useState([]);
+  // const [finalData, SetFinalData] = useState([]);
+  const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
   function resteData() {
     // dispatch(selectState(SelectState));
     // dispatch(selectDistrict(SelectDistrict));
@@ -221,22 +223,20 @@ export default function TransitionRateReport() {
     selectReportType,
   ]);
 
-  useEffect(() => {
-    if (selectedState) {
-      const filtered = aspirationalData
-        .filter((item) => item.lgd_state_name === selectedState)
-        .map((item) => ({
-          ...item,
-          lgd_block_name: item.lgd_block_name,
-          lgd_district_name: item.lgd_district_name,
-        }));
-      setFilteredData(filtered);
-    } else {
-      setFilteredData([]);
-    }
-  }, [selectedState, aspirationalData]);
-
-
+  // useEffect(() => {
+  //   if (selectedState) {
+  //     const filtered = aspirationalData
+  //       .filter((item) => item.lgd_state_name === selectedState)
+  //       .map((item) => ({
+  //         ...item,
+  //         lgd_block_name: item.lgd_block_name,
+  //         lgd_district_name: item.lgd_district_name,
+  //       }));
+  //     setFilteredData(filtered);
+  //   } else {
+  //     setFilteredData([]);
+  //   }
+  // }, [selectedState, aspirationalData]);
 
   const getLocationName = (item) => {
     if (selectReportType === "ABP_Report") {
@@ -406,8 +406,7 @@ export default function TransitionRateReport() {
 
       setColumn(columns);
     }
-  }, [selectedState,selectReportType]);
-
+  }, [selectedState, selectReportType]);
 
   const handleOptionChange = (event) => {
     dispatch(setselectedOption(event.target.value));
@@ -427,24 +426,27 @@ export default function TransitionRateReport() {
           ...(selectReportType === "ADP_Report"
             ? [
                 {
-                    headerName: "District",
-                    field: "lgd_district_name",
-                  },
+                  headerName: "District",
+                  field: "lgd_district_name",
+                },
               ]
             : []),
-            ...(selectedState !== "All State" && selectReportType === "ABP_Report" && (selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict)
+          ...(selectedState !== "All State" &&
+          selectReportType === "ABP_Report" &&
+          (selectedDistrict === SelectDistrict ||
+            selectedDistrict === AllDistrict)
             ? [
                 {
-                    headerName: "District",
-                    field: "lgd_district_name",
-                  },
+                  headerName: "District",
+                  field: "lgd_district_name",
+                },
               ]
             : []),
-        //   {
-        //     headerName: locationHeader,
-        //     cellRenderer: ArrowRenderer,
-        //     field: "Location",
-        //   },
+          //   {
+          //     headerName: locationHeader,
+          //     cellRenderer: ArrowRenderer,
+          //     field: "Location",
+          //   },
 
           ...(selectReportType === "ABP_Report"
             ? [
@@ -482,28 +484,31 @@ export default function TransitionRateReport() {
             suppressColumnsToolPanel: true,
             suppressFiltersToolPanel: true,
           },
-         
+
           ...(selectReportType === "ADP_Report"
             ? [
                 {
-                    headerName: "District",
-                    field: "lgd_district_name",
-                  },
+                  headerName: "District",
+                  field: "lgd_district_name",
+                },
               ]
             : []),
-            ...(selectedState !== "All State" && selectReportType === "ABP_Report" && (selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict)
+          ...(selectedState !== "All State" &&
+          selectReportType === "ABP_Report" &&
+          (selectedDistrict === SelectDistrict ||
+            selectedDistrict === AllDistrict)
             ? [
                 {
-                    headerName: "District",
-                    field: "lgd_district_name",
-                  },
+                  headerName: "District",
+                  field: "lgd_district_name",
+                },
               ]
             : []),
-        //   {
-        //     headerName: locationHeader,
-        //     cellRenderer: ArrowRenderer,
-        //     field: "Location",
-        //   },
+          //   {
+          //     headerName: locationHeader,
+          //     cellRenderer: ArrowRenderer,
+          //     field: "Location",
+          //   },
 
           ...(selectReportType === "ABP_Report"
             ? [
@@ -535,7 +540,13 @@ export default function TransitionRateReport() {
         ]);
       }
     }
-  }, [locationHeader, selectedOption, selectedState,selectedDistrict, selectReportType]);
+  }, [
+    locationHeader,
+    selectedState,
+    selectedOption,
+    selectedDistrict,
+    selectReportType,
+  ]);
   const compressData = useCallback((data, groupBy) => {
     if (data) {
       return data.reduce((acc, curr) => {
@@ -611,17 +622,18 @@ export default function TransitionRateReport() {
     }
     return compressData(data, "lgd_state_name");
   }, [data, selectedState, selectedDistrict, selectedBlock]);
+
   
   useEffect(() => {
     if (selectedState !== "All State" && selectReportType === "ADP_Report") {
-      SetFinalData(compressedData);
+      dispatch(SetFinalData(compressedData));
     } else if (
       selectedState !== "All State" &&
       selectReportType === "ABP_Report"
     ) {
-      SetFinalData(data);
+      dispatch(SetFinalData(data));
     } else {
-      SetFinalData(aspirationalData);
+      dispatch(SetFinalData(aspirationalData));
     }
   }, [selectedState, data, aspirationalData, selectReportType]);
   const defColumnDefs = useMemo(
