@@ -282,11 +282,45 @@
             }
         }
 
+        // Search bar css
+        .serch-box-show {
+            position: absolute;
+            top: 60px;
+            width: 250px;
+            right: 15px;
+            z-index: 9;
+
+            .form-control:focus {
+                color: #212529;
+                background-color: #fff;
+                border-color: #86b7fe !important;
+                outline: 0;
+            }
+
+            .submit-btn-apply {
+                margin-left: -5px;
+                border-radius: 0px 6px 6px 0px;
+                padding: 8px 18px !important;
+                font-size: 18px;
+            }
+
+            .submit-btn-apply{
+                background: #ff9461 !important;
+                border: 0;
+                color: #fff !important;
+                padding:8px 15px !important;
+                margin: 0;
+                font-size: 1rem;
+                margin-left: -5px;
+                display: flex   ;
+            }
+        }
+
         .top-logo {
             width: auto;
             border-right: 1px solid #707070;
-            padding-right: 13px;
-            margin-right: 13px;
+            padding-right: 9px;
+            margin-right: 9px;
 
             @media (max-width: 767px) {
                 width: auto;
@@ -296,17 +330,44 @@
             }
         }
 
-        .logo-text {
-            font-size: 19px;
-            color: #239da1;
-            text-decoration: none;
-            text-align: left;
-            font-weight: 600;
-            line-height: 1.2;
+        .header-logo-text {
+            display: flex;
 
-            @media (max-width:767px) {
-                font-size: 14px;
-                display: none;
+            .logo-text {
+                font-size: 18px;
+                color: #239da1;
+                text-decoration: none;
+                text-align: left;
+                font-weight: 600;
+                line-height: 1.2;
+
+                @media (max-width:1599px) and (min-width: 1400px) {
+                    font-size: 17px;
+                }
+
+                @media (max-width:1399px) and (min-width: 1024px) {
+                    font-size: 15px !important;
+                }
+
+                &:first-child{
+                    margin-right: 18px;
+                    &::after {
+                        content: "";
+                        background: #707070;
+                        padding-left: 0px;
+                        position: absolute;
+                        width: .1px;
+                        height: 52px;
+                        top: 11px;
+                        margin-left: 9px;
+    
+                    }
+                }
+
+                @media (max-width:767px) {
+                    font-size: 14px;
+                    display: none;
+                }
             }
         }
 

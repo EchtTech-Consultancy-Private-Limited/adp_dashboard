@@ -25,20 +25,20 @@ const Header = () => {
       }, 500); // Adjust this duration if needed
     }
   };
-  
+
   const scrollToElement = (id, offset) => {
     const element = document.getElementById(id);
     if (element) {
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset + offset;
-  
+
       window.scrollTo({
         top: offsetPosition,
         behavior: 'smooth'
       });
     }
   };
-  
+
 
   const goToPageOnClick = () => {
     // navigate("/");
@@ -50,6 +50,11 @@ const Header = () => {
   const [isShow, setIsShow] = useState(false);
 
   const handleShowNavbar = () => {
+    setShowNavbar(!showNavbar);
+    setIsShow(!isShow);
+  };
+
+  const handleShowsearch = () => {
     setShowNavbar(!showNavbar);
     setIsShow(!isShow);
   };
@@ -95,7 +100,7 @@ const Header = () => {
       });
     }
   };
-  
+
 
 
 
@@ -109,104 +114,104 @@ const Header = () => {
   return (
 
     <>
-      
-        <div className="header-top header-bg">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12">
-                <div className="header-top-content">
-                  {/* <div className="header-top-skipwrap top-date-time">
+
+      <div className="header-top header-bg">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="header-top-content">
+                {/* <div className="header-top-skipwrap top-date-time">
                   <ul>
                     <li>{formatDateString(currentDateTime)}</li>
                     <li><a href="#">{currentDateTime.toLocaleTimeString()}</a></li>
                   </ul>
                 </div> */}
 
-                  <div className="header-top-skipwrap">
-                    <ul className="ps-0 mb-0">
-                      <li>
-                        <Link to="#">{t("sitemap")}</Link>
-                      </li>
-                      <li>
-                        <Link to="#" onClick={handleClickScroll}>
-                          {" "}
-                          {t("skipToMainContent")}
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/screen-reader-access">
-                          {t("screenReaderAccess")}
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
+                <div className="header-top-skipwrap">
+                  <ul className="ps-0 mb-0">
+                    <li>
+                      <Link to="#">{t("sitemap")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#" onClick={handleClickScroll}>
+                        {" "}
+                        {t("skipToMainContent")}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/screen-reader-access">
+                        {t("screenReaderAccess")}
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
 
-                  <div className="header-top-skipwrap right-access-points">
-                    <ul className="mb-0">
-                      <li>
-                        <div className="theme-toggle">
-                          <label className="switch" title="Dark Mode">
-                            <input
-                              className="switch-input"
-                              type="checkbox"
-                              id="mode"
-                              onChange={handleChange}
-                              checked={toggleDarkMode}
-                              onClick={toggleDarkTheme}
-                            />
-                            <span
-                              data-on="On"
-                              data-off="Off"
-                              className="switch-label"
-                            ></span>
-                            <span
-                              className="switch-handle"
-                              title="Change Contrast"
-                            ></span>
-                          </label>
+                <div className="header-top-skipwrap right-access-points">
+                  <ul className="mb-0">
+                    <li>
+                      <div className="theme-toggle">
+                        <label className="switch" title="Dark Mode">
+                          <input
+                            className="switch-input"
+                            type="checkbox"
+                            id="mode"
+                            onChange={handleChange}
+                            checked={toggleDarkMode}
+                            onClick={toggleDarkTheme}
+                          />
+                          <span
+                            data-on="On"
+                            data-off="Off"
+                            className="switch-label"
+                          ></span>
+                          <span
+                            className="switch-handle"
+                            title="Change Contrast"
+                          ></span>
+                        </label>
+                      </div>
+                    </li>
+
+                    <li>
+                      <div className="select-right">
+                        <div className="select-wrap">
+                          <select
+                            className="form-select Langchange"
+                            value={i18n.language}
+                            onChange={changeLanguage}
+                          >
+                            <option value="en">Eng</option>
+                            <option value="hi">हिन्दी</option>
+                          </select>
                         </div>
-                      </li>
+                      </div>
+                    </li>
 
-                      <li>
+                    <li>
+                      <div>
                         <div className="select-right">
-                          <div className="select-wrap">
-                            <select
-                              className="form-select Langchange"
-                              value={i18n.language}
-                              onChange={changeLanguage}
-                            >
-                              <option value="en">Eng</option>
-                              <option value="hi">हिन्दी</option>
-                            </select>
-                          </div>
+                          <select
+                            className="form-select Langchange"
+                            onChange={changeSizeByBtn}
+                          >
+                            <option value="average">{t("gradeA")}</option>
+                            <option value="max">{t("gradeAPlus")}</option>
+                            <option value="normal">{t("gradeAMinus")}</option>
+                          </select>
                         </div>
-                      </li>
-
-                      <li>
-                        <div>
-                          <div className="select-right">
-                            <select
-                              className="form-select Langchange"
-                              onChange={changeSizeByBtn}
-                            >
-                              <option value="average">{t("gradeA")}</option>
-                              <option value="max">{t("gradeAPlus")}</option>
-                              <option value="normal">{t("gradeAMinus")}</option>
-                            </select>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <header className="site-header header-bg">
-          <div className="container">
-            <div className="header-bottom">
+      <header className="site-header header-bg">
+        <div className="container">
+          <div className="header-bottom">
             <div className="row">
               <div className="col-md-12">
                 <nav className="navbar navbar-expand-lg">
@@ -223,15 +228,25 @@ const Header = () => {
                         className="img-fluid logo-main"
                       />
                     </Link>
-                    <Link
-                      to=""
-                      onClick={goToPageOnClick}
-                      className="logo-text ordernav-sm-2"
-                    >
-                      {" "}
-                      {t("aspirational")} <br />
-                      {t("districtProgramme")}{" "}
-                    </Link>
+                    <div className='header-logo-text'>
+                      <Link
+                        to=""
+                        onClick={goToPageOnClick}
+                        className="logo-text ordernav-sm-2">
+                        {" "}
+                        {t("aspirational")} <br />
+                        {t("districtProgramme")}{" "}
+                      </Link>
+
+                      <Link
+                        to=""
+                        onClick={goToPageOnClick}
+                        className="logo-text ordernav-sm-2">
+                        {" "}
+                        {t("aspirational")} <br />
+                        {t("blockProgramme")}{" "}
+                      </Link>
+                    </div>
                   </div>
 
                   <div className="navbar-right d-flex align-items-center">
@@ -247,7 +262,7 @@ const Header = () => {
                               smooth={true}
                               duration={500}
                               offset={-140}
-                              //  className='active'
+                            //  className='active'
                             >
                               {t("about_us")}
                             </ScrollLink>
@@ -301,7 +316,22 @@ const Header = () => {
                       </ul>
                     </div>
                     <div className="search-icon ms-3">
-                      <img src={search} alt="search" />
+                      <img src={search} alt="search"/>
+
+                      {/* <div className={`serch-box-show ${isShow ? "" : "d-none"}`}>
+                        <form action="#" method="post">
+                          <input type="hidden" name="_token" value="" />
+                          <div className="d-flex">
+                            <div className="d-flex">
+                              <input type="search" className="form-control" placeholder="Search here..." />
+                              <button type="submit" className="btn-info submit-btn-apply"> <span class="material-icons-round">search</span> </button>
+
+                            </div>
+
+                          </div></form>
+
+
+                      </div> */}
                     </div>
                   </div>
 
@@ -315,9 +345,9 @@ const Header = () => {
               </div>
             </div>
           </div>
-          </div>
-        </header>
-      
+        </div>
+      </header>
+
     </>
 
   );
