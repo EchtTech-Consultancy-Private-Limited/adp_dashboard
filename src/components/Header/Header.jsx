@@ -16,7 +16,7 @@ const Header = () => {
   const dispatch = useDispatch()
   const toggleDarkMode = useSelector((state) => state.toggle.toggleDarkLight);
   const navigate = useNavigate();
-
+console.log("toggleDarkMode=======>",toggleDarkMode)
   const handleAboutClick = () => {
     if (pathName !== "/") {
       navigate("/");
@@ -126,7 +126,7 @@ const Header = () => {
                     <ul className="mb-0">
                       <li>
                         <div className="theme-toggle">
-                          <label className="switch" title="Dark Mode">
+                          <label className="switch" title={toggleDarkMode ?  "Dark Mode" : "Light mode "}>
                             <input
                               className="switch-input"
                               type="checkbox"
