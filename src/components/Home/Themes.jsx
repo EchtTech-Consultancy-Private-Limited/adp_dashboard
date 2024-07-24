@@ -415,13 +415,13 @@ let TotalSchoolPerformanceAdp_Abp = (
                     </div>
 
                     <div className="link-box">
-                      <Link to="/enrollment-retention" className="link">
+                      <Link  className="link">
                         {t("seeADPReport")}
                         <span className="material-icons-round">
                           arrow_forward_ios
                         </span>
                       </Link>
-                      <Link to="/enrollment-retention" className="link">
+                      <Link  className="link">
                         {t("seeABPReport")}
                         <span className="material-icons-round">
                           arrow_forward_ios
