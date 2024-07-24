@@ -16,7 +16,6 @@ const Header = () => {
   const dispatch = useDispatch()
   const toggleDarkMode = useSelector((state) => state.toggle.toggleDarkLight);
   const navigate = useNavigate();
-console.log("toggleDarkMode=======>",toggleDarkMode)
   const handleAboutClick = () => {
     if (pathName !== "/") {
       navigate("/");
