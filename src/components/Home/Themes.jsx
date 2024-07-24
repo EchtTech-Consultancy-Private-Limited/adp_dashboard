@@ -183,8 +183,9 @@ let TotalSchoolPerformanceAdp_Abp = (
                 {t("socioEconomic")} <br /> {t("themes")}
               </h3>
               <h6 className="sub-title">
-                {t("kpiSentence1")} <br /> {t("kpiSentence2")}
-                <br /> {t("kpiSentence3")}
+                {t("kpiSentence1")}
+                 {/* <br /> {t("kpiSentence2")}
+                <br /> {t("kpiSentence3")} */}
               </h6>
               <Link to="/transition-rate" className="btn-banner d-none-mobile">
                 {t("exploreCompositeScore")}{" "}
@@ -414,13 +415,13 @@ let TotalSchoolPerformanceAdp_Abp = (
                     </div>
 
                     <div className="link-box">
-                      <Link to="/enrollment-retention" className="link">
+                      <Link  className="link">
                         {t("seeADPReport")}
                         <span className="material-icons-round">
                           arrow_forward_ios
                         </span>
                       </Link>
-                      <Link to="/enrollment-retention" className="link">
+                      <Link  className="link">
                         {t("seeABPReport")}
                         <span className="material-icons-round">
                           arrow_forward_ios
