@@ -316,15 +316,25 @@ const Header = () => {
                       </ul>
                     </div>
                     <div className="search-icon ms-3">
-                      <img src={search} alt="search"/>
 
+                      {/* <img src={search} alt="search"/> */}
+
+                      <div class={`input-box ${isShow ? "open" : ""}`}>
+                        <input type="text" placeholder="Search..." />
+                        <span class="search" onClick={handleShowsearch}>
+                          <span class="material-icons-round search-icon">search</span>
+                        </span>
+                        <span class="material-icons-round close-icon" onClick={handleShowsearch}>close</span>
+                      </div>
+
+                      {/* <img src={search} alt="search" onClick={handleShowsearch} /> */}
                       {/* <div className={`serch-box-show ${isShow ? "" : "d-none"}`}>
                         <form action="#" method="post">
                           <input type="hidden" name="_token" value="" />
                           <div className="d-flex">
                             <div className="d-flex">
                               <input type="search" className="form-control" placeholder="Search here..." />
-                              <button type="submit" className="btn-info submit-btn-apply"> <span class="material-icons-round">search</span> </button>
+                              <button type="submit" className="btn-info submit-btn-apply"> <span className="material-icons-round">search</span> </button>
 
                             </div>
 
