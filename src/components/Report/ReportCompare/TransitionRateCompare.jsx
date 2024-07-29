@@ -19,59 +19,13 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BlankPage from "../BlankPage";
 import { useTranslation } from "react-i18next";
+import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer"
 
-const ArrowRenderer = ({ data }) => {
-  const selectedOption = useSelector(
-    (state) => state.reportAdpAbpType.selectedOption
-  );
-  const [arrowData, setArrowData] = useState(null);
-
-  useEffect(() => {
-    if (selectedOption === "upper_primary_to_secondary") {
-      setArrowData(data.upri_t);
-    } else {
-      setArrowData(data.sec_t);
-    }
-  }, [selectedOption, data]);
-
-  const renderArrow = () => {
-    if (
-      selectedOption === "upper_primary_to_secondary" &&
-      arrowData >= 70 &&
-      arrowData <= 100
-    ) {
-      return (
-        <ArrowUpwardIcon
-          style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-        />
-      );
-    } else if (
-      selectedOption !== "upper_primary_to_secondary" &&
-      arrowData >= 40 &&
-      arrowData < 100
-    ) {
-      return (
-        <ArrowUpwardIcon
-          style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-        />
-      );
-    } else {
-      return (
-        <ArrowDownwardIcon
-          style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-        />
-      );
-    }
-  };
-
-  return <span>{renderArrow()}</span>;
-};
 export default function TransitionRateCompare() {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
 
   const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
-  const yearWiseData = useSelector((state) => state.reportAdpAbpType.selectedDataAllYear)
   const selectedOption = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareOption
   );
@@ -79,14 +33,16 @@ export default function TransitionRateCompare() {
     (state) => state.reportAdpAbpType.updateReportType
   );
   const MAX_DISTRICTS = 5;
-  const states = useSelector((state) => state.locationAdp.states);
-  const districts = useSelector((state) => state.locationAdp.districts);
-  const selectedState = useSelector((state) => state.locationAdp.selectedState);
+  const states = useSelector((state) => state.locationAdp?.states);
+  const districts = useSelector((state) => state.locationAdp?.districts);
+  const selectedState = useSelector((state) => state.locationAdp?.selectedState);
+
   const selectedDistricts = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareDistricts
   );
+ 
   const selectedYear = useSelector(
-    (state) => state.reportAdpAbpType.selectedYear
+    (state) => state.reportAdpAbpType?.selectedYear
   );
   const [errorMessages, setErrorMessages] = useState(
     new Array(MAX_DISTRICTS).fill("")
@@ -147,7 +103,14 @@ export default function TransitionRateCompare() {
     }, []);
 
     dispatch(setStates(structuredData));
-  }, [dispatch]);
+    const updatedSelectedDistricts = selectedDistricts.map((selectedDistrict) => {
+      return aspirationalData.find(
+        (district) => district.lgd_district_id === selectedDistrict.lgd_district_id
+      ) || selectedDistrict;
+    });
+
+    dispatch(setselectedCompareDistricts(updatedSelectedDistricts));
+  }, [dispatch, aspirationalData, selectedYear])
 
   // Handle state change
   const handleStateChange = (value) => {
@@ -160,8 +123,8 @@ export default function TransitionRateCompare() {
     const newSelectedDistricts = [...selectedDistricts];
     const districtData = aspirationalData.find(
       (district) =>
-        district.lgd_district_name === value &&
-        district.lgd_state_name === selectedState
+        district?.lgd_district_name === value &&
+        district?.lgd_state_name === selectedState
     );
     if (districtData) {
       newSelectedDistricts[position] = districtData;
@@ -272,7 +235,7 @@ export default function TransitionRateCompare() {
                 </div>
                 <div className="col-md-6 Comparison-select-group order_3">
                   <div className="d-flex justify-content-between text-aligns-center antd-select">
-                    {[...Array(MAX_DISTRICTS)].map((_, index) => (
+                    {[...Array(MAX_DISTRICTS)]?.map((_, index) => (
                       <div key={index}>
                         <Select
                           className="form-select"
@@ -286,10 +249,10 @@ export default function TransitionRateCompare() {
                         >
                           {getFilteredDistricts().map((district) => (
                             <Select.Option
-                              key={district.lgd_district_id}
-                              value={district.lgd_district_name}
+                              key={district?.lgd_district_id}
+                              value={district?.lgd_district_name}
                             >
-                              {district.lgd_district_name}
+                              {district?.lgd_district_name}
                             </Select.Option>
                           ))}
                         </Select>
@@ -314,7 +277,7 @@ export default function TransitionRateCompare() {
           {selectedState !== SelectState ? (
             <div className="col-md-12 mt-4">
               <div className="row">
-                {selectedDistricts.map((district, index) => (
+                {selectedDistricts && selectedDistricts?.map((district, index) => (
                   <div
                     className={`col-sm-12 col-20 ${selectedDistricts.length === 1 ? "m-auto" : ""
                       }`}
