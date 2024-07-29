@@ -24,74 +24,22 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BlankPage from "../BlankPage";
 import { ScrollToTopOnMount } from "../../../Scroll/ScrollToTopOnMount";
 import { useTranslation } from "react-i18next";
-
-const ArrowRenderer = ({ data }) => {
-  const selectedOption = useSelector(
-    (state) => state.reportAdpAbpType.selectedOption
-  );
-  const [arrowData, setArrowData] = useState(null);
-
-  useEffect(() => {
-    if (selectedOption === "upper_primary_to_secondary") {
-      setArrowData(data.upri_t);
-    } else {
-      setArrowData(data.sec_t);
-    }
-  }, [selectedOption, data]);
-
-  const renderArrow = () => {
-    if (
-      selectedOption === "upper_primary_to_secondary" &&
-      arrowData >= 70 &&
-      arrowData <= 100
-    ) {
-      return (
-        <ArrowUpwardIcon
-          style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-        />
-      );
-    } else if (
-      selectedOption !== "upper_primary_to_secondary" &&
-      arrowData >= 40 &&
-      arrowData < 100
-    ) {
-      return (
-        <ArrowUpwardIcon
-          style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-        />
-      );
-    } else {
-      return (
-        <ArrowDownwardIcon
-          style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-        />
-      );
-    }
-  };
-
-  return <span>{renderArrow()}</span>;
-};
+import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer.jsx"
 
 export default function SchoolInfraStructureBlockCompare() {
-  
+
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
-  const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
-  const selectedOption = useSelector(
-    (state) => state.reportAdpAbpType.selectedCompareOption
-  );
+  const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
   const selectedAdpAbpOption = useSelector(
     (state) => state.reportAdpAbpType.updateReportType
   );
   const MAX_BLOCKS = 5;
-  const states = useSelector((state) => state.locationAdp.states);
-  const districts = useSelector((state) => state.locationAdp.districts);
   const blocks = useSelector((state) => state.locationAdp.blocks);
-
-  const selectedState = useSelector((state) => state.locationAdp.selectedState);
-  const selectedDistricts = useSelector(
-    (state) => state.reportAdpAbpType.selectedCompareDistricts
+  const selectedYear = useSelector(
+    (state) => state.reportAdpAbpType?.selectedYear
   );
+  const selectedState = useSelector((state) => state.locationAdp.selectedState);
   const selectedBlocks = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareBlock
   );
@@ -159,7 +107,14 @@ export default function SchoolInfraStructureBlockCompare() {
     }, []);
 
     dispatch(setStates(structuredData));
-  }, [dispatch]);
+    const updatedSelectedBlocks = selectedBlocks.map((selectedBlock) => {
+      return aspirationalData.find(
+        (block) => block.lgd_block_id === selectedBlock.lgd_block_id
+      ) || selectedBlock;
+    });
+
+    dispatch(setselectedCompareBlocks(updatedSelectedBlocks));
+  }, [dispatch, aspirationalData, selectedYear]);
   // Handle district change
   const handleBlockChange = (value, position) => {
     const newSelectedBlocks = [...selectedBlocks];
@@ -225,7 +180,7 @@ export default function SchoolInfraStructureBlockCompare() {
                                     </Select>
                                 </h5> */}
                 <h3 className="heading-sm">
-                {t('comparisonBySchoolInfrastructure')}
+                  {t('comparisonBySchoolInfrastructure')}
                 </h3>
               </div>
             </div>
@@ -244,34 +199,34 @@ export default function SchoolInfraStructureBlockCompare() {
                 </div>
                 <div className="col-md-6 Comparison-select-group order_3">
                   <div className="d-flex justify-content-between text-aligns-center antd-select">
-                  {[...Array(MAX_BLOCKS)].map((_, index) => (
-                        <div key={index}>
-                          <Select
-                            className="form-select"
-                            onChange={(value) =>
-                              handleBlockChange(value, index)
-                            }
-                            style={{ width: "100%" }}
-                            placeholder={`${t("addBlock")} ${index + 1}`}
-                            mode="single"
-                            showSearch
-                            value={
-                              selectedBlocks[index]?.lgd_block_name ||
-                              `${t("addBlock")}`
-                            }
-                            disabled={!selectedState || (index > 0 && !selectedBlocks[index - 1])}
-                          >
-                            {getFilteredBlocks(index).map((block) => (
-                              <Select.Option
-                                key={block.lgd_block_id}
-                                value={block.lgd_block_name}
-                              >
-                                {block.lgd_block_name}
-                              </Select.Option>
-                            ))}
-                          </Select>
-                        </div>
-                      ))}
+                    {[...Array(MAX_BLOCKS)].map((_, index) => (
+                      <div key={index}>
+                        <Select
+                          className="form-select"
+                          onChange={(value) =>
+                            handleBlockChange(value, index)
+                          }
+                          style={{ width: "100%" }}
+                          placeholder={`${t("addBlock")} ${index + 1}`}
+                          mode="single"
+                          showSearch
+                          value={
+                            selectedBlocks[index]?.lgd_block_name ||
+                            `${t("addBlock")}`
+                          }
+                          disabled={!selectedState || (index > 0 && !selectedBlocks[index - 1])}
+                        >
+                          {getFilteredBlocks(index)?.map((block) => (
+                            <Select.Option
+                              key={block.lgd_block_id}
+                              value={block.lgd_block_name}
+                            >
+                              {block.lgd_block_name}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      </div>
+                    ))}
                   </div>
                 </div>
                 <div className="col-md-3 order_2">
@@ -291,11 +246,10 @@ export default function SchoolInfraStructureBlockCompare() {
           {selectedState !== SelectState ? (
             <div className="col-md-12 mt-4">
               <div className="row">
-                {selectedBlocks.map((block, index) => (
+                {selectedBlocks && selectedBlocks?.map((block, index) => (
                   <div
-                    className={`col-sm-12 col-20 col-50-d ${
-                      selectedBlocks.length === 1 ? "m-auto" : ""
-                    }`}
+                    className={`col-sm-12 col-20 col-50-d ${selectedBlocks.length === 1 ? "m-auto" : ""
+                      }`}
                   >
                     {selectedBlocks.length === 1 ? (
                       <Card
@@ -316,9 +270,8 @@ export default function SchoolInfraStructureBlockCompare() {
                               <div className="d-flex">
                                 <div>
                                   <div
-                                    className={`number-card card-color-${
-                                      index + 1
-                                    }`}
+                                    className={`number-card card-color-${index + 1
+                                      }`}
                                   >
                                     {index + 1}
                                   </div>

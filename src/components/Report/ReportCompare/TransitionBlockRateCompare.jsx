@@ -24,53 +24,8 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BlankPage from "../BlankPage";
 import { ScrollToTopOnMount } from "../../../Scroll/ScrollToTopOnMount";
 import { useTranslation } from "react-i18next";
+import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer.jsx"
 
-const ArrowRenderer = ({ data }) => {
-  const selectedOption = useSelector(
-    (state) => state.reportAdpAbpType.selectedOption
-  );
-  const [arrowData, setArrowData] = useState(null);
-
-  useEffect(() => {
-    if (selectedOption === "upper_primary_to_secondary") {
-      setArrowData(data?.upri_t);
-    } else {
-      setArrowData(data?.sec_t);
-    }
-  }, [selectedOption, data]);
-
-  const renderArrow = () => {
-    if (
-      selectedOption === "upper_primary_to_secondary" &&
-      arrowData >= 70 &&
-      arrowData <= 100
-    ) {
-      return (
-        <ArrowUpwardIcon
-          style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-        />
-      );
-    } else if (
-      selectedOption !== "upper_primary_to_secondary" &&
-      arrowData >= 40 &&
-      arrowData < 100
-    ) {
-      return (
-        <ArrowUpwardIcon
-          style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-        />
-      );
-    } else {
-      return (
-        <ArrowDownwardIcon
-          style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-        />
-      );
-    }
-  };
-
-  return <span>{renderArrow()}</span>;
-};
 export default function TransitionBlockRateCompare() {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
@@ -86,7 +41,9 @@ export default function TransitionBlockRateCompare() {
   const states = useSelector((state) => state.locationAdp.states);
   const districts = useSelector((state) => state.locationAdp.districts);
   const blocks = useSelector((state) => state.locationAdp.blocks);
-
+  const selectedYear = useSelector(
+    (state) => state.reportAdpAbpType?.selectedYear
+  );
   const selectedState = useSelector((state) => state.locationAdp.selectedState);
   const selectedDistricts = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareDistricts
@@ -158,7 +115,14 @@ export default function TransitionBlockRateCompare() {
     }, []);
 
     dispatch(setStates(structuredData));
-  }, [dispatch]);
+    const updatedSelectedBlocks = selectedBlocks.map((selectedBlock) => {
+      return aspirationalData.find(
+        (block) => block.lgd_block_id === selectedBlock.lgd_block_id
+      ) || selectedBlock;
+    });
+
+    dispatch(setselectedCompareBlocks(updatedSelectedBlocks));
+  }, [dispatch, aspirationalData, selectedYear]);
 
   //   suggestion      [dispatch, aspirationalData]
 
@@ -323,7 +287,7 @@ export default function TransitionBlockRateCompare() {
           {selectedState !== SelectState ? (
             <div className="col-md-12 mt-4">
               <div className="row">
-                {selectedBlocks.map((block, index) => (
+                {selectedBlocks && selectedBlocks?.map((block, index) => (
                   <div
                     className={`col-sm-12 col-20 ${selectedBlocks.length === 1 ? "m-auto" : ""
                       }`}

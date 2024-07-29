@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    selectDistrict,
-    selectState,
-    setStates,
-    selectBlock,
+  selectDistrict,
+  selectState,
+  setStates,
+  selectBlock,
 } from "../../../redux/slice/filterServicesComprisionSlice";
 import {
-    setselectedCompareDistricts,
-    setselectedCompareOption,
-    setUpdateReportType,
-    setselectedCompareBlocks,
-    setAspirationalAllData,
+  setselectedCompareDistricts,
+  setselectedCompareOption,
+  setUpdateReportType,
+  setselectedCompareBlocks,
+  setAspirationalAllData,
 } from "../../../redux/slice/reportTypeSlice";
 import aspirationalAbpData from "../../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../../aspirational-reports-data/aspirationalDistrict.json";
@@ -24,181 +24,137 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BlankPage from "../BlankPage";
 import { ScrollToTopOnMount } from "../../../Scroll/ScrollToTopOnMount";
 import { useTranslation } from "react-i18next";
+import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer.jsx"
 
-const ArrowRenderer = ({ data }) => {
-    const selectedOption = useSelector(
-        (state) => state.reportAdpAbpType.selectedOption
-    );
-    const [arrowData, setArrowData] = useState(null);
-
-    useEffect(() => {
-        if (selectedOption === "upper_primary_to_secondary") {
-            setArrowData(data.upri_t);
-        } else {
-            setArrowData(data.sec_t);
-        }
-    }, [selectedOption, data]);
-
-    const renderArrow = () => {
-        if (
-            selectedOption === "upper_primary_to_secondary" &&
-            arrowData >= 70 &&
-            arrowData <= 100
-        ) {
-            return (
-                <ArrowUpwardIcon
-                    style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        } else if (
-            selectedOption !== "upper_primary_to_secondary" &&
-            arrowData >= 40 &&
-            arrowData < 100
-        ) {
-            return (
-                <ArrowUpwardIcon
-                    style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        } else {
-            return (
-                <ArrowDownwardIcon
-                    style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        }
-    };
-
-    return <span>{renderArrow()}</span>;
-};
 export default function TeacherAndSchoolBlockCompare() {
-    const { t, i18n } = useTranslation();
-    const dispatch = useDispatch();
-    const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
-    const selectedOption = useSelector(
-        (state) => state.reportAdpAbpType.selectedCompareOption
-    );
-    const selectedAdpAbpOption = useSelector(
-        (state) => state.reportAdpAbpType.updateReportType
-    );
-    const MAX_BLOCKS = 5;
-    const states = useSelector((state) => state.locationAdp.states);
-    const districts = useSelector((state) => state.locationAdp.districts);
-    const blocks = useSelector((state) => state.locationAdp.blocks);
+  const { t, i18n } = useTranslation();
+  const dispatch = useDispatch();
+  const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
+  const selectedAdpAbpOption = useSelector(
+    (state) => state.reportAdpAbpType.updateReportType
+  );
+  const MAX_BLOCKS = 5;
+  const blocks = useSelector((state) => state.locationAdp.blocks);
+  const selectedYear = useSelector(
+    (state) => state.reportAdpAbpType?.selectedYear
+  );
+  const selectedState = useSelector((state) => state.locationAdp.selectedState);
+  const selectedBlocks = useSelector(
+    (state) => state.reportAdpAbpType.selectedCompareBlock
+  );
 
-    const selectedState = useSelector((state) => state.locationAdp.selectedState);
-    const selectedDistricts = useSelector(
-        (state) => state.reportAdpAbpType.selectedCompareDistricts
-    );
-    const selectedBlocks = useSelector(
-        (state) => state.reportAdpAbpType.selectedCompareBlock
-    );
+  function resteData() {
+    dispatch(selectState(SelectState));
+    dispatch(setselectedCompareOption("upper_primary_to_secondary"));
+  }
+  useEffect(() => {
+    resteData();
+  }, [dispatch]);
 
-    function resteData() {
-        dispatch(selectState(SelectState));
-        dispatch(setselectedCompareOption("upper_primary_to_secondary"));
+  useEffect(() => {
+    // dispatch(setUpdateReportType('ADP_Report'));
+    dispatch(setAspirationalAllData(aspirationalAdpData));
+  }, [dispatch]);
+  useEffect(() => {
+    if (selectedAdpAbpOption === "ADP_Report") {
+      dispatch(setAspirationalAllData(aspirationalAdpData));
+    } else {
+      dispatch(setAspirationalAllData(aspirationalAbpData));
     }
-    useEffect(() => {
-        resteData();
-    }, [dispatch]);
-
-    useEffect(() => {
-        // dispatch(setUpdateReportType('ADP_Report'));
-        dispatch(setAspirationalAllData(aspirationalAdpData));
-    }, [dispatch]);
-    useEffect(() => {
-        if (selectedAdpAbpOption === "ADP_Report") {
-            dispatch(setAspirationalAllData(aspirationalAdpData));
-        } else {
-            dispatch(setAspirationalAllData(aspirationalAbpData));
+  }, [selectedAdpAbpOption]);
+  // Initialize states and districts from JSON data
+  useEffect(() => {
+    const structuredData = aspirationalData?.reduce((acc, curr) => {
+      const stateIndex = acc?.findIndex(
+        (st) => st.lgd_state_id === curr?.lgd_state_id
+      );
+      if (stateIndex === -1) {
+        acc.push({
+          lgd_state_id: curr?.lgd_state_id,
+          lgd_state_name: curr?.lgd_state_name,
+          block: [
+            {
+              lgd_block_id: curr?.lgd_block_id,
+              lgd_block_name: curr?.lgd_block_name,
+              u_ptr: curr?.u_ptr,
+              total_sch_ele: curr?.total_sch_ele,
+              ele_sch_percent: curr?.ele_sch_percent,
+            },
+          ],
+        });
+      } else {
+        const blockIndex = acc[stateIndex]?.blocks?.findIndex(
+          (blk) => blk.lgd_block_id === curr?.lgd_block_id
+        );
+        if (blockIndex === -1) {
+          acc[stateIndex]?.blocks.push({
+            lgd_block_id: curr?.lgd_block_id,
+            lgd_block_name: curr?.lgd_block_name,
+            u_ptr: curr?.u_ptr,
+            total_sch_ele: curr?.total_sch_ele,
+            ele_sch_percent: curr?.ele_sch_percent,
+          });
         }
-    }, [selectedAdpAbpOption]);
-    // Initialize states and districts from JSON data
-    useEffect(() => {
-        const structuredData = aspirationalData?.reduce((acc, curr) => {
-            const stateIndex = acc?.findIndex(
-                (st) => st.lgd_state_id === curr?.lgd_state_id
-            );
-            if (stateIndex === -1) {
-                acc.push({
-                    lgd_state_id: curr?.lgd_state_id,
-                    lgd_state_name: curr?.lgd_state_name,
-                    block: [
-                        {
-                            lgd_block_id: curr?.lgd_block_id,
-                            lgd_block_name: curr?.lgd_block_name,
-                            u_ptr: curr?.u_ptr,
-                            total_sch_ele: curr?.total_sch_ele,
-                            ele_sch_percent: curr?.ele_sch_percent,
-                        },
-                    ],
-                });
-            } else {
-                const blockIndex = acc[stateIndex]?.blocks?.findIndex(
-                    (blk) => blk.lgd_block_id === curr?.lgd_block_id
-                );
-                if (blockIndex === -1) {
-                    acc[stateIndex]?.blocks.push({
-                        lgd_block_id: curr?.lgd_block_id,
-                        lgd_block_name: curr?.lgd_block_name,
-                        u_ptr: curr?.u_ptr,
-                        total_sch_ele: curr?.total_sch_ele,
-                        ele_sch_percent: curr?.ele_sch_percent,
-                    });
-                }
-            }
-            return acc;
-        }, []);
+      }
+      return acc;
+    }, []);
 
-        dispatch(setStates(structuredData));
-    }, [dispatch]);
+    dispatch(setStates(structuredData));
+    const updatedSelectedBlocks = selectedBlocks.map((selectedBlock) => {
+      return aspirationalData.find(
+        (block) => block.lgd_block_id === selectedBlock.lgd_block_id
+      ) || selectedBlock;
+    });
 
-    //   suggestion      [dispatch, aspirationalData]
+    dispatch(setselectedCompareBlocks(updatedSelectedBlocks));
+  }, [dispatch, aspirationalData, selectedYear]);
 
-    // Handle state change
-    const handleStateChange = (value) => {
-        dispatch(selectState(value));
-        dispatch(setselectedCompareBlocks([]));
-    };
+  //   suggestion      [dispatch, aspirationalData]
 
-    // Handle district change
-    const handleBlockChange = (value, position) => {
-        const newSelectedBlocks = [...selectedBlocks];
-        const blockData = aspirationalData.find(
-            (block) =>
-                block.lgd_block_name === value && block.lgd_state_name === selectedState
-        );
-        if (blockData) {
-            newSelectedBlocks[position] = blockData;
-            dispatch(
-                setselectedCompareBlocks(newSelectedBlocks.slice(0, MAX_BLOCKS))
-            );
-            dispatch(selectBlock(value));
-        }
-    };
+  // Handle state change
+  const handleStateChange = (value) => {
+    dispatch(selectState(value));
+    dispatch(setselectedCompareBlocks([]));
+  };
 
-    // Get filtered districts based on selected state and existing selections
-    const getFilteredBlocks = (position) => {
-        const selected = selectedBlocks.filter(
-            (block) =>
-                block &&
-                block.lgd_block_name !== selectedBlocks[position]?.lgd_block_name
-        );
-        return blocks.filter(
-            (block) =>
-                !selected.map((d) => d.lgd_block_name).includes(block.lgd_block_name)
-        );
-    };
+  // Handle district change
+  const handleBlockChange = (value, position) => {
+    const newSelectedBlocks = [...selectedBlocks];
+    const blockData = aspirationalData.find(
+      (block) =>
+        block.lgd_block_name === value && block.lgd_state_name === selectedState
+    );
+    if (blockData) {
+      newSelectedBlocks[position] = blockData;
+      dispatch(
+        setselectedCompareBlocks(newSelectedBlocks.slice(0, MAX_BLOCKS))
+      );
+      dispatch(selectBlock(value));
+    }
+  };
 
-    return (
-      <>
-        <ScrollToTopOnMount />
-        <div className="card-box">
-          <div className="row align-items-end">
-            <div className="col-md-7">
-              <div className="d-flex align-items-center">
-                <div className="title-box">
-                  {/* <h5 className='sub-title'>State :
+  // Get filtered districts based on selected state and existing selections
+  const getFilteredBlocks = (position) => {
+    const selected = selectedBlocks.filter(
+      (block) =>
+        block &&
+        block.lgd_block_name !== selectedBlocks[position]?.lgd_block_name
+    );
+    return blocks.filter(
+      (block) =>
+        !selected.map((d) => d.lgd_block_name).includes(block.lgd_block_name)
+    );
+  };
+
+  return (
+    <>
+      <ScrollToTopOnMount />
+      <div className="card-box">
+        <div className="row align-items-end">
+          <div className="col-md-7">
+            <div className="d-flex align-items-center">
+              <div className="title-box">
+                {/* <h5 className='sub-title'>State :
                                     <Select
                                         className='state-select'
                                         onChange={handleStateChange}
@@ -221,150 +177,148 @@ export default function TeacherAndSchoolBlockCompare() {
                                         ))}
                                     </Select>
                                 </h5> */}
-                  <h3 className="heading-sm mt-2">
-                    {t("comparisonByTeacherAndSchoolResources")}
-                  </h3>
-                </div>
+                <h3 className="heading-sm mt-2">
+                  {t("comparisonByTeacherAndSchoolResources")}
+                </h3>
               </div>
             </div>
-            <div className="col-md-5">
-              <div className="d-flex w-m-100"></div>
-            </div>
           </div>
+          <div className="col-md-5">
+            <div className="d-flex w-m-100"></div>
+          </div>
+        </div>
 
-          <div className="row">
-            <div className="col-md-12">
-              <div className="comparison-box">
-                <div className="row align-items-center">
-                  <div className="col-md-3 order_1">
-                    <h5 className="sub-title">{t("selectBlockToCompare")}</h5>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="comparison-box">
+              <div className="row align-items-center">
+                <div className="col-md-3 order_1">
+                  <h5 className="sub-title">{t("selectBlockToCompare")}</h5>
+                </div>
+                <div className="col-md-6 Comparison-select-group order_3">
+                  <div className="d-flex justify-content-between text-aligns-center antd-select">
+                    {[...Array(MAX_BLOCKS)].map((_, index) => (
+                      <div key={index}>
+                        <Select
+                          className="form-select"
+                          onChange={(value) =>
+                            handleBlockChange(value, index)
+                          }
+                          style={{ width: "100%" }}
+                          placeholder={`${t("addBlock")} ${index + 1}`}
+                          mode="single"
+                          showSearch
+                          value={
+                            selectedBlocks[index]?.lgd_block_name ||
+                            `${t("addBlock")}`
+                          }
+                          disabled={
+                            !selectedState ||
+                            (index > 0 && !selectedBlocks[index - 1])
+                          }
+                        >
+                          {getFilteredBlocks(index).map((block) => (
+                            <Select.Option
+                              key={block.lgd_block_id}
+                              value={block.lgd_block_name}
+                            >
+                              {block.lgd_block_name}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      </div>
+                    ))}
                   </div>
-                  <div className="col-md-6 Comparison-select-group order_3">
-                    <div className="d-flex justify-content-between text-aligns-center antd-select">
-                      {[...Array(MAX_BLOCKS)].map((_, index) => (
-                        <div key={index}>
-                          <Select
-                            className="form-select"
-                            onChange={(value) =>
-                              handleBlockChange(value, index)
-                            }
-                            style={{ width: "100%" }}
-                            placeholder={`${t("addBlock")} ${index + 1}`}
-                            mode="single"
-                            showSearch
-                            value={
-                              selectedBlocks[index]?.lgd_block_name ||
-                              `${t("addBlock")}`
-                            }
-                            disabled={
-                              !selectedState ||
-                              (index > 0 && !selectedBlocks[index - 1])
-                            }
-                          >
-                            {getFilteredBlocks(index).map((block) => (
-                              <Select.Option
-                                key={block.lgd_block_id}
-                                value={block.lgd_block_name}
-                              >
-                                {block.lgd_block_name}
-                              </Select.Option>
-                            ))}
-                          </Select>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="col-md-3 order_2">
-                    <div className="tab-box float-end">
+                </div>
+                <div className="col-md-3 order_2">
+                  <div className="tab-box float-end">
                     <button className="tab-button active">
                       <img src={card} alt="card" /> <span>{t('cardView')}</span>
                     </button>
                     <button className="tab-button">
                       <img src={table} alt="Table" /> <span>{t('tableView')}</span>
                     </button>
-                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            {selectedState !== SelectState ? (
-              <div className="col-md-12 mt-4">
-                <div className="row">
-                  {selectedBlocks.map((block, index) => (
-                    <div
-                      className={`col-sm-12 col-20 ${
-                        selectedBlocks.length === 1 ? "m-auto" : ""
+          {selectedState !== SelectState ? (
+            <div className="col-md-12 mt-4">
+              <div className="row">
+                {selectedBlocks && selectedBlocks?.map((block, index) => (
+                  <div
+                    className={`col-sm-12 col-20 ${selectedBlocks.length === 1 ? "m-auto" : ""
                       }`}
-                    >
-                      {selectedBlocks.length === 1 ? (
-                        <Card
-                          style={{
-                            width: 300,
-                          }}
-                        >
-                          <b>{t("selectOneMoreBlock")}</b>
-                        </Card>
-                      ) : (
-                        <>
-                          {" "}
-                          <div className="comp-card" key={index}>
-                            <div className="upper-card">
-                              <div className="d-flex align-items-center justify-content-between w-100">
-                                <div className="d-flex">
-                                  <div>
-                                    <div
-                                      className={`number-card card-color-${
-                                        index + 1
+                  >
+                    {selectedBlocks.length === 1 ? (
+                      <Card
+                        style={{
+                          width: 300,
+                        }}
+                      >
+                        <b>{t("selectOneMoreBlock")}</b>
+                      </Card>
+                    ) : (
+                      <>
+                        {" "}
+                        <div className="comp-card" key={index}>
+                          <div className="upper-card">
+                            <div className="d-flex align-items-center justify-content-between w-100">
+                              <div className="d-flex">
+                                <div>
+                                  <div
+                                    className={`number-card card-color-${index + 1
                                       }`}
-                                    >
-                                      {index + 1}
-                                    </div>
-                                  </div>
-                                  <div className="text-card">
-                                    <p>Block</p>
-                                    <h6 className="sub-title">
-                                      {block.lgd_block_name}
-                                    </h6>
+                                  >
+                                    {index + 1}
                                   </div>
                                 </div>
-                                <div className="arrow-d">
-                                  {" "}
-                                  <ArrowRenderer data={block} />
+                                <div className="text-card">
+                                  <p>Block</p>
+                                  <h6 className="sub-title">
+                                    {block.lgd_block_name}
+                                  </h6>
                                 </div>
                               </div>
-                            </div>
-
-                            <div className="lower-card">
-                              <div className="text-card">
-                                <p>{`PTR < 30`}</p>
-                                <h6 className="sub-title">{block?.u_ptr}</h6>
-                              </div>
-                              <div className="text-card">
-                                <p>Elementry School</p>
-                                <h6 className="sub-title">
-                                  {block?.total_sch_ele}
-                                </h6>
-                              </div>
-                              <div className="text-card">
-                                <p>{`% PTR < 30`}</p>
-                                <h6 className="sub-title">
-                                  {block?.ele_sch_percent?.toFixed(2)}
-                                </h6>
+                              <div className="arrow-d">
+                                {" "}
+                                <ArrowRenderer data={block} />
                               </div>
                             </div>
                           </div>
-                        </>
-                      )}
-                    </div>
-                  ))}
-                </div>
+
+                          <div className="lower-card">
+                            <div className="text-card">
+                              <p>{`PTR < 30`}</p>
+                              <h6 className="sub-title">{block?.u_ptr}</h6>
+                            </div>
+                            <div className="text-card">
+                              <p>Elementry School</p>
+                              <h6 className="sub-title">
+                                {block?.total_sch_ele}
+                              </h6>
+                            </div>
+                            <div className="text-card">
+                              <p>{`% PTR < 30`}</p>
+                              <h6 className="sub-title">
+                                {block?.ele_sch_percent?.toFixed(2)}
+                              </h6>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                ))}
               </div>
-            ) : (
-              <BlankPage />
-            )}
-          </div>
+            </div>
+          ) : (
+            <BlankPage />
+          )}
         </div>
-      </>
-    );
+      </div>
+    </>
+  );
 }

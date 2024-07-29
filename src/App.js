@@ -25,6 +25,9 @@ function App() {
   const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
   const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
   const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
+  const selectedDistricts = useSelector(
+    (state) => state.reportAdpAbpType.selectedCompareDistricts
+  );
 
   useEffect(() => {
     if (toggleDarkMode) {
@@ -39,20 +42,20 @@ function App() {
   {/*...............Take data report wise..............*/ }
   const combinedData = {
     "2019-20": {
-      ADP_Report: aspirationalAdpData2019,
-      ABP_Report: aspirationalAbpData2019,
+      ADP_Report : aspirationalAdpData2019,
+      ABP_Report : aspirationalAbpData2019,
     },
     "2020-21": {
-      ADP_Report: aspirationalAdpData2020,
-      ABP_Report: aspirationalAbpData2020,
+      ADP_Report : aspirationalAdpData2020,
+      ABP_Report : aspirationalAbpData2020,
     },
     "2021-22": {
-      ADP_Report: aspirationalAdpData2021,
-      ABP_Report: aspirationalAbpData2021,
+      ADP_Report : aspirationalAdpData2021,
+      ABP_Report : aspirationalAbpData2021,
     },
     "2022-23": {
-      ADP_Report: aspirationalAdpData2022,
-      ABP_Report: aspirationalAbpData2022,
+      ADP_Report : aspirationalAdpData2022,
+      ABP_Report : aspirationalAbpData2022,
     },
   };
 
@@ -62,7 +65,7 @@ function App() {
       dispatch(setselectedDataAllYear(selectedData))
       dispatch(setAspirationalAllData(selectedData));
     }
-  }, [selectReportType, selectedState,selectedDistrict,selectedBlock,selectedYear,]);
+  }, [selectReportType,selectedYear]);
 
   
   return (
