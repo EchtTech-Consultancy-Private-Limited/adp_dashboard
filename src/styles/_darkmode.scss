@@ -139,8 +139,10 @@
         background: #000 !important;
     }
 
+    .site-header .navbar .search-icon .input-box.open input{color: #fff;}
+
     .card-box,
-    .radio-button {
+    .radio-button, .site-header .navbar .search-icon .input-box .search {
         background: #000 !important;
         border: 1px solid #ddd !important;
     }
@@ -160,7 +162,7 @@
 
     .themes .themes-box-img .content,
     .ag-center-cols-viewport,
-    .multi-header-table .ag-row-animation .ag-row, .ag-row-no-focus.ag-row.ag-row-level-0.ag-row-position-absolute.ag-row-not-inline-editing.ag-row-hover::before {
+    .multi-header-table .ag-row-animation .ag-row, .ag-row-no-focus.ag-row.ag-row-level-0.ag-row-position-absolute.ag-row-not-inline-editing.ag-row-hover::before, .site-header .navbar .search-icon .input-box, .site-header .navbar .search-icon .input-box input {
         background: rgba(18, 18, 18, 0.84) !important;
     }
 

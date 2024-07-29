@@ -292,7 +292,7 @@ export default function TransitionRateReport() {
                     ],
                 },
                 {
-                    headerName: "Upper Primary To Secondary",
+                    headerName: "Upper Primary to Secondary",
                     children: [
                         {
                             headerName: "Boys",
@@ -315,7 +315,7 @@ export default function TransitionRateReport() {
                     ],
                 },
                 {
-                    headerName: "Secondary To Higher Secondary",
+                    headerName: "Secondary to Higher Secondary",
                     children: [
                         {
                             headerName: "Boys",
