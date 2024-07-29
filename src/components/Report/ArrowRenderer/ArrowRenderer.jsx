@@ -11,7 +11,7 @@ export function ArrowRenderer({ data, value }) {
         (state) => state.reportAdpAbpType.selectedOption
     );
     const [arrowData, setArrowData] = useState([]);
-
+    const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
     useEffect(() => {
         if (location.pathname === "/transition-rate") {
             if (selectedOption === "upper_primary_to_secondary") {
@@ -32,38 +32,23 @@ export function ArrowRenderer({ data, value }) {
     }, [selectedOption, data, location]);
 
     const renderArrow = () => {
-        if (location.pathname === "/transition-rate") {
-            if (selectedOption === "upper_primary_to_secondary") {
-                if (arrowData >= 70 && arrowData <= 100) {
-                    return (
-                        <ArrowUpwardIcon
-                            style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-                        />
-                    );
-                } else {
-                    return (
-                        <ArrowDownwardIcon
-                            style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-                        />
-                    );
-                }
+  if(finalData || finalData.length>0){
+    if (location.pathname === "/transition-rate") {
+        if (selectedOption === "upper_primary_to_secondary") {
+            if (arrowData >= 70 && arrowData <= 100) {
+                return (
+                    <ArrowUpwardIcon
+                        style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
+                    />
+                );
             } else {
-                if (arrowData >= 40 && arrowData <= 100) {
-                    return (
-                        <ArrowUpwardIcon
-                            style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-                        />
-                    );
-                } else {
-                    return (
-                        <ArrowDownwardIcon
-                            style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-                        />
-                    );
-                }
+                return (
+                    <ArrowDownwardIcon
+                        style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
+                    />
+                );
             }
-        }
-        if (location.pathname === "/teacher-and-school-resources") {
+        } else {
             if (arrowData >= 40 && arrowData <= 100) {
                 return (
                     <ArrowUpwardIcon
@@ -78,36 +63,53 @@ export function ArrowRenderer({ data, value }) {
                 );
             }
         }
-        if (location.pathname === "/student-performance") {
-            if (arrowData >= 40 && arrowData <= 100) {
-                return (
-                    <ArrowUpwardIcon
-                        style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-                    />
-                );
-            } else {
-                return (
-                    <ArrowDownwardIcon
-                        style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-                    />
-                );
-            }
+    }
+    if (location.pathname === "/teacher-and-school-resources") {
+        if (arrowData >= 40 && arrowData <= 100) {
+            return (
+                <ArrowUpwardIcon
+                    style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
+                />
+            );
+        } else {
+            return (
+                <ArrowDownwardIcon
+                    style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
+                />
+            );
         }
-        if (location.pathname === "/school-infrastructure") {
-            if (arrowData >= 40 && arrowData <= 100) {
-                return (
-                    <ArrowUpwardIcon
-                        style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-                    />
-                );
-            } else {
-                return (
-                    <ArrowDownwardIcon
-                        style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-                    />
-                );
-            }
+    }
+    if (location.pathname === "/student-performance") {
+        if (arrowData >= 40 && arrowData <= 100) {
+            return (
+                <ArrowUpwardIcon
+                    style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
+                />
+            );
+        } else {
+            return (
+                <ArrowDownwardIcon
+                    style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
+                />
+            );
         }
+    }
+    if (location.pathname === "/school-infrastructure") {
+        if (arrowData >= 40 && arrowData <= 100) {
+            return (
+                <ArrowUpwardIcon
+                    style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
+                />
+            );
+        } else {
+            return (
+                <ArrowDownwardIcon
+                    style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
+                />
+            );
+        }
+    }
+  }
     };
 
     return (

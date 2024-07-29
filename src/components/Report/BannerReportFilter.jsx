@@ -28,9 +28,7 @@ export default function BannerReportFilter() {
   const finalData= useSelector((state) => state.reportAdpAbpType.finalData)
   const disableSelectedState = selectedState === "All State";
   const disableSelectedDistrict = selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict;
-
-  // Combine the data from multiple JSON files
-
+ 
  
   useEffect(() => {
     if (selectReportType === "ADP_Report") {
@@ -209,7 +207,8 @@ export default function BannerReportFilter() {
                 </div>
                 <div className="col-md-9">
                   <div className="d-flex justify-content-between text-aligns-center antd-select">
-                    <Select
+                    {selectReportType === "ADP_Report" ?
+                    (     <Select
                       onChange={handleYearChange}
                       style={{ width: "100%" }}
                       placeholder="Academic Year"
@@ -218,12 +217,28 @@ export default function BannerReportFilter() {
                       className="form-select"
                       value={selectedYear}
                     >
-                      {["2020-21", "2021-22", "2022-23"].map((year, index) => (
+                      {[ "2022-23", "2021-22","2020-21"].map((year, index) => (
                         <Select.Option key={index} value={year}>
                           {year.replace("-", " - ")}
                         </Select.Option>
                       ))}
-                    </Select>
+                    </Select>): (     <Select
+                      onChange={handleYearChange}
+                      style={{ width: "100%" }}
+                      placeholder="Academic Year"
+                      mode="single"
+                      showSearch
+                      className="form-select"
+                      value={selectedYear}
+                    >
+                      {[ "2022-23", "2021-22","2020-21","2019-20"].map((year, index) => (
+                        <Select.Option key={index} value={year}>
+                          {year.replace("-", " - ")}
+                        </Select.Option>
+                      ))}
+                    </Select>)
+                  }
+               
 
 
                     {/* State select option */}

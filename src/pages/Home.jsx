@@ -5,25 +5,27 @@ import '../components/Home/home.scss'
 import Themes from '../components/Home/Themes'
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { ScrollToTopOnMount } from '../Scroll/ScrollToTopOnMount'
 
 export default function Home() {
 
-    useEffect(() => {
-        AOS.init({
-          disable: "phone",
-          duration: 1000,
-          easing: "ease-out-cubic",
-        });
-      }, []);
+  useEffect(() => {
+    AOS.init({
+      disable: "phone",
+      duration: 1000,
+      easing: "ease-out-cubic",
+    });
+  }, []);
 
-    return (    
+  return (
 
     <>
-     <Banners/>
-     <AboutUs/>
-     <Themes/>
+      <ScrollToTopOnMount />
+      <Banners />
+      <AboutUs />
+      <Themes />
     </>
 
-    )
+  )
 }
 
