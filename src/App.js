@@ -5,9 +5,14 @@ import './styles/global.scss'
 import Footer from './components/Footer/Footer';
 import aspirationalAbpData from "./aspirational-reports-data/aspirational.json"
 import aspirationalAdpData from "./aspirational-reports-data/aspirationalDistrict.json";
+import aspirationalAdpData2019 from "./aspirational-reports-data/aspirationalAdpData2019-20.json";
 import aspirationalAdpData2020 from "./aspirational-reports-data/aspirationalAdpData2020-21.json";
 import aspirationalAdpData2021 from "./aspirational-reports-data/aspirationalAdpData2021-22.json";
 import aspirationalAdpData2022 from "./aspirational-reports-data/aspirationalAdpData2022-23.json";
+import aspirationalAbpData2020 from "./aspirational-reports-data/aspirationalAbpData2020-21.json";
+import aspirationalAbpData2021 from "./aspirational-reports-data/aspirationalAbpData2021-22.json";
+import aspirationalAbpData2022 from "./aspirational-reports-data/aspirationalAbpData2022-23.json";
+import aspirationalAbpData2019 from "./aspirational-reports-data/aspirationalAbpData2019-20.json";
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { setAspirationalAllData, setselectedDataAllYear } from './redux/slice/reportTypeSlice';
@@ -33,17 +38,21 @@ function App() {
   }, [toggleDarkMode]);
   {/*...............Take data report wise..............*/ }
   const combinedData = {
+    "2019-20": {
+      ADP_Report: aspirationalAdpData2019,
+      ABP_Report: aspirationalAbpData2019,
+    },
     "2020-21": {
       ADP_Report: aspirationalAdpData2020,
-      ABP_Report: aspirationalAbpData,
+      ABP_Report: aspirationalAbpData2020,
     },
     "2021-22": {
       ADP_Report: aspirationalAdpData2021,
-      ABP_Report: aspirationalAbpData,
+      ABP_Report: aspirationalAbpData2021,
     },
     "2022-23": {
       ADP_Report: aspirationalAdpData2022,
-      ABP_Report: aspirationalAbpData,
+      ABP_Report: aspirationalAbpData2022,
     },
   };
 

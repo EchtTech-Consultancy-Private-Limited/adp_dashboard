@@ -628,7 +628,7 @@ export default function StudentsPerformanceReport() {
                                                 style={{ width: "100%", height: 300 }} >
                                                 <AgGridReact
                                                     columnDefs={columns}
-                                                    rowData={finalData}
+                                                    rowData={finalData || finalData.length>0 ? finalData :""}
                                                     defaultColDef={defColumnDefs}
                                                     onGridReady={onGridReady}
                                                 />
