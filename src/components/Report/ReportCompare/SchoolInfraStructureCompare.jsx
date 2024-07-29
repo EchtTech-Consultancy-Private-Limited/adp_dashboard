@@ -26,56 +26,11 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BlankPage from "../BlankPage";
 import { t } from "i18next";
-const ArrowRenderer = ({ data }) => {
-  const selectedOption = useSelector(
-    (state) => state.reportAdpAbpType.selectedOption
-  );
-  const [arrowData, setArrowData] = useState(null);
-
-  useEffect(() => {
-    if (selectedOption === "upper_primary_to_secondary") {
-      setArrowData(data.upri_t);
-    } else {
-      setArrowData(data.sec_t);
-    }
-  }, [selectedOption, data]);
-
-  const renderArrow = () => {
-    if (
-      selectedOption === "upper_primary_to_secondary" &&
-      arrowData >= 70 &&
-      arrowData <= 100
-    ) {
-      return (
-        <ArrowUpwardIcon
-          style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-        />
-      );
-    } else if (
-      selectedOption !== "upper_primary_to_secondary" &&
-      arrowData >= 40 &&
-      arrowData < 100
-    ) {
-      return (
-        <ArrowUpwardIcon
-          style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-        />
-      );
-    } else {
-      return (
-        <ArrowDownwardIcon
-          style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-        />
-      );
-    }
-  };
-
-  return <span>{renderArrow()}</span>;
-};
+import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer.jsx"
 
 export default function SchoolInfraStructureCompare() {
   const dispatch = useDispatch();
-  const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
+  const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
   const selectedOption = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareOption
   );
@@ -105,28 +60,6 @@ export default function SchoolInfraStructureCompare() {
     dispatch(setAspirationalAllData(aspirationalAdpData));
   }, [dispatch]);
 
-
-  const combinedData = {
-    "2020-21": {
-      ADP_Report: aspirationalAdpData2020,
-      ABP_Report: aspirationalAbpData,
-    },
-    "2021-22": {
-      ADP_Report: aspirationalAdpData2021,
-      ABP_Report: aspirationalAbpData,
-    },
-    "2022-23": {
-      ADP_Report: aspirationalAdpData2022,
-      ABP_Report: aspirationalAbpData,
-    },
-  };
-
-  useEffect(() => {
-    const selectedData = combinedData[selectedYear][selectedAdpAbpOption];
-    if (selectedData) {
-      setAspirationalAllData(selectedData);
-    }
-  }, [selectedAdpAbpOption, selectedYear]);
 
   // Initialize states and districts from JSON data
   useEffect(() => {
@@ -172,7 +105,14 @@ export default function SchoolInfraStructureCompare() {
     }, []);
 
     dispatch(setStates(structuredData));
-  }, [dispatch]);
+    const updatedSelectedDistricts = selectedDistricts.map((selectedDistrict) => {
+      return aspirationalData.find(
+        (district) => district.lgd_district_id === selectedDistrict.lgd_district_id
+      ) || selectedDistrict;
+    });
+
+    dispatch(setselectedCompareDistricts(updatedSelectedDistricts));
+  }, [dispatch, aspirationalData, selectedYear]);
 
   // Handle state change
   const handleStateChange = (value) => {
@@ -205,7 +145,7 @@ export default function SchoolInfraStructureCompare() {
       (district) =>
         district &&
         district.lgd_district_name !==
-          selectedDistricts[position]?.lgd_district_name
+        selectedDistricts[position]?.lgd_district_name
     );
     return districts.filter(
       (district) =>
@@ -247,14 +187,14 @@ export default function SchoolInfraStructureCompare() {
                                     </Select>
                                 </h5> */}
                 <h3 className="heading-sm">
-           {t('comparisonBySchoolInfrastructure')}
+                  {t('comparisonBySchoolInfrastructure')}
                 </h3>
               </div>
             </div>
           </div>
           <div className="col-md-5">
             <div className="d-flex w-m-100">
-          
+
             </div>
           </div>
         </div>
@@ -268,30 +208,30 @@ export default function SchoolInfraStructureCompare() {
                 </div>
                 <div className="col-md-6 Comparison-select-group order_3">
                   <div className="d-flex justify-content-between text-aligns-center antd-select">
-                  {[...Array(MAX_DISTRICTS)].map((_, index) => (
-                <div key={index}>
-                    <Select
-                        className="form-select"
-                        onChange={(value) => handleDistrictChange(value, index)}
-                        style={{ width: "100%" }}
-                        placeholder={`${t('addDistrict')} ${index + 1}`}
-                        mode="single"
-                        showSearch
-                        value={selectedDistricts[index]?.lgd_district_name || `${t('addDistrict')}`}
-                        disabled={index > 0 && !selectedDistricts[index - 1]}
-                    >
-                        {getFilteredDistricts().map((district) => (
+                    {[...Array(MAX_DISTRICTS)].map((_, index) => (
+                      <div key={index}>
+                        <Select
+                          className="form-select"
+                          onChange={(value) => handleDistrictChange(value, index)}
+                          style={{ width: "100%" }}
+                          placeholder={`${t('addDistrict')} ${index + 1}`}
+                          mode="single"
+                          showSearch
+                          value={selectedDistricts[index]?.lgd_district_name || `${t('addDistrict')}`}
+                          disabled={index > 0 && !selectedDistricts[index - 1]}
+                        >
+                          {getFilteredDistricts().map((district) => (
                             <Select.Option
-                                key={district.lgd_district_id}
-                                value={district.lgd_district_name}
+                              key={district.lgd_district_id}
+                              value={district.lgd_district_name}
                             >
-                                {district.lgd_district_name}
+                              {district.lgd_district_name}
                             </Select.Option>
-                        ))}
-                    </Select>
-                </div>
-            ))} 
-             </div>
+                          ))}
+                        </Select>
+                      </div>
+                    ))}
+                  </div>
                 </div>
                 <div className="col-md-3 order_2">
                   <div className="tab-box float-end">
@@ -310,11 +250,10 @@ export default function SchoolInfraStructureCompare() {
           {selectedState !== SelectState ? (
             <div className="col-md-12 mt-4">
               <div className="row">
-                {selectedDistricts.map((district, index) => (
+                {selectedDistricts && selectedDistricts?.map((district, index) => (
                   <div
-                    className={`col-sm-12 col-20 col-50-d${
-                      selectedDistricts.length === 1 ? "m-auto" : ""
-                    }`}
+                    className={`col-sm-12 col-20 col-50-d${selectedDistricts.length === 1 ? "m-auto" : ""
+                      }`}
                   >
                     {selectedDistricts.length === 1 ? (
                       <Card
@@ -323,7 +262,7 @@ export default function SchoolInfraStructureCompare() {
                         }}
                       >
                         <b>
-                        {t('selectOneMoreDistrict')}
+                          {t('selectOneMoreDistrict')}
                         </b>
                       </Card>
                     ) : (
@@ -335,9 +274,8 @@ export default function SchoolInfraStructureCompare() {
                               <div className="d-flex">
                                 <div>
                                   <div
-                                    className={`number-card card-color-${
-                                      index + 1
-                                    }`}
+                                    className={`number-card card-color-${index + 1
+                                      }`}
                                   >
                                     {index + 1}
                                   </div>
