@@ -724,7 +724,7 @@ export default function SchoolInfraStructureReport() {
                       >
                         <AgGridReact
                           columnDefs={columns}
-                          rowData={finalData}
+                          rowData={finalData || finalData.length>0 ? finalData :""}
                           defaultColDef={defColumnDefs}
                           onGridReady={onGridReady}
                         />

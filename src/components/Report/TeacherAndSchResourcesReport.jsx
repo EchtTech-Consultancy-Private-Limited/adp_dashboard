@@ -687,7 +687,7 @@ export default function TeacherAndSchResourcesReport() {
                                             >
                                                 <AgGridReact
                                                     columnDefs={columns}
-                                                    rowData={finalData}
+                                                    rowData={finalData || finalData.length>0 ? finalData :""}
                                                     defaultColDef={defColumnDefs}
                                                     onGridReady={onGridReady}
                                                 />

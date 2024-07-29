@@ -51,7 +51,6 @@ export default function TransitionRateReport() {
     const selectReportType = useSelector(
         (state) => state.reportAdpAbpType.updateReportType
     );
-    console.log(selectReportType, "selectReportType")
     const selectedOption = useSelector(
         (state) => state.reportAdpAbpType.selectedOption
     );
@@ -912,7 +911,7 @@ export default function TransitionRateReport() {
                                             >
                                                 <AgGridReact
                                                     columnDefs={columns}
-                                                    rowData={finalData}
+                                                    rowData={finalData || finalData.length>0 ? finalData :""}
                                                     defaultColDef={defColumnDefs}
                                                     onGridReady={onGridReady}
                                                 />
