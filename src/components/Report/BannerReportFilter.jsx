@@ -24,31 +24,31 @@ export default function BannerReportFilter() {
   const selectedReport = useSelector((state) => state.reportAdpAbpType.selectedReport);
   const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
   const [showBreadcomeAdpAbp, setShowBreadcomeAdpAbp] = useState();
-  const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
-  const finalData= useSelector((state) => state.reportAdpAbpType.finalData)
+  const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
+  const finalData = useSelector((state) => state.reportAdpAbpType.finalData)
   const disableSelectedState = selectedState === "All State";
   const disableSelectedDistrict = selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict;
- 
- 
+
+
   useEffect(() => {
     if (selectReportType === "ADP_Report") {
       setShowBreadcomeAdpAbp("ADP Report")
       //  resteData()
-       
+
     }
     else {
       setShowBreadcomeAdpAbp("ABP Report")
       //  resteData()
     }
-  }, [selectReportType,selectedYear]);
+  }, [selectReportType, selectedYear]);
 
   // If data is not match then reset the State also
-//   useEffect(()=>{
-//     if(finalData.length===0){
-//       dispatch(selectState(SelectState));
-//  }
-//   }, [finalData])
-  
+  //   useEffect(()=>{
+  //     if(finalData.length===0){
+  //       dispatch(selectState(SelectState));
+  //  }
+  //   }, [finalData])
+
   useEffect(() => {
     const savedReportName = localStorage.getItem('selectedReport');
     if (savedReportName) {
@@ -57,7 +57,7 @@ export default function BannerReportFilter() {
   }, [dispatch]);
 
   const handleReportChange = (value) => {
-   // dispatch(setUpdateReportType('ADP_Report'));
+    // dispatch(setUpdateReportType('ADP_Report'));
     localStorage.setItem('selectedReport', value);
     dispatch(setselectedReport(value));
     switch (value) {
@@ -85,7 +85,7 @@ export default function BannerReportFilter() {
     if (aspirationalData.length > 0) {
       const structuredData = aspirationalData.reduce((acc, curr) => {
         const stateIndex = acc.findIndex((st) => st.lgd_state_id === curr.lgd_state_id);
-        
+
         if (stateIndex === -1) {
           acc.push({
             lgd_state_id: curr.lgd_state_id,
@@ -107,7 +107,7 @@ export default function BannerReportFilter() {
           const districtIndex = acc[stateIndex].districts.findIndex(
             (dist) => dist.lgd_district_id === curr.lgd_district_id
           );
-          
+
           if (districtIndex === -1) {
             acc[stateIndex].districts.push({
               lgd_district_id: curr.lgd_district_id,
@@ -128,11 +128,11 @@ export default function BannerReportFilter() {
         }
         return acc;
       }, []);
-      
+
       dispatch(setStates(structuredData));
-  
+
       const updatedDistricts = structuredData.find(st => st.lgd_state_name === selectedState)?.districts || [];
-      
+
       if (selectReportType === "ADP_Report") {
         dispatch(setDistricts(updatedDistricts));
         dispatch(selectBlock(SelectBlock));
@@ -143,12 +143,14 @@ export default function BannerReportFilter() {
       }
     }
   }, [aspirationalData, selectReportType, selectedState, selectedDistrict, dispatch]);
-  
-  
+
+
   const handleOptionChange = (event) => {
     dispatch(selectDistrict(SelectDistrict));
     dispatch(selectBlock(SelectBlock));
     dispatch(setUpdateReportType(event.target.value));
+    dispatch(setselectedCompareDistricts([]));
+    dispatch(setselectedCompareBlocks([]))
   };
 
   const handleStateChange = (value) => {
@@ -156,8 +158,8 @@ export default function BannerReportFilter() {
     dispatch(setselectedCompareDistricts([]));
     dispatch(setselectedCompareBlocks([]))
   };
- 
-  
+
+
   const handleDistrictChange = (value) => {
     dispatch(selectDistrict(value));
     dispatch(setselectedCompareBlocks([]));
@@ -208,37 +210,37 @@ export default function BannerReportFilter() {
                 <div className="col-md-9">
                   <div className="d-flex justify-content-between text-aligns-center antd-select">
                     {selectReportType === "ADP_Report" ?
-                    (     <Select
-                      onChange={handleYearChange}
-                      style={{ width: "100%" }}
-                      placeholder="Academic Year"
-                      mode="single"
-                      showSearch
-                      className="form-select"
-                      value={selectedYear}
-                    >
-                      {[ "2022-23", "2021-22","2020-21"].map((year, index) => (
-                        <Select.Option key={index} value={year}>
-                          {year.replace("-", " - ")}
-                        </Select.Option>
-                      ))}
-                    </Select>): (     <Select
-                      onChange={handleYearChange}
-                      style={{ width: "100%" }}
-                      placeholder="Academic Year"
-                      mode="single"
-                      showSearch
-                      className="form-select"
-                      value={selectedYear}
-                    >
-                      {[ "2022-23", "2021-22","2020-21","2019-20"].map((year, index) => (
-                        <Select.Option key={index} value={year}>
-                          {year.replace("-", " - ")}
-                        </Select.Option>
-                      ))}
-                    </Select>)
-                  }
-               
+                      (<Select
+                        onChange={handleYearChange}
+                        style={{ width: "100%" }}
+                        placeholder="Academic Year"
+                        mode="single"
+                        showSearch
+                        className="form-select"
+                        value={selectedYear}
+                      >
+                        {["2022-23", "2021-22", "2020-21"].map((year, index) => (
+                          <Select.Option key={index} value={year}>
+                            {year.replace("-", " - ")}
+                          </Select.Option>
+                        ))}
+                      </Select>) : (<Select
+                        onChange={handleYearChange}
+                        style={{ width: "100%" }}
+                        placeholder="Academic Year"
+                        mode="single"
+                        showSearch
+                        className="form-select"
+                        value={selectedYear}
+                      >
+                        {["2022-23", "2021-22", "2020-21", "2019-20"].map((year, index) => (
+                          <Select.Option key={index} value={year}>
+                            {year.replace("-", " - ")}
+                          </Select.Option>
+                        ))}
+                      </Select>)
+                    }
+
 
 
                     {/* State select option */}
