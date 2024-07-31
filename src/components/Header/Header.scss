@@ -4,6 +4,7 @@
 .header-bg {
     background: url('../../assets/images/header_bg.png');
     background-position: center;
+    z-index: 9999 !important;
 }
 
 .header-top {
@@ -1286,12 +1287,12 @@ button.text-increment-btn {
     transition: all .3s ease-in-out;
 
     &:hover {
-        color: #FF9461;
+        color: #FF9461 !important;
     }
 }
 
 .nav-elements ul a.active {
-    color: #FF9461;
+    color: #FF9461 !important;
     font-weight: 600;
     // font-size: 16px;
     position: relative;

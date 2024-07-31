@@ -139,8 +139,10 @@
         background: #000 !important;
     }
 
+    .site-header .navbar .search-icon .input-box.open input{color: #fff;}
+
     .card-box,
-    .radio-button {
+    .radio-button, .site-header .navbar .search-icon .input-box .search, .ag-virtual-list-item, .ag-theme-material .ag-tabs-header {
         background: #000 !important;
         border: 1px solid #ddd !important;
     }
@@ -149,7 +151,7 @@
         border: none !important;
     }
 
-    .themes .themes-box-img .theme-shadow-box {
+    .themes .themes-box-img .theme-shadow-box, .ag-tabs-body.ag-menu-body, .ag-menu-option-active, .ag-menu-list.ag-focus-managed    {
         background: rgb(18 18 18 / 84%) !important;
     }
 
@@ -157,12 +159,21 @@
         color: #ff0;
     }
     .menu-icon svg rect{fill: #ff0;}
+    .ag-root.ag-layout-normal, .comp-card{border: 1px solid;}
 
     .themes .themes-box-img .content,
     .ag-center-cols-viewport,
-    .multi-header-table .ag-row-animation .ag-row, .ag-row-no-focus.ag-row.ag-row-level-0.ag-row-position-absolute.ag-row-not-inline-editing.ag-row-hover::before {
+    .multi-header-table .ag-row-animation .ag-row, .ag-row-no-focus.ag-row.ag-row-level-0.ag-row-position-absolute.ag-row-not-inline-editing.ag-row-hover::before, .site-header .navbar .search-icon .input-box, .site-header .navbar .search-icon .input-box input {
         background: rgba(18, 18, 18, 0.84) !important;
     }
+     .tab-box .tab-button{
+        border: 1px solid #fff;
+        padding: 10px 7px;
+
+        &.active{
+            background: #4a4a4a !important;
+        }
+     }
 
     .footer .footer-bottom .visitor-counter span {
         color: #000 !important;

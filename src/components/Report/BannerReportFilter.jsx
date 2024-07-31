@@ -275,7 +275,7 @@ export default function BannerReportFilter() {
                     <Select style={{ width: '100%' }} placeholder="Select KPI" mode="single" showSearch className="form-select" value={selectedReport || SelectKpi} onChange={handleReportChange}>
                       <Select.Option key="Transition Rate" value="Transition Rate">Transition Rate</Select.Option>
                       <Select.Option key="Teacher and School Resources" value="Teacher and School Resources">Teacher and School Resources</Select.Option>
-                      <Select.Option key="Student Performance" value="Student Performance">Student Performance</Select.Option>
+                      <Select.Option key="Student Performance" value="Student Performance">Teachers Trained for Teaching CWSN</Select.Option>
                       <Select.Option key="School Infrastructure" value="School Infrastructure">School Infrastructure</Select.Option>
                       {/* <Select.Option key="Enrollment and Retention" value="Enrollment and Retention">Enrollment and Retention</Select.Option> */}
                     </Select>

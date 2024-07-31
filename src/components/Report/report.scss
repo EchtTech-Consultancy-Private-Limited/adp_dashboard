@@ -445,6 +445,10 @@
         }
     }
 
+    .ag-header-group-cell:first-of-type:not(.ag-header-cell-moving):hover{
+        background: #2b9c9f;
+    }
+
     .ag-ltr .ag-cell {
         border-right-width: 0px !important;
         height: 35px !important;
