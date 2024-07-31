@@ -296,7 +296,7 @@ export default function StudentsPerformanceReport() {
                 },
 
                 {
-                    headerName: "% Schools with Teachers trained for teaching CWSN",
+                    headerName: "Percentage Schools with Teachers trained for teaching CWSN",
                     field: "swsn_teacher_percent",
                     cellRenderer: percentageRenderer,
                     hide: false,

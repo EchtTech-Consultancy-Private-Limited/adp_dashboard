@@ -180,13 +180,9 @@ let TotalSchoolPerformanceAdp_Abp = (
           <div className="col-md-4">
             <div className="themes-text">
               <h3 className="heading-blue mb-3">
-                {t("socioEconomic")} <br /> {t("themes")}
+                {t("socioEconomic")} 
               </h3>
-              <h6 className="sub-title">
-                {t("kpiSentence1")}
-                 {/* <br /> {t("kpiSentence2")}
-                <br /> {t("kpiSentence3")} */}
-              </h6>
+              
               <Link to="/transition-rate" className="btn-banner d-none-mobile">
                 {t("exploreCompositeScore")}{" "}
                 <span className="material-icons-round">arrow_forward</span>
