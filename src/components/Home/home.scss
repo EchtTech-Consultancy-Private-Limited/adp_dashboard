@@ -359,8 +359,11 @@ img {
             &.img-3 {
                 margin-top: -59px;
 
+                @media (max-width:1599px) and (min-width: 1400px) {
+                    margin-top: -86px;
+                }
                 @media (max-width:1399px) and (min-width: 1024px) {
-                    margin-top: -38px;
+                    margin-top: -65px;
                 }
                 @media (max-width: 991px) {
                     margin-top: -52px;
@@ -407,9 +410,9 @@ img {
 
         .content {
             border: 1px solid #2B9C9F;
-            margin-top: 8px;
+            margin-top: 20px;
             padding: 14px 20px;
-            min-height: 170px;
+            min-height: 160px;
             border-radius: 20px;
 
             @media (max-width:1399px) and (min-width: 1024px) {

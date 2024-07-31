@@ -14,7 +14,7 @@ import {
 import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json";
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
-import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
+import themesData from "../../aspirational-reports-data/themesData.json";
 import { useTranslation } from "react-i18next";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -65,109 +65,7 @@ export default function Themes() {
     });
   }, []);
 
-  //  get the districts Count start
-
-  let DistrictSet = new Set();
-  aspirationalData.ADP_Report.forEach((item) => {
-    DistrictSet.add(item.lgd_district_name);
-  });
-  let numberOfUniqueDistricts = DistrictSet.size;
-  //  get the district Count end
-
-  //  get the blocks Count start
-
-  let blockSet = new Set();
-  aspirationalData.ABP_Report.forEach((item) => {
-    blockSet.add(item.lgd_block_name);
-  });
-  let numberOfUniqueBlockes = blockSet.size;
-
-  //  get the blocks Count end
-
-  // combinedData the data Year 20,21,22 start
-
-  const combinedData = {
-    "2020-21": {
-      ADP_Report: aspirationalAdpData2020,
-      ABP_Report: aspirationalAbpData,
-    },
-    "2021-22": {
-      ADP_Report: aspirationalAdpData2021,
-      ABP_Report: aspirationalAbpData,
-    },
-    "2022-23": {
-      ADP_Report: aspirationalAdpData2022,
-      ABP_Report: aspirationalAbpData,
-    },
-  };
-
-  useEffect(() => {
-    const yearData = combinedData[selectedYear];
-    if (yearData) {
-      const adpData = yearData.ADP_Report;
-      const abpData = yearData.ABP_Report;
-
-      // Combine or handle both reports as needed
-      if (adpData && abpData) {
-        setAspirationalData({
-          ADP_Report: adpData,
-          ABP_Report: abpData,
-        });
-      } else {
-        console.warn("Data for the selected year or reports is missing");
-      }
-    }
-  }, [selectedAdpAbpOption, selectedYear]);
-
-
-  // combinedData the data Year 20,21,22 end
-
-  // useEffect(() => {
-  //     const selectedData = combinedData[selectedYear][selectedAdpAbpOption];
-  //     if (selectedData) {
-
-  //         setAspirationalData(selectedData);
-  //     }
-  // }, [selectedAdpAbpOption, selectedYear]);
-
-  //    Transition  rate  Adp Data
-
-  let AdpAllStateAverage = AdpCountTotalAverage(
-    aspirationalData.ADP_Report,
-    numberOfUniqueDistricts
-  );
-
-  //    Transition  rate  Abp Data
-
-  let AbpAllStateAverage = AbpCountTotalAverage(
-    aspirationalData.ABP_Report,
-    numberOfUniqueBlockes
-  );
-
-
-  //    calculate   Transition rate Averge
-  let TotalTransitionRateAdp_Abp = (
-    (AdpAllStateAverage[0]?.Sec_Upri_Total +
-      AbpAllStateAverage[0]?.Sec_Upri_Total) /
-    2
-  ).toFixed(2);
-
-//   TeachAndSchResourses
-  let TotalTeachAndSchResoursesAdp_Abp = (
-    (AdpAllStateAverage[0]?.TeachAndSchResourses +
-      AbpAllStateAverage[0]?.TeachAndSchResourses) /
-    2
-  ).toFixed(2);
-
-// schoolPerformace
-
-let TotalSchoolPerformanceAdp_Abp = (
-    (AdpAllStateAverage[0]?.StudentPerformance +
-      AbpAllStateAverage[0]?.StudentPerformance) /
-    2
-  ).toFixed(2);
-
-//   let TotalTeacherAndschoolAdp_Abp   =AdpAllStateAverage
+  
 
 
 
@@ -180,13 +78,9 @@ let TotalSchoolPerformanceAdp_Abp = (
           <div className="col-md-4">
             <div className="themes-text">
               <h3 className="heading-blue mb-3">
-                {t("socioEconomic")} <br /> {t("themes")}
+                {t("socioEconomic")} 
               </h3>
-              <h6 className="sub-title">
-                {t("kpiSentence1")}
-                 {/* <br /> {t("kpiSentence2")}
-                <br /> {t("kpiSentence3")} */}
-              </h6>
+              
               <Link to="/transition-rate" className="btn-banner d-none-mobile">
                 {t("exploreCompositeScore")}{" "}
                 <span className="material-icons-round">arrow_forward</span>
@@ -202,7 +96,7 @@ let TotalSchoolPerformanceAdp_Abp = (
                       {t("transitionRateBoysGirls")}
                     </div>
                     <div className="theme-maintext">
-                      {TotalTransitionRateAdp_Abp}%
+                      79.01%
                     </div>
                     <div className="theme-subtext">{t("allStates")}</div>
                   </div>
@@ -249,7 +143,7 @@ let TotalSchoolPerformanceAdp_Abp = (
                     <div className="theme-text">
                       {t("teacherSchoolResources")}
                     </div>
-                    <div className="theme-maintext">{TotalTeachAndSchResoursesAdp_Abp}%</div>
+                    <div className="theme-maintext">{themesData[0]?.ele_sch_percent}%</div>
                     <div className="theme-subtext mb-2">{t("allStates")}</div>
                   </div>
 
@@ -302,7 +196,7 @@ let TotalSchoolPerformanceAdp_Abp = (
                 <div className="themes-box-img" data-aos="fade-up-right">
                   <div className="themes-box">
                     <div className="theme-text">{t("studentPerformance")}</div>
-                    <div className="theme-maintext">{TotalSchoolPerformanceAdp_Abp}%</div>
+                    <div className="theme-maintext">{themesData[0]?.swsn_teacher_percent}%</div>
                     <div className="theme-subtext mb-2">{t("allStates")}</div>
                   </div>
 
@@ -354,7 +248,7 @@ let TotalSchoolPerformanceAdp_Abp = (
                     <div className="theme-text">
                       {t("schoolInfrastructure")}
                     </div>
-                    <div className="theme-maintext">73%</div>
+                    <div className="theme-maintext">{themesData[0]?.functional_toilet_girls_percent}%</div>
                     <div className="theme-subtext mb-2">{t("allStates")}</div>
                   </div>
 
