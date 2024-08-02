@@ -22,6 +22,27 @@
             transform: translate(-8px, 10px);
         }
 
+        .chart-button {
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            margin-top: 10px;
+        }
+
+        button.btn {
+            background: #FF9461;
+            color: #fff;
+            padding: 3px 10px;
+            border: 1px solid #FF9461;
+            transition: all .3s ease-in-out;
+            font-size: 14px;
+
+            &:hover{
+                background: #fff;
+                color: #FF9461;
+            }
+        }
+
     }
 
 
