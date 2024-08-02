@@ -100,12 +100,12 @@ export default function TransitionRateGraphA() {
         },
         series: [{
             name: 'Boys',
-            color: "#17AFD2",
+            color: "#FFB74BF0",
             data: boysData,
             pointWidth: 12,
         }, {
             name: 'Girls',
-            color: "#6C6CB0",
+            color: "#2B9C9F",
             data: girlsData,
             pointWidth: 12,
         }],
