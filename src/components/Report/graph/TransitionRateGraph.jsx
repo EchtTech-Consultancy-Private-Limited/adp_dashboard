@@ -72,6 +72,7 @@ console.log("selectReportType=======>",selectReportType)
                                 chart: {
                                     type: "bar",
                                     marginTop: 50,
+                                    height:500,
                                     events: {
                                         beforePrint: function () {
                                             this.exportSVGElements[0].box.hide();
@@ -249,6 +250,7 @@ console.log("selectReportType=======>",selectReportType)
                                 chart: {
                                     type: "bar",
                                     marginTop: 50,
+                                    height:500,
                                     events: {
                                         beforePrint: function () {
                                             this.exportSVGElements[0].box.hide();
@@ -310,11 +312,13 @@ console.log("selectReportType=======>",selectReportType)
                                 series: [{
                                     name: '2022-23',
                                     color: "#FFB74BF0",
-                                    data: [23, 42, 81, 98, 98, 79, 98, 59, 18, 26]
+                                    data: [23, 42, 81, 98, 98, 79, 98, 59, 18, 26],
+                                    pointWidth: 12,
                                 }, {
                                     name: '2023-24',
                                     color: "#2B9C9F",
-                                    data: [59, 78, 59, 81, 59, 81, 74, 79, 71, 39]
+                                    data: [59, 78, 59, 81, 59, 81, 74, 79, 71, 39],
+                                    pointWidth: 12,
                                 }],
                             }}
                             immutable={true}
