@@ -30,6 +30,7 @@ import { ScrollToTopOnMount } from "../../Scroll/ScrollToTopOnMount";
 import TransitionBlockRateCompare from "./ReportCompare/TransitionBlockRateCompare";
 import { useTranslation } from "react-i18next";
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
+import TransitionRateGraph from "./graph/TransitionRateGraph";
 export default function TransitionRateReport() {
     const dispatch = useDispatch();
     const { t, i18n } = useTranslation();
@@ -765,6 +766,12 @@ export default function TransitionRateReport() {
         document.getElementById("export_data").selectedIndex = 0;
     };
 
+    const [isActive, setIsActive] = useState(false);
+
+    const toggleClass = () => {
+        setIsActive(prevState => !prevState);
+    };
+
     return (
         <>
             <ScrollToTopOnMount />
@@ -811,11 +818,11 @@ export default function TransitionRateReport() {
                                                 <h3 className="heading-sm">{t("transitionRate")}</h3>
                                             </div>
                                             <div className="tab-box">
-                                                <button className="tab-button active">
+                                                <button className={`tab-button  ${isActive ? '' : 'active'}`}  onClick={toggleClass}>
                                                     <img src={table} alt="Table" />{" "}
                                                     <span>{t("tableView")}</span>
                                                 </button>
-                                                <button className="tab-button">
+                                                <button className={`tab-button  ${isActive ? 'active' : ''}`} onClick={toggleClass}>
                                                     <img src={chart} alt="chart" />{" "}
                                                     <span>{t("chartView")}</span>
                                                 </button>
@@ -903,19 +910,20 @@ export default function TransitionRateReport() {
 
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <div className="table-box mt-4">
-                                            <div
-                                                id="content"
+                                        <div className={`table-box mt-4  ${isActive ? 'd-none' : ''}`}>
+                                            <div id="content"
                                                 className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
-                                                style={{ width: "100%", height: 300 }}
-                                            >
+                                                style={{ width: "100%", height: 300 }}>
                                                 <AgGridReact
                                                     columnDefs={columns}
-                                                    rowData={finalData || finalData.length>0 ? finalData :""}
+                                                    rowData={finalData || finalData.length > 0 ? finalData : ""}
                                                     defaultColDef={defColumnDefs}
-                                                    onGridReady={onGridReady}
-                                                />
+                                                    onGridReady={onGridReady} />
                                             </div>
+                                        </div>
+
+                                        <div className={`graph-box  ${isActive ? '' : 'd-none'}`}>
+                                            <TransitionRateGraph />
                                         </div>
                                     </div>
                                 </div>

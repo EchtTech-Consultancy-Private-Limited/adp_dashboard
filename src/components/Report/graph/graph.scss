@@ -1,0 +1,22 @@
+.graph-box {
+    margin: 40px 0 20px;
+
+    .graph-card {
+        box-shadow: 0px 0px 6px #0000001A;
+        border-radius: 20px;
+        padding: 25px 20px;
+
+        .heading-sm{font-size: 18px;}
+
+        text.highcharts-title {
+            display: none;
+        }
+
+        g.highcharts-legend.highcharts-no-tooltip {
+            transform: translate(-8px, 10px);
+        }
+    
+    }
+
+
+}
