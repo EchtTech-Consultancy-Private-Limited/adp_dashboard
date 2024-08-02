@@ -40,7 +40,9 @@ export default function TransitionRateGraph() {
     // Determine which data to display based on upper to sec and sec to upp
     const boysData = selectedOption === "secondary_to_higher_secondary" ? SecBoysData : UppBoysData;
     const girlsData = selectedOption === "upper_primary_to_secondary" ? UppGirlsData : SecGirlsData;
-
+    console.log(boysData, "boysData")
+    console.log(girlsData, "boysData")
+    console.log(girlsData, "boysDatas")
     const AllDistricts = finalData?.map((districts) => ({
             ...districts,
             combinedScore: districts.upri_t + districts.sec_t,
