@@ -8,7 +8,11 @@ export default function TransitionRateGraph() {
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
 
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
-         
+    const selectedOption = useSelector(
+        (state) => state.reportAdpAbpType.selectedOption
+    );
+
+    console.log("selectedOption=======>",selectedOption)
 
     console.log("finalData  Graph======>",finalData)
 console.log("selectReportType=======>",selectReportType)
@@ -34,13 +38,17 @@ console.log("selectReportType=======>",selectReportType)
   const SecBoysData = TopDistricts.map(district => district.sec_b);
   const SecGirlsData = TopDistricts.map(district => district.sec_g);
 
-  const UppBoysData = TopDistricts.map(district => district.upri_b
-  );
-  const UppGirlsData = TopDistricts.map(district => district.upri_g
-      )    ;
+  const UppBoysData = TopDistricts.map(district => district.upri_b);
+  const UppGirlsData = TopDistricts.map(district => district.upri_g);
 
-//   ***************end 10 District******************
 
+  //   ***************end 10 District******************
+
+
+   // Determine which data to display based on upper to sec and sec to upp
+   const boysData = selectedOption === "secondary_to_higher_secondary" ? SecBoysData : UppBoysData;
+   const girlsData = selectedOption === "upper_primary_to_secondary" ? UppGirlsData :  SecGirlsData ;
+ 
 
 
 
@@ -126,11 +134,11 @@ console.log("selectReportType=======>",selectReportType)
                                 series: [{
                                     name: 'Boys',
                                     color: "#17AFD2",
-                                    data: UppBoysData
+                                    data: boysData
                                 }, {
                                     name: 'Girls',
                                     color: "#6C6CB0",
-                                    data: UppGirlsData
+                                    data: girlsData
                                 }],
                             }}
                             immutable={true}
@@ -212,11 +220,11 @@ console.log("selectReportType=======>",selectReportType)
                                 series: [{
                                     name: 'Boys',
                                     color: "#17AFD2",
-                                    data: SecBoysData
+                                    data: boysData
                                 }, {
                                     name: 'Girls',
                                     color: "#6C6CB0",
-                                    data: SecGirlsData
+                                    data: girlsData
                                 }],
                             }}
                             immutable={true}
