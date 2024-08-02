@@ -14,7 +14,7 @@ export default function TransitionRateGraphA() {
     const combinedData = (data) => data?.map((district) => ({
         ...district,
         combinedScore: district.upri_t + district.sec_t,
-    })).sort((a, b) => b.combinedScore - a.combinedScore);
+    }))
 
     const TopDistricts = combinedData(finalData)?.slice(0, 10);
     const AllDistricts = combinedData(finalData);
