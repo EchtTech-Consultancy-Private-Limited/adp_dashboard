@@ -20,8 +20,7 @@ export default function TransitionRateGraph() {
         .sort((a, b) => b.combinedScore - a.combinedScore)
         .slice(0, 10);
 
-    console.log("TopDistricts======>", TopDistricts);
-    console.log(TopDistricts.lgd_district_name)
+  
     let DistrictCategories, BlockCategories, SecBoysData, SecGirlsData, UppBoysData, UppGirlsData;
     if (TopDistricts) {
         DistrictCategories = TopDistricts.map(district => district.lgd_district_name);
@@ -357,7 +356,7 @@ export default function TransitionRateGraph() {
                         </div>)
                         :
                         (
-                            <div className="graph-card">
+                            <div className="">
                                 <h4 className='heading-sm'> Year Wise Block Transition Rate </h4>
 
                                 <div className='graph'>
@@ -367,6 +366,7 @@ export default function TransitionRateGraph() {
                                             chart: {
                                                 type: "bar",
                                                 marginTop: 50,
+                                                height:500,
                                                 events: {
                                                     beforePrint: function () {
                                                         this.exportSVGElements[0].box.hide();
