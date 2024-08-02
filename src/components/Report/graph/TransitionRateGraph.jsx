@@ -36,6 +36,7 @@ export default function TransitionRateGraph() {
                                     },
                                     gridLineWidth: 1,
                                     lineWidth: 0,
+                                    marginTop:10,
                                 },
                                 yAxis: {
                                     min: 0,
@@ -79,11 +80,13 @@ export default function TransitionRateGraph() {
                                 series: [{
                                     name: 'Boys',
                                     color: "#17AFD2",
-                                    data: [23, 42, 81, 98, 98, 79, 98, 59, 18, 26]
+                                    data: [23, 42, 81, 98, 98, 79, 98, 59, 18, 26],
+                                    marginTop:10,
                                 }, {
                                     name: 'Girls',
                                     color: "#6C6CB0",
-                                    data: [59, 78, 59, 81, 59, 81, 74, 79, 71, 39]
+                                    data: [59, 78, 59, 81, 59, 81, 74, 79, 71, 39],
+                                    marginTop:10,
                                 }],
                             }}
                             immutable={true}
