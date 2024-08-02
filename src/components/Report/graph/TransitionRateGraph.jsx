@@ -82,6 +82,7 @@ console.log("selectReportType=======>",selectReportType)
                                     },
                                     gridLineWidth: 1,
                                     lineWidth: 0,
+                                    marginTop:10,
                                 },
                                 yAxis: {
                                     min: 0,

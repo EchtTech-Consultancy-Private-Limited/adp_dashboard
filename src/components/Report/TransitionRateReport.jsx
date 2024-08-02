@@ -767,7 +767,7 @@ export default function TransitionRateReport() {
     };
 
     const [isActive, setIsActive] = useState(false);
-
+console.log(isActive, "isActive")
     const toggleClass = () => {
         setIsActive(prevState => !prevState);
     };
@@ -786,7 +786,7 @@ export default function TransitionRateReport() {
                                 <div className="row align-items-end">
                                     <div
                                         className={
-                                            selectedState !== "All State" ? "col-md-5" : "col-md-6"
+                                            (selectedState !== "All State" && !isActive) || ((selectedState === "All State"  || selectedState !== "All State" ) && isActive) ? "col-md-5" : "col-md-6"
                                         }
                                     >
                                         <div className="d-flex align-items-end">
@@ -818,7 +818,7 @@ export default function TransitionRateReport() {
                                                 <h3 className="heading-sm">{t("transitionRate")}</h3>
                                             </div>
                                             <div className="tab-box">
-                                                <button className={`tab-button  ${isActive ? '' : 'active'}`}  onClick={toggleClass}>
+                                                <button className={`tab-button  ${isActive ? '' : 'active'}`} onClick={toggleClass}>
                                                     <img src={table} alt="Table" />{" "}
                                                     <span>{t("tableView")}</span>
                                                 </button>
@@ -831,9 +831,7 @@ export default function TransitionRateReport() {
                                     </div>
                                     <div
                                         className={
-                                            selectedState !== "All State" ? "col-md-7" : "col-md-6"
-                                        }
-                                    >
+                                            (selectedState !== "All State" && !isActive) || ((selectedState === "All State"  || selectedState !== "All State" ) && isActive) ? "col-md-7" : "col-md-6"}>
                                         <div
                                             className={
                                                 selectedState !== "All State"
@@ -843,20 +841,17 @@ export default function TransitionRateReport() {
                                         >
                                             <div
                                                 className={
-                                                    selectedState !== "All State" ? "radio-button" : ""
+                                                    (selectedState !== "All State" && !isActive) || ((selectedState === "All State"  || selectedState !== "All State" ) && isActive) ? "radio-button" : ""
                                                 }
                                             >
-                                                {selectedState !== "All State" ? (
+                                                {(selectedState !== "All State" && !isActive) || ((selectedState === "All State"  || selectedState !== "All State" ) && isActive) ? (
                                                     <>
                                                         <div className="box-radio">
                                                             <input
                                                                 type="radio"
                                                                 id="radio4"
                                                                 value="upper_primary_to_secondary"
-                                                                checked={
-                                                                    selectedOption ===
-                                                                    "upper_primary_to_secondary"
-                                                                }
+                                                                checked={selectedOption === "upper_primary_to_secondary"}
                                                                 onChange={handleOptionChange}
                                                             />
                                                             <label htmlFor="radio4">
@@ -869,10 +864,7 @@ export default function TransitionRateReport() {
                                                                 type="radio"
                                                                 id="radio5"
                                                                 value="secondary_to_higher_secondary"
-                                                                checked={
-                                                                    selectedOption ===
-                                                                    "secondary_to_higher_secondary"
-                                                                }
+                                                                checked={selectedOption === "secondary_to_higher_secondary"}
                                                                 onChange={handleOptionChange}
                                                             />
                                                             <label htmlFor="radio5">
@@ -883,8 +875,9 @@ export default function TransitionRateReport() {
                                                 ) : (
                                                     ""
                                                 )}
+
                                             </div>
-                                            <div className="">
+                                            <div className={`${isActive ? 'd-none' : ''}`}>
                                                 {/* <img src={download} alt="download" /> */}
                                                 <select
                                                     id="export_data"
@@ -931,9 +924,9 @@ export default function TransitionRateReport() {
                         </div>
 
                         {
-                            selectedState !== "All State" && selectReportType === "ADP_Report" ? (
+                            selectedState !== "All State" && selectReportType === "ADP_Report" && !isActive ? (
                                 <TransitionRateCompare />
-                            ) : (selectedState !== "All State" && selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) && selectReportType === "ABP_Report" ? (
+                            ) : (selectedState !== "All State" && selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) && !isActive && selectReportType === "ABP_Report" ? (
                                 <TransitionBlockRateCompare />
                             ) : (
                                 ""
