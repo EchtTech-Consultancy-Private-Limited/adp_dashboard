@@ -768,9 +768,9 @@ export default function TransitionRateReport() {
 
     const [isActive, setIsActive] = useState(false);
 
-    const toggleClass = () => {
-        setIsActive(prevState => !prevState);
-    };
+    // const toggleClass = () => {
+    //     setIsActive(prevState => !prevState);
+    // };
 
     return (
         <>
@@ -818,11 +818,11 @@ export default function TransitionRateReport() {
                                                 <h3 className="heading-sm">{t("transitionRate")}</h3>
                                             </div>
                                             <div className="tab-box">
-                                                <button className={`tab-button  ${isActive ? '' : 'active'}`} onClick={toggleClass}>
+                                                <button className={`tab-button  ${isActive ? '' : 'active'}`} >
                                                     <img src={table} alt="Table" />{" "}
                                                     <span>{t("tableView")}</span>
                                                 </button>
-                                                <button className={`tab-button  ${isActive ? 'active' : ''}`} onClick={toggleClass}>
+                                                <button className={`tab-button  ${isActive ? 'active' : ''}`} >
                                                     <img src={chart} alt="chart" />{" "}
                                                     <span>{t("chartView")}</span>
                                                 </button>
