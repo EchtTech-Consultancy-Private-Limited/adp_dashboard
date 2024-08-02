@@ -14,9 +14,9 @@ export default function TransitionRateGraph() {
     );
     // Get Top 10 District bases on the boys and girls
     const TopDistricts = finalData?.map((districts) => ({
-            ...districts,
-            combinedScore: districts.upri_t + districts.sec_t,
-        }))
+        ...districts,
+        combinedScore: districts.upri_t + districts.sec_t,
+    }))
         .sort((a, b) => b.combinedScore - a.combinedScore)
         .slice(0, 10);
 
@@ -44,9 +44,9 @@ export default function TransitionRateGraph() {
     console.log(girlsData, "boysData")
     console.log(girlsData, "boysDatas")
     const AllDistricts = finalData?.map((districts) => ({
-            ...districts,
-            combinedScore: districts.upri_t + districts.sec_t,
-        }))
+        ...districts,
+        combinedScore: districts.upri_t + districts.sec_t,
+    }))
     const totalPages = Math.ceil(AllDistricts.length / itemsPerPage);
 
     const handleClick = (page) => {
@@ -92,7 +92,7 @@ export default function TransitionRateGraph() {
                                     chart: {
                                         type: "bar",
                                         marginTop: 50,
-                                        height: 500,
+                                        height: 540,
                                         events: {
                                             beforePrint: function () {
                                                 this.exportSVGElements[0].box.hide();
@@ -155,12 +155,13 @@ export default function TransitionRateGraph() {
                                     series: [{
                                         name: 'Boys',
                                         color: "#17AFD2",
-
-                                        data: boysData
+                                        data: boysData,
+                                        pointWidth: 12,
                                     }, {
                                         name: 'Girls',
-                                        color: "#6C6CB0",
-                                        data: girlsData
+                                        color: "#6C6CB0",   
+                                        data: girlsData,
+                                        pointWidth: 12,
                                     }],
                                 }}
                                 immutable={true}
@@ -180,6 +181,7 @@ export default function TransitionRateGraph() {
                                         chart: {
                                             type: "bar",
                                             marginTop: 50,
+                                            height:540,
                                             events: {
                                                 beforePrint: function () {
                                                     this.exportSVGElements[0].box.hide();
@@ -241,7 +243,8 @@ export default function TransitionRateGraph() {
                                         series: [{
                                             name: 'Boys',
                                             color: "#17AFD2",
-                                            data: boysData
+                                            data: boysData,
+                                            pointWidth: 12,
                                         }, {
                                             name: 'Girls',
                                             color: "#6C6CB0",
@@ -264,10 +267,10 @@ export default function TransitionRateGraph() {
             <div className="col-md-6">
 
 
-                <div className='graph'>
+                <div className='graph-card'>
                     {selectReportType === "ADP_Report" ?
 
-                        (<div className="graph-card">
+                        (<div className="">
                             <h4 className='heading-sm'>Year Wise District Transition Rate </h4>
 
                             <div className='graph'>
@@ -340,12 +343,13 @@ export default function TransitionRateGraph() {
                                         series: [{
                                             name: 'Boys',
                                             color: "#FFB74BF0",
-
-                                            data: boysDatas
+                                            data: boysDatas,
+                                            pointWidth: 12,
                                         }, {
                                             name: 'Girls',
                                             color: "#2B9C9F",
-                                            data: girlsDatas
+                                            data: girlsDatas,
+                                            pointWidth: 12,
                                         }],
                                     }}
                                     immutable={true}
@@ -426,7 +430,8 @@ export default function TransitionRateGraph() {
                                             series: [{
                                                 name: 'Boys',
                                                 color: "#FFB74BF0",
-                                                data: boysDatas
+                                                data: boysDatas,
+                                                pointWidth: 12,
                                             }, {
                                                 name: 'Girls',
                                                 color: "#2B9C9F",
@@ -441,19 +446,17 @@ export default function TransitionRateGraph() {
                             </div>)
 
                     }
-                    <button
-                        disabled={currentPage === 1}
-                        onClick={() => handleClick(currentPage - 1)}
-                    >
+
+                   <div className="chart-button">
+                     <button className='btn btn-d me-3' disabled={currentPage === 1} onClick={() => handleClick(currentPage - 1)}>
                         Previous
                     </button>
                     <span>Page {currentPage} of {totalPages}</span>
-                    <button
-                        disabled={currentPage === totalPages}
-                        onClick={() => handleClick(currentPage + 1)}
-                    >
+                    <button className='btn btn-next ms-3' disabled={currentPage === totalPages} onClick={() => handleClick(currentPage + 1)} >
                         Next
                     </button>
+                   </div>
+
                 </div>
             </div>
         </div>
