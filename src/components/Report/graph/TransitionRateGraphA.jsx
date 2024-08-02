@@ -3,9 +3,8 @@ import './graph.scss';
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useSelector } from 'react-redux';
-import TransitionRateGraphA from './TransitionRateGraphA';
 
-export default function TransitionRateGraph() {
+export default function TransitionRateGraphA() {
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
@@ -40,7 +39,7 @@ export default function TransitionRateGraph() {
         chart: {
             type: "bar",
             marginTop: 50,
-            height: 540,
+            height: 500,
             events: {
                 beforePrint: function () {
                     this.exportSVGElements[0].box.hide();
@@ -113,23 +112,29 @@ export default function TransitionRateGraph() {
     });
 
     return (
-        <div className="row">
-            <div className="col-md-6">
-                <div className="graph-card">
-                    <h4 className='heading-sm'>Top 10 {selectReportType === "ADP_Report" ? "Districts" : "Blocks"}</h4>
-                    <div className='graph'>
-                        <HighchartsReact
-                            highcharts={Highcharts}
-                            options={chartOptions(topCategories, topBoysData, topGirlsData, "Top 10 Districts")}
-                            immutable={true}
-                        />
-                    </div>
+
+
+        <div className="col-md-12">
+            <div className='graph-card'>
+                <h4 className='heading-sm'>Year Wise {selectReportType === "ADP_Report" ? "District" : "Block"} Transition Rate</h4>
+                <div className='graph'>
+                    <HighchartsReact
+                        highcharts={Highcharts}
+                        options={chartOptions(categories, boysData, girlsData, "Year Wise District Transition Rate")}
+                        immutable={true}
+                    />
+                </div>
+                <div className="chart-button">
+                    <button className='btn btn-d me-3' disabled={currentPage === 1} onClick={() => handleClick(currentPage - 1)}>
+                        Previous
+                    </button>
+                    <span>Page {currentPage} of {totalPages}</span>
+                    <button className='btn btn-next ms-3' disabled={currentPage === totalPages} onClick={() => handleClick(currentPage + 1)}>
+                        Next
+                    </button>
                 </div>
             </div>
-
-            <div className="col-md-6">
-                <TransitionRateGraphA></TransitionRateGraphA>
-            </div>
         </div>
+
     );
 }
