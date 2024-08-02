@@ -18,6 +18,7 @@ export default function TransitionRateGraph() {
                                 chart: {
                                     type: "bar",
                                     marginTop: 50,
+                                    height:500,
                                     events: {
                                         beforePrint: function () {
                                             this.exportSVGElements[0].box.hide();
@@ -81,12 +82,12 @@ export default function TransitionRateGraph() {
                                     name: 'Boys',
                                     color: "#17AFD2",
                                     data: [23, 42, 81, 98, 98, 79, 98, 59, 18, 26],
-                                    marginTop:10,
+                                    pointWidth: 12,
                                 }, {
                                     name: 'Girls',
                                     color: "#6C6CB0",
                                     data: [59, 78, 59, 81, 59, 81, 74, 79, 71, 39],
-                                    marginTop:10,
+                                    pointWidth: 12,
                                 }],
                             }}
                             immutable={true}
@@ -107,6 +108,7 @@ export default function TransitionRateGraph() {
                                 chart: {
                                     type: "bar",
                                     marginTop: 50,
+                                    height:500,
                                     events: {
                                         beforePrint: function () {
                                             this.exportSVGElements[0].box.hide();
@@ -168,11 +170,13 @@ export default function TransitionRateGraph() {
                                 series: [{
                                     name: '2022-23',
                                     color: "#FFB74BF0",
-                                    data: [23, 42, 81, 98, 98, 79, 98, 59, 18, 26]
+                                    data: [23, 42, 81, 98, 98, 79, 98, 59, 18, 26],
+                                    pointWidth: 12,
                                 }, {
                                     name: '2023-24',
                                     color: "#2B9C9F",
-                                    data: [59, 78, 59, 81, 59, 81, 74, 79, 71, 39]
+                                    data: [59, 78, 59, 81, 59, 81, 74, 79, 71, 39],
+                                    pointWidth: 12,
                                 }],
                             }}
                             immutable={true}
