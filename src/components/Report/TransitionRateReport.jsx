@@ -767,7 +767,7 @@ export default function TransitionRateReport() {
     };
 
     const [isActive, setIsActive] = useState(false);
-console.log(isActive, "isActive")
+
     const toggleClass = () => {
         setIsActive(prevState => !prevState);
     };
