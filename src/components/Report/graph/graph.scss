@@ -9,6 +9,7 @@
 
         .heading-sm {
             font-size: 18px !important;
+
             @media (max-width: 1399px) and (min-width: 1024px) {
                 font-size: 16px !important;
             }
@@ -37,7 +38,7 @@
             transition: all .3s ease-in-out;
             font-size: 14px;
 
-            &:hover{
+            &:hover {
                 background: #fff;
                 color: #FF9461;
             }
@@ -45,5 +46,30 @@
 
     }
 
+    .download-button {
+        padding: 10px 0 10px 5px !important;
+        width: auto !important;
+    }
+
+    .radio-button {
+        width: fit-content;
+        background: transparent;
+        padding-left: 0;
+
+        .box-radio {
+
+            // &:first-child {
+            //     input {
+            //         accent-color:#FF9461 ;
+            //     }
+            // }
+
+            &:last-child {
+                input {
+                    accent-color: #2B9C9F;
+                }
+            }
+        }
+    }
 
 }
