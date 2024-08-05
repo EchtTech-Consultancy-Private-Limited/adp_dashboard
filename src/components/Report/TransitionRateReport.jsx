@@ -43,13 +43,15 @@ export default function TransitionRateReport() {
     const { selectedState, selectedDistrict, selectedBlock } = useSelector(
         (state) => state.locationAdp
     );
+   
     // const [aspirationalData, setAspirationalData] = useState([]);
     const aspirationalData = useSelector(
         (state) => state.reportAdpAbpType.aspirationalAllData
     );
     const [locationHeader, SetLocationHeader] = useState();
     const [gridApi, setGridApi] = useState();
-    const states = useSelector((state) => state.locationAdp.states);
+    const states = useSelector((state) => state.locationAdp.districts);
+    console.log(states, "selectedState")
     const selectReportType = useSelector(
         (state) => state.reportAdpAbpType.updateReportType
     );
@@ -769,9 +771,11 @@ export default function TransitionRateReport() {
     };
 
     const [isActive, setIsActive] = useState(false);
+console.log(isActive, "isActive")
+    const toggleClass = (e) => {
+       
+        dispatch(setIsActiveGraph(!isActiveGraph));
 
-    const toggleClass = () => {
-        dispatch(setIsActiveGraph(prevState => !prevState));
     };
 
     return (
