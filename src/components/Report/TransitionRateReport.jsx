@@ -912,7 +912,7 @@ console.log(isActive, "isActive")
                                         <div className={`table-box mt-4  ${isActiveGraph ? 'd-none' : ''}`}>
                                             <div id="content"
                                                 className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
-                                                style={{ width: "100%", height: 300 }}>
+                                                style={{ width: "100%", height: 400 }}>
                                                 <AgGridReact
                                                     columnDefs={columns}
                                                     rowData={finalData || finalData.length > 0 ? finalData : ""}
