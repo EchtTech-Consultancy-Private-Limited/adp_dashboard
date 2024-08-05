@@ -5,117 +5,29 @@ import HighchartsReact from "highcharts-react-official";
 import { useSelector } from 'react-redux';
 
 export default function TransitionRateGraphA() {
-    const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
+    const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
-
-    const combinedData = (data) => data?.map((district) => ({
-        ...district,
-        combinedScore: district.upri_t + district.sec_t,
-    }))
-
-    const TopDistricts = combinedData(finalData)?.slice(0, 10);
-    const AllDistricts = combinedData(finalData);
+    const [showBoysData, setShowBoysData] = useState(true);
+    const { selectedState, selectedDistrict, selectedBlock } = useSelector(
+        (state) => state.locationAdp
+    );
+    console.log("district=>,",selectedDistrict)
 
     const getChartData = (data) => {
-        const categories = data.map((district) => selectReportType === "ADP_Report" ? district.lgd_district_name : district.lgd_block_name);
+        const totalData = data.map((district) => selectedOption === "upper_primary_to_secondary" ? district.upri_t : district.sec_t);
         const boysData = data.map((district) => selectedOption === "secondary_to_higher_secondary" ? district.sec_b : district.upri_b);
         const girlsData = data.map((district) => selectedOption === "upper_primary_to_secondary" ? district.upri_g : district.sec_g);
-        return { categories, boysData, girlsData };
+        const boysDataPoints = totalData.map((total, index) => [total, boysData[index]]);
+        const girlsDataPoints = totalData.map((total, index) => [total, girlsData[index]]);
+        return { boysDataPoints,girlsDataPoints};
     };
-
-    const { categories: topCategories, boysData: topBoysData, girlsData: topGirlsData } = getChartData(TopDistricts || []);
-    const { categories, boysData, girlsData } = getChartData(AllDistricts?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage) || []);
-
-    const totalPages = Math.ceil((AllDistricts?.length || 0) / itemsPerPage);
-
-    const handleClick = (page) => {
-        setCurrentPage(page);
-    };
-
-    const chartOptions = (categories, boysData, girlsData, title) => ({
-        chart: {
-            type: "bar",
-            marginTop: 50,
-            height: 500,
-            events: {
-                beforePrint: function () {
-                    this.exportSVGElements[0].box.hide();
-                    this.exportSVGElements[1].hide();
-                },
-                afterPrint: function () {
-                    this.exportSVGElements[0].box.show();
-                    this.exportSVGElements[1].show();
-                },
-            },
-        },
-        xAxis: {
-            categories,
-            title: {
-                text: null,
-            },
-            gridLineWidth: 1,
-            lineWidth: 0,
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                enabled: false,
-            },
-            labels: {
-                overflow: "justify",
-            },
-            gridLineWidth: 0,
-        },
-        title: {
-            text: title,
-        },
-        tooltip: {
-            valueSuffix: "%",
-        },
-        plotOptions: {
-            bar: {
-                borderRadius: "50%",
-                dataLabels: {
-                    enabled: true,
-                    formatter: function () {
-                        return "<b>" + this.point.y + "%";
-                    },
-                },
-                groupPadding: 0.1,
-                pointPadding: 0.1,
-            },
-        },
-        legend: {
-            layout: "horizontal",
-            align: "left",
-            verticalAlign: "top",
-            itemMarginTop: 0,
-            itemMarginBottom: 50,
-        },
-        credits: {
-            enabled: false,
-        },
-        series: [{
-            name: 'Boys',
-            color: "#FFB74BF0",
-            data: boysData,
-            pointWidth: 12,
-        }, {
-            name: 'Girls',
-            color: "#2B9C9F",
-            data: girlsData,
-            pointWidth: 12,
-        }],
-    });
-
-
-
+    const { boysDataPoints,girlsDataPoints} = getChartData(finalData);
+  
     const [selectedValue, setSelectedValue] = useState('Boys');
-
+    console.log(selectedValue, "selectedValue")
     const handleChange = (event) => {
+        console.log(event.target.value, "kdjfdfjdjf")
         setSelectedValue(event.target.value);
     };
 
@@ -123,37 +35,15 @@ export default function TransitionRateGraphA() {
 
 
         <div className="col-md-12">
-            {/* <div className='graph-card'>
-                <h4 className='heading-sm'>Year Wise {selectReportType === "ADP_Report" ? "District" : "Block"} Transition Rate</h4>
-                <div className='graph'>
-                    <HighchartsReact
-                        highcharts={Highcharts}
-                        options={chartOptions(categories, boysData, girlsData, "Year Wise District Transition Rate")}
-                        immutable={true}
-                    />
-                </div>
-                <div className="chart-button">
-                    <button className='btn btn-d me-3' disabled={currentPage === 1} onClick={() => handleClick(currentPage - 1)}>
-                        Previous
-                    </button>
-                    <span>Page {currentPage} of {totalPages}</span>
-                    <button className='btn btn-next ms-3' disabled={currentPage === totalPages} onClick={() => handleClick(currentPage + 1)}>
-                        Next
-                    </button>
-                </div>
-            </div> */}
-
-
-
             <div className="graph-card">
                 <div className='d-flex align-items-center justify-content-between'>
                     <h4 className='heading-sm'>Lable wise Transition Rate of District</h4>
-                    <div>
+                    {/* <div>
                         <select className="form-select download-button">
                             <option value="">Upper Primary to Secondary</option>
                             <option value="">Secondary to Higher Secondary</option>
                         </select>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="graph mt-2">
                     <div className="radio-button">
@@ -209,7 +99,9 @@ export default function TransitionRateGraphA() {
                             },
                             yAxis: {
                                 title: {
-                                    text: 'Boys',
+                                    title: {
+                                        text: selectedValue ? 'Boys' : 'Girls'
+                                    },
                                     style: {
                                         color: '#000',
                                         fontWeight: 'bold' // Make the X-axis title text bold
@@ -248,6 +140,12 @@ export default function TransitionRateGraphA() {
                                     },
                                     jitter: {
                                         x: 0.005
+                                    },
+                                    dataLabels: {
+                                        enabled: true,
+                                        formatter: function() {
+                                            return `${this.point.y}`;
+                                        }
                                     }
                                 }
                             },
@@ -257,17 +155,14 @@ export default function TransitionRateGraphA() {
                             credits: {
                                 enabled: false,
                             },
-                            series: [{
-                                name: 'Boys',
-                                color: "#FFB74BF0",
-                                data: [50, 80, 60, 70, 90, 95, 85],
-
-                            }, {
-                                name: 'Girls',
-                                color: "#2B9C9F",
-                                data: [60, 80, 35, 95, 25, 71, 66],
-
-                            }],
+                            series: [
+                                {
+                                    name:'Total',
+                                    data: selectedValue ? boysDataPoints : girlsDataPoints,
+                                    color:selectedState? "#FFB74BF0":"#2B9C9F",
+                                    pointWidth:selectedValue?20:20
+                                }
+                            ]
                         }}
                         immutable={true}
                     />
