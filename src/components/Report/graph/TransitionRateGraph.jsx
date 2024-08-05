@@ -3,6 +3,7 @@ import './graph.scss';
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useSelector } from 'react-redux';
+import TransitionRateGraphA from './TransitionRateGraphA';
 
 export default function TransitionRateGraph() {
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
@@ -127,25 +128,7 @@ export default function TransitionRateGraph() {
             </div>
 
             <div className="col-md-6">
-                <div className='graph-card'>
-                    <h4 className='heading-sm'>Year Wise {selectReportType === "ADP_Report" ? "District" : "Block"} Transition Rate</h4>
-                    <div className='graph'>
-                        <HighchartsReact
-                            highcharts={Highcharts}
-                            options={chartOptions(categories, boysData, girlsData, "Year Wise District Transition Rate")}
-                            immutable={true}
-                        />
-                    </div>
-                    <div className="chart-button">
-                        <button className='btn btn-d me-3' disabled={currentPage === 1} onClick={() => handleClick(currentPage - 1)}>
-                            Previous
-                        </button>
-                        <span>Page {currentPage} of {totalPages}</span>
-                        <button className='btn btn-next ms-3' disabled={currentPage === totalPages} onClick={() => handleClick(currentPage + 1)}>
-                            Next
-                        </button>
-                    </div>
-                </div>
+                <TransitionRateGraphA></TransitionRateGraphA>
             </div>
         </div>
     );
