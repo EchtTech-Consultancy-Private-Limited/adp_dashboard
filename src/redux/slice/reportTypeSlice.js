@@ -18,7 +18,8 @@ const reportTypeSlice = createSlice({
         aspirationalAllData:[],
         selectedDataAllYear:[],
         finalData:[],
-        currentPage:1
+        currentPage:1,
+        isActiveGraph:false
     },
     reducers: {
       setUpdateReportType(state,action) {
@@ -71,8 +72,11 @@ const reportTypeSlice = createSlice({
       setCurrentPage(state,action) {
         state.currentPage=action.payload;
       },
+      setIsActiveGraph(state,action) {
+        state.isActiveGraph=action.payload;
+      },
     },
   })
   
-  export const { setUpdateReportType,setUpdateStatus, setselectedOption,setselectedCompareOption,setselectedStateShow,setselectedReport,setselectedCompareDistricts,setselectedCompareBlocks,setSelectedYear,setgirdAPIForCommonData,SetSheetName,SethandleExportData, setAspirationalAllData,setselectedDataAllYear,SetFinalData,setCurrentPage } = reportTypeSlice.actions
+  export const { setUpdateReportType,setUpdateStatus, setselectedOption,setselectedCompareOption,setselectedStateShow,setselectedReport,setselectedCompareDistricts,setselectedCompareBlocks,setSelectedYear,setgirdAPIForCommonData,SetSheetName,SethandleExportData, setAspirationalAllData,setselectedDataAllYear,SetFinalData,setCurrentPage,setIsActiveGraph } = reportTypeSlice.actions
   export default reportTypeSlice.reducer
