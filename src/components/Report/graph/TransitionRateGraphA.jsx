@@ -155,7 +155,7 @@ export default function TransitionRateGraphA() {
                             },
                             tooltip: {
                                 formatter: function () {
-                                    return `<b>${this.point.name}</b><br/>Total: ${this.point.x} % <br/> ${this.series.name}: ${this.point.y}`;
+                                    return `<b>${selectReportType === "ADP_Report" ? "District's" : "Block's"}</b> :- <br/><b>${this.point.name}</b><br/>Total: ${this.point.x} % <br/> ${this.series.name}: ${this.point.y}`;
                                 }
                             },
                             credits: {
