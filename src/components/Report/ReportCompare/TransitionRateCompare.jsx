@@ -32,6 +32,7 @@ export default function TransitionRateCompare() {
   const selectedAdpAbpOption = useSelector(
     (state) => state.reportAdpAbpType.updateReportType
   );
+  const isActiveGraph=useSelector((state)=>state.reportAdpAbpType.isActiveGraph)
   const MAX_DISTRICTS = 5;
   const states = useSelector((state) => state.locationAdp?.states);
   const districts = useSelector((state) => state.locationAdp?.districts);
@@ -292,8 +293,7 @@ export default function TransitionRateCompare() {
                       </Card>
                     ) : (
                       <>
-                        {" "}
-                        <div className="comp-card" key={index}>
+                   {!isActiveGraph ? ( <div className="comp-card" key={index}>
                           <div className="upper-card">
                             <div className="d-flex align-items-center justify-content-between w-100">
                               <div className="d-flex">
@@ -345,7 +345,8 @@ export default function TransitionRateCompare() {
                               </h6>
                             </div>
                           </div>
-                        </div>
+                        </div>) :(<div>Hello</div>)}
+                       
                       </>
                     )}
                   </div>

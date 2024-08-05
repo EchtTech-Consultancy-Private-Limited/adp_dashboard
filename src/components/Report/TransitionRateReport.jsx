@@ -16,6 +16,7 @@ import {
     SetFinalData,
     setselectedOption,
     SetSheetName,
+    setIsActiveGraph
 } from "../../redux/slice/reportTypeSlice";
 
 import {
@@ -58,6 +59,7 @@ export default function TransitionRateReport() {
     const selectedYear = useSelector(
         (state) => state.reportAdpAbpType.selectedYear
     );
+    const isActiveGraph=useSelector((state)=>state.reportAdpAbpType.isActiveGraph)
     const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName);
     const savedReportName = localStorage.getItem("selectedReport");
     const report_name = savedReportName;
@@ -768,9 +770,9 @@ export default function TransitionRateReport() {
 
     const [isActive, setIsActive] = useState(false);
 
-    // const toggleClass = () => {
-    //     setIsActive(prevState => !prevState);
-    // };
+    const toggleClass = () => {
+        dispatch(setIsActiveGraph(prevState => !prevState));
+    };
 
     return (
         <>
@@ -786,7 +788,7 @@ export default function TransitionRateReport() {
                                 <div className="row align-items-end">
                                     <div
                                         className={
-                                            (selectedState !== "All State" && !isActive) || ((selectedState === "All State"  || selectedState !== "All State" ) && isActive) ? "col-md-5" : "col-md-6"
+                                            (selectedState !== "All State" && !isActiveGraph) || ((selectedState === "All State"  || selectedState !== "All State" ) && isActiveGraph) ? "col-md-5" : "col-md-6"
                                         }
                                     >
                                         <div className="d-flex align-items-end">
@@ -818,11 +820,11 @@ export default function TransitionRateReport() {
                                                 <h3 className="heading-sm">{t("transitionRate")}</h3>
                                             </div>
                                             <div className="tab-box">
-                                                <button className={`tab-button  ${isActive ? '' : 'active'}`} >
+                                                <button className={`tab-button  ${isActiveGraph ? '' : 'active'}`} onClick={toggleClass}>
                                                     <img src={table} alt="Table" />{" "}
                                                     <span>{t("tableView")}</span>
                                                 </button>
-                                                <button className={`tab-button  ${isActive ? 'active' : ''}`} >
+                                                <button className={`tab-button  ${isActiveGraph ? 'active' : ''}`} onClick={toggleClass}>
                                                     <img src={chart} alt="chart" />{" "}
                                                     <span>{t("chartView")}</span>
                                                 </button>
@@ -831,7 +833,7 @@ export default function TransitionRateReport() {
                                     </div>
                                     <div
                                         className={
-                                            (selectedState !== "All State" && !isActive) || ((selectedState === "All State"  || selectedState !== "All State" ) && isActive) ? "col-md-7" : "col-md-6"}>
+                                            (selectedState !== "All State" && !isActiveGraph) || ((selectedState === "All State"  || selectedState !== "All State" ) && isActiveGraph) ? "col-md-7" : "col-md-6"}>
                                         <div
                                             className={
                                                 selectedState !== "All State"
@@ -841,10 +843,10 @@ export default function TransitionRateReport() {
                                         >
                                             <div
                                                 className={
-                                                    (selectedState !== "All State" && !isActive) || ((selectedState === "All State"  || selectedState !== "All State" ) && isActive) ? "radio-button" : ""
+                                                    (selectedState !== "All State" && !isActiveGraph) || ((selectedState === "All State"  || selectedState !== "All State" ) && isActiveGraph) ? "radio-button" : ""
                                                 }
                                             >
-                                                {(selectedState !== "All State" && !isActive) || ((selectedState === "All State"  || selectedState !== "All State" ) && isActive) ? (
+                                                {(selectedState !== "All State" && !isActiveGraph) || ((selectedState === "All State"  || selectedState !== "All State" ) && isActiveGraph) ? (
                                                     <>
                                                         <div className="box-radio">
                                                             <input
@@ -877,7 +879,7 @@ export default function TransitionRateReport() {
                                                 )}
 
                                             </div>
-                                            <div className={`${isActive ? 'd-none' : ''}`}>
+                                            <div className={`${isActiveGraph ? 'd-none' : ''}`}>
                                                 {/* <img src={download} alt="download" /> */}
                                                 <select
                                                     id="export_data"
@@ -903,7 +905,7 @@ export default function TransitionRateReport() {
 
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <div className={`table-box mt-4  ${isActive ? 'd-none' : ''}`}>
+                                        <div className={`table-box mt-4  ${isActiveGraph ? 'd-none' : ''}`}>
                                             <div id="content"
                                                 className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
                                                 style={{ width: "100%", height: 300 }}>
@@ -915,7 +917,7 @@ export default function TransitionRateReport() {
                                             </div>
                                         </div>
 
-                                        <div className={`graph-box  ${isActive ? '' : 'd-none'}`}>
+                                        <div className={`graph-box  ${isActiveGraph ? '' : 'd-none'}`}>
                                             <TransitionRateGraph />
                                         </div>
                                     </div>
@@ -924,9 +926,9 @@ export default function TransitionRateReport() {
                         </div>
 
                         {
-                            selectedState !== "All State" && selectReportType === "ADP_Report" && !isActive ? (
+                            selectedState !== "All State" && selectReportType === "ADP_Report"  ? (
                                 <TransitionRateCompare />
-                            ) : (selectedState !== "All State" && selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) && !isActive && selectReportType === "ABP_Report" ? (
+                            ) : (selectedState !== "All State" && selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) && !isActiveGraph && selectReportType === "ABP_Report" ? (
                                 <TransitionBlockRateCompare />
                             ) : (
                                 ""
