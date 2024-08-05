@@ -14,7 +14,7 @@ export default function TransitionRateGraphA() {
     const combinedData = (data) => data?.map((district) => ({
         ...district,
         combinedScore: district.upri_t + district.sec_t,
-    })).sort((a, b) => b.combinedScore - a.combinedScore);
+    }))
 
     const TopDistricts = combinedData(finalData)?.slice(0, 10);
     const AllDistricts = combinedData(finalData);
@@ -100,41 +100,41 @@ export default function TransitionRateGraphA() {
         },
         series: [{
             name: 'Boys',
-            color: "#17AFD2",
+            color: "#FFB74BF0",
             data: boysData,
             pointWidth: 12,
         }, {
             name: 'Girls',
-            color: "#6C6CB0",
+            color: "#2B9C9F",
             data: girlsData,
             pointWidth: 12,
         }],
     });
 
     return (
-    
 
-            <div className="col-md-12">
-                <div className='graph-card'>
-                    <h4 className='heading-sm'>Year Wise {selectReportType === "ADP_Report" ? "District" : "Block"} Transition Rate</h4>
-                    <div className='graph'>
-                        <HighchartsReact
-                            highcharts={Highcharts}
-                            options={chartOptions(categories, boysData, girlsData, "Year Wise District Transition Rate")}
-                            immutable={true}
-                        />
-                    </div>
-                    <div className="chart-button">
-                        <button className='btn btn-d me-3' disabled={currentPage === 1} onClick={() => handleClick(currentPage - 1)}>
-                            Previous
-                        </button>
-                        <span>Page {currentPage} of {totalPages}</span>
-                        <button className='btn btn-next ms-3' disabled={currentPage === totalPages} onClick={() => handleClick(currentPage + 1)}>
-                            Next
-                        </button>
-                    </div>
+
+        <div className="col-md-12">
+            <div className='graph-card'>
+                <h4 className='heading-sm'>Year Wise {selectReportType === "ADP_Report" ? "District" : "Block"} Transition Rate</h4>
+                <div className='graph'>
+                    <HighchartsReact
+                        highcharts={Highcharts}
+                        options={chartOptions(categories, boysData, girlsData, "Year Wise District Transition Rate")}
+                        immutable={true}
+                    />
+                </div>
+                <div className="chart-button">
+                    <button className='btn btn-d me-3' disabled={currentPage === 1} onClick={() => handleClick(currentPage - 1)}>
+                        Previous
+                    </button>
+                    <span>Page {currentPage} of {totalPages}</span>
+                    <button className='btn btn-next ms-3' disabled={currentPage === totalPages} onClick={() => handleClick(currentPage + 1)}>
+                        Next
+                    </button>
                 </div>
             </div>
-    
+        </div>
+
     );
 }
