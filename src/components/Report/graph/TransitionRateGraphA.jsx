@@ -111,11 +111,19 @@ export default function TransitionRateGraphA() {
         }],
     });
 
+
+
+    const [selectedValue, setSelectedValue] = useState('Boys');
+
+    const handleChange = (event) => {
+        setSelectedValue(event.target.value);
+    };
+
     return (
 
 
         <div className="col-md-12">
-            <div className='graph-card'>
+            {/* <div className='graph-card'>
                 <h4 className='heading-sm'>Year Wise {selectReportType === "ADP_Report" ? "District" : "Block"} Transition Rate</h4>
                 <div className='graph'>
                     <HighchartsReact
@@ -132,6 +140,137 @@ export default function TransitionRateGraphA() {
                     <button className='btn btn-next ms-3' disabled={currentPage === totalPages} onClick={() => handleClick(currentPage + 1)}>
                         Next
                     </button>
+                </div>
+            </div> */}
+
+
+
+            <div className="graph-card">
+                <div className='d-flex align-items-center justify-content-between'>
+                    <h4 className='heading-sm'>Lable wise Transition Rate of District</h4>
+                    <div>
+                        <select className="form-select download-button">
+                            <option value="">Upper Primary to Secondary</option>
+                            <option value="">Secondary to Higher Secondary</option>
+                        </select>
+                    </div>
+                </div>
+                <div className="graph mt-2">
+                    <div className="radio-button">
+                        <div className="box-radio">
+                            <input type="radio" id="boys" value="Boys" checked={selectedValue === 'Boys'} onChange={handleChange} />
+                            <label htmlFor="boys">Boys</label>
+                        </div>
+                        <div className="box-radio ms-4">
+                            <input
+                                type="radio"
+                                id="girls"
+                                value="Girls"
+                                checked={selectedValue === 'Girls'}
+                                onChange={handleChange}
+                            />
+                            <label htmlFor="girls">Girls</label>
+                        </div>
+                    </div>
+                    <HighchartsReact
+                        highcharts={Highcharts}
+                        options={{
+                            chart: {
+                                type: 'scatter',
+                                marginTop: 20,
+                                height: 430,
+                                zooming: {
+                                    type: 'xy'
+                                },
+
+                            },
+                            title: {
+                                text: '',
+                                align: 'left'
+                            },
+
+                            xAxis: {
+                                title: {
+                                    text: 'Total Transition Rate',
+                                    margin: 20,
+                                    style: {
+                                        color: '#000',
+                                        fontWeight: 'bold' // Make the X-axis title text bold
+                                    }
+                                },
+                                labels: {
+                                    format: '{value} %'
+                                },
+                                startOnTick: true,
+                                endOnTick: true,
+                                showLastLabel: true,
+                                lineWidth: 1,
+                                lineColor: '#ddd',
+                            },
+                            yAxis: {
+                                title: {
+                                    text: 'Boys',
+                                    style: {
+                                        color: '#000',
+                                        fontWeight: 'bold' // Make the X-axis title text bold
+                                    }
+                                },
+                                labels: {
+                                    format: '{value} %'
+                                },
+                                gridLineWidth: 0,
+                                lineWidth: 1,
+                                lineColor: '#ddd',
+                            },
+                            legend: {
+                                enabled: false,
+                            },
+                            plotOptions: {
+                                scatter: {
+                                    marker: {
+                                        radius: 2.5,
+                                        symbol: 'circle',
+                                        lineWidth: 0, // Remove border around markers
+                                        lineColor: null, // No color for marker borders
+                                        states: {
+                                            hover: {
+                                                enabled: true,
+                                                lineColor: 'rgb(100,100,100)',
+                                            }
+                                        }
+                                    },
+                                    states: {
+                                        hover: {
+                                            marker: {
+                                                enabled: false
+                                            }
+                                        }
+                                    },
+                                    jitter: {
+                                        x: 0.005
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                pointFormat: 'Boys: {point.y} %'
+                            },
+                            credits: {
+                                enabled: false,
+                            },
+                            series: [{
+                                name: 'Boys',
+                                color: "#FFB74BF0",
+                                data: [50, 80, 60, 70, 90, 95, 85],
+
+                            }, {
+                                name: 'Girls',
+                                color: "#2B9C9F",
+                                data: [60, 80, 35, 95, 25, 71, 66],
+
+                            }],
+                        }}
+                        immutable={true}
+                    />
                 </div>
             </div>
         </div>

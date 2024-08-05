@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './graph.scss';
-import Highcharts from "highcharts";
+import Highcharts, { color } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useSelector } from 'react-redux';
 import TransitionRateGraphA from './TransitionRateGraphA';
@@ -40,7 +40,7 @@ export default function TransitionRateGraph() {
         chart: {
             type: "bar",
             marginTop: 50,
-            height: 540,
+            height: 500,
             events: {
                 beforePrint: function () {
                     this.exportSVGElements[0].box.hide();
@@ -112,6 +112,9 @@ export default function TransitionRateGraph() {
         }],
     });
 
+
+
+
     return (
         <div className="row">
             <div className="col-md-6">
@@ -128,7 +131,8 @@ export default function TransitionRateGraph() {
             </div>
 
             <div className="col-md-6">
-                <TransitionRateGraphA></TransitionRateGraphA>
+               <TransitionRateGraphA/>
+              
             </div>
         </div>
     );
