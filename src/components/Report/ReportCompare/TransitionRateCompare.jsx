@@ -179,18 +179,18 @@ export default function TransitionRateCompare() {
   };
 
 
-  // const male_female = [{
-  //   name: 'Female',
-  //   data: [1, 1, 1, 1],
-  //   color: "#751539"
-  // }, {
+  const boy_girl = [{
+    name: 'Girl',
+    data: [1, 1, 1, 1,1],
+    color: "#751539"
+  }, {
 
-  //   name: 'Male',
-  //   data: [1, 1, 1, 1],
-  //   color: "#57C1BB"
-  // }];
+    name: 'Boy',
+    data: [1, 1, 1, 1,1],
+    color: "#57C1BB"
+  }];
 
-  const [totalMaleFemale, setTotalMaleFemale] = useState([]);
+  const [totalMaleFemale, setTotalMaleFemale] = useState(boy_girl);
 
 
   // ********Start Baar Graph******
@@ -203,8 +203,8 @@ export default function TransitionRateCompare() {
           ? district?.upri_b
           : district?.sec_b,
         selectedOption === "secondary_to_higher_secondary"
-          ? district?.upri_g
-          : district?.sec_g,
+          ? district?.sec_g 
+          : district?.upri_g,
       ],
       // color:  % 2 === 0 ? "#57C1BB" : "#751539",
     }));
@@ -219,7 +219,6 @@ export default function TransitionRateCompare() {
 
 
 
-  console.log("totalMaleFemale=========>",totalMaleFemale)
 
   return (
     <>
@@ -467,7 +466,7 @@ export default function TransitionRateCompare() {
                                       },
                                     },
                                     xAxis: {
-                                      // categories:district.lgd_district_name,
+                                      categories:selectedDistricts.map(district => district.lgd_district_name),
                                       title: {
                                         text: null,
                                       },
