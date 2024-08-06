@@ -149,30 +149,24 @@ export default function TransitionRateCompare() {
 
   // Handle option change
   const handleOptionChange = (event) => {
-    console.log("event.target.value =>", event.target.value)
     dispatch(setselectedCompareOption(event.target.value));
   };
 
 
 
-  console.log("selectedDistricts=======>", selectedDistricts)
 
-  console.log("selectedOption====>", selectedOption)
-
-  const boysData = selectedDistricts.map(district =>
-    selectedOption === 'upper_primary_to_secondary' ? district.upri_b : district.sec_b
+  const boysData = selectedDistricts?.map(district =>
+    selectedOption === 'upper_primary_to_secondary' ? district?.upri_b : district?.sec_b
   );
 
-  const girlsData = selectedDistricts.map(district =>
-    selectedOption === 'secondary_to_higher_secondary' ? district.sec_g : district.upri_g
+  const girlsData = selectedDistricts?.map(district =>
+    selectedOption === 'secondary_to_higher_secondary' ? district?.sec_g : district?.upri_g
   );
 
-  const Total_boys_girls = selectedDistricts.map(district =>
-    selectedOption === 'upper_primary_to_secondary' ? district.upri_t : district.sec_t
+  const Total_boys_girls = selectedDistricts?.map(district =>
+    selectedOption === 'upper_primary_to_secondary' ? district?.upri_t : district?.sec_t
   );
 
-  console.log("boysData", boysData)
-  console.log("girlsData", girlsData)
   return (
     <>
       {!isActiveGraph ? (<div className="card-box">
@@ -495,19 +489,14 @@ export default function TransitionRateCompare() {
                 series: [{
                   color: "#17AFD2",
                   name: 'Boys',
-                  // data: selectedDistricts.map(district => selectedOption === 'upper_primary_to_secondary' ? district.upri_b : district.sec_b),
-
-
-                  // data: selectedDistricts.map(district => district.upri_g),
+              
                   data: boysData,
                   maxPointWidth: 50,
                 }, {
                   color: "#6C6CB0",
                   name: 'Girls',
 
-                  // data: selectedDistricts.map(district => selectedOption === 'upper_primary_to_secondary' ? district.upri_b : district.sec_b),
-
-                  // data: selectedDistricts.map(district => district.upri_b),
+         
                   data: girlsData,
                   maxPointWidth: 50,
 
