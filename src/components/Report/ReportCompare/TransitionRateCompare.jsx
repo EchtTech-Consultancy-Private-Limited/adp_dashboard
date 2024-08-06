@@ -149,8 +149,30 @@ export default function TransitionRateCompare() {
 
   // Handle option change
   const handleOptionChange = (event) => {
+    console.log("event.target.value =>",event.target.value)
     dispatch(setselectedCompareOption(event.target.value));
   };
+
+
+
+  console.log("selectedDistricts=======>",selectedDistricts)
+
+  console.log("selectedOption====>",selectedOption)
+
+  const boysData = selectedDistricts.map(district =>
+    selectedOption === 'upper_primary_to_secondary' ? district.upri_b : district.sec_b
+  );
+
+  const girlsData = selectedDistricts.map(district =>
+    selectedOption === 'secondary_to_higher_secondary' ? district.sec_g: district.upri_g 
+  );
+
+const Total_boys_girls=selectedDistricts.map(district =>
+  selectedOption === 'upper_primary_to_secondary' ? district.upri_t : district.sec_t
+);
+
+  console.log("boysData",boysData)
+  console.log("girlsData",girlsData)
   return (
     <>
     {!isActiveGraph ? (  <div className="card-box">
@@ -329,16 +351,19 @@ export default function TransitionRateCompare() {
           )}
         </div>
       </div>) : ( <div className="col-md-12 graph-box">
-                <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card">
+                <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
                     <div className="text-btn-d d-flex justify-content-between align-items-center">
                         <h2 className="heading-sm">
                             Comparison of States By Transition Rate
                         </h2>
 
                         <div className="select-infra button-group-filter">
-                            <select id="export_data" className="form-select bg-grey2" defaultValue={""}>
-                                <option value="">Upper Primary to Secondary </option>
-                                <option value="">Secondary to Higher Secondary</option>
+                            <select id="export_data" className="form-select bg-grey2" defaultValue={"upper_primary_to_secondary"}
+                               value={selectedOption}
+                               onChange={handleOptionChange}
+                            >
+                                <option value="upper_primary_to_secondary">Upper Primary to Secondary </option>
+                                <option value="secondary_to_higher_secondary">Secondary to Higher Secondary</option>
                             </select>
                         </div>
 
@@ -347,11 +372,38 @@ export default function TransitionRateCompare() {
                     <div className="Comparison-box">
                         <div className="row align-items-center">
                             <div className="col-md-2 col-lg-2">
-                                <h4 className="sub-heading">Add Districts to Compare</h4>
+                                <h4 className="sub-heading text-left">Add Districts to Compare</h4>
                             </div>
-                            <div className="col-md-10 col-lg-10">
+                            <div className="col-md-10 col-lg-10 pe-2">
                                 <div className="select-infra Comparison-select-group">
-                                    <select className="form-select bg-grey2" defaultValue={""}>
+
+
+                                {[...Array(MAX_DISTRICTS)]?.map((_, index) => (
+                      <div key={index}>
+                        <Select
+                          className="form-select bg-grey2"
+                          onChange={(value) => handleDistrictChange(value, index)}
+                          style={{ width: "100%" }}
+                          placeholder={`${t('addDistrict')} ${index + 1}`}
+                          mode="single"
+                          showSearch
+                          value={selectedDistricts[index]?.lgd_district_name || `${t('addDistrict')}`}
+                          disabled={index > 0 && !selectedDistricts[index - 1]}
+                        >
+                          {getFilteredDistricts().map((district) => (
+                            <Select.Option
+                              key={district?.lgd_district_id}
+                              value={district?.lgd_district_name}
+                            >
+                              {district?.lgd_district_name}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      </div>
+                    ))}
+
+
+                                    {/* <select className="form-select bg-grey2" defaultValue={""}>
                                         <option value="">Add a District </option>
                                         <option value="">District 1</option>
                                     </select>
@@ -371,6 +423,10 @@ export default function TransitionRateCompare() {
                                         <option value="">Add a District </option>
                                         <option value="">District 1</option>
                                     </select>
+ */}
+
+
+
                                 </div>
                             </div>
                         </div>
@@ -378,7 +434,7 @@ export default function TransitionRateCompare() {
 
                     <Tabs defaultActiveKey="State" id="top-tabs-st-dis-block">
                         <Tab eventKey="State" title="State">
-                            <div className="piechart-box row mt-4 align-items-center">
+                            <div className="piechart-box row align-items-center">
                                
                                 <HighchartsReact
                                     highcharts={Highcharts}
@@ -398,7 +454,7 @@ export default function TransitionRateCompare() {
                                             },
                                         },
                                         xAxis: {
-                                            categories: ['Agra', 'Aligarh', 'Allahabad', 'Rajasthan', 'Bihar'],
+                                          categories: selectedDistricts.map(district => district.lgd_district_name),
                                         },
                                         yAxis: {
                                             allowDecimals: false,
@@ -440,9 +496,6 @@ export default function TransitionRateCompare() {
                                                     },
                                                     position: "top",
                                                     formatter: function () {
-                                                        // return parseFloat(
-                                                        //   this.y
-                                                        // ).toFixed(0);
                                                         return this.y.toLocaleString("en-IN");
                                                     },
                                                 },
@@ -464,16 +517,21 @@ export default function TransitionRateCompare() {
                                         series: [{
                                             color:"#17AFD2",
                                             name: 'Boys',
-                                            data: [30, 50, 95, 66, 96]
+                                            data:boysData
                                         }, {
                                             color:"#6C6CB0",
                                             name: 'Girls',
-                                            data: [80, 60, 55, 38, 52]
-                                        }, {
+                                            data:girlsData
+
+                                        }, 
+                                        {
                                             color:"#FFB74BF0",
                                             name: 'Total',
-                                            data: [52, 92, 86, 30]
-                                        }]
+                                            data: Total_boys_girls,
+                                        }
+                                      
+                                      
+                                      ]
                                     }}
                                     immutable={true}
                                 />
