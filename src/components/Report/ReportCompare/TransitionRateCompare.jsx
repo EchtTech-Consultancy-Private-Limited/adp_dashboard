@@ -354,7 +354,7 @@ export default function TransitionRateCompare() {
         <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
           <div className="text-btn-d d-flex justify-content-between align-items-center">
             <h2 className="heading-sm">
-              Comparison of States By Transition Rate
+              Comparison By Transition Rate
             </h2>
 
             <div className="select-infra button-group-filter">
