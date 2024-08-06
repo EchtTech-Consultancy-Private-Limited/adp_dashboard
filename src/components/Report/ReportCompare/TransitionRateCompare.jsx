@@ -474,9 +474,6 @@ export default function TransitionRateCompare() {
                       },
                       position: "top",
                       formatter: function () {
-                        // return parseFloat(
-                        //   this.y
-                        // ).toFixed(0);
                         return this.y.toLocaleString("en-IN");
                       },
                     },
