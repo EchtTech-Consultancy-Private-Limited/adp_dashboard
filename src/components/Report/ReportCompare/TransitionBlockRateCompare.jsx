@@ -37,6 +37,8 @@ export default function TransitionBlockRateCompare() {
   const selectedAdpAbpOption = useSelector(
     (state) => state.reportAdpAbpType.updateReportType
   );
+  const isActiveGraph = useSelector((state) => state.reportAdpAbpType.isActiveGraph)
+  console.log(isActiveGraph, "isActiveGraph")
   const MAX_BLOCKS = 5;
   const states = useSelector((state) => state.locationAdp.states);
   const districts = useSelector((state) => state.locationAdp.districts);
