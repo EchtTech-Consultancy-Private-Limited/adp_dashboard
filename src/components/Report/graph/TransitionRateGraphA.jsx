@@ -25,12 +25,12 @@ export default function TransitionRateGraphA() {
         const boysDataPoints = totalData.map((total, index) => ({
             x: total,
             y: boysData[index],
-            name:selectReportType==="ADP_Report"? DistrictName[index]:blockName[index]
+            name: selectReportType === "ADP_Report" ? DistrictName[index] : blockName[index]
         }));
         const girlsDataPoints = totalData.map((total, index) => ({
             x: total,
             y: girlsData[index],
-            name:selectReportType==="ADP_Report"? DistrictName[index]:blockName[index]
+            name: selectReportType === "ADP_Report" ? DistrictName[index] : blockName[index]
         }));
         return { boysDataPoints, girlsDataPoints };
     };
@@ -172,6 +172,9 @@ export default function TransitionRateGraphA() {
                         }}
                         immutable={true}
                     />
+
+
+                  
                 </div>
             </div>
         </div>
