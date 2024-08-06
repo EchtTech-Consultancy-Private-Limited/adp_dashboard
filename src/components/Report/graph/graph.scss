@@ -72,4 +72,177 @@
         }
     }
 
+    .impact-box-content-education.bg-light-blue {
+        background: #E0E1FE !important;
+        border-radius: 25px;
+        margin-bottom: 20px;
+        min-height: 183px;
+        padding: 20px 20px;
+        position: relative;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .impact-box-content-education {
+        background: #E5F1ED !important;
+
+        &.bg-light-red {
+            background: #FFE8E8 !important;
+
+            .highcharts-background {
+                fill: #FFE8E8;
+            }
+        }
+
+        &.bg-light-blue {
+            background: #E0E1FE !important;
+
+            .highcharts-background {
+                fill: #E0E1FE;
+            }
+        }
+    }
+
+    .nav-tabs {
+        background: #fff;
+        display: inline-flex;
+        padding: 5px 10px;
+        border-radius: 40px;
+
+        .nav-item {
+            margin-left: 5px !important;
+
+            &:first-child {
+                margin-left: 0 !important;
+            }
+
+            .nav-link {
+                color: #fff;
+                background-color: #113689;
+                border-color: #113689;
+                border-radius: 20px;
+                box-shadow: 0px 11px 14px rgba(255, 255, 255, 0.12);
+                padding: 5px 15px;
+
+
+                &.active {
+                    background-color: #113689;
+                    border-color: #113689;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    h2.heading-sm {
+        font-size: 22px !important;
+    }
+
+    span.subfont {
+        font-weight: 400;
+        font-size: 18px;
+    }
+
+    rect.highcharts-button-box {
+        fill: transparent;
+    }
+
+    .highcharts-data-table table th {
+        background: transparent;
+    }
+
+    .select-infra.button-group-filter {
+        select.form-select {
+            background: #fff;
+            padding: 5px 0px 5px 6px;
+            border-right: 4px solid transparent;
+            cursor: pointer;
+            appearance: auto;
+
+        }
+
+        .form-select:focus {
+            box-shadow: none;
+        }
+    }
+
+
+    .Comparison-box {
+        background: #FFFFFF;
+        padding: 10px 15px 10px 20px;
+        margin: 20px 0;
+        border-radius: 10px;
+
+        .sub-heading {
+            font-size: 16px;
+            margin-bottom: 0;
+            font-weight: 500;
+
+            @media (max-width:1599px) and (min-width: 1400px) {
+                font-size: 14px;
+            }
+
+            @media (max-width:1399px) and (min-width: 1024px) {
+                font-size: 12px;
+            }
+        }
+
+        .Comparison-select-group {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+
+            select.form-select {
+                background: #fff;
+                padding: 5px 0px 5px 6px;
+                appearance: auto;
+                width: 19%;
+                margin-right: 4px;
+                font-size: 14px;
+
+                @media (max-width:1599px) and (min-width: 1400px) {
+                    font-size: 12px;
+                }
+
+                @media (max-width:1399px) and (min-width: 1024px) {
+                    font-size: 10px;
+                }
+
+            }
+
+            .form-select:focus {
+                box-shadow: none;
+            }
+        }
+
+    }
+
+    .radio-btn-filter {
+        display: flex;
+
+        div {
+            margin-left: 14px;
+            font-size: 20px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        input {
+            margin-right: 6px;
+            height: 18px;
+            width: 18px;
+        }
+    }
+
+    @media (max-width: 1699px) and (min-width: 1400px) {
+        h2.heading-sm {
+            font-size: 18px !important;
+        }
+
+        .radio-btn-filter div {
+            font-size: 18px !important;
+        }
+    }
+
+
 }
