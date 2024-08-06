@@ -25,12 +25,12 @@ export default function TransitionRateGraphA() {
         const boysDataPoints = totalData.map((total, index) => ({
             x: total,
             y: boysData[index],
-            name:selectReportType==="ADP_Report"? DistrictName[index]:blockName[index]
+            name: selectReportType === "ADP_Report" ? DistrictName[index] : blockName[index]
         }));
         const girlsDataPoints = totalData.map((total, index) => ({
             x: total,
             y: girlsData[index],
-            name:selectReportType==="ADP_Report"? DistrictName[index]:blockName[index]
+            name: selectReportType === "ADP_Report" ? DistrictName[index] : blockName[index]
         }));
         return { boysDataPoints, girlsDataPoints };
     };
@@ -45,7 +45,7 @@ export default function TransitionRateGraphA() {
         <div className="col-md-12">
             <div className="graph-card">
                 <div className="d-flex align-items-center justify-content-between">
-                    <h4 className='heading-sm'>Label Wise Transition Rate of {selectReportType === "ADP_Report" ? "District" : "Block"} </h4>
+                    <h4 className='heading-sm'>Lable Wise Transition Rate of {selectReportType === "ADP_Report" ? "District" : "Block"} </h4>
                 </div>
                 <div className="graph mt-2">
                     <div className="radio-button">
@@ -88,7 +88,7 @@ export default function TransitionRateGraphA() {
                             xAxis: {
                                 title: {
                                     text: 'Total Transition Rate',
-                                    margin: 20,
+                                    margin: 10,
                                     style: {
                                         color: '#000',
                                         fontWeight: 'bold'
@@ -124,7 +124,7 @@ export default function TransitionRateGraphA() {
                             plotOptions: {
                                 scatter: {
                                     marker: {
-                                        radius: 2.5,
+                                        radius: Math.max(2.1, 3.5 - (selectedValue === 'Boys' ? boysDataPoints : girlsDataPoints).length / 100),
                                         symbol: 'circle',
                                         lineWidth: 0,
                                         lineColor: null,
@@ -143,8 +143,10 @@ export default function TransitionRateGraphA() {
                                         }
                                     },
                                     jitter: {
-                                        x: 0.005
+                                        x: 0.02, 
+                                        y: 0.02
                                     },
+                                    
                                     dataLabels: {
                                         enabled: false,
                                         formatter: function () {
@@ -155,7 +157,7 @@ export default function TransitionRateGraphA() {
                             },
                             tooltip: {
                                 formatter: function () {
-                                    return `<b>${this.point.name}</b><br/>Total: ${this.point.x} % <br/> ${this.series.name}: ${this.point.y}`;
+                                    return `<b>${selectReportType === "ADP_Report" ? "District's" : "Block's"}</b> :- <br/><b>${this.point.name}</b><br/>Total: ${this.point.x} % <br/> ${this.series.name}: ${this.point.y}`;
                                 }
                             },
                             credits: {
@@ -172,6 +174,9 @@ export default function TransitionRateGraphA() {
                         }}
                         immutable={true}
                     />
+
+
+                  
                 </div>
             </div>
         </div>
