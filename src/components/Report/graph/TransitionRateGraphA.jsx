@@ -88,7 +88,7 @@ export default function TransitionRateGraphA() {
                             xAxis: {
                                 title: {
                                     text: 'Total Transition Rate',
-                                    margin: 20,
+                                    margin: 10,
                                     style: {
                                         color: '#000',
                                         fontWeight: 'bold'
@@ -124,7 +124,7 @@ export default function TransitionRateGraphA() {
                             plotOptions: {
                                 scatter: {
                                     marker: {
-                                        radius: 2.5,
+                                        radius: Math.max(2.1, 3.5 - (selectedValue === 'Boys' ? boysDataPoints : girlsDataPoints).length / 100),
                                         symbol: 'circle',
                                         lineWidth: 0,
                                         lineColor: null,
@@ -143,8 +143,10 @@ export default function TransitionRateGraphA() {
                                         }
                                     },
                                     jitter: {
-                                        x: 0.005
+                                        x: 0.02, 
+                                        y: 0.02
                                     },
+                                    
                                     dataLabels: {
                                         enabled: false,
                                         formatter: function () {
