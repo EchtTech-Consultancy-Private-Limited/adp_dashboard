@@ -169,7 +169,7 @@
 
     .Comparison-box {
         background: #FFFFFF;
-        padding: 10px 0;
+        padding: 10px 0 0;
         margin: 5px 0;
         border-radius: 10px;
 
@@ -185,6 +185,12 @@
             @media (max-width:1399px) and (min-width: 1024px) {
                 font-size: 12px;
             }
+        }
+
+        .form-select.bg-grey2 {
+            padding: 0;
+            background: transparent;
+            appearance: none;
         }
 
         .Comparison-select-group {
@@ -212,6 +218,10 @@
 
             .form-select:focus {
                 box-shadow: none;
+            }
+
+            .width-20 {
+                width: 19%;
             }
         }
 
@@ -245,5 +255,17 @@
         }
     }
 
+    .Comparison-select-group :where(.css-dev-only-do-not-override-98ntnt).ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
+        height: 30px;
+    }
 
+    .piechart-box {
+        height: 350px;
+
+        rect.highcharts-background {height: auto !important;}
+    }
+
+    g.highcharts-label.highcharts-data-label text tspan {
+        stroke: transparent !important;
+    }
 }

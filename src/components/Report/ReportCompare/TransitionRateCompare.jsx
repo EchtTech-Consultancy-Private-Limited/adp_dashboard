@@ -149,33 +149,33 @@ export default function TransitionRateCompare() {
 
   // Handle option change
   const handleOptionChange = (event) => {
-    console.log("event.target.value =>",event.target.value)
+    console.log("event.target.value =>", event.target.value)
     dispatch(setselectedCompareOption(event.target.value));
   };
 
 
 
-  console.log("selectedDistricts=======>",selectedDistricts)
+  console.log("selectedDistricts=======>", selectedDistricts)
 
-  console.log("selectedOption====>",selectedOption)
+  console.log("selectedOption====>", selectedOption)
 
   const boysData = selectedDistricts.map(district =>
     selectedOption === 'upper_primary_to_secondary' ? district.upri_b : district.sec_b
   );
 
   const girlsData = selectedDistricts.map(district =>
-    selectedOption === 'secondary_to_higher_secondary' ? district.sec_g: district.upri_g 
+    selectedOption === 'secondary_to_higher_secondary' ? district.sec_g : district.upri_g
   );
 
-const Total_boys_girls=selectedDistricts.map(district =>
-  selectedOption === 'upper_primary_to_secondary' ? district.upri_t : district.sec_t
-);
+  const Total_boys_girls = selectedDistricts.map(district =>
+    selectedOption === 'upper_primary_to_secondary' ? district.upri_t : district.sec_t
+  );
 
-  console.log("boysData",boysData)
-  console.log("girlsData",girlsData)
+  console.log("boysData", boysData)
+  console.log("girlsData", girlsData)
   return (
     <>
-    {!isActiveGraph ? (  <div className="card-box">
+      {!isActiveGraph ? (<div className="card-box">
         <div className="row align-items-end">
           <div className="col-md-5">
             <div className="d-flex align-items-end">
@@ -350,219 +350,182 @@ const Total_boys_girls=selectedDistricts.map(district =>
             <BlankPage />
           )}
         </div>
-      </div>) : ( <div className="col-md-12 graph-box">
-                <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
-                    <div className="text-btn-d d-flex justify-content-between align-items-center">
-                        <h2 className="heading-sm">
-                            Comparison of States By Transition Rate
-                        </h2>
+      </div>) : (<div className="col-md-12 graph-box">
+        <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
+          <div className="text-btn-d d-flex justify-content-between align-items-center">
+            <h2 className="heading-sm">
+              Comparison of States By Transition Rate
+            </h2>
 
-                        <div className="select-infra button-group-filter">
-                            <select id="export_data" className="form-select bg-grey2" defaultValue={"upper_primary_to_secondary"}
-                               value={selectedOption}
-                               onChange={handleOptionChange}
-                            >
-                                <option value="upper_primary_to_secondary">Upper Primary to Secondary </option>
-                                <option value="secondary_to_higher_secondary">Secondary to Higher Secondary</option>
-                            </select>
-                        </div>
+            <div className="select-infra button-group-filter">
+              <select id="export_data" className="form-select bg-grey2" defaultValue={"upper_primary_to_secondary"}
+                value={selectedOption}
+                onChange={handleOptionChange}
+              >
+                <option value="upper_primary_to_secondary">Upper Primary to Secondary </option>
+                <option value="secondary_to_higher_secondary">Secondary to Higher Secondary</option>
+              </select>
+            </div>
 
+          </div>
+
+          <div className="Comparison-box">
+            <div className="row align-items-center">
+              <div className="col-md-2 col-lg-2">
+                <h4 className="sub-heading text-left">Add Districts to Compare</h4>
+              </div>
+              <div className="col-md-10 col-lg-10 pe-2">
+                <div className="select-infra Comparison-select-group">
+
+
+                  {[...Array(MAX_DISTRICTS)]?.map((_, index) => (
+                    <div key={index} class="width-20">
+                      <Select
+                        className="form-select bg-grey2"
+                        onChange={(value) => handleDistrictChange(value, index)}
+                        style={{ width: "100%" }}
+                        placeholder={`${t('addDistrict')} ${index + 1}`}
+                        mode="single"
+                        showSearch
+                        value={selectedDistricts[index]?.lgd_district_name || `${t('addDistrict')}`}
+                        disabled={index > 0 && !selectedDistricts[index - 1]}
+                      >
+                        {getFilteredDistricts().map((district) => (
+                          <Select.Option
+                            key={district?.lgd_district_id}
+                            value={district?.lgd_district_name}
+                          >
+                            {district?.lgd_district_name}
+                          </Select.Option>
+                        ))}
+                      </Select>
                     </div>
-
-                    <div className="Comparison-box">
-                        <div className="row align-items-center">
-                            <div className="col-md-2 col-lg-2">
-                                <h4 className="sub-heading text-left">Add Districts to Compare</h4>
-                            </div>
-                            <div className="col-md-10 col-lg-10 pe-2">
-                                <div className="select-infra Comparison-select-group">
-
-
-                                {[...Array(MAX_DISTRICTS)]?.map((_, index) => (
-                      <div key={index}>
-                        <Select
-                          className="form-select bg-grey2"
-                          onChange={(value) => handleDistrictChange(value, index)}
-                          style={{ width: "100%" }}
-                          placeholder={`${t('addDistrict')} ${index + 1}`}
-                          mode="single"
-                          showSearch
-                          value={selectedDistricts[index]?.lgd_district_name || `${t('addDistrict')}`}
-                          disabled={index > 0 && !selectedDistricts[index - 1]}
-                        >
-                          {getFilteredDistricts().map((district) => (
-                            <Select.Option
-                              key={district?.lgd_district_id}
-                              value={district?.lgd_district_name}
-                            >
-                              {district?.lgd_district_name}
-                            </Select.Option>
-                          ))}
-                        </Select>
-                      </div>
-                    ))}
-
-
-                                    {/* <select className="form-select bg-grey2" defaultValue={""}>
-                                        <option value="">Add a District </option>
-                                        <option value="">District 1</option>
-                                    </select>
-                                    <select className="form-select bg-grey2" defaultValue={""}>
-                                        <option value="">Add a District </option>
-                                        <option value="">District 1</option>
-                                    </select>
-                                    <select className="form-select bg-grey2" defaultValue={""}>
-                                        <option value="">Add a District </option>
-                                        <option value="">District 1</option>
-                                    </select>
-                                    <select className="form-select bg-grey2" defaultValue={""}>
-                                        <option value="">Add a District </option>
-                                        <option value="">District 1</option>
-                                    </select>
-                                    <select className="form-select bg-grey2" defaultValue={""}>
-                                        <option value="">Add a District </option>
-                                        <option value="">District 1</option>
-                                    </select>
- */}
-
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <Tabs defaultActiveKey="State" id="top-tabs-st-dis-block">
-                        <Tab eventKey="State" title="State">
-                            <div className="piechart-box row align-items-center">
-                               
-                                <HighchartsReact
-                                    highcharts={Highcharts}
-                                    options={{
-                                        chart: {
-                                            type: "column",
-                                            marginTop: 80,
-                                            events: {
-                                                beforePrint: function () {
-                                                    this.exportSVGElements[0].box.hide();
-                                                    this.exportSVGElements[1].hide();
-                                                },
-                                                afterPrint: function () {
-                                                    this.exportSVGElements[0].box.show();
-                                                    this.exportSVGElements[1].show();
-                                                },
-                                            },
-                                        },
-                                        xAxis: {
-                                          categories: selectedDistricts.map(district => district.lgd_district_name),
-                                        },
-                                        yAxis: {
-                                            allowDecimals: false,
-                                            min: 0,
-                                            title: {
-                                                text: "",
-                                            },
-                                        },
-                                        title: {
-                                            text: ""
-                                        },
-                                        tooltip: {
-                                            headerFormat: "<b>{point.x}</b><br/>",
-                                            pointFormat: "{series.name}: {point.y}",
-                                            pointFormatter: function () {
-                                                return `<span style="color:${this.color
-                                                    }">\u25CF</span> ${this.series.name
-                                                    }: <b>${this.y.toLocaleString(
-                                                        "en-IN"
-                                                    )}</b><br/>`;
-                                            },
-                                        },
-                                        plotOptions: {
-                                            column: {
-                                                stacking: "normal",
-                                                dataLabels: {
-                                                    enabled: true,
-                                                    crop: false,
-                                                    overflow: "none",
-                                                    rotation: 0,
-                                                    align: "center",
-                                                    x: -2,
-                                                    y: -5,
-                                                    style: {
-                                                        font: "13px Arial, sans-serif",
-                                                        fontWeight: "600",
-                                                        stroke: "transparent",
-                                                        align: "center",
-                                                    },
-                                                    position: "top",
-                                                    formatter: function () {
-                                                        // return parseFloat(
-                                                        //   this.y
-                                                        // ).toFixed(0);
-                                                        return this.y.toLocaleString("en-IN");
-                                                    },
-                                                },
-                                            },
-                                        },
-                                        legend: {
-                                            layout: "horizontal",
-                                            align: "center",
-                                            verticalAlign: "bottom",
-                                            itemMarginTop: 10,
-                                            itemMarginBottom: 10,
-                                        },
-                                        credits: {
-                                            enabled: false,
-                                        },
-                                        exports:{
-                                            enabled: false,
-                                        },
-                                        series: [{
-                                            color:"#17AFD2",
-                                            name: 'Boys',
-                                            // data: selectedDistricts.map(district => selectedOption === 'upper_primary_to_secondary' ? district.upri_b : district.sec_b),
-
-
-                                            // data: selectedDistricts.map(district => district.upri_g),
-                                            data:boysData
-                                        }, {
-                                            color:"#6C6CB0",
-                                            name: 'Girls',
-
-                                            // data: selectedDistricts.map(district => selectedOption === 'upper_primary_to_secondary' ? district.upri_b : district.sec_b),
-
-                                            // data: selectedDistricts.map(district => district.upri_b),
-                                            data:girlsData
-
-                                        }, 
-                                        {
-                                            color:"#FFB74BF0",
-                                            name: 'Total',
-                                            data: Total_boys_girls,
-                                        }
-                                      
-                                      
-                                      ]
-                                    }}
-                                    immutable={true}
-                                />
-                            </div>
-                        </Tab>
-                        <Tab eventKey="District" title="District">
-                            <div className="piechart-box row mt-4 align-items-center">
-
-                            </div>
-                        </Tab>
-                        <Tab eventKey="Block" title="Block">
-                            <div className="piechart-box row mt-4 align-items-center">
-
-                            </div>
-                        </Tab>
-                    </Tabs>
+                  ))}
                 </div>
+              </div>
+            </div>
+          </div>
 
-            </div>)}
-    
+          <div className="piechart-box row align-items-center">
+
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={{
+                chart: {
+                  type: "column",
+                  marginTop: 80,
+                  events: {
+                    beforePrint: function () {
+                      this.exportSVGElements[0].box.hide();
+                      this.exportSVGElements[1].hide();
+                    },
+                    afterPrint: function () {
+                      this.exportSVGElements[0].box.show();
+                      this.exportSVGElements[1].show();
+                    },
+                  },
+                },
+                xAxis: {
+                  categories: selectedDistricts.map(district => district.lgd_district_name),
+                },
+                yAxis: {
+                  allowDecimals: false,
+                  min: 0,
+                  title: {
+                    text: "",
+                  },
+                },
+                title: {
+                  text: ""
+                },
+                tooltip: {
+                  headerFormat: "<b>{point.x}</b><br/>",
+                  pointFormat: "{series.name}: {point.y}",
+                  pointFormatter: function () {
+                    return `<span style="color:${this.color
+                      }">\u25CF</span> ${this.series.name
+                      }: <b>${this.y.toLocaleString(
+                        "en-IN"
+                      )}</b><br/>`;
+                  },
+                },
+                plotOptions: {
+                  column: {
+                    stacking: "normal",
+                    dataLabels: {
+                      enabled: true,
+                      crop: false,
+                      overflow: "none",
+                      rotation: 0,
+                      align: "center",
+                      x: -2,
+                      y: -5,
+                      style: {
+                        font: "13px Arial, sans-serif",
+                        fontWeight: "600",
+                        stroke: "transparent",
+                        align: "center",
+                      },
+                      position: "top",
+                      formatter: function () {
+                        // return parseFloat(
+                        //   this.y
+                        // ).toFixed(0);
+                        return this.y.toLocaleString("en-IN");
+                      },
+                    },
+                  },
+                },
+                legend: {
+                  layout: "horizontal",
+                  align: "center",
+                  verticalAlign: "bottom",
+                  itemMarginTop: 10,
+                  itemMarginBottom: 10,
+                },
+                credits: {
+                  enabled: false,
+                },
+                exports: {
+                  enabled: false,
+                },
+                series: [{
+                  color: "#17AFD2",
+                  name: 'Boys',
+                  // data: selectedDistricts.map(district => selectedOption === 'upper_primary_to_secondary' ? district.upri_b : district.sec_b),
+
+
+                  // data: selectedDistricts.map(district => district.upri_g),
+                  data: boysData,
+                  maxPointWidth:50,
+                }, {
+                  color: "#6C6CB0",
+                  name: 'Girls',
+
+                  // data: selectedDistricts.map(district => selectedOption === 'upper_primary_to_secondary' ? district.upri_b : district.sec_b),
+
+                  // data: selectedDistricts.map(district => district.upri_b),
+                  data: girlsData,
+                  maxPointWidth:50,
+
+                },
+                {
+                  color: "#FFB74BF0",
+                  name: 'Total',
+                  data: Total_boys_girls,
+                  maxPointWidth:50,
+                }
+
+
+                ]
+              }}
+              immutable={true}
+            />
+          </div>
+        </div>
+
+      </div>)}
+
     </>
   );
 }
