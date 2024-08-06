@@ -932,7 +932,7 @@ console.log(isActive, "isActive")
                         {
                             selectedState !== "All State" && selectReportType === "ADP_Report"   ? (
                                 <TransitionRateCompare />
-                            ) : (selectedState !== "All State" && selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict)  && selectReportType === "ABP_Report" ? (
+                            ) : (selectedState !== "All State" && selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) &&   selectReportType === "ABP_Report" ? (
                                 <TransitionBlockRateCompare />
                             ) : (
                                 ""

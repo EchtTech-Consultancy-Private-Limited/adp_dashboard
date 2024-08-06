@@ -25,7 +25,11 @@ import BlankPage from "../BlankPage";
 import { ScrollToTopOnMount } from "../../../Scroll/ScrollToTopOnMount";
 import { useTranslation } from "react-i18next";
 import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer.jsx"
-
+import Highcharts, { color } from "highcharts";
+import HighchartsReact from "highcharts-react-official";
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+import '../graph/graph.scss';
 export default function TransitionBlockRateCompare() {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
@@ -167,37 +171,32 @@ export default function TransitionBlockRateCompare() {
   const handleOptionChange = (event) => {
     dispatch(setselectedCompareOption(event.target.value));
   };
+
+  console.log("selectBlock=====>",selectedBlocks)
+
+
+  const boysData = selectedBlocks.map(block =>
+    selectedOption === 'upper_primary_to_secondary' ? block.upri_b : block.sec_b
+  );
+
+  const girlsData = selectedBlocks.map(block =>
+    selectedOption === 'secondary_to_higher_secondary' ? block.sec_g: block.upri_g 
+  );
+
+const Total_boys_girls=selectedBlocks.map(block =>
+  selectedOption === 'upper_primary_to_secondary' ? block.upri_t : block.sec_t);
+
+
+
   return (
     <>
       <ScrollToTopOnMount />
-      <div className="card-box">
+      {!isActiveGraph ? (<div className="card-box">
         <div className="row align-items-end">
           <div className="col-md-5">
             <div className="d-flex align-items-center">
               <div className="title-box">
-                {/* <h5 className='sub-title'>State :
-                                    <Select
-                                        className='state-select'
-                                        onChange={handleStateChange}
-                                        style={{ width: "50%" }}
-                                        placeholder="Select State"
-                                        mode="single"
-                                        showSearch
-                                        value={selectedState || SelectState}
-                                    >
-                                        <Select.Option key="Select State" value={SelectState}>
-                                            Select State
-                                        </Select.Option>
-                                        {states.map((state) => (
-                                            <Select.Option
-                                                key={state.lgd_state_id}
-                                                value={state.lgd_state_name}
-                                            >
-                                                {state.lgd_state_name}
-                                            </Select.Option>
-                                        ))}
-                                    </Select>
-                                </h5> */}
+  
                 <h3 className="heading-sm">
                   {t('comparisonByTransitionRate')}
                 </h3>
@@ -370,7 +369,194 @@ export default function TransitionBlockRateCompare() {
             <BlankPage />
           )}
         </div>
-      </div>
+      </div>) : (<div className="col-md-12 graph-box">
+                <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
+                    <div className="text-btn-d d-flex justify-content-between align-items-center">
+                        <h2 className="heading-sm">
+                            Comparison of States By Transition Rate
+                        </h2>
+
+                        <div className="select-infra button-group-filter">
+                            <select id="export_data" className="form-select bg-grey2" defaultValue={"upper_primary_to_secondary"}
+                               value={selectedOption}
+                               onChange={handleOptionChange}
+                            >
+                                <option value="upper_primary_to_secondary">Upper Primary to Secondary </option>
+                                <option value="secondary_to_higher_secondary">Secondary to Higher Secondary</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div className="Comparison-box">
+                        <div className="row align-items-center">
+                            <div className="col-md-2 col-lg-2">
+                                <h4 className="sub-heading text-left">Add Blocks to Compare</h4>
+                            </div>
+                            <div className="col-md-10 col-lg-10 pe-2">
+                                <div className="select-infra Comparison-select-group">
+
+
+                                {[...Array(MAX_BLOCKS)]?.map((_, index) => (
+                      <div key={index}>
+                        <Select
+                          className="form-select bg-grey2"
+                          onChange={(value) => handleBlockChange(value, index)}
+                          style={{ width: "100%" }}
+                          placeholder={`${t('addBlock')} ${index + 1}`}
+                          mode="single"
+                          showSearch
+                          value={selectedBlocks[index]?.lgd_block_name || `${t('addBlock')}`}
+                          disabled={index > 0 && !selectedBlocks[index - 1]}
+                        >
+                          {getFilteredBlocks(index).map((block) => (
+                            <Select.Option
+                              key={block?.lgd_block_id}
+                              value={block?.lgd_block_name}
+                            >
+                              {block?.lgd_block_name}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      </div>
+                    ))}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <Tabs defaultActiveKey="State" id="top-tabs-st-dis-block">
+                        <Tab eventKey="State" title="State">
+                            <div className="piechart-box row align-items-center">
+                               
+                                <HighchartsReact
+                                    highcharts={Highcharts}
+                                    options={{
+                                        chart: {
+                                            type: "column",
+                                            marginTop: 80,
+                                            events: {
+                                                beforePrint: function () {
+                                                    this.exportSVGElements[0].box.hide();
+                                                    this.exportSVGElements[1].hide();
+                                                },
+                                                afterPrint: function () {
+                                                    this.exportSVGElements[0].box.show();
+                                                    this.exportSVGElements[1].show();
+                                                },
+                                            },
+                                        },
+                                        xAxis: {
+                                          categories: selectedBlocks.map(district => district.lgd_block_name),
+                                        },
+                                        yAxis: {
+                                            allowDecimals: false,
+                                            min: 0,
+                                            title: {
+                                                text: "",
+                                            },
+                                        },
+                                        title: {
+                                            text: ""
+                                        },
+                                        tooltip: {
+                                            headerFormat: "<b>{point.x}</b><br/>",
+                                            pointFormat: "{series.name}: {point.y}",
+                                            pointFormatter: function () {
+                                                return `<span style="color:${this.color
+                                                    }">\u25CF</span> ${this.series.name
+                                                    }: <b>${this.y.toLocaleString(
+                                                        "en-IN"
+                                                    )}</b><br/>`;
+                                            },
+                                        },
+                                        plotOptions: {
+                                            column: {
+                                                stacking: "normal",
+                                                dataLabels: {
+                                                    enabled: true,
+                                                    crop: false,
+                                                    overflow: "none",
+                                                    rotation: 0,
+                                                    align: "center",
+                                                    x: -2,
+                                                    y: -5,
+                                                    style: {
+                                                        font: "13px Arial, sans-serif",
+                                                        fontWeight: "600",
+                                                        stroke: "transparent",
+                                                        align: "center",
+                                                    },
+                                                    position: "top",
+                                                    formatter: function () {
+                                                        // return parseFloat(
+                                                        //   this.y
+                                                        // ).toFixed(0);
+                                                        return this.y.toLocaleString("en-IN");
+                                                    },
+                                                },
+                                            },
+                                        },
+                                        legend: {
+                                            layout: "horizontal",
+                                            align: "center",
+                                            verticalAlign: "bottom",
+                                            itemMarginTop: 10,
+                                            itemMarginBottom: 10,
+                                        },
+                                        credits: {
+                                            enabled: false,
+                                        },
+                                        exports:{
+                                            enabled: false,
+                                        },
+                                        series: [{
+                                            color:"#17AFD2",
+                                            name: 'Boys',
+                                            // data: selectedDistricts.map(district => selectedOption === 'upper_primary_to_secondary' ? district.upri_b : district.sec_b),
+
+
+                                            // data: selectedDistricts.map(district => district.upri_g),
+                                            data:boysData
+                                        }, {
+                                            color:"#6C6CB0",
+                                            name: 'Girls',
+
+                                            // data: selectedDistricts.map(district => selectedOption === 'upper_primary_to_secondary' ? district.upri_b : district.sec_b),
+
+                                            // data: selectedDistricts.map(district => district.upri_b),
+                                            data:girlsData
+
+                                        }, 
+                                        {
+                                            color:"#FFB74BF0",
+                                            name: 'Total',
+                                            data: Total_boys_girls,
+                                        }
+                                      
+                                      
+                                      ]
+                                    }}
+                                    immutable={true}
+                                />
+                            </div>
+                        </Tab>
+                        <Tab eventKey="District" title="District">
+                            <div className="piechart-box row mt-4 align-items-center">
+
+                            </div>
+                        </Tab>
+                        <Tab eventKey="Block" title="Block">
+                            <div className="piechart-box row mt-4 align-items-center">
+
+                            </div>
+                        </Tab>
+                    </Tabs>
+                </div>
+
+            </div>)}
+      
     </>
   );
 }

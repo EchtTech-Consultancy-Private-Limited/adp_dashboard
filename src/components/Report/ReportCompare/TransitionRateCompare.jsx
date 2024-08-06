@@ -405,8 +405,14 @@ export default function TransitionRateCompare() {
               </div>
             </div>
           </div>
-
-          <div className="piechart-box row align-items-center">
+          {selectedDistricts.length === 1 ? (<Card
+            style={{
+              width: 300,
+              margin:"20px auto 0",
+            }}
+          >
+            <b>{t("selectOneMoreDistrict")}</b>
+          </Card>) : (<div className="piechart-box row align-items-center">
 
             <HighchartsReact
               highcharts={Highcharts}
@@ -497,7 +503,7 @@ export default function TransitionRateCompare() {
 
                   // data: selectedDistricts.map(district => district.upri_g),
                   data: boysData,
-                  maxPointWidth:50,
+                  maxPointWidth: 50,
                 }, {
                   color: "#6C6CB0",
                   name: 'Girls',
@@ -506,14 +512,14 @@ export default function TransitionRateCompare() {
 
                   // data: selectedDistricts.map(district => district.upri_b),
                   data: girlsData,
-                  maxPointWidth:50,
+                  maxPointWidth: 50,
 
                 },
                 {
                   color: "#FFB74BF0",
                   name: 'Total',
                   data: Total_boys_girls,
-                  maxPointWidth:50,
+                  maxPointWidth: 50,
                 }
 
 
@@ -521,7 +527,8 @@ export default function TransitionRateCompare() {
               }}
               immutable={true}
             />
-          </div>
+          </div>)}
+
         </div>
 
       </div>)}
