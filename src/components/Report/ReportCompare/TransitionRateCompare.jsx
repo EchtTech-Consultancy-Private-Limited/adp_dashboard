@@ -155,16 +155,16 @@ export default function TransitionRateCompare() {
 
 
 
-  const boysData = selectedDistricts.map(district =>
-    selectedOption === 'upper_primary_to_secondary' ? district.upri_b : district.sec_b
+  const boysData = selectedDistricts?.map(district =>
+    selectedOption === 'upper_primary_to_secondary' ? district?.upri_b : district?.sec_b
   );
 
-  const girlsData = selectedDistricts.map(district =>
-    selectedOption === 'secondary_to_higher_secondary' ? district.sec_g : district.upri_g
+  const girlsData = selectedDistricts?.map(district =>
+    selectedOption === 'secondary_to_higher_secondary' ? district?.sec_g : district?.upri_g
   );
 
-  const Total_boys_girls = selectedDistricts.map(district =>
-    selectedOption === 'upper_primary_to_secondary' ? district.upri_t : district.sec_t
+  const Total_boys_girls = selectedDistricts?.map(district =>
+    selectedOption === 'upper_primary_to_secondary' ? district?.upri_t : district?.sec_t
   );
 
   return (
@@ -348,7 +348,7 @@ export default function TransitionRateCompare() {
         <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
           <div className="text-btn-d d-flex justify-content-between align-items-center">
             <h2 className="heading-sm">
-              Comparison of States By Transition Rate
+              Comparison By Transition Rate
             </h2>
 
             <div className="select-infra button-group-filter">
@@ -399,8 +399,14 @@ export default function TransitionRateCompare() {
               </div>
             </div>
           </div>
-
-          <div className="piechart-box row align-items-center">
+          {selectedDistricts.length === 1 ? (<Card
+            style={{
+              width: 300,
+              margin:"20px auto 0",
+            }}
+          >
+            <b>{t("selectOneMoreDistrict")}</b>
+          </Card>) : (<div className="piechart-box row align-items-center">
 
             <HighchartsReact
               highcharts={Highcharts}
@@ -462,9 +468,6 @@ export default function TransitionRateCompare() {
                       },
                       position: "top",
                       formatter: function () {
-                        // return parseFloat(
-                        //   this.y
-                        // ).toFixed(0);
                         return this.y.toLocaleString("en-IN");
                       },
                     },
@@ -488,21 +491,21 @@ export default function TransitionRateCompare() {
                   name: 'Boys',
               
                   data: boysData,
-                  maxPointWidth:50,
+                  maxPointWidth: 50,
                 }, {
                   color: "#6C6CB0",
                   name: 'Girls',
 
          
                   data: girlsData,
-                  maxPointWidth:50,
+                  maxPointWidth: 50,
 
                 },
                 {
                   color: "#FFB74BF0",
                   name: 'Total',
                   data: Total_boys_girls,
-                  maxPointWidth:50,
+                  maxPointWidth: 50,
                 }
 
 
@@ -510,7 +513,8 @@ export default function TransitionRateCompare() {
               }}
               immutable={true}
             />
-          </div>
+          </div>)}
+
         </div>
 
       </div>)}
