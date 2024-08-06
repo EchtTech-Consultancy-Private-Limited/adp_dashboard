@@ -43,13 +43,15 @@ export default function TransitionRateReport() {
     const { selectedState, selectedDistrict, selectedBlock } = useSelector(
         (state) => state.locationAdp
     );
+   
     // const [aspirationalData, setAspirationalData] = useState([]);
     const aspirationalData = useSelector(
         (state) => state.reportAdpAbpType.aspirationalAllData
     );
     const [locationHeader, SetLocationHeader] = useState();
     const [gridApi, setGridApi] = useState();
-    const states = useSelector((state) => state.locationAdp.states);
+    const states = useSelector((state) => state.locationAdp.districts);
+    console.log(states, "selectedState")
     const selectReportType = useSelector(
         (state) => state.reportAdpAbpType.updateReportType
     );
@@ -769,9 +771,11 @@ export default function TransitionRateReport() {
     };
 
     const [isActive, setIsActive] = useState(false);
-
-    const toggleClass = () => {
+console.log(isActive, "isActive")
+    const toggleClass = (e) => {
+       
         dispatch(setIsActiveGraph(!isActiveGraph));
+
     };
 
     return (
@@ -908,7 +912,7 @@ export default function TransitionRateReport() {
                                         <div className={`table-box mt-4  ${isActiveGraph ? 'd-none' : ''}`}>
                                             <div id="content"
                                                 className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
-                                                style={{ width: "100%", height: 300 }}>
+                                                style={{ width: "100%", height: 400 }}>
                                                 <AgGridReact
                                                     columnDefs={columns}
                                                     rowData={finalData || finalData.length > 0 ? finalData : ""}
