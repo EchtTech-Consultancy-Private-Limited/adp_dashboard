@@ -45,7 +45,7 @@ export default function TransitionRateGraphA() {
         <div className="col-md-12">
             <div className="graph-card">
                 <div className="d-flex align-items-center justify-content-between">
-                    <h4 className='heading-sm'>Label Wise Transition Rate of {selectReportType === "ADP_Report" ? "District" : "Block"} </h4>
+                    <h4 className='heading-sm'>Lable Wise Transition Rate of {selectReportType === "ADP_Report" ? "District" : "Block"} </h4>
                 </div>
                 <div className="graph mt-2">
                     <div className="radio-button">
