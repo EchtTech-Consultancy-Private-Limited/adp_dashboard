@@ -1,8 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "../graph/graph.scss";
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectDistrict,
@@ -10,43 +6,37 @@ import {
   setStates,
 } from "../../../redux/slice/filterServicesComprisionSlice";
 import {
-  setAspirationalAllData,
   setselectedCompareDistricts,
   setselectedCompareOption,
-  setUpdateReportType,
 } from "../../../redux/slice/reportTypeSlice";
 import table from "../../../assets/images/table.svg";
 import card from "../../../assets/images/card-list.svg";
 import { Card, Select } from "antd";
 import { SelectState } from "../../../constant/Constant";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BlankPage from "../BlankPage";
 import { useTranslation } from "react-i18next";
-import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer";
-
+import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer"
+import Highcharts, { color } from "highcharts";
+import HighchartsReact from "highcharts-react-official";
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+import '../graph/graph.scss';
 export default function TransitionRateCompare() {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
 
-  const aspirationalData = useSelector(
-    (state) => state.reportAdpAbpType.aspirationalAllData
-  );
+  const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
   const selectedOption = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareOption
   );
   const selectedAdpAbpOption = useSelector(
     (state) => state.reportAdpAbpType.updateReportType
   );
-  const isActiveGraph = useSelector(
-    (state) => state.reportAdpAbpType.isActiveGraph
-  );
+  const isActiveGraph = useSelector((state) => state.reportAdpAbpType.isActiveGraph)
   const MAX_DISTRICTS = 5;
   const states = useSelector((state) => state.locationAdp?.states);
   const districts = useSelector((state) => state.locationAdp?.districts);
-  const selectedState = useSelector(
-    (state) => state.locationAdp?.selectedState
-  );
+  const selectedState = useSelector((state) => state.locationAdp?.selectedState);
 
   const selectedDistricts = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareDistricts
@@ -56,13 +46,6 @@ export default function TransitionRateCompare() {
     (state) => state.reportAdpAbpType?.selectedYear
   );
 
-  const selectReportType = useSelector(
-    (state) => state.reportAdpAbpType.updateReportType
-  );
-
-  const [errorMessages, setErrorMessages] = useState(
-    new Array(MAX_DISTRICTS).fill("")
-  );
   function resteData() {
     dispatch(selectState(SelectState));
     dispatch(setselectedCompareOption("upper_primary_to_secondary"));
@@ -70,10 +53,6 @@ export default function TransitionRateCompare() {
   useEffect(() => {
     resteData();
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(setAspirationalAllData(yearWiseData));
-  // }, [dispatch,selectedYear,aspirationalData]);
 
   useEffect(() => {
     const structuredData = aspirationalData.reduce((acc, curr) => {
@@ -118,19 +97,14 @@ export default function TransitionRateCompare() {
     }, []);
 
     dispatch(setStates(structuredData));
-    const updatedSelectedDistricts = selectedDistricts.map(
-      (selectedDistrict) => {
-        return (
-          aspirationalData.find(
-            (district) =>
-              district.lgd_district_id === selectedDistrict.lgd_district_id
-          ) || selectedDistrict
-        );
-      }
-    );
+    const updatedSelectedDistricts = selectedDistricts.map((selectedDistrict) => {
+      return aspirationalData.find(
+        (district) => district.lgd_district_id === selectedDistrict.lgd_district_id
+      ) || selectedDistrict;
+    });
 
     dispatch(setselectedCompareDistricts(updatedSelectedDistricts));
-  }, [dispatch, aspirationalData, selectedYear]);
+  }, [dispatch, aspirationalData, selectedYear])
 
   // Handle state change
   const handleStateChange = (value) => {
@@ -163,7 +137,7 @@ export default function TransitionRateCompare() {
       (district) =>
         district &&
         district.lgd_district_name !==
-          selectedDistricts[position]?.lgd_district_name
+        selectedDistricts[position]?.lgd_district_name
     );
     return districts.filter(
       (district) =>
@@ -175,81 +149,38 @@ export default function TransitionRateCompare() {
 
   // Handle option change
   const handleOptionChange = (event) => {
+    console.log("event.target.value =>",event.target.value)
     dispatch(setselectedCompareOption(event.target.value));
   };
 
 
-  const boy_girl = [{
-    name: 'Girl',
-    data: [1, 1, 1, 1,1],
-    color: "#751539"
-  }, {
 
-    name: 'Boy',
-    data: [1, 1, 1, 1,1],
-    color: "#57C1BB"
-  }];
+  console.log("selectedDistricts=======>",selectedDistricts)
 
-  const [totalMaleFemale, setTotalMaleFemale] = useState(boy_girl);
+  console.log("selectedOption====>",selectedOption)
 
+  const boysData = selectedDistricts.map(district =>
+    selectedOption === 'upper_primary_to_secondary' ? district.upri_b : district.sec_b
+  );
 
-  // ********Start Baar Graph******
-  // Update totalMaleFemale data based on selectedDistricts
-  useEffect(() => {
-    const male_female_data = selectedDistricts.map((district) => ({
-      name: district.lgd_district_name,
-      data: [
-        selectedOption === "upper_primary_to_secondary"
-          ? district?.upri_b
-          : district?.sec_b,
-        selectedOption === "secondary_to_higher_secondary"
-          ? district?.sec_g 
-          : district?.upri_g,
-      ],
-      // color:  % 2 === 0 ? "#57C1BB" : "#751539",
-    }));
+  const girlsData = selectedDistricts.map(district =>
+    selectedOption === 'secondary_to_higher_secondary' ? district.sec_g: district.upri_g 
+  );
 
-    setTotalMaleFemale(male_female_data);
-  }, [selectedDistricts, selectedOption]);
+const Total_boys_girls=selectedDistricts.map(district =>
+  selectedOption === 'upper_primary_to_secondary' ? district.upri_t : district.sec_t
+);
 
-
-
-
-
-
-
-
-
+  console.log("boysData",boysData)
+  console.log("girlsData",girlsData)
   return (
     <>
-      <div className="card-box">
+    {!isActiveGraph ? (  <div className="card-box">
         <div className="row align-items-end">
           <div className="col-md-5">
             <div className="d-flex align-items-end">
               <div className="title-box">
-                {/* <h5 className='sub-title'>State :
-                                    <Select
-                                        className='state-select'
-                                        onChange={handleStateChange}
-                                        style={{ width: "50%" }}
-                                        placeholder="Select State"
-                                        mode="single"
-                                        showSearch
-                                        value={selectedState || SelectState}
-                                    >
-                                        <Select.Option key="Select State" value={SelectState}>
-                                            Select State
-                                        </Select.Option>
-                                        {states.map((state) => (
-                                            <Select.Option
-                                                key={state.lgd_state_id}
-                                                value={state.lgd_state_name}
-                                            >
-                                                {state.lgd_state_name}
-                                            </Select.Option>
-                                        ))}
-                                    </Select>
-                                </h5> */}
+
                 <h3 className="heading-sm">
                   {t("comparisonByTransitionRate")}
                 </h3>
@@ -302,20 +233,15 @@ export default function TransitionRateCompare() {
                       <div key={index}>
                         <Select
                           className="form-select"
-                          onChange={(value) =>
-                            handleDistrictChange(value, index)
-                          }
+                          onChange={(value) => handleDistrictChange(value, index)}
                           style={{ width: "100%" }}
-                          placeholder={`${t("addDistrict")} ${index + 1}`}
+                          placeholder={`${t('addDistrict')} ${index + 1}`}
                           mode="single"
                           showSearch
-                          value={
-                            selectedDistricts[index]?.lgd_district_name ||
-                            `${t("addDistrict")}`
-                          }
+                          value={selectedDistricts[index]?.lgd_district_name || `${t('addDistrict')}`}
                           disabled={index > 0 && !selectedDistricts[index - 1]}
                         >
-                          {getFilteredDistricts(index)?.map((district) => (
+                          {getFilteredDistricts().map((district) => (
                             <Select.Option
                               key={district?.lgd_district_id}
                               value={district?.lgd_district_name}
@@ -331,11 +257,10 @@ export default function TransitionRateCompare() {
                 <div className="col-md-3 order_2">
                   <div className="tab-box float-end">
                     <button className="tab-button active">
-                      <img src={card} alt="card" /> <span>{t("cardView")}</span>
+                      <img src={card} alt="card" /> <span>{t('cardView')}</span>
                     </button>
                     <button className="tab-button">
-                      <img src={table} alt="Table" />{" "}
-                      <span>{t("tableView")}</span>
+                      <img src={table} alt="Table" /> <span>{t('tableView')}</span>
                     </button>
                   </div>
                 </div>
@@ -346,251 +271,298 @@ export default function TransitionRateCompare() {
           {selectedState !== SelectState ? (
             <div className="col-md-12 mt-4">
               <div className="row">
-                {selectedDistricts &&
-                  selectedDistricts?.map((district, index) => (
-                    <div
-                      className={`col-sm-12 col-20 ${
-                        selectedDistricts.length === 1 ? "m-auto" : ""
+                {selectedDistricts && selectedDistricts?.map((district, index) => (
+                  <div
+                    className={`col-sm-12 col-20 ${selectedDistricts.length === 1 ? "m-auto" : ""
                       }`}
-                    >
-                      {selectedDistricts.length === 1 ? (
-                        <Card
-                          style={{
-                            width: 300,
-                          }}
-                        >
-                          <b>{t("selectOneMoreDistrict")}</b>
-                        </Card>
-                      ) : (
-                        <>
-                          {!isActiveGraph ? (
-                            <div className="comp-card" key={index}>
-                              <div className="upper-card">
-                                <div className="d-flex align-items-center justify-content-between w-100">
-                                  <div className="d-flex">
-                                    <div>
-                                      <div
-                                        className={`number-card card-color-${
-                                          index + 1
-                                        }`}
-                                      >
-                                        {index + 1}
-                                      </div>
-                                    </div>
-                                    <div className="text-card">
-                                      <p>District</p>
-                                      <h6 className="sub-title">
-                                        {district.lgd_district_name}
-                                      </h6>
-                                    </div>
-                                  </div>
-                                  <div className="arrow-d">
-                                    {" "}
-                                    <ArrowRenderer data={district} />
+                  >
+                    {selectedDistricts.length === 1 ? (
+                      <Card
+                        style={{
+                          width: 300,
+                        }}
+                      >
+                        <b>{t("selectOneMoreDistrict")}</b>
+                      </Card>
+                    ) : (
+                      <>
+                        {!isActiveGraph ? (<div className="comp-card" key={index}>
+                          <div className="upper-card">
+                            <div className="d-flex align-items-center justify-content-between w-100">
+                              <div className="d-flex">
+                                <div>
+                                  <div
+                                    className={`number-card card-color-${index + 1
+                                      }`}
+                                  >
+                                    {index + 1}
                                   </div>
                                 </div>
-                              </div>
-
-                              <div className="lower-card">
                                 <div className="text-card">
-                                  <p>Boys</p>
+                                  <p>District</p>
                                   <h6 className="sub-title">
-                                    {selectedOption ===
-                                    "upper_primary_to_secondary"
-                                      ? district?.upri_b
-                                      : district?.sec_b}
-                                  </h6>
-                                </div>
-                                <div className="text-card">
-                                  <p>Girls</p>
-                                  <h6 className="sub-title">
-                                    {selectedOption ===
-                                    "upper_primary_to_secondary"
-                                      ? district?.upri_g
-                                      : district?.sec_g}
-                                  </h6>
-                                </div>
-                                <div className="text-card">
-                                  <p>Total</p>
-                                  <h6 className="sub-title">
-                                    {selectedOption ===
-                                    "upper_primary_to_secondary"
-                                      ? district?.upri_t
-                                      : district?.sec_t}
+                                    {district.lgd_district_name}
                                   </h6>
                                 </div>
                               </div>
-                            </div>
-                          ) : (
-                            <></>
-                          )}{" "}
-                          :
-                        </>
-                      )}
-                    </div>
-                  ))}
-
-                {isActiveGraph ? (
-                  <div>
-                    <div className="card-box-impact tab-for-graph number_of_male_female_teacher mt-4">
-                      <div className="row">
-                        <div className="col-md-12 col-lg-12">
-                          <div className="impact-box-content-education">
-                            <div className="text-btn-d">
-                              <h2 className="heading-sm">
-                                {t("number_of_male_female_teacher")}
-                              </h2>
-                              {/* <div className='d-flex w-20'>
-                                                        <button className='view-table-btn'> <span className="material-icons-round">table_view</span> View Table </button>
-                                                        <button className='view-table-btn view-more-btn ms-1'> <span className="material-icons-round me-0">more_horiz</span></button>
-                                                    </div> */}
-                            </div>
-
-                            <div className="piechart-box row mt-4">
-                              <div className="col-md-12">
-                                <HighchartsReact
-                                  highcharts={Highcharts}
-                                  options={{
-                                    chart: {
-                                      type: "column",
-                                      marginTop: 50,
-                                      events: {
-                                        beforePrint: function () {
-                                          this.exportSVGElements[0].box.hide();
-                                          this.exportSVGElements[1].hide();
-                                        },
-                                        afterPrint: function () {
-                                          this.exportSVGElements[0].box.show();
-                                          this.exportSVGElements[1].show();
-                                        },
-                                      },
-                                    },
-                                    xAxis: {
-                                      categories:selectedDistricts.map(district => district.lgd_district_name),
-                                      title: {
-                                        text: null,
-                                      },
-                                      gridLineWidth: 1,
-                                      lineWidth: 0,
-                                    },
-                                    yAxis: {
-                                      min: 0,
-                                      title: {
-                                        // text: 'Population (millions)',
-                                        // align: 'high'
-                                        enabled: false,
-                                      },
-                                      labels: {
-                                        overflow: "justify",
-                                      },
-                                      gridLineWidth: 0,
-                                    },
-
-                                    tooltip: {
-                                      valueSuffix: "",
-                                      valueFormatter: function () {
-                                        return this.y.toFixed(2);
-                                      },
-                                      pointFormatter: function () {
-                                        return `<span style="color:${
-                                          this.color
-                                        }">\u25CF</span> ${
-                                          this.series.name
-                                        }: <b>${this.y.toLocaleString(
-                                          "en-IN"
-                                        )}</b><br/>`;
-                                      },
-                                    },
-                                    title: {
-                                      text: t("number_of_male_female_teacher"),
-                                    },
-                                    plotOptions: {
-                                      column: {
-                                        // Use 'column' instead of 'bar' for column charts
-
-                                        dataLabels: {
-                                          enabled: true,
-                                          formatter: function () {
-                                            return this.y.toLocaleString(
-                                              "en-IN"
-                                            );
-                                          },
-                                        },
-                                        groupPadding: 0,
-                                      },
-                                    },
-                                    legend: {
-                                      layout: "horizontal",
-                                      align: "center",
-                                      verticalAlign: "bottom",
-                                      itemMarginTop: 10,
-                                      itemMarginBottom: 10,
-                                    },
-                                    events: {
-                                      load: function () {
-                                        const chart = this;
-                                        // When the chart is loaded and the table is rendered, format the table cells
-                                        const table = document.querySelector(
-                                          ".highcharts-data-table table"
-                                        );
-                                        if (table) {
-                                          const cells =
-                                            table.querySelectorAll("tbody td");
-                                          cells.forEach((cell) => {
-                                            const cellValue = parseFloat(
-                                              cell.innerText.replace(/,/g, "")
-                                            );
-                                            if (!isNaN(cellValue)) {
-                                              cell.innerText =
-                                                cellValue.toLocaleString(
-                                                  "en-IN"
-                                                );
-                                            }
-                                          });
-                                        }
-                                      },
-                                    },
-                                    credits: {
-                                      enabled: false,
-                                    },
-                                    series: totalMaleFemale,
-                                    exporting: {
-                                      filename: t(
-                                        "number_of_male_female_teacher"
-                                      ),
-                                      csv: {
-                                        columnHeaderFormatter: function (item) {
-                                          if (
-                                            !item ||
-                                            item instanceof Highcharts.Axis
-                                          ) {
-                                            return t("category");
-                                          }
-                                          return item.name;
-                                        },
-                                      },
-                                    },
-                                  }}
-                                  // allowChartUpdate={true}
-                                  immutable={true}
-                                />
+                              <div className="arrow-d">
+                                {" "}
+                                <ArrowRenderer data={district} />
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
+
+                          <div className="lower-card">
+                            <div className="text-card">
+                              <p>Boys</p>
+                              <h6 className="sub-title">
+                                {selectedOption === "upper_primary_to_secondary"
+                                  ? district?.upri_b
+                                  : district?.sec_b}
+                              </h6>
+                            </div>
+                            <div className="text-card">
+                              <p>Girls</p>
+                              <h6 className="sub-title">
+                                {selectedOption === "upper_primary_to_secondary"
+                                  ? district?.upri_g
+                                  : district?.sec_g}
+                              </h6>
+                            </div>
+                            <div className="text-card">
+                              <p>Total</p>
+                              <h6 className="sub-title">
+                                {selectedOption === "upper_primary_to_secondary"
+                                  ? district?.upri_t
+                                  : district?.sec_t}
+                              </h6>
+                            </div>
+                          </div>
+                        </div>) : (<div>Hello</div>)}
+
+                      </>
+                    )}
                   </div>
-                ) : (
-                  <></>
-                )}
+                ))}
               </div>
             </div>
           ) : (
             <BlankPage />
           )}
         </div>
-      </div>
+      </div>) : ( <div className="col-md-12 graph-box">
+                <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card">
+                    <div className="text-btn-d d-flex justify-content-between align-items-center">
+                        <h2 className="heading-sm">
+                            Comparison of States By Transition Rate
+                        </h2>
+
+                        <div className="select-infra button-group-filter">
+                            <select id="export_data" className="form-select bg-grey2" defaultValue={"upper_primary_to_secondary"}
+                               value={selectedOption}
+                               onChange={handleOptionChange}
+                            >
+                                <option value="upper_primary_to_secondary">Upper Primary to Secondary </option>
+                                <option value="secondary_to_higher_secondary">Secondary to Higher Secondary</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div className="Comparison-box">
+                        <div className="row align-items-center">
+                            <div className="col-md-2 col-lg-2">
+                                <h4 className="sub-heading">Add Districts to Compare</h4>
+                            </div>
+                            <div className="col-md-10 col-lg-10">
+                                <div className="select-infra Comparison-select-group">
+
+
+                                {[...Array(MAX_DISTRICTS)]?.map((_, index) => (
+                      <div key={index}>
+                        <Select
+                          className="form-select bg-grey2"
+                          onChange={(value) => handleDistrictChange(value, index)}
+                          style={{ width: "100%" }}
+                          placeholder={`${t('addDistrict')} ${index + 1}`}
+                          mode="single"
+                          showSearch
+                          value={selectedDistricts[index]?.lgd_district_name || `${t('addDistrict')}`}
+                          disabled={index > 0 && !selectedDistricts[index - 1]}
+                        >
+                          {getFilteredDistricts().map((district) => (
+                            <Select.Option
+                              key={district?.lgd_district_id}
+                              value={district?.lgd_district_name}
+                            >
+                              {district?.lgd_district_name}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      </div>
+                    ))}
+
+
+                                    {/* <select className="form-select bg-grey2" defaultValue={""}>
+                                        <option value="">Add a District </option>
+                                        <option value="">District 1</option>
+                                    </select>
+                                    <select className="form-select bg-grey2" defaultValue={""}>
+                                        <option value="">Add a District </option>
+                                        <option value="">District 1</option>
+                                    </select>
+                                    <select className="form-select bg-grey2" defaultValue={""}>
+                                        <option value="">Add a District </option>
+                                        <option value="">District 1</option>
+                                    </select>
+                                    <select className="form-select bg-grey2" defaultValue={""}>
+                                        <option value="">Add a District </option>
+                                        <option value="">District 1</option>
+                                    </select>
+                                    <select className="form-select bg-grey2" defaultValue={""}>
+                                        <option value="">Add a District </option>
+                                        <option value="">District 1</option>
+                                    </select>
+ */}
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <Tabs defaultActiveKey="State" id="top-tabs-st-dis-block">
+                        <Tab eventKey="State" title="State">
+                            <div className="piechart-box row mt-4 align-items-center">
+                               
+                                <HighchartsReact
+                                    highcharts={Highcharts}
+                                    options={{
+                                        chart: {
+                                            type: "column",
+                                            marginTop: 80,
+                                            events: {
+                                                beforePrint: function () {
+                                                    this.exportSVGElements[0].box.hide();
+                                                    this.exportSVGElements[1].hide();
+                                                },
+                                                afterPrint: function () {
+                                                    this.exportSVGElements[0].box.show();
+                                                    this.exportSVGElements[1].show();
+                                                },
+                                            },
+                                        },
+                                        xAxis: {
+                                          categories: selectedDistricts.map(district => district.lgd_district_name),
+                                        },
+                                        yAxis: {
+                                            allowDecimals: false,
+                                            min: 0,
+                                            title: {
+                                                text: "",
+                                            },
+                                        },
+                                        title: {
+                                            text: ""
+                                        },
+                                        tooltip: {
+                                            headerFormat: "<b>{point.x}</b><br/>",
+                                            pointFormat: "{series.name}: {point.y}",
+                                            pointFormatter: function () {
+                                                return `<span style="color:${this.color
+                                                    }">\u25CF</span> ${this.series.name
+                                                    }: <b>${this.y.toLocaleString(
+                                                        "en-IN"
+                                                    )}</b><br/>`;
+                                            },
+                                        },
+                                        plotOptions: {
+                                            column: {
+                                                stacking: "normal",
+                                                dataLabels: {
+                                                    enabled: true,
+                                                    crop: false,
+                                                    overflow: "none",
+                                                    rotation: 0,
+                                                    align: "center",
+                                                    x: -2,
+                                                    y: -5,
+                                                    style: {
+                                                        font: "13px Arial, sans-serif",
+                                                        fontWeight: "600",
+                                                        stroke: "transparent",
+                                                        align: "center",
+                                                    },
+                                                    position: "top",
+                                                    formatter: function () {
+                                                        // return parseFloat(
+                                                        //   this.y
+                                                        // ).toFixed(0);
+                                                        return this.y.toLocaleString("en-IN");
+                                                    },
+                                                },
+                                            },
+                                        },
+                                        legend: {
+                                            layout: "horizontal",
+                                            align: "center",
+                                            verticalAlign: "bottom",
+                                            itemMarginTop: 10,
+                                            itemMarginBottom: 10,
+                                        },
+                                        credits: {
+                                            enabled: false,
+                                        },
+                                        exports:{
+                                            enabled: false,
+                                        },
+                                        series: [{
+                                            color:"#17AFD2",
+                                            name: 'Boys',
+                                            // data: selectedDistricts.map(district => selectedOption === 'upper_primary_to_secondary' ? district.upri_b : district.sec_b),
+
+
+                                            // data: selectedDistricts.map(district => district.upri_g),
+                                            data:boysData
+                                        }, {
+                                            color:"#6C6CB0",
+                                            name: 'Girls',
+
+                                            // data: selectedDistricts.map(district => selectedOption === 'upper_primary_to_secondary' ? district.upri_b : district.sec_b),
+
+                                            // data: selectedDistricts.map(district => district.upri_b),
+                                            data:girlsData
+
+                                        }, 
+                                        {
+                                            color:"#FFB74BF0",
+                                            name: 'Total',
+                                            data: Total_boys_girls,
+                                        }
+                                      
+                                      
+                                      ]
+                                    }}
+                                    immutable={true}
+                                />
+                            </div>
+                        </Tab>
+                        <Tab eventKey="District" title="District">
+                            <div className="piechart-box row mt-4 align-items-center">
+
+                            </div>
+                        </Tab>
+                        <Tab eventKey="Block" title="Block">
+                            <div className="piechart-box row mt-4 align-items-center">
+
+                            </div>
+                        </Tab>
+                    </Tabs>
+                </div>
+
+            </div>)}
+    
     </>
   );
 }
