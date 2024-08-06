@@ -4,8 +4,7 @@ import Highcharts, { color } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useSelector } from 'react-redux';
 import TransitionRateGraphA from './TransitionRateGraphA';
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
+
 export default function TransitionRateGraph() {
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
     const [currentPage, setCurrentPage] = useState(1);

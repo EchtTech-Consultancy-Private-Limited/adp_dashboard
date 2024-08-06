@@ -930,9 +930,9 @@ console.log(isActive, "isActive")
                         </div>
 
                         {
-                            selectedState !== "All State" && selectReportType === "ADP_Report"  ? (
+                            selectedState !== "All State" && selectReportType === "ADP_Report"   ? (
                                 <TransitionRateCompare />
-                            ) : (selectedState !== "All State" && selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) && !isActiveGraph && selectReportType === "ABP_Report" ? (
+                            ) : (selectedState !== "All State" && selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) &&   selectReportType === "ABP_Report" ? (
                                 <TransitionBlockRateCompare />
                             ) : (
                                 ""
