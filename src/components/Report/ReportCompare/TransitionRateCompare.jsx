@@ -329,7 +329,7 @@ export default function TransitionRateCompare() {
           )}
         </div>
       </div>) : ( <div className="col-md-12 graph-box">
-                <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card">
+                <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
                     <div className="text-btn-d d-flex justify-content-between align-items-center">
                         <h2 className="heading-sm">
                             Comparison of States By Transition Rate
@@ -347,9 +347,9 @@ export default function TransitionRateCompare() {
                     <div className="Comparison-box">
                         <div className="row align-items-center">
                             <div className="col-md-2 col-lg-2">
-                                <h4 className="sub-heading">Add Districts to Compare</h4>
+                                <h4 className="sub-heading text-left">Add Districts to Compare</h4>
                             </div>
-                            <div className="col-md-10 col-lg-10">
+                            <div className="col-md-10 col-lg-10 pe-2">
                                 <div className="select-infra Comparison-select-group">
                                     <select className="form-select bg-grey2" defaultValue={""}>
                                         <option value="">Add a District </option>
@@ -378,7 +378,7 @@ export default function TransitionRateCompare() {
 
                     <Tabs defaultActiveKey="State" id="top-tabs-st-dis-block">
                         <Tab eventKey="State" title="State">
-                            <div className="piechart-box row mt-4 align-items-center">
+                            <div className="piechart-box row align-items-center">
                                
                                 <HighchartsReact
                                     highcharts={Highcharts}
