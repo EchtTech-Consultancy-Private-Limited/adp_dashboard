@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from "react";
+import "../graph/graph.scss";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectDistrict,
@@ -19,31 +23,43 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BlankPage from "../BlankPage";
 import { useTranslation } from "react-i18next";
-import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer"
+import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer";
 
 export default function TransitionRateCompare() {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
 
-  const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
+  const aspirationalData = useSelector(
+    (state) => state.reportAdpAbpType.aspirationalAllData
+  );
   const selectedOption = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareOption
   );
   const selectedAdpAbpOption = useSelector(
     (state) => state.reportAdpAbpType.updateReportType
   );
+  const isActiveGraph = useSelector(
+    (state) => state.reportAdpAbpType.isActiveGraph
+  );
   const MAX_DISTRICTS = 5;
   const states = useSelector((state) => state.locationAdp?.states);
   const districts = useSelector((state) => state.locationAdp?.districts);
-  const selectedState = useSelector((state) => state.locationAdp?.selectedState);
+  const selectedState = useSelector(
+    (state) => state.locationAdp?.selectedState
+  );
 
   const selectedDistricts = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareDistricts
   );
- 
+
   const selectedYear = useSelector(
     (state) => state.reportAdpAbpType?.selectedYear
   );
+
+  const selectReportType = useSelector(
+    (state) => state.reportAdpAbpType.updateReportType
+  );
+
   const [errorMessages, setErrorMessages] = useState(
     new Array(MAX_DISTRICTS).fill("")
   );
@@ -58,7 +74,6 @@ export default function TransitionRateCompare() {
   // useEffect(() => {
   //   dispatch(setAspirationalAllData(yearWiseData));
   // }, [dispatch,selectedYear,aspirationalData]);
-
 
   useEffect(() => {
     const structuredData = aspirationalData.reduce((acc, curr) => {
@@ -103,14 +118,19 @@ export default function TransitionRateCompare() {
     }, []);
 
     dispatch(setStates(structuredData));
-    const updatedSelectedDistricts = selectedDistricts.map((selectedDistrict) => {
-      return aspirationalData.find(
-        (district) => district.lgd_district_id === selectedDistrict.lgd_district_id
-      ) || selectedDistrict;
-    });
+    const updatedSelectedDistricts = selectedDistricts.map(
+      (selectedDistrict) => {
+        return (
+          aspirationalData.find(
+            (district) =>
+              district.lgd_district_id === selectedDistrict.lgd_district_id
+          ) || selectedDistrict
+        );
+      }
+    );
 
     dispatch(setselectedCompareDistricts(updatedSelectedDistricts));
-  }, [dispatch, aspirationalData, selectedYear])
+  }, [dispatch, aspirationalData, selectedYear]);
 
   // Handle state change
   const handleStateChange = (value) => {
@@ -143,7 +163,7 @@ export default function TransitionRateCompare() {
       (district) =>
         district &&
         district.lgd_district_name !==
-        selectedDistricts[position]?.lgd_district_name
+          selectedDistricts[position]?.lgd_district_name
     );
     return districts.filter(
       (district) =>
@@ -157,6 +177,50 @@ export default function TransitionRateCompare() {
   const handleOptionChange = (event) => {
     dispatch(setselectedCompareOption(event.target.value));
   };
+
+
+  // const male_female = [{
+  //   name: 'Female',
+  //   data: [1, 1, 1, 1],
+  //   color: "#751539"
+  // }, {
+
+  //   name: 'Male',
+  //   data: [1, 1, 1, 1],
+  //   color: "#57C1BB"
+  // }];
+
+  const [totalMaleFemale, setTotalMaleFemale] = useState([]);
+
+
+  // ********Start Baar Graph******
+  // Update totalMaleFemale data based on selectedDistricts
+  useEffect(() => {
+    const male_female_data = selectedDistricts.map((district) => ({
+      name: district.lgd_district_name,
+      data: [
+        selectedOption === "upper_primary_to_secondary"
+          ? district?.upri_b
+          : district?.sec_b,
+        selectedOption === "secondary_to_higher_secondary"
+          ? district?.upri_g
+          : district?.sec_g,
+      ],
+      // color:  % 2 === 0 ? "#57C1BB" : "#751539",
+    }));
+
+    setTotalMaleFemale(male_female_data);
+  }, [selectedDistricts, selectedOption]);
+
+
+
+
+
+
+
+
+  console.log("totalMaleFemale=========>",totalMaleFemale)
+
   return (
     <>
       <div className="card-box">
@@ -239,15 +303,20 @@ export default function TransitionRateCompare() {
                       <div key={index}>
                         <Select
                           className="form-select"
-                          onChange={(value) => handleDistrictChange(value, index)}
+                          onChange={(value) =>
+                            handleDistrictChange(value, index)
+                          }
                           style={{ width: "100%" }}
-                          placeholder={`${t('addDistrict')} ${index + 1}`}
+                          placeholder={`${t("addDistrict")} ${index + 1}`}
                           mode="single"
                           showSearch
-                          value={selectedDistricts[index]?.lgd_district_name || `${t('addDistrict')}`}
+                          value={
+                            selectedDistricts[index]?.lgd_district_name ||
+                            `${t("addDistrict")}`
+                          }
                           disabled={index > 0 && !selectedDistricts[index - 1]}
                         >
-                          {getFilteredDistricts().map((district) => (
+                          {getFilteredDistricts(index)?.map((district) => (
                             <Select.Option
                               key={district?.lgd_district_id}
                               value={district?.lgd_district_name}
@@ -263,10 +332,11 @@ export default function TransitionRateCompare() {
                 <div className="col-md-3 order_2">
                   <div className="tab-box float-end">
                     <button className="tab-button active">
-                      <img src={card} alt="card" /> <span>{t('cardView')}</span>
+                      <img src={card} alt="card" /> <span>{t("cardView")}</span>
                     </button>
                     <button className="tab-button">
-                      <img src={table} alt="Table" /> <span>{t('tableView')}</span>
+                      <img src={table} alt="Table" />{" "}
+                      <span>{t("tableView")}</span>
                     </button>
                   </div>
                 </div>
@@ -277,79 +347,244 @@ export default function TransitionRateCompare() {
           {selectedState !== SelectState ? (
             <div className="col-md-12 mt-4">
               <div className="row">
-                {selectedDistricts && selectedDistricts?.map((district, index) => (
-                  <div
-                    className={`col-sm-12 col-20 ${selectedDistricts.length === 1 ? "m-auto" : ""
+                {selectedDistricts &&
+                  selectedDistricts?.map((district, index) => (
+                    <div
+                      className={`col-sm-12 col-20 ${
+                        selectedDistricts.length === 1 ? "m-auto" : ""
                       }`}
-                  >
-                    {selectedDistricts.length === 1 ? (
-                      <Card
-                        style={{
-                          width: 300,
-                        }}
-                      >
-                        <b>{t("selectOneMoreDistrict")}</b>
-                      </Card>
-                    ) : (
-                      <>
-                        {" "}
-                        <div className="comp-card" key={index}>
-                          <div className="upper-card">
-                            <div className="d-flex align-items-center justify-content-between w-100">
-                              <div className="d-flex">
-                                <div>
-                                  <div
-                                    className={`number-card card-color-${index + 1
-                                      }`}
-                                  >
-                                    {index + 1}
+                    >
+                      {selectedDistricts.length === 1 ? (
+                        <Card
+                          style={{
+                            width: 300,
+                          }}
+                        >
+                          <b>{t("selectOneMoreDistrict")}</b>
+                        </Card>
+                      ) : (
+                        <>
+                          {!isActiveGraph ? (
+                            <div className="comp-card" key={index}>
+                              <div className="upper-card">
+                                <div className="d-flex align-items-center justify-content-between w-100">
+                                  <div className="d-flex">
+                                    <div>
+                                      <div
+                                        className={`number-card card-color-${
+                                          index + 1
+                                        }`}
+                                      >
+                                        {index + 1}
+                                      </div>
+                                    </div>
+                                    <div className="text-card">
+                                      <p>District</p>
+                                      <h6 className="sub-title">
+                                        {district.lgd_district_name}
+                                      </h6>
+                                    </div>
+                                  </div>
+                                  <div className="arrow-d">
+                                    {" "}
+                                    <ArrowRenderer data={district} />
                                   </div>
                                 </div>
+                              </div>
+
+                              <div className="lower-card">
                                 <div className="text-card">
-                                  <p>District</p>
+                                  <p>Boys</p>
                                   <h6 className="sub-title">
-                                    {district.lgd_district_name}
+                                    {selectedOption ===
+                                    "upper_primary_to_secondary"
+                                      ? district?.upri_b
+                                      : district?.sec_b}
+                                  </h6>
+                                </div>
+                                <div className="text-card">
+                                  <p>Girls</p>
+                                  <h6 className="sub-title">
+                                    {selectedOption ===
+                                    "upper_primary_to_secondary"
+                                      ? district?.upri_g
+                                      : district?.sec_g}
+                                  </h6>
+                                </div>
+                                <div className="text-card">
+                                  <p>Total</p>
+                                  <h6 className="sub-title">
+                                    {selectedOption ===
+                                    "upper_primary_to_secondary"
+                                      ? district?.upri_t
+                                      : district?.sec_t}
                                   </h6>
                                 </div>
                               </div>
-                              <div className="arrow-d">
-                                {" "}
-                                <ArrowRenderer data={district} />
+                            </div>
+                          ) : (
+                            <></>
+                          )}{" "}
+                          :
+                        </>
+                      )}
+                    </div>
+                  ))}
+
+                {isActiveGraph ? (
+                  <div>
+                    <div className="card-box-impact tab-for-graph number_of_male_female_teacher mt-4">
+                      <div className="row">
+                        <div className="col-md-12 col-lg-12">
+                          <div className="impact-box-content-education">
+                            <div className="text-btn-d">
+                              <h2 className="heading-sm">
+                                {t("number_of_male_female_teacher")}
+                              </h2>
+                              {/* <div className='d-flex w-20'>
+                                                        <button className='view-table-btn'> <span className="material-icons-round">table_view</span> View Table </button>
+                                                        <button className='view-table-btn view-more-btn ms-1'> <span className="material-icons-round me-0">more_horiz</span></button>
+                                                    </div> */}
+                            </div>
+
+                            <div className="piechart-box row mt-4">
+                              <div className="col-md-12">
+                                <HighchartsReact
+                                  highcharts={Highcharts}
+                                  options={{
+                                    chart: {
+                                      type: "column",
+                                      marginTop: 50,
+                                      events: {
+                                        beforePrint: function () {
+                                          this.exportSVGElements[0].box.hide();
+                                          this.exportSVGElements[1].hide();
+                                        },
+                                        afterPrint: function () {
+                                          this.exportSVGElements[0].box.show();
+                                          this.exportSVGElements[1].show();
+                                        },
+                                      },
+                                    },
+                                    xAxis: {
+                                      // categories:district.lgd_district_name,
+                                      title: {
+                                        text: null,
+                                      },
+                                      gridLineWidth: 1,
+                                      lineWidth: 0,
+                                    },
+                                    yAxis: {
+                                      min: 0,
+                                      title: {
+                                        // text: 'Population (millions)',
+                                        // align: 'high'
+                                        enabled: false,
+                                      },
+                                      labels: {
+                                        overflow: "justify",
+                                      },
+                                      gridLineWidth: 0,
+                                    },
+
+                                    tooltip: {
+                                      valueSuffix: "",
+                                      valueFormatter: function () {
+                                        return this.y.toFixed(2);
+                                      },
+                                      pointFormatter: function () {
+                                        return `<span style="color:${
+                                          this.color
+                                        }">\u25CF</span> ${
+                                          this.series.name
+                                        }: <b>${this.y.toLocaleString(
+                                          "en-IN"
+                                        )}</b><br/>`;
+                                      },
+                                    },
+                                    title: {
+                                      text: t("number_of_male_female_teacher"),
+                                    },
+                                    plotOptions: {
+                                      column: {
+                                        // Use 'column' instead of 'bar' for column charts
+
+                                        dataLabels: {
+                                          enabled: true,
+                                          formatter: function () {
+                                            return this.y.toLocaleString(
+                                              "en-IN"
+                                            );
+                                          },
+                                        },
+                                        groupPadding: 0,
+                                      },
+                                    },
+                                    legend: {
+                                      layout: "horizontal",
+                                      align: "center",
+                                      verticalAlign: "bottom",
+                                      itemMarginTop: 10,
+                                      itemMarginBottom: 10,
+                                    },
+                                    events: {
+                                      load: function () {
+                                        const chart = this;
+                                        // When the chart is loaded and the table is rendered, format the table cells
+                                        const table = document.querySelector(
+                                          ".highcharts-data-table table"
+                                        );
+                                        if (table) {
+                                          const cells =
+                                            table.querySelectorAll("tbody td");
+                                          cells.forEach((cell) => {
+                                            const cellValue = parseFloat(
+                                              cell.innerText.replace(/,/g, "")
+                                            );
+                                            if (!isNaN(cellValue)) {
+                                              cell.innerText =
+                                                cellValue.toLocaleString(
+                                                  "en-IN"
+                                                );
+                                            }
+                                          });
+                                        }
+                                      },
+                                    },
+                                    credits: {
+                                      enabled: false,
+                                    },
+                                    series: totalMaleFemale,
+                                    exporting: {
+                                      filename: t(
+                                        "number_of_male_female_teacher"
+                                      ),
+                                      csv: {
+                                        columnHeaderFormatter: function (item) {
+                                          if (
+                                            !item ||
+                                            item instanceof Highcharts.Axis
+                                          ) {
+                                            return t("category");
+                                          }
+                                          return item.name;
+                                        },
+                                      },
+                                    },
+                                  }}
+                                  // allowChartUpdate={true}
+                                  immutable={true}
+                                />
                               </div>
                             </div>
                           </div>
-
-                          <div className="lower-card">
-                            <div className="text-card">
-                              <p>Boys</p>
-                              <h6 className="sub-title">
-                                {selectedOption === "upper_primary_to_secondary"
-                                  ? district?.upri_b
-                                  : district?.sec_b}
-                              </h6>
-                            </div>
-                            <div className="text-card">
-                              <p>Girls</p>
-                              <h6 className="sub-title">
-                                {selectedOption === "upper_primary_to_secondary"
-                                  ? district?.upri_g
-                                  : district?.sec_g}
-                              </h6>
-                            </div>
-                            <div className="text-card">
-                              <p>Total</p>
-                              <h6 className="sub-title">
-                                {selectedOption === "upper_primary_to_secondary"
-                                  ? district?.upri_t
-                                  : district?.sec_t}
-                              </h6>
-                            </div>
-                          </div>
                         </div>
-                      </>
-                    )}
+                      </div>
+                    </div>
                   </div>
-                ))}
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           ) : (
