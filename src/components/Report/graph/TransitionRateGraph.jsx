@@ -105,7 +105,7 @@ export default function TransitionRateGraph() {
     });
     const headingText = TopDistricts.length < 10
     ? `${t('performance_of')} ${selectReportType === "ADP_Report" ? t('district') : t('block')} ${t('by_transition_rate')}`
-    : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}`;
+    : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}  ${t('transition_rate')}`;
 
     return (
         <div className="row">
