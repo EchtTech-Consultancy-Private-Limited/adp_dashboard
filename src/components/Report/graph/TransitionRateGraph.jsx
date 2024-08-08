@@ -103,15 +103,15 @@ export default function TransitionRateGraph() {
             pointWidth: 12,
         }],
     });
-
-
-
+    const headingText = TopDistricts.length < 10
+    ? `${t('performance_of')} ${selectReportType === "ADP_Report" ? t('district') : t('block')} ${t('by_transition_rate')}`
+    : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}`;
 
     return (
         <div className="row">
             <div className="col-md-6">
                 <div className="graph-card">
-                    <h4 className='heading-sm'>{t('top_ten')} {selectReportType === "ADP_Report" ? t('district') : t('block')}</h4>
+                <h4 className='heading-sm'>{headingText}</h4>
                     <div className='graph'>
                         <HighchartsReact
                             highcharts={Highcharts}
@@ -126,8 +126,6 @@ export default function TransitionRateGraph() {
                 <TransitionRateGraphA />
 
             </div>
-
-           
         </div>
     );
 }

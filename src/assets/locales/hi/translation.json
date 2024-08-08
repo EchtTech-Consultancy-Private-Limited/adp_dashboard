@@ -96,8 +96,11 @@
   "selectBlockToCompare": "तुलना के लिए ब्लॉक चुनें",
   "top_ten":"शीर्ष दस",
   "block":"शिलाखंद",
-  "label_wise_transition_rate":"लेबल वार संक्रमण दर",
+  "transition_rate":"संक्रमण दर",
+  "label_wise_transition_rate":"स्तर के अनुसार संक्रमण दर",
   "total_transition_rate":"कुल संक्रमण दर",
   "add_district_to_compare":"तुलना करने के लिए जिले जोड़ें",
-  "add_block_to_compare":"तुलना करने के लिए ब्लॉक जोड़ें"
+  "add_block_to_compare":"तुलना करने के लिए ब्लॉक जोड़ें",
+  "performance_of":"संक्रमण दर के अनुसार",
+  "by_transition_rate":"का प्रदर्शन"
 }
