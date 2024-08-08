@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {  useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectDistrict,
@@ -16,25 +16,23 @@ import { SelectState } from "../../../constant/Constant";
 import BlankPage from "../BlankPage";
 import { useTranslation } from "react-i18next";
 import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer"
-import Highcharts, { color } from "highcharts";
+import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
 import '../graph/graph.scss';
 export default function TransitionRateCompare() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
   const selectedOption = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareOption
   );
-  const selectedAdpAbpOption = useSelector(
-    (state) => state.reportAdpAbpType.updateReportType
-  );
+  // const selectedAdpAbpOption = useSelector(
+  //   (state) => state.reportAdpAbpType.updateReportType
+  // );
   const isActiveGraph = useSelector((state) => state.reportAdpAbpType.isActiveGraph)
   const MAX_DISTRICTS = 5;
-  const states = useSelector((state) => state.locationAdp?.states);
+  // const states = useSelector((state) => state.locationAdp?.states);
   const districts = useSelector((state) => state.locationAdp?.districts);
   const selectedState = useSelector((state) => state.locationAdp?.selectedState);
 
@@ -106,11 +104,11 @@ export default function TransitionRateCompare() {
     dispatch(setselectedCompareDistricts(updatedSelectedDistricts));
   }, [dispatch, aspirationalData, selectedYear])
 
-  // Handle state change
-  const handleStateChange = (value) => {
-    dispatch(selectState(value));
-    dispatch(setselectedCompareDistricts([]));
-  };
+  // // Handle state change
+  // const handleStateChange = (value) => {
+  //   dispatch(selectState(value));
+  //   dispatch(setselectedCompareDistricts([]));
+  // };
 
   // Handle district change
   const handleDistrictChange = (value, position) => {
@@ -293,7 +291,7 @@ export default function TransitionRateCompare() {
                                   </div>
                                 </div>
                                 <div className="text-card">
-                                  <p>District</p>
+                                  <p>{t('district')}</p>
                                   <h6 className="sub-title">
                                     {district.lgd_district_name}
                                   </h6>
@@ -308,7 +306,7 @@ export default function TransitionRateCompare() {
 
                           <div className="lower-card">
                             <div className="text-card">
-                              <p>Boys</p>
+                              <p>{t('boys')}</p>
                               <h6 className="sub-title">
                                 {selectedOption === "upper_primary_to_secondary"
                                   ? district?.upri_b
@@ -316,7 +314,7 @@ export default function TransitionRateCompare() {
                               </h6>
                             </div>
                             <div className="text-card">
-                              <p>Girls</p>
+                              <p>{t('girls')}</p>
                               <h6 className="sub-title">
                                 {selectedOption === "upper_primary_to_secondary"
                                   ? district?.upri_g
@@ -324,7 +322,7 @@ export default function TransitionRateCompare() {
                               </h6>
                             </div>
                             <div className="text-card">
-                              <p>Total</p>
+                              <p>{t('total')}</p>
                               <h6 className="sub-title">
                                 {selectedOption === "upper_primary_to_secondary"
                                   ? district?.upri_t
@@ -332,7 +330,7 @@ export default function TransitionRateCompare() {
                               </h6>
                             </div>
                           </div>
-                        </div>) : (<div>Hello</div>)}
+                        </div>) : (<div> Data is empty</div>)}
 
                       </>
                     )}
@@ -348,7 +346,7 @@ export default function TransitionRateCompare() {
         <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
           <div className="text-btn-d d-flex justify-content-between align-items-center">
             <h2 className="heading-sm">
-              Comparison By Transition Rate
+            {t("comparisonByTransitionRate")}
             </h2>
 
             <div className="select-infra button-group-filter">
@@ -356,8 +354,8 @@ export default function TransitionRateCompare() {
                 value={selectedOption}
                 onChange={handleOptionChange}
               >
-                <option value="upper_primary_to_secondary">Upper Primary to Secondary </option>
-                <option value="secondary_to_higher_secondary">Secondary to Higher Secondary</option>
+                <option value="upper_primary_to_secondary"> {t("upperPrimaryToSecondary")}</option>
+                <option value="secondary_to_higher_secondary">  {t("secondaryToHigherSecondary")}</option>
               </select>
             </div>
 
@@ -366,7 +364,7 @@ export default function TransitionRateCompare() {
           <div className="Comparison-box">
             <div className="row align-items-center">
               <div className="col-md-2 col-lg-2">
-                <h4 className="sub-heading text-left">Add Districts to Compare</h4>
+                <h4 className="sub-heading text-left">{t('add_district_to_compare')}</h4>
               </div>
               <div className="col-md-10 col-lg-10 pe-2">
                 <div className="select-infra Comparison-select-group">
@@ -488,13 +486,13 @@ export default function TransitionRateCompare() {
                 },
                 series: [{
                   color: "#17AFD2",
-                  name: 'Boys',
+                  name: t('boys'),
               
                   data: boysData,
                   maxPointWidth: 50,
                 }, {
                   color: "#6C6CB0",
-                  name: 'Girls',
+                  name: t('girls'),
 
          
                   data: girlsData,
@@ -503,7 +501,7 @@ export default function TransitionRateCompare() {
                 },
                 {
                   color: "#FFB74BF0",
-                  name: 'Total',
+                  name: t('total'),
                   data: Total_boys_girls,
                   maxPointWidth: 50,
                 }

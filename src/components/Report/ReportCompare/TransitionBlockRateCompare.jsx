@@ -393,7 +393,7 @@ export default function TransitionBlockRateCompare() {
           <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
             <div className="text-btn-d d-flex justify-content-between align-items-center">
               <h2 className="heading-sm">
-                Comparison By Transition Rate
+              {t("comparisonByTransitionRate")}
               </h2>
 
               <div className="select-infra button-group-filter">
@@ -405,10 +405,10 @@ export default function TransitionBlockRateCompare() {
                   onChange={handleOptionChange}
                 >
                   <option value="upper_primary_to_secondary">
-                    Upper Primary to Secondary{" "}
+                  {t("upperPrimaryToSecondary")}
                   </option>
                   <option value="secondary_to_higher_secondary">
-                    Secondary to Higher Secondary
+                  {t("secondaryToHigherSecondary")}
                   </option>
                 </select>
               </div>
@@ -418,7 +418,7 @@ export default function TransitionBlockRateCompare() {
               <div className="row align-items-center">
                 <div className="col-md-2 col-lg-2">
                   <h4 className="sub-heading text-left">
-                    Add Blocks to Compare
+                         {t('add_block_to_compare')}
                   </h4>
                 </div>
                 <div className="col-md-10 col-lg-10 pe-2">
@@ -549,24 +549,21 @@ export default function TransitionBlockRateCompare() {
                     series: [
                       {
                         color: "#17AFD2",
-                        name: "Boys",
-
+                        name: t('boys'),
                         data: boysData,
                         maxPointWidth: 50,
 
                       },
                       {
                         color: "#6C6CB0",
-                        name: "Girls",
-
-
+                        name: t('girls'),
                         data: girlsData,
                         maxPointWidth: 50,
 
                       },
                       {
                         color: "#FFB74BF0",
-                        name: "Total",
+                        name: t('total'),
                         data: Total_boys_girls,
                         maxPointWidth: 50,
 
