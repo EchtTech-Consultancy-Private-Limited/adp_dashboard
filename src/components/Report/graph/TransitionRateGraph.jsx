@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './graph.scss';
-import Highcharts, { color } from "highcharts";
+import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useSelector } from 'react-redux';
 import TransitionRateGraphA from './TransitionRateGraphA';
+import { useTranslation } from "react-i18next";
 
 export default function TransitionRateGraph() {
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
+    const { t} = useTranslation();
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
 
@@ -18,7 +18,6 @@ export default function TransitionRateGraph() {
     })).sort((a, b) => b.combinedScore - a.combinedScore);
 
     const TopDistricts = combinedData(finalData)?.slice(0, 10);
-    const AllDistricts = combinedData(finalData);
 
     const getChartData = (data) => {
         const categories = data.map((district) => selectReportType === "ADP_Report" ? district.lgd_district_name : district.lgd_block_name);
@@ -28,13 +27,6 @@ export default function TransitionRateGraph() {
     };
 
     const { categories: topCategories, boysData: topBoysData, girlsData: topGirlsData } = getChartData(TopDistricts || []);
-    const { categories, boysData, girlsData } = getChartData(AllDistricts?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage) || []);
-
-    const totalPages = Math.ceil((AllDistricts?.length || 0) / itemsPerPage);
-
-    const handleClick = (page) => {
-        setCurrentPage(page);
-    };
 
     const chartOptions = (categories, boysData, girlsData, title) => ({
         chart: {
@@ -100,26 +92,26 @@ export default function TransitionRateGraph() {
             enabled: false,
         },
         series: [{
-            name: 'Boys',
+            name: t('boys'),
             color: "#17AFD2",
             data: boysData,
             pointWidth: 12,
         }, {
-            name: 'Girls',
+            name: t('girls'),
             color: "#6C6CB0",
             data: girlsData,
             pointWidth: 12,
         }],
     });
-
-
-
+    const headingText = TopDistricts.length < 10
+    ? `${t('performance_of')} ${selectReportType === "ADP_Report" ? t('district') : t('block')} ${t('by_transition_rate')}`
+    : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}`;
 
     return (
         <div className="row">
             <div className="col-md-6">
                 <div className="graph-card">
-                    <h4 className='heading-sm'>Top 10 {selectReportType === "ADP_Report" ? "Districts" : "Blocks"}</h4>
+                <h4 className='heading-sm'>{headingText}</h4>
                     <div className='graph'>
                         <HighchartsReact
                             highcharts={Highcharts}
@@ -134,8 +126,6 @@ export default function TransitionRateGraph() {
                 <TransitionRateGraphA />
 
             </div>
-
-           
         </div>
     );
 }

@@ -3,8 +3,10 @@ import './graph.scss';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { useSelector } from 'react-redux';
+import { useTranslation } from "react-i18next";
 
 export default function TransitionRateGraphA() {
+    const { t } = useTranslation();
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
@@ -45,7 +47,7 @@ export default function TransitionRateGraphA() {
         <div className="col-md-12">
             <div className="graph-card">
                 <div className="d-flex align-items-center justify-content-between">
-                    <h4 className='heading-sm'>Lable Wise Transition Rate of {selectReportType === "ADP_Report" ? "District" : "Block"} </h4>
+                    <h4 className='heading-sm'>{t('label_wise_transition_rate')} {selectReportType === "ADP_Report" ? t('district') : t('block')} </h4>
                 </div>
                 <div className="graph mt-2">
                     <div className="radio-button">
@@ -57,7 +59,7 @@ export default function TransitionRateGraphA() {
                                 checked={selectedValue === 'Boys'}
                                 onChange={handleChange}
                             />
-                            <label htmlFor="boys">Boys</label>
+                            <label htmlFor="boys">{t('boys')}</label>
                         </div>
                         <div className="box-radio ms-4">
                             <input
@@ -67,7 +69,7 @@ export default function TransitionRateGraphA() {
                                 checked={selectedValue === 'Girls'}
                                 onChange={handleChange}
                             />
-                            <label htmlFor="girls">Girls</label>
+                            <label htmlFor="girls">{t('girls')}</label>
                         </div>
                     </div>
                     <HighchartsReact
@@ -87,7 +89,7 @@ export default function TransitionRateGraphA() {
                             },
                             xAxis: {
                                 title: {
-                                    text: 'Total Transition Rate',
+                                    text: t('total_transition_rate'),
                                     margin: 10,
                                     style: {
                                         color: '#000',
@@ -105,7 +107,7 @@ export default function TransitionRateGraphA() {
                             },
                             yAxis: {
                                 title: {
-                                    text: selectedValue,
+                                    text:  selectedValue === 'Boys' ? t('boys'):t('girls'),
                                     style: {
                                         color: '#000',
                                         fontWeight: 'bold'
@@ -165,7 +167,7 @@ export default function TransitionRateGraphA() {
                             },
                             series: [
                                 {
-                                    name: selectedValue === 'Boys' ? 'Boys' : 'Girls',
+                                    name: selectedValue === 'Boys' ? t('boys'):t('girls'),
                                     data: selectedValue === 'Boys' ? boysDataPoints : girlsDataPoints,
                                     color: selectedValue === 'Boys' ? '#FFB74BF0' : '#2B9C9F',
                                     pointWidth: 20
