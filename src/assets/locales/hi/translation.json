@@ -93,5 +93,11 @@
   "comparisonByTeacherAndSchoolResources": "शिक्षक और स्कूल संसाधनों द्वारा तुलना",
   "comparisonByStudentPerformance": "छात्र प्रदर्शन द्वारा तुलना",
   "comparisonBySchoolInfrastructure": "स्कूल अवसंरचना द्वारा तुलना",
-  "selectBlockToCompare": "तुलना के लिए ब्लॉक चुनें"
+  "selectBlockToCompare": "तुलना के लिए ब्लॉक चुनें",
+  "top_ten":"शीर्ष दस",
+  "block":"शिलाखंद",
+  "label_wise_transition_rate":"लेबल वार संक्रमण दर",
+  "total_transition_rate":"कुल संक्रमण दर",
+  "add_district_to_compare":"तुलना करने के लिए जिले जोड़ें",
+  "add_block_to_compare":"तुलना करने के लिए ब्लॉक जोड़ें"
 }
