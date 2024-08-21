@@ -28,7 +28,8 @@ function App() {
   const selectedDistricts = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareDistricts
   );
-
+  const selectedReport = useSelector((state) => state.reportAdpAbpType.selectedReport);
+  console.log(selectedReport, "selectedReportselectedReport")
   useEffect(() => {
     if (toggleDarkMode) {
       localStorage.setItem("dark-mode", "true");
@@ -67,6 +68,56 @@ function App() {
     }
   }, [selectReportType,selectedYear]);
 
+  const combinedtopData = {
+    "2019-20": {
+      ADP_Report: {
+        "Teacher and School Resources": aspirationalAdpData2019,
+        "School Infrastructure": aspirationalAdpData2019,
+        "Student Performance": aspirationalAdpData2019,
+      }
+     
+    },
+    "2020-21": {
+      ADP_Report: {
+        "Teacher and School Resources": aspirationalAdpData2020,
+        "School Infrastructure": aspirationalAdpData2020,
+        "Student Performance": aspirationalAdpData2020,
+      }
+     
+    },
+    "2021-22": {
+      ADP_Report: {
+        "Teacher and School Resources": aspirationalAdpData2021,
+        "School Infrastructure": aspirationalAdpData2021,
+        "Student Performance": aspirationalAdpData2021,
+      }
+      
+     
+    },
+    "2022-23": {
+      ADP_Report: {
+        "Teacher and School Resources": aspirationalAdpData2022,
+        "School Infrastructure": aspirationalAdpData2022,
+        "Student Performance": aspirationalAdpData2022,
+      }
+     
+    
+    },
+  };
+  
+  useEffect(() => {
+    const selectedYearData = combinedtopData[selectedYear];
+    if (selectedYearData) {
+      const selectedReportData = selectedYearData[selectReportType];
+      if (selectedReportData) {
+        const specificReportData = selectedReportData[selectedReport];
+        if (specificReportData) {
+          dispatch(setselectedDataAllYear(specificReportData));
+          dispatch(setAspirationalAllData(specificReportData));
+        }
+      }
+    }
+  }, [selectReportType, selectedYear, selectedReport]);
   
   return (
     <div className="App">
