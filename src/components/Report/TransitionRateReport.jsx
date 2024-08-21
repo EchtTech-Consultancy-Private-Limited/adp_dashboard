@@ -771,7 +771,7 @@ export default function TransitionRateReport() {
     };
 
     const [isActive, setIsActive] = useState(false);
-// console.log(isActive, "isActive")
+
     const toggleClass = (e) => {
        
         dispatch(setIsActiveGraph(!isActiveGraph));

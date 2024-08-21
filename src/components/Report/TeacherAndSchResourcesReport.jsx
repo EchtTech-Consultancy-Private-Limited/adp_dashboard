@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 import BannerReportFilter from "./BannerReportFilter";
 import table from "../../assets/images/table.svg";
 import chart from "../../assets/images/bar-chart.svg";
+import school from "../../assets/images/school.png";
 import "./report.scss";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
@@ -17,6 +18,7 @@ import {
     SetFinalData,
     setselectedOption,
     SetSheetName,
+    setIsActiveGraph
 } from "../../redux/slice/reportTypeSlice";
 import {
     AllBlock,
@@ -59,6 +61,7 @@ export default function TeacherAndSchResourcesReport() {
     const selectedYear = useSelector(
         (state) => state.reportAdpAbpType.selectedYear
     );
+    const isActiveGraph = useSelector((state) => state.reportAdpAbpType.isActiveGraph)
     const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName);
     const [gridApi, setGridApi] = useState();
     const savedReportName = localStorage.getItem("selectedReport");
@@ -595,6 +598,14 @@ export default function TeacherAndSchResourcesReport() {
         document.getElementById("export_data").selectedIndex = 0;
     };
 
+    const [isActive, setIsActive] = useState(false);
+
+    const toggleClass = (e) => {
+
+        dispatch(setIsActiveGraph(!isActiveGraph));
+
+    };
+
     return (
         <>
             <ScrollToTopOnMount />
@@ -639,7 +650,7 @@ export default function TeacherAndSchResourcesReport() {
                                                 </h3>
                                             </div>
                                             <div className="tab-box">
-                                                <button className="tab-button active">
+                                                <button className={`tab-button  ${isActiveGraph ? '' : 'active'}`} onClick={toggleClass}>
                                                     <img src={table} alt="Table" />{" "}
                                                     <span>{t("tableView")}</span>
                                                 </button>
@@ -647,12 +658,25 @@ export default function TeacherAndSchResourcesReport() {
                                                     <img src={chart} alt="chart" />{" "}
                                                     <span>{t("chartView")}</span>
                                                 </button>
+                                                <button className={`tab-button  ${isActiveGraph ? 'active' : ''}`} onClick={toggleClass}>
+                                                    <img src={school} alt="school" className="text-invert-f" />{" "}
+                                                    <span>Top 50 Schools</span>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="d-flex w-m-100 justify-content-end">
-                                            <div className="">
+
+                                            
+                                                <select className="form-select download-button school-btn" defaultValue={"Top 50 School"} onChange={handleExportData}>                                                   
+                                                    <option value="Top_School">
+                                                        Top 50 School
+                                                    </option>
+                                                    <option value="Upcoming_school">
+                                                       Upcoming 50
+                                                    </option>
+                                                </select>
                                                 {/* <img src={download} alt="download" /> */}
                                                 <select
                                                     id="export_data"
@@ -672,14 +696,14 @@ export default function TeacherAndSchResourcesReport() {
                                                         {t("downloadAsExcel")}
                                                     </option>
                                                 </select>
-                                            </div>
+                                           
                                         </div>
                                     </div>
                                 </div>
 
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <div className="table-box mt-4">
+                                        <div className={`table-box mt-4  ${isActiveGraph ? 'd-none' : ''}`}>
                                             <div
                                                 id="content"
                                                 className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
@@ -687,7 +711,22 @@ export default function TeacherAndSchResourcesReport() {
                                             >
                                                 <AgGridReact
                                                     columnDefs={columns}
-                                                    rowData={finalData || finalData.length>0 ? finalData :""}
+                                                    rowData={finalData || finalData.length > 0 ? finalData : ""}
+                                                    defaultColDef={defColumnDefs}
+                                                    onGridReady={onGridReady}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className={`table-box mt-4  ${isActiveGraph ? '' : 'd-none'}`}>
+                                            <div
+                                                id="content"
+                                                className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
+                                                style={{ width: "100%", height: 400 }}
+                                            >
+                                                <AgGridReact
+                                                    columnDefs={columns}
+                                                    rowData={finalData || finalData.length > 0 ? finalData : ""}
                                                     defaultColDef={defColumnDefs}
                                                     onGridReady={onGridReady}
                                                 />
