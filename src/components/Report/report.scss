@@ -264,12 +264,8 @@
 
 .tab-box {
     margin-left: 20px;
-    width: 510px;
-
-    .active .text-invert-f{
-        filter:invert(1) !important;
-    }
-
+    width: 260px;
+    
     @media (max-width: 991px) {
         margin-left: 0;
         width: 25%;
