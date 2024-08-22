@@ -12,12 +12,17 @@ import { useTranslation } from "react-i18next";
 import { jsPDF } from "jspdf";
 import 'jspdf-autotable';
 import { GlobalLoading } from '../GlobalLoading/GlobalLoading'
-import { SetFinalData, setselectedOption, SetSheetName } from '../../redux/slice/reportTypeSlice'
+import { SetFinalData, setselectedOption, setselectedOptionTop50, SetSheetName } from '../../redux/slice/reportTypeSlice'
 import { AllBlock, AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
 import { ScrollToTopOnMount } from '../../Scroll/ScrollToTopOnMount'
 import StudentsPerformanceCompare from './ReportCompare/StudentsPerformanceCompare'
 import StudentsPerformanceBlockCompare from './ReportCompare/StudentsPerformanceBlockCompare'
+import teacherTrainedCwsnAdp2019 from "../../aspirational-reports-data/teacherTrainedCwsnAdp2019-2020.json";
+import teacherTrainedCwsnAdp2020 from "../../aspirational-reports-data/teacherTrainedCwsnAdp2020-2021.json";
+import teacherTrainedCwsnAdp2021 from "../../aspirational-reports-data/teacherTrainedCwsnAdp2021-2022.json";
+import teacherTrainedCwsnAdp2022 from "../../aspirational-reports-data/teacherTrainedCwsnAdp2022-2023.json";
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
+
 
 
 export default function StudentsPerformanceReport() {
@@ -29,7 +34,7 @@ export default function StudentsPerformanceReport() {
     const [locationHeader, SetLocationHeader] = useState();
     const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
-    const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
+    const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOptionTop50);
     const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
     const states = useSelector((state) => state.locationAdp.states);
     const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName);
@@ -39,7 +44,59 @@ export default function StudentsPerformanceReport() {
     const [data, setData] = useState([]);
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData)
     // const [finalData, SetFinalData] = useState([])
+    const [topPtrData, setTopPtrData] = useState([])
+    const [top50Data, setTop50Data] = useState([])
+    const combinedTopData = {
+        "2019-20": {
+            ADP_Report: teacherTrainedCwsnAdp2019,
+        },
+        "2020-21": {
+            ADP_Report: teacherTrainedCwsnAdp2020,
+        },
+        "2021-22": {
+            ADP_Report: teacherTrainedCwsnAdp2021,
+        },
+        "2022-23": {
+            ADP_Report: teacherTrainedCwsnAdp2022,
+        },
+    };
 
+    useEffect(() => {
+        const reportData = combinedTopData[selectedYear] && combinedTopData[selectedYear][selectReportType];
+        if (reportData && reportData.length > 0) {
+            setTopPtrData(reportData);
+        } else {
+            setTopPtrData([]);
+        }
+    }, [selectReportType, selectedYear]);
+
+    const filteredTopeData = useMemo(() => {
+        return Array.isArray(topPtrData) && topPtrData.length > 0
+            ? topPtrData.filter(topeItem => {
+                const districtMatch = selectedDistrict !== "SelectDistrict"
+                    ? finalData.some(finalItem => finalItem.lgd_district_name === topeItem.lgd_district_name)
+                    : true;
+
+                return districtMatch;
+            })
+            : [];
+    }, [topPtrData, selectedDistrict, finalData, selectedYear]);
+
+
+
+    useEffect(() => {
+        if (Array.isArray(filteredTopeData) && filteredTopeData.length > 0) {
+            const sortedData = filteredTopeData.sort((a, b) => a.Rank - b.Rank);
+
+            if (selectedOption === "Top_50_Schools") {
+                setTop50Data(sortedData.slice(0, 50));
+            } else if (selectedOption === "Upcoming_50") {
+                setTop50Data(sortedData.slice(50, 100));
+            }
+        } else {
+            setTop50Data([]);
+        }
+    }, [selectedOption, filteredTopeData, selectedYear]);
     function resteData() {
         // dispatch(selectState(SelectState));
         // dispatch(selectDistrict(SelectDistrict));
@@ -74,7 +131,11 @@ export default function StudentsPerformanceReport() {
     }, [selectedState, SelectState, selectedDistrict, SelectDistrict, selectedBlock, selectReportType])
 
 
-
+    useEffect(() => {
+        if (selectedDistrict === SelectDistrict) {
+            dispatch(setselectedOptionTop50(""));
+        }
+    }, [selectedDistrict])
     useEffect(() => {
         let filteredData = aspirationalData;
 
@@ -136,13 +197,13 @@ export default function StudentsPerformanceReport() {
 
     const percentageRenderer = (params) => {
         const value = params.value;
-
         if (typeof value === 'number') {
-            return value.toFixed(2) + " " + '%';
+            return parseFloat(value).toFixed(2) + " %";
         } else {
             return value;
         }
     };
+    
 
     const [columns, setColumn] = useState([
         {
@@ -170,7 +231,7 @@ export default function StudentsPerformanceReport() {
         },
 
         {
-            headerName: "% Schools with Teachers trained for teaching CWSN",
+            headerName: "Percentange Schools with Teachers trained for teaching CWSN",
             field: "swsn_teacher_percent",
             cellRenderer: percentageRenderer,
             hide: false,
@@ -217,7 +278,7 @@ export default function StudentsPerformanceReport() {
                 },
 
                 {
-                    headerName: "% Schools with Teachers trained for teaching CWSN",
+                    headerName: "Percentange Schools with Teachers trained for teaching CWSN",
                     field: "swsn_teacher_percent",
                     cellRenderer: percentageRenderer,
                     hide: false,
@@ -308,6 +369,80 @@ export default function StudentsPerformanceReport() {
     }, [locationHeader, selectedState, selectedOption,
         selectedDistrict,
         selectReportType,]);
+
+    useEffect(() => {
+        if (selectedState !== "All State") {
+            if (selectedOption === "Top_50_Schools") {
+                setColumn([
+                    {
+                        headerName: "Serial Number",
+                        field: "Serial Number",
+                        hide: true,
+                        suppressColumnsToolPanel: true,
+                        suppressFiltersToolPanel: true,
+                    },
+                    {
+                        headerName: "UDISE School Code",
+                        field: "Udise School Code",
+                        hide: false,
+                    },
+
+
+                    {
+                        headerName: "School Name",
+                        field: "School Name",
+                        hide: false,
+                    },
+
+                    {
+                        headerName: "Percentage Schools with Teachers trained for teaching CWSN",
+                        field: "Teacher trained to teach CWSN",
+                        cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+                ]);
+            }
+            else if (selectedOption === "Upcoming_50") {
+                setColumn([
+                    {
+                        headerName: "Serial Number",
+                        field: "Serial Number",
+                        hide: true,
+                        suppressColumnsToolPanel: true,
+                        suppressFiltersToolPanel: true,
+                    },
+                    {
+                        headerName: "Udise School Code",
+                        field: "Udise School Code",
+                        // cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+
+                    {
+                        headerName: "School Name",
+                        field: "School Name",
+                        // cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+
+                    {
+                        headerName: "Percentage Schools with Teachers trained for teaching CWSN",
+                        field: "Teacher trained to teach CWSN",
+                        cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+                ]);
+            }
+
+        }
+    }, [
+
+        locationHeader,
+        selectedState,
+        selectedOption,
+        selectedDistrict,
+        selectReportType,
+    ]);
 
     const compressData = useCallback((data, groupBy) => {
         return data.reduce((acc, curr) => {
@@ -541,7 +676,12 @@ export default function StudentsPerformanceReport() {
         }
         document.getElementById("export_data").selectedIndex = 0;
     };
-
+    const handleOptionChange = (event) => {
+        dispatch(setselectedOptionTop50(event.target.value));
+    };
+    const toggleClass = (e) => {
+        dispatch(setselectedOptionTop50(""));
+    };
     return (
         <>
             <ScrollToTopOnMount />
@@ -579,35 +719,52 @@ export default function StudentsPerformanceReport() {
                                                                     : selectedBlock
                                                             : selectedBlock}
                                                 </h5>
-                                                <h3 className='heading-sm'>{t('studentPerformance')}</h3>
+                                                <h3 className="heading-sm">
+                                                    {selectedOption === "Top_50_Schools"
+                                                        ? "Top 50 Schools with Teachers Trained for CWSN"
+                                                        : selectedOption === "Upcoming_50"
+                                                            ? "Upcoming 50 Schools with Teachers Trained for CWSN"
+                                                            : t("studentPerformance")}
+                                                </h3>
+
                                             </div>
                                             <div className="tab-box">
-                                                <button className='tab-button active'><img src={table} alt="Table" /> <span>{t('tableView')}</span></button>
-                                                <button className='tab-button'><img src={chart} alt="chart" /> <span>{t('chartView')}</span></button>
+                                                <button className='tab-button active' onClick={toggleClass}><img src={table} alt="Table" /> <span>{t('tableView')}</span></button>
+                                                <button className='tab-button' onClick={toggleClass}><img src={chart} alt="chart" /> <span>{t('chartView')}</span></button>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="d-flex justify-content-end w-m-100">
-                                            {/* <div className="radio-button">
-                                                <div className="box-radio">
-                                                    <input type="radio"
-                                                        id="radio4"
-                                                        value="upper_primary_to_secondary"
-                                                        checked={selectedOption === "upper_primary_to_secondary"}
-                                                        onChange={handleOptionChange} />
-                                                    <label htmlFor="radio4">Upper Primary to Secondary  </label>
-                                                </div>
+                                            {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) ? (
+                                                <div className="radio-button w-auto">
+                                                    <div className="box-radio me-4">
+                                                        <input
+                                                            type="radio"
+                                                            id="radio44"
+                                                            value="Top_50_Schools"
+                                                            checked={selectedOption === "Top_50_Schools"}
+                                                            onChange={handleOptionChange}
+                                                        />
+                                                        <label htmlFor="radio44">
+                                                            Top 50 Schools
+                                                        </label>
+                                                    </div>
 
-                                                <div className="box-radio">
-                                                    <input type="radio"
-                                                        id="radio5"
-                                                        value="secondary_to_higher_secondary"
-                                                        checked={selectedOption === "secondary_to_higher_secondary"}
-                                                        onChange={handleOptionChange} />
-                                                    <label htmlFor="radio5">Secondary to Higher Secondary</label>
+                                                    <div className="box-radio">
+                                                        <input
+                                                            type="radio"
+                                                            id="radio55"
+                                                            value="Upcoming_50"
+                                                            checked={selectedOption === "Upcoming_50"}
+                                                            onChange={handleOptionChange}
+                                                        />
+                                                        <label htmlFor="radio55">
+                                                            Upcoming 50 Schools
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                            </div> */}
+                                            ) : ("")}
                                             <div className="">
                                                 {/* <img src={download} alt="download" /> */}
                                                 <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
@@ -628,7 +785,13 @@ export default function StudentsPerformanceReport() {
                                                 style={{ width: "100%", height: 400 }} >
                                                 <AgGridReact
                                                     columnDefs={columns}
-                                                    rowData={finalData || finalData.length>0 ? finalData :""}
+                                                    rowData={
+                                                        selectedOption === "Top_50_Schools"
+                                                            ? top50Data && top50Data.length > 0 ? top50Data : []
+                                                            : selectedOption === "Upcoming_50"
+                                                                ? top50Data && top50Data.length > 0 ? top50Data : []
+                                                                : finalData && finalData.length > 0 ? finalData : []
+                                                    }
                                                     defaultColDef={defColumnDefs}
                                                     onGridReady={onGridReady}
                                                 />
@@ -640,7 +803,7 @@ export default function StudentsPerformanceReport() {
 
 
                         </div>
-                      
+
                         {
                             selectedState !== "All State" && selectReportType === "ADP_Report" ? (
                                 <StudentsPerformanceCompare />
