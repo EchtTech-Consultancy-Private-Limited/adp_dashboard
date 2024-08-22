@@ -18,6 +18,7 @@ import {
     SetFinalData,
     setselectedDataAllYear,
     setselectedOption,
+    setselectedOptionTop50,
     SetSheetName,
 } from "../../redux/slice/reportTypeSlice";
 import {
@@ -31,6 +32,9 @@ import {
 import { ScrollToTopOnMount } from "../../Scroll/ScrollToTopOnMount";
 import TeacherAndSchoolCompare from "./ReportCompare/TeacherAndSchoolCompare";
 import TeacherAndSchoolBlockCompare from "./ReportCompare/TeacherAndSchoolBlockCompare";
+import ptrLessThanAdp2019 from "../../aspirational-reports-data/ptrLessThanAdp2019-2020.json";
+import ptrLessThanAdp2020 from "../../aspirational-reports-data/ptrLessThanAdp2020-2021.json";
+import ptrLessThanAdp2021 from "../../aspirational-reports-data/ptrLessThanAdp2021-2022.json";
 import ptrLessThanAdp2022 from "../../aspirational-reports-data/ptrLessThanAdp2022-2023.json";
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 
@@ -45,7 +49,6 @@ export default function TeacherAndSchResourcesReport() {
     const { selectedState, selectedDistrict, selectedBlock } = useSelector(
         (state) => state.locationAdp
     );
-    
     const [locationHeader, SetLocationHeader] = useState();
     const aspirationalData = useSelector(
         (state) => state.reportAdpAbpType.aspirationalAllData
@@ -54,14 +57,13 @@ export default function TeacherAndSchResourcesReport() {
         (state) => state.reportAdpAbpType.updateReportType
     );
     const selectedOption = useSelector(
-        (state) => state.reportAdpAbpType.selectedOption
+        (state) => state.reportAdpAbpType.selectedOptionTop50
     );
     console.log(selectedOption, "selectedOption")
     const updateLoading = useSelector(
         (state) => state.reportAdpAbpType.loadingStatus
     );
     const states = useSelector((state) => state.locationAdp.states);
-    console.log(states, "selectedState")
     const selectedYear = useSelector(
         (state) => state.reportAdpAbpType.selectedYear
     );
@@ -72,29 +74,66 @@ export default function TeacherAndSchResourcesReport() {
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
     console.log(finalData, "finalData")
     const [data, setData] = useState([]);
-    // const [finalData, SetFinalData] = useState([])
+    const [topPtrData, setTopPtrData] = useState([])
+    const [top50Data, setTop50Data] = useState([])
+    console.log(top50Data, "topPtrDatatopPtrData")
+
     const combinedTopData = {
         "2019-20": {
-          ADP_Report: ptrLessThanAdp2022,
+            ADP_Report: ptrLessThanAdp2019,
         },
         "2020-21": {
-          ADP_Report: ptrLessThanAdp2022,
+            ADP_Report: ptrLessThanAdp2020,
         },
         "2021-22": {
-          ADP_Report: ptrLessThanAdp2022,
+            ADP_Report: ptrLessThanAdp2021,
         },
         "2022-23": {
-          ADP_Report: ptrLessThanAdp2022,
+            ADP_Report: ptrLessThanAdp2022,
         },
-      };
-    
-      useEffect(() => {
-        const selectedData = combinedTopData[selectedYear][selectReportType];
-        if (selectedData) {
-          dispatch(setselectedDataAllYear(selectedData))
-          dispatch(setAspirationalAllData(selectedData));
+    };
+
+    useEffect(() => {
+        const reportData = combinedTopData[selectedYear] && combinedTopData[selectedYear][selectReportType];
+
+        if (reportData && reportData.length > 0) {
+            setTopPtrData(reportData);
+        } else {
+            setTopPtrData([]);
         }
-      }, [selectReportType, selectedYear]);
+    }, [selectReportType, selectedYear]);
+
+    const filteredTopeData = useMemo(() => {
+        return Array.isArray(topPtrData) && topPtrData.length > 0
+            ? topPtrData.filter(topeItem => {
+                const districtMatch = selectedDistrict !== "SelectDistrict"
+                    ? finalData.some(finalItem => finalItem.lgd_district_name === topeItem.lgd_district_name)
+                    : true;
+
+                return districtMatch;
+            })
+            : [];
+    }, [topPtrData, selectedDistrict, finalData, selectedYear]);
+
+    console.log(filteredTopeData, "filteredTopeData");
+
+    useEffect(() => {
+        console.log(filteredTopeData, "filteredTopeData inside useEffect");
+        if (Array.isArray(filteredTopeData) && filteredTopeData.length > 0) {
+            const sortedData = filteredTopeData.sort((a, b) => a.Rank - b.Rank);
+
+            if (selectedOption === "Top_50_Schools") {
+                setTop50Data(sortedData.slice(0, 50));
+            } else if (selectedOption === "Upcoming_50") {
+                setTop50Data(sortedData.slice(50, 100));
+            }
+        } else {
+            setTop50Data([]);
+        }
+    }, [selectedOption, filteredTopeData, selectedYear]);
+
+    console.log(filteredTopeData, "filteredTopeData");
+
     function resteData() {
         // dispatch(selectState(SelectState));
         // dispatch(selectDistrict(SelectDistrict));
@@ -148,6 +187,11 @@ export default function TeacherAndSchResourcesReport() {
     }
 
     useEffect(() => {
+        if (selectedDistrict === SelectDistrict) {
+            dispatch(setselectedOptionTop50(""));
+        }
+    }, [selectedDistrict])
+    useEffect(() => {
         let filteredData = aspirationalData;
 
         if (selectedState && selectedState !== SelectState) {
@@ -186,6 +230,7 @@ export default function TeacherAndSchResourcesReport() {
     }, [selectedState, selectedDistrict, selectedBlock, aspirationalData, selectReportType]);
     const getLocationName = (item) => {
         if (selectReportType === "ABP_Report") {
+            // dispatch(setselectedOptionTop50(""));
             if (
                 selectedBlock &&
                 selectedBlock !== AllBlock &&
@@ -203,6 +248,7 @@ export default function TeacherAndSchResourcesReport() {
             } else if (selectedState === SelectState) {
                 return `${item.lgd_state_name}`;
             }
+
         } else if (selectReportType === "ADP_Report") {
             if (selectedState && selectedState !== SelectState) {
                 return `${item.lgd_district_name}`;
@@ -391,40 +437,62 @@ export default function TeacherAndSchResourcesReport() {
                         suppressColumnsToolPanel: true,
                         suppressFiltersToolPanel: true,
                     },
-                    ...(selectReportType === "ADP_Report"
-                        ? [
-                            {
-                                headerName: "District",
-                                field: "lgd_district_name",
-                                cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
-                            },
-                        ]
-                        : []),
-                  
-                
                     {
-                        headerName: "Boys",
-                        // field: "upri_b",
-                        cellRenderer: percentageRenderer,
+                        headerName: "UDISE School Code",
+                        field: "Udise School Code",
                         hide: false,
                     },
+
+
                     {
-                        headerName: "Girls",
-                        // field: "upri_g",
-                        cellRenderer: percentageRenderer,
+                        headerName: "School Name",
+                        field: "School Name",
                         hide: false,
                     },
+
                     {
-                        headerName: "Total",
-                        // field: "upri_t",
+                        headerName: "Percentage of elementary schools having PTR less than equal to 30",
+                        field: "PTR<=30",
                         cellRenderer: percentageRenderer,
                         hide: false,
                     },
                 ]);
-            } 
-          
+            }
+            else if (selectedOption === "Upcoming_50") {
+                setColumn([
+                    {
+                        headerName: "Serial Number",
+                        field: "Serial Number",
+                        hide: true,
+                        suppressColumnsToolPanel: true,
+                        suppressFiltersToolPanel: true,
+                    },
+                    {
+                        headerName: "Udise School Code",
+                        field: "Udise School Code",
+                        // cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+
+                    {
+                        headerName: "School Name",
+                        field: "School Name",
+                        // cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+
+                    {
+                        headerName: "Percentage of elementary schools having PTR less than equal to 30",
+                        field: "PTR<=30",
+                        cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+                ]);
+            }
+
         }
     }, [
+
         locationHeader,
         selectedState,
         selectedOption,
@@ -674,11 +742,10 @@ export default function TeacherAndSchResourcesReport() {
     };
 
     const handleOptionChange = (event) => {
-        dispatch(setselectedOption(event.target.value));
+        dispatch(setselectedOptionTop50(event.target.value));
     };
     const toggleClass = (e) => {
-       
-        dispatch(setselectedOption(""));
+        dispatch(setselectedOptionTop50(""));
     };
     return (
         <>
@@ -720,8 +787,13 @@ export default function TeacherAndSchResourcesReport() {
                                                             : selectedBlock}
                                                 </h5>
                                                 <h3 className="heading-sm">
-                                                    {t("teacherSchoolResources")}
+                                                    {selectedOption === "Top_50_Schools"
+                                                        ? "Top 50 Elementary Schools with PTR ≤ 30%"
+                                                        : selectedOption === "Upcoming_50"
+                                                            ? "Upcoming 50 Elementary Schools with PTR ≤ 30%"
+                                                            : t("teacherSchoolResources")}
                                                 </h3>
+
                                             </div>
                                             <div className="tab-box">
                                                 <button className="tab-button active" onClick={toggleClass}>
@@ -739,34 +811,34 @@ export default function TeacherAndSchResourcesReport() {
                                         <div className="d-flex w-m-100 justify-content-end">
                                             {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) ? (
                                                 <div className="radio-button w-auto">
-                                                <div className="box-radio me-4">
-                                                    <input
-                                                        type="radio"
-                                                        id="radio44"
-                                                        value="Top_50_Schools"
-                                                        checked={selectedOption === "Top_50_Schools"}
-                                                        onChange={handleOptionChange}
-                                                    />
-                                                    <label htmlFor="radio44">
-                                                        Top 50 Schools
-                                                    </label>
-                                                </div>
+                                                    <div className="box-radio me-4">
+                                                        <input
+                                                            type="radio"
+                                                            id="radio44"
+                                                            value="Top_50_Schools"
+                                                            checked={selectedOption === "Top_50_Schools"}
+                                                            onChange={handleOptionChange}
+                                                        />
+                                                        <label htmlFor="radio44">
+                                                            Top 50 Schools
+                                                        </label>
+                                                    </div>
 
-                                                <div className="box-radio">
-                                                    <input
-                                                        type="radio"
-                                                        id="radio55"
-                                                        value="Upcoming_50"
-                                                        checked={selectedOption === "Upcoming_50"}
-                                                        onChange={handleOptionChange}
-                                                    />
-                                                    <label htmlFor="radio55">
-                                                        Upcoming 50
-                                                    </label>
+                                                    <div className="box-radio">
+                                                        <input
+                                                            type="radio"
+                                                            id="radio55"
+                                                            value="Upcoming_50"
+                                                            checked={selectedOption === "Upcoming_50"}
+                                                            onChange={handleOptionChange}
+                                                        />
+                                                        <label htmlFor="radio55">
+                                                            Upcoming 50 Schools
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            ):("")}
-                                            
+                                            ) : ("")}
+
 
                                             <div className="">
                                                 {/* <img src={download} alt="download" /> */}
@@ -803,10 +875,17 @@ export default function TeacherAndSchResourcesReport() {
                                             >
                                                 <AgGridReact
                                                     columnDefs={columns}
-                                                    rowData={finalData || finalData.length > 0 ? finalData : ""}
+                                                    rowData={
+                                                        selectedOption === "Top_50_Schools"
+                                                            ? top50Data && top50Data.length > 0 ? top50Data : []
+                                                            : selectedOption === "Upcoming_50"
+                                                                ? top50Data && top50Data.length > 0 ? top50Data : []
+                                                                : finalData && finalData.length > 0 ? finalData : []
+                                                    }
                                                     defaultColDef={defColumnDefs}
                                                     onGridReady={onGridReady}
                                                 />
+
                                             </div>
                                         </div>
                                     </div>
