@@ -736,7 +736,7 @@ export default function StudentsPerformanceReport() {
                                     </div>
                                     <div className="col-md-6">
                                         <div className="d-flex justify-content-end w-m-100">
-                                            {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) ? (
+                                            {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectReportType !== "ABP_Report"  && selectedDistrict !== AllDistrict) ? (
                                                 <div className="radio-button w-auto">
                                                     <div className="box-radio me-4">
                                                         <input
