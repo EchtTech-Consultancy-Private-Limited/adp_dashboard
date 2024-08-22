@@ -224,7 +224,6 @@ export default function TeacherAndSchResourcesReport() {
     }, [selectedState, selectedDistrict, selectedBlock, aspirationalData, selectReportType]);
     const getLocationName = (item) => {
         if (selectReportType === "ABP_Report") {
-            // dispatch(setselectedOptionTop50(""));
             if (
                 selectedBlock &&
                 selectedBlock !== AllBlock &&

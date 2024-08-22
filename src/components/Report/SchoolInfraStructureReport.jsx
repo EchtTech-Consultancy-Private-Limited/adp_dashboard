@@ -17,6 +17,7 @@ import { GlobalLoading } from "../GlobalLoading/GlobalLoading";
 import {
   SetFinalData,
   setselectedOption,
+  setselectedOptionTop50,
   SetSheetName,
 } from "../../redux/slice/reportTypeSlice";
 import {
@@ -30,8 +31,11 @@ import {
 import { ScrollToTopOnMount } from "../../Scroll/ScrollToTopOnMount";
 import SchoolInfraStructureCompare from "./ReportCompare/SchoolInfraStructureCompare";
 import SchoolInfraStructureBlockCompare from "./ReportCompare/SchoolInfraStructureBlockCompare";
+import schWithToiletRatioAdp2019 from "../../aspirational-reports-data/schWithToiletRatioAdp2019-2020.json";
+import schWithToiletRatioAdp2020 from "../../aspirational-reports-data/schWithToiletRatioAdp2020-2021.json";
+import schWithToiletRatioAdp2021 from "../../aspirational-reports-data/schWithToiletRatioAdp2021-2022.json";
+import schWithToiletRatioAdp2022 from "../../aspirational-reports-data/schWithToiletRatioAdp2022-2023.json";
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
-
 
 export default function SchoolInfraStructureReport() {
   const dispatch = useDispatch();
@@ -45,17 +49,90 @@ export default function SchoolInfraStructureReport() {
     (state) => state.locationAdp
   );
   const [locationHeader, SetLocationHeader] = useState();
-  const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
-  const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
-  const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
-  const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
+  const aspirationalData = useSelector(
+    (state) => state.reportAdpAbpType.aspirationalAllData
+  );
+  const selectReportType = useSelector(
+    (state) => state.reportAdpAbpType.updateReportType
+  );
+  const selectedOption = useSelector(
+    (state) => state.reportAdpAbpType.selectedOptionTop50
+  );
+  const selectedYear = useSelector(
+    (state) => state.reportAdpAbpType.selectedYear
+  );
   const states = useSelector((state) => state.locationAdp.states);
-  const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName)
-  const [gridApi, setGridApi] = useState()
+  const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName);
+  const [gridApi, setGridApi] = useState();
   const savedReportName = localStorage.getItem("selectedReport");
   const report_name = savedReportName;
+
   const [data, setData] = useState([]);
-  const finalData = useSelector((state) => state.reportAdpAbpType.finalData)
+
+  const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
+  const [topPtrData, setTopPtrData] = useState([])
+  const [top50Data, setTop50Data] = useState([])
+  const combinedTopData = {
+    "2019-20": {
+      ADP_Report: schWithToiletRatioAdp2019,
+    },
+    "2020-21": {
+      ADP_Report: schWithToiletRatioAdp2020,
+    },
+    "2021-22": {
+      ADP_Report: schWithToiletRatioAdp2021,
+    },
+    "2022-23": {
+      ADP_Report: schWithToiletRatioAdp2022,
+    },
+  };
+
+  useEffect(() => {
+    const reportData =
+      combinedTopData[selectedYear] &&
+      combinedTopData[selectedYear][selectReportType];
+
+    if (reportData && reportData.length > 0) {
+      setTopPtrData(reportData);
+    } else {
+      setTopPtrData([]);
+    }
+  }, [selectReportType, selectedYear]);
+
+  const filteredTopeData = useMemo(() => {
+    return Array.isArray(topPtrData) &&
+      topPtrData.length > 0
+      ? topPtrData.filter((topeItem) => {
+          const districtMatch =
+            selectedDistrict !== "SelectDistrict"
+              ? finalData.some(
+                  (finalItem) =>
+                    finalItem.lgd_district_name === topeItem.lgd_district_name
+                )
+              : true;
+
+          return districtMatch;
+        })
+      : [];
+  }, [topPtrData, selectedDistrict, finalData, selectedYear]);
+
+
+
+  useEffect(() => {
+    if (Array.isArray(filteredTopeData) && filteredTopeData.length > 0) {
+      const sortedData = filteredTopeData.sort((a, b) => a.Rank - b.Rank);
+
+      if (selectedOption === "Top_50_Schools") {
+        setTop50Data(sortedData.slice(0, 50));
+      } else if (selectedOption === "Upcoming_50") {
+        setTop50Data(sortedData.slice(50, 100));
+      }
+    } else {
+      setTop50Data([]);
+    }
+  }, [selectedOption, filteredTopeData, selectedYear]);
+
+
   // const [finalData, SetFinalData] = useState([]
   function resteData() {
     // dispatch(selectState(SelectState));
@@ -67,7 +144,6 @@ export default function SchoolInfraStructureReport() {
   useEffect(() => {
     resteData();
   }, [dispatch]);
-
 
   {
     /*...............update Location Header..............*/
@@ -105,7 +181,6 @@ export default function SchoolInfraStructureReport() {
     SelectDistrict,
     selectReportType,
   ]);
-
 
   useEffect(() => {
     let filteredData = aspirationalData;
@@ -180,8 +255,8 @@ export default function SchoolInfraStructureReport() {
 
   const percentageRenderer = (params) => {
     const value = params.value;
-    if (typeof value === 'number') {
-      return value.toFixed(2) + " " + '%';
+    if (typeof value === "number") {
+      return value.toFixed(2) + " " + "%";
     } else {
       return value;
     }
@@ -220,18 +295,17 @@ export default function SchoolInfraStructureReport() {
     },
 
     {
-      headerName:
-        "Number of Schools having girls toilets in the ratio of 40:1",
+      headerName: "Number of Schools having girls toilets in the ratio of 40:1",
       field: "toilet_40",
       hide: false,
     },
     {
-      headerName: "percentage of Schools having girls toilets in the ratio of 40:1",
+      headerName:
+        "percentage of Schools having girls toilets in the ratio of 40:1",
       field: "sch_having_toilet_40_percent",
       cellRenderer: percentageRenderer,
       hide: false,
     },
-
   ]);
 
   useEffect(() => {
@@ -251,13 +325,18 @@ export default function SchoolInfraStructureReport() {
         {
           headerName: "District",
           field: "lgd_district_name",
-          cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
+          cellRenderer:
+            selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
         },
-        ...(selectReportType === "ABP_Report" ? [{
-          headerName: "Block",
-          field: "lgd_block_name",
-          cellRenderer: ArrowRenderer,
-        }] : []),
+        ...(selectReportType === "ABP_Report"
+          ? [
+              {
+                headerName: "Block",
+                field: "lgd_block_name",
+                cellRenderer: ArrowRenderer,
+              },
+            ]
+          : []),
 
         {
           headerName: "Total number of Coed and Girls Schools",
@@ -284,7 +363,8 @@ export default function SchoolInfraStructureReport() {
           hide: false,
         },
         {
-          headerName: "percentage of Schools having girls toilets in the ratio of 40:1",
+          headerName:
+            "percentage of Schools having girls toilets in the ratio of 40:1",
           field: "sch_having_toilet_40_percent",
           cellRenderer: percentageRenderer,
           hide: false,
@@ -293,10 +373,9 @@ export default function SchoolInfraStructureReport() {
 
       setColumn(columns);
     }
-  }, [selectedState, selectReportType])
+  }, [selectedState, selectReportType]);
   useEffect(() => {
     if (selectedState !== "All State") {
-
       setColumn([
         {
           headerName: "Serial Number",
@@ -308,30 +387,28 @@ export default function SchoolInfraStructureReport() {
 
         ...(selectReportType === "ADP_Report"
           ? [
-            {
-              headerName: "District",
-              cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
-              field: "lgd_district_name",
-            },
-          ]
+              {
+                headerName: "District",
+                cellRenderer:
+                  selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
+                field: "lgd_district_name",
+              },
+            ]
           : []),
 
         ...(selectedState !== "All State" &&
-          selectReportType === "ABP_Report" &&
-          (selectedDistrict === SelectDistrict ||
-            selectedDistrict === AllDistrict)
+        selectReportType === "ABP_Report" &&
+        (selectedDistrict === SelectDistrict ||
+          selectedDistrict === AllDistrict)
           ? [
-            {
-              headerName: "District",
-              cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
-              field: "lgd_district_name",
-            },
-          ]
+              {
+                headerName: "District",
+                cellRenderer:
+                  selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
+                field: "lgd_district_name",
+              },
+            ]
           : []),
-
-
-
-
 
         // {
         //   headerName: locationHeader,
@@ -341,15 +418,13 @@ export default function SchoolInfraStructureReport() {
 
         ...(selectReportType === "ABP_Report"
           ? [
-            {
-              headerName: "Block",
-              cellRenderer: ArrowRenderer,
-              field: "lgd_block_name",
-            },
-          ]
+              {
+                headerName: "Block",
+                cellRenderer: ArrowRenderer,
+                field: "lgd_block_name",
+              },
+            ]
           : []),
-
-
 
         {
           headerName: "Total number of Coed and Girls Schools",
@@ -376,27 +451,101 @@ export default function SchoolInfraStructureReport() {
           hide: false,
         },
         {
-          headerName: "percentage of Schools having girls toilets in the ratio of 40:1",
+          headerName:
+            "percentage of Schools having girls toilets in the ratio of 40:1",
           field: "sch_having_toilet_40_percent",
           cellRenderer: percentageRenderer,
           hide: false,
         },
       ]);
-
     }
-
-  }, [locationHeader, selectedState, selectedOption,
+  }, [
+    locationHeader,
+    selectedState,
+    selectedOption,
     selectedDistrict,
-    selectReportType,]);
+    selectReportType,
+  ]);
+
+  useEffect(() => {
+    if (selectedState !== "All State") {
+      if (selectedOption === "Top_50_Schools") {
+        setColumn([
+          {
+            headerName: "Serial Number",
+            field: "Serial Number",
+            hide: true,
+            suppressColumnsToolPanel: true,
+            suppressFiltersToolPanel: true,
+          },
+          {
+            headerName: "UDISE School Code",
+            field: "Udise School Code",
+            hide: false,
+          },
+
+          {
+            headerName: "School Name",
+            field: "School Name",
+            hide: false,
+          },
+
+          {
+            headerName: "Enrolment Toilet ratio(40:1)",
+            field: "Enrolment Toilet ratio(40:1)",
+            cellRenderer: percentageRenderer,
+            hide: false,
+          },
+        ]);
+      } else if (selectedOption === "Upcoming_50") {
+        setColumn([
+          {
+            headerName: "Serial Number",
+            field: "Serial Number",
+            hide: true,
+            suppressColumnsToolPanel: true,
+            suppressFiltersToolPanel: true,
+          },
+          {
+            headerName: "Udise School Code",
+            field: "Udise School Code",
+            // cellRenderer: percentageRenderer,
+            hide: false,
+          },
+
+          {
+            headerName: "School Name",
+            field: "School Name",
+            // cellRenderer: percentageRenderer,
+            hide: false,
+          },
+
+          {
+            headerName: "Enrolment Toilet ratio(40:1)",
+            field: "Enrolment Toilet ratio(40:1)",
+            cellRenderer: percentageRenderer,
+            hide: false,
+          },
+        ]);
+      }
+    }
+  }, [
+    locationHeader,
+    selectedState,
+    selectedOption,
+    selectedDistrict,
+    selectReportType,
+  ]);
 
   const compressData = useCallback((data, groupBy) => {
     return data.reduce((acc, curr) => {
       const groupKey = curr[groupBy];
-      let group = acc.find(item => item[groupBy] === groupKey);
+      let group = acc.find((item) => item[groupBy] === groupKey);
 
       if (group) {
         group.tot_school_girl_co_ed += curr?.tot_school_girl_co_ed || 0;
-        group.total_no_of_fun_girls_toilet += curr?.total_no_of_fun_girls_toilet || 0;
+        group.total_no_of_fun_girls_toilet +=
+          curr?.total_no_of_fun_girls_toilet || 0;
         group.toilet_40 += curr?.toilet_40 || 0;
 
         const totalSchools = group.tot_school_girl_co_ed;
@@ -432,10 +581,13 @@ export default function SchoolInfraStructureReport() {
     }, []);
   }, []);
 
-
   const compressedData = useMemo(() => {
     if (selectedState && selectedState !== SelectState) {
-      if (selectedDistrict && selectedDistrict !== AllDistrict && selectedDistrict !== SelectDistrict) {
+      if (
+        selectedDistrict &&
+        selectedDistrict !== AllDistrict &&
+        selectedDistrict !== SelectDistrict
+      ) {
         return compressData(data, "lgd_block_name");
       }
       return compressData(data, "lgd_district_name");
@@ -444,19 +596,16 @@ export default function SchoolInfraStructureReport() {
   }, [data, selectedState, selectedDistrict, selectedBlock]);
   useEffect(() => {
     if (selectedState !== "All State" && selectReportType === "ADP_Report") {
-      dispatch(SetFinalData(compressedData))
-    }
-    else if (
+      dispatch(SetFinalData(compressedData));
+    } else if (
       selectedState !== "All State" &&
       selectReportType === "ABP_Report"
     ) {
       dispatch(SetFinalData(data));
+    } else {
+      dispatch(SetFinalData(aspirationalData));
     }
-
-    else {
-      dispatch(SetFinalData(aspirationalData))
-    }
-  }, [selectedState, data, aspirationalData, selectReportType])
+  }, [selectedState, data, aspirationalData, selectReportType]);
 
   const defColumnDefs = useMemo(
     () => ({
@@ -473,7 +622,7 @@ export default function SchoolInfraStructureReport() {
   );
 
   const onGridReady = useCallback((params) => {
-    setGridApi(params)
+    setGridApi(params);
   }, []);
   /*------------Export data to Excel and PDF-------------*/
   const getHeaderToExport = (gridApi) => {
@@ -503,7 +652,7 @@ export default function SchoolInfraStructureReport() {
     const columns = gridApi.api.getAllDisplayedColumns();
     const getCellToExport = (column, node) => {
       const value = gridApi.api.getValue(column, node);
-      if (typeof value === 'number') {
+      if (typeof value === "number") {
         return { text: value.toFixed(2) };
       }
       return { text: value ?? "" };
@@ -551,12 +700,22 @@ export default function SchoolInfraStructureReport() {
       doc.text(`Report type : ${selectedState}`, 0.6, 1.5);
       doc.setTextColor("blue");
       doc.setFont("bold");
-      doc.text(`Report Year : ${selectedYear}`, doc.internal.pageSize.width - 2, 0.5, {
-        align: "right",
-      });
+      doc.text(
+        `Report Year : ${selectedYear}`,
+        doc.internal.pageSize.width - 2,
+        0.5,
+        {
+          align: "right",
+        }
+      );
 
       doc.setFontSize(20);
-      doc.text(`Report generated on: ${formattedDate}`, doc.internal.pageSize.width - 2, 1.5, { align: "right" });
+      doc.text(
+        `Report generated on: ${formattedDate}`,
+        doc.internal.pageSize.width - 2,
+        1.5,
+        { align: "right" }
+      );
     };
 
     // Function to add footer
@@ -641,6 +800,19 @@ export default function SchoolInfraStructureReport() {
     document.getElementById("export_data").selectedIndex = 0;
   };
 
+  useEffect(() => {
+    if (selectedDistrict === SelectDistrict) {
+      dispatch(setselectedOptionTop50(""));
+    }
+  }, [selectedDistrict]);
+
+  const handleOptionChange = (event) => {
+    dispatch(setselectedOptionTop50(event.target.value));
+  };
+  const toggleClass = (e) => {
+    dispatch(setselectedOptionTop50(""));
+  };
+
   return (
     <>
       <ScrollToTopOnMount />
@@ -649,7 +821,6 @@ export default function SchoolInfraStructureReport() {
 
         <div className="container">
           <div className="row mt-3">
-
             <div className="col-md-12">
               {loading && <GlobalLoading />}
               <div className="card-box">
@@ -661,40 +832,50 @@ export default function SchoolInfraStructureReport() {
                           {selectReportType === "ADP_Report"
                             ? selectedState === "All State"
                               ? "All State"
-                              : selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict
-                                ? `${selectedDistrict}`
-                                : selectedDistrict === AllDistrict
-                                  ? `${selectedState} District's`
-                                  : `${selectedState} District's`
+                              : selectedDistrict !== SelectDistrict &&
+                                selectedDistrict !== AllDistrict
+                              ? `${selectedDistrict}`
+                              : selectedDistrict === AllDistrict
+                              ? `${selectedState} District's`
+                              : `${selectedState} District's`
                             : selectReportType === "ABP_Report"
-                              ? selectedState === "All State"
-                                ? "All State"
-                                : selectedState !== SelectState
-                                  ? selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict
-                                    ? `${selectedState} District's`
-                                    : selectedBlock !== SelectBlock && selectedBlock !== AllBlock
-                                      ? `${selectedBlock}`
-                                      : `${selectedDistrict} Block's`
-                                  : selectedBlock
-                              : selectedBlock}
+                            ? selectedState === "All State"
+                              ? "All State"
+                              : selectedState !== SelectState
+                              ? selectedDistrict === SelectDistrict ||
+                                selectedDistrict === AllDistrict
+                                ? `${selectedState} District's`
+                                : selectedBlock !== SelectBlock &&
+                                  selectedBlock !== AllBlock
+                                ? `${selectedBlock}`
+                                : `${selectedDistrict} Block's`
+                              : selectedBlock
+                            : selectedBlock}
                         </h5>
-                        <h3 className="heading-sm">{t('schoolInfrastructure')}</h3>
+                        <h3 className="heading-sm">
+                          {t("schoolInfrastructure")}
+                        </h3>
                       </div>
                       <div className="tab-box">
-                        <button className="tab-button active">
-                          <img src={table} alt="Table" /> <span>{t('tableView')}</span>
+                        <button
+                          className="tab-button active"
+                          onClick={toggleClass}
+                        >
+                          <img src={table} alt="Table" />{" "}
+                          <span>{t("tableView")}</span>
                         </button>
-                        <button className="tab-button">
-                          <img src={chart} alt="chart" /> <span>{t('chartView')}</span>
+                        <button className="tab-button" onClick={toggleClass}>
+                          <img src={chart} alt="chart" />{" "}
+                          <span>{t("chartView")}</span>
                         </button>
                       </div>
                     </div>
                   </div>
-                  <div className="col-md-6">
+                  {/* <div className="col-md-6">
                     <div className="d-flex justify-content-end w-m-100">
 
                       <div className="">
-                        {/* <img src={download} alt="download" /> */}
+                        <img src={download} alt="download" />
                         <select
                           id="export_data"
                           className="form-select download-button"
@@ -712,19 +893,82 @@ export default function SchoolInfraStructureReport() {
                         </select>
                       </div>
                     </div>
+                  </div> */}
+
+                  <div className="col-md-6">
+                    <div className="d-flex w-m-100 justify-content-end">
+                      {selectedState !== SelectState &&
+                      selectedDistrict !== SelectDistrict &&
+                      selectedDistrict !== AllDistrict ? (
+                        <div className="radio-button w-auto">
+                          <div className="box-radio me-4">
+                            <input
+                              type="radio"
+                              id="radio44"
+                              value="Top_50_Schools"
+                              checked={selectedOption === "Top_50_Schools"}
+                              onChange={handleOptionChange}
+                            />
+                            <label htmlFor="radio44">Top 50 Schools</label>
+                          </div>
+
+                          <div className="box-radio">
+                            <input
+                              type="radio"
+                              id="radio55"
+                              value="Upcoming_50"
+                              checked={selectedOption === "Upcoming_50"}
+                              onChange={handleOptionChange}
+                            />
+                            <label htmlFor="radio55">Upcoming 50 Schools</label>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+
+                      <div className="">
+                        {/* <img src={download} alt="download" /> */}
+                        <select
+                          id="export_data"
+                          className="form-select download-button"
+                          defaultValue={""}
+                          onChange={handleExportData}
+                        >
+                          <option className="option-hide">
+                            {" "}
+                            {t("downloadReport")} {selectedYear}
+                          </option>
+                          <option value="export_pdf">
+                            {t("downloadAsPdf")}
+                          </option>
+                          <option value="export_excel">
+                            {" "}
+                            {t("downloadAsExcel")}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
                 <div className="row">
                   <div className="col-md-12">
                     <div className="table-box mt-4">
-                      <div id="content"
+                      <div
+                        id="content"
                         className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
                         style={{ width: "100%", height: 400 }}
                       >
                         <AgGridReact
                           columnDefs={columns}
-                          rowData={finalData || finalData.length>0 ? finalData :""}
+                          rowData={
+                            selectedOption === "Top_50_Schools"
+                                ? top50Data && top50Data.length > 0 ? top50Data : []
+                                : selectedOption === "Upcoming_50"
+                                    ? top50Data && top50Data.length > 0 ? top50Data : []
+                                    : finalData && finalData.length > 0 ? finalData : []
+                        }
                           defaultColDef={defColumnDefs}
                           onGridReady={onGridReady}
                         />
@@ -734,15 +978,17 @@ export default function SchoolInfraStructureReport() {
                 </div>
               </div>
             </div>
-            {
-              selectedState !== "All State" && selectReportType === "ADP_Report" ? (
-                <SchoolInfraStructureCompare />
-              ) : (selectedState !== "All State" && selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) && selectReportType === "ABP_Report" ? (
-                <SchoolInfraStructureBlockCompare />
-              ) : (
-                ""
-              )
-            }
+            {selectedState !== "All State" &&
+            selectReportType === "ADP_Report" ? (
+              <SchoolInfraStructureCompare />
+            ) : selectedState !== "All State" &&
+              selectedDistrict !== SelectDistrict &&
+              selectedDistrict !== AllDistrict &&
+              selectReportType === "ABP_Report" ? (
+              <SchoolInfraStructureBlockCompare />
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </section>
