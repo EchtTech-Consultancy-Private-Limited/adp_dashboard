@@ -70,8 +70,8 @@ export default function SchoolInfraStructureReport() {
   const [data, setData] = useState([]);
 
   const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
-  const [topPtrData, setTopPtrData] = useState([]);
-  const [top50Data, setTop50Data] = useState([]);
+  const [topPtrData, setTopPtrData] = useState([])
+  const [top50Data, setTop50Data] = useState([])
   const combinedTopData = {
     "2019-20": {
       ADP_Report: schWithToiletRatioAdp2019,
@@ -100,20 +100,23 @@ export default function SchoolInfraStructureReport() {
   }, [selectReportType, selectedYear]);
 
   const filteredTopeData = useMemo(() => {
-    return Array.isArray(topPtrData) && topPtrData.length > 0
+    return Array.isArray(topPtrData) &&
+      topPtrData.length > 0
       ? topPtrData.filter((topeItem) => {
-          const districtMatch =
-            selectedDistrict !== "SelectDistrict"
-              ? finalData.some(
-                  (finalItem) =>
-                    finalItem.lgd_district_name === topeItem.lgd_district_name
-                )
-              : true;
+        const districtMatch =
+          selectedDistrict !== "SelectDistrict"
+            ? finalData.some(
+              (finalItem) =>
+                finalItem.lgd_district_name === topeItem.lgd_district_name
+            )
+            : true;
 
-          return districtMatch;
-        })
+        return districtMatch;
+      })
       : [];
   }, [topPtrData, selectedDistrict, finalData, selectedYear]);
+
+
 
   useEffect(() => {
     if (Array.isArray(filteredTopeData) && filteredTopeData.length > 0) {
@@ -128,6 +131,7 @@ export default function SchoolInfraStructureReport() {
       setTop50Data([]);
     }
   }, [selectedOption, filteredTopeData, selectedYear]);
+
 
   // const [finalData, SetFinalData] = useState([]
   function resteData() {
@@ -326,12 +330,12 @@ export default function SchoolInfraStructureReport() {
         },
         ...(selectReportType === "ABP_Report"
           ? [
-              {
-                headerName: "Block",
-                field: "lgd_block_name",
-                cellRenderer: ArrowRenderer,
-              },
-            ]
+            {
+              headerName: "Block",
+              field: "lgd_block_name",
+              cellRenderer: ArrowRenderer,
+            },
+          ]
           : []),
 
         {
@@ -383,27 +387,27 @@ export default function SchoolInfraStructureReport() {
 
         ...(selectReportType === "ADP_Report"
           ? [
-              {
-                headerName: "District",
-                cellRenderer:
-                  selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
-                field: "lgd_district_name",
-              },
-            ]
+            {
+              headerName: "District",
+              cellRenderer:
+                selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
+              field: "lgd_district_name",
+            },
+          ]
           : []),
 
         ...(selectedState !== "All State" &&
-        selectReportType === "ABP_Report" &&
-        (selectedDistrict === SelectDistrict ||
-          selectedDistrict === AllDistrict)
+          selectReportType === "ABP_Report" &&
+          (selectedDistrict === SelectDistrict ||
+            selectedDistrict === AllDistrict)
           ? [
-              {
-                headerName: "District",
-                cellRenderer:
-                  selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
-                field: "lgd_district_name",
-              },
-            ]
+            {
+              headerName: "District",
+              cellRenderer:
+                selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
+              field: "lgd_district_name",
+            },
+          ]
           : []),
 
         // {
@@ -414,12 +418,12 @@ export default function SchoolInfraStructureReport() {
 
         ...(selectReportType === "ABP_Report"
           ? [
-              {
-                headerName: "Block",
-                cellRenderer: ArrowRenderer,
-                field: "lgd_block_name",
-              },
-            ]
+            {
+              headerName: "Block",
+              cellRenderer: ArrowRenderer,
+              field: "lgd_block_name",
+            },
+          ]
           : []),
 
         {
@@ -487,7 +491,7 @@ export default function SchoolInfraStructureReport() {
           },
 
           {
-            headerName: "Enrolment Toilet ratio(40:1)",
+            headerName: "percentage of Schools having Enrolment toilets in the ratio of 40:1",
             field: "Enrolment Toilet ratio(40:1)",
             cellRenderer: percentageRenderer,
             hide: false,
@@ -517,7 +521,7 @@ export default function SchoolInfraStructureReport() {
           },
 
           {
-            headerName: "Enrolment Toilet ratio(40:1)",
+            headerName: "percentage of Schools having Enrolment toilets in the ratio of 40:1",
             field: "Enrolment Toilet ratio(40:1)",
             cellRenderer: percentageRenderer,
             hide: false,
@@ -830,27 +834,32 @@ export default function SchoolInfraStructureReport() {
                               ? "All State"
                               : selectedDistrict !== SelectDistrict &&
                                 selectedDistrict !== AllDistrict
-                              ? `${selectedDistrict}`
-                              : selectedDistrict === AllDistrict
-                              ? `${selectedState} District's`
-                              : `${selectedState} District's`
+                                ? `${selectedDistrict}`
+                                : selectedDistrict === AllDistrict
+                                  ? `${selectedState} District's`
+                                  : `${selectedState} District's`
                             : selectReportType === "ABP_Report"
-                            ? selectedState === "All State"
-                              ? "All State"
-                              : selectedState !== SelectState
-                              ? selectedDistrict === SelectDistrict ||
-                                selectedDistrict === AllDistrict
-                                ? `${selectedState} District's`
-                                : selectedBlock !== SelectBlock &&
-                                  selectedBlock !== AllBlock
-                                ? `${selectedBlock}`
-                                : `${selectedDistrict} Block's`
-                              : selectedBlock
-                            : selectedBlock}
+                              ? selectedState === "All State"
+                                ? "All State"
+                                : selectedState !== SelectState
+                                  ? selectedDistrict === SelectDistrict ||
+                                    selectedDistrict === AllDistrict
+                                    ? `${selectedState} District's`
+                                    : selectedBlock !== SelectBlock &&
+                                      selectedBlock !== AllBlock
+                                      ? `${selectedBlock}`
+                                      : `${selectedDistrict} Block's`
+                                  : selectedBlock
+                              : selectedBlock}
                         </h5>
                         <h3 className="heading-sm">
-                          {t("schoolInfrastructure")}
+                          {selectedOption === "Top_50_Schools"
+                            ? "Top 50 Schools with 40:1 Enrolment Toilet Ratio"
+                            : selectedOption === "Upcoming_50"
+                              ? "Upcoming 50 Schools with 40:1 Enrolment Toilet Ratio"
+                              : t("schoolInfrastructure")}
                         </h3>
+
                       </div>
                       <div className="tab-box">
                         <button
@@ -867,37 +876,13 @@ export default function SchoolInfraStructureReport() {
                       </div>
                     </div>
                   </div>
-                  {/* <div className="col-md-6">
-                    <div className="d-flex justify-content-end w-m-100">
 
-                      <div className="">
-                        <img src={download} alt="download" />
-                        <select
-                          id="export_data"
-                          className="form-select download-button"
-                          defaultValue={""}
-                          onChange={handleExportData}
-                        >
-                          <option className="option-hide">
-                            {" "}
-                            {t('downloadReport')} {selectedYear}
-                          </option>
-                          <option value="export_pdf">{t('downloadAsPdf')} </option>
-                          <option value="export_excel">
-                            {t('downloadAsExcel')}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                  </div> */}
 
                   <div className="col-md-6">
                     <div className="d-flex w-m-100 justify-content-end">
                       {selectedState !== SelectState &&
-                      selectedDistrict !== SelectDistrict &&
-                      selectReportType !== "ABP_Report" &&
-                      selectReportType !== "ABP_Report" &&
-                      selectedDistrict !== AllDistrict ? (
+                        selectedDistrict !== SelectDistrict &&
+                        selectedDistrict !== AllDistrict ? (
                         <div className="radio-button w-auto">
                           <div className="box-radio me-4">
                             <input
@@ -962,16 +947,10 @@ export default function SchoolInfraStructureReport() {
                           columnDefs={columns}
                           rowData={
                             selectedOption === "Top_50_Schools"
-                              ? top50Data && top50Data.length > 0
-                                ? top50Data
-                                : []
+                              ? top50Data && top50Data.length > 0 ? top50Data : []
                               : selectedOption === "Upcoming_50"
-                              ? top50Data && top50Data.length > 0
-                                ? top50Data
-                                : []
-                              : finalData && finalData.length > 0
-                              ? finalData
-                              : []
+                                ? top50Data && top50Data.length > 0 ? top50Data : []
+                                : finalData && finalData.length > 0 ? finalData : []
                           }
                           defaultColDef={defColumnDefs}
                           onGridReady={onGridReady}
@@ -983,7 +962,7 @@ export default function SchoolInfraStructureReport() {
               </div>
             </div>
             {selectedState !== "All State" &&
-            selectReportType === "ADP_Report" ? (
+              selectReportType === "ADP_Report" ? (
               <SchoolInfraStructureCompare />
             ) : selectedState !== "All State" &&
               selectedDistrict !== SelectDistrict &&
