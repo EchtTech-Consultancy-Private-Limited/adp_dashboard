@@ -78,7 +78,6 @@ const reportTypeSlice = createSlice({
         state.currentPage=action.payload;
       },
       setIsActiveGraph(state,action) {
-        // console.log(action.payload, "action.payload")
         state.isActiveGraph=action.payload;
       },
     },
