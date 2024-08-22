@@ -197,8 +197,7 @@ export default function StudentsPerformanceReport() {
 
     const percentageRenderer = (params) => {
         const value = params.value;
-    
-        if (typeof value === Number) {
+        if (typeof value === 'number') {
             return parseFloat(value).toFixed(2) + " %";
         } else {
             return value;
