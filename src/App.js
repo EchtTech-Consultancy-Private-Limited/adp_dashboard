@@ -31,7 +31,7 @@ function App() {
     (state) => state.reportAdpAbpType.selectedCompareDistricts
   );
   const selectedReport = useSelector((state) => state.reportAdpAbpType.selectedReport);
-  console.log(selectedReport, "selectedReportselectedReport")
+  
   useEffect(() => {
     if (toggleDarkMode) {
       localStorage.setItem("dark-mode", "true");
@@ -70,63 +70,7 @@ function App() {
     }
   }, [selectReportType, selectedYear]);
 
-  const combinedtopData = {
-    "2019-20": {
-      ADP_Report: {
-        Teacher_and_School_Resources: aspirationalAdpData2019,
-        School_Infrastructure: aspirationalAdpData2019,
-        Student_Performance: aspirationalAdpData2019,
-      }
 
-    },
-    "2020-21": {
-      ADP_Report: {
-        Transition_Rate: aspirationalAdpData2020,
-        Teacher_and_School_Resources: aspirationalAdpData2020,
-        School_Infrastructure: aspirationalAdpData2020,
-        Student_Performance: aspirationalAdpData2020,
-      }
-
-    },
-    "2021-22": {
-      ADP_Report: {
-        Transition_Rate: aspirationalAdpData2020,
-        Teacher_and_School_Resources: aspirationalAdpData2021,
-        School_Infrastructure: aspirationalAdpData2021,
-        Student_Performance: aspirationalAdpData2021,
-      }
-
-
-    },
-    "2022-23": {
-      ADP_Report: {
-        Transition_Rate: aspirationalAdpData2020,
-        Teacher_and_School_Resources: ptrLessThanAdp2022,
-        School_Infrastructure: aspirationalAdpData2022,
-        Student_Performance: aspirationalAdpData2022,
-      }
-
-
-    },
-  };
-
-  useEffect(() => {
-    const selectedYearData = combinedtopData[selectedYear];
-    console.log("finalData")
-    if (selectedYearData) {
-      console.log("finalData")
-      const selectedReportData = selectedYearData[selectReportType];
-      if (selectedReportData) {
-        console.log("finalData")
-        const specificReportData = selectedReportData[selectedReport];
-        if (specificReportData) {
-          console.log("finalData")
-          dispatch(setselectedDataAllYear(specificReportData));
-          dispatch(setAspirationalAllData(specificReportData));
-        }
-      }
-    }
-  }, [selectReportType, selectedYear, selectedReport]);
 
   return (
     <div className="App">
