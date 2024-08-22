@@ -37,7 +37,6 @@ import ptrLessThanAdp2020 from "../../aspirational-reports-data/ptrLessThanAdp20
 import ptrLessThanAdp2021 from "../../aspirational-reports-data/ptrLessThanAdp2021-2022.json";
 import ptrLessThanAdp2022 from "../../aspirational-reports-data/ptrLessThanAdp2022-2023.json";
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
-
 export default function TeacherAndSchResourcesReport() {
     const dispatch = useDispatch();
     const { t, i18n } = useTranslation();
@@ -59,7 +58,6 @@ export default function TeacherAndSchResourcesReport() {
     const selectedOption = useSelector(
         (state) => state.reportAdpAbpType.selectedOptionTop50
     );
-    console.log(selectedOption, "selectedOption")
     const updateLoading = useSelector(
         (state) => state.reportAdpAbpType.loadingStatus
     );
@@ -72,12 +70,10 @@ export default function TeacherAndSchResourcesReport() {
     const savedReportName = localStorage.getItem("selectedReport");
     const report_name = savedReportName;
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
-    console.log(finalData, "finalData")
     const [data, setData] = useState([]);
     const [topPtrData, setTopPtrData] = useState([])
     const [top50Data, setTop50Data] = useState([])
-    console.log(top50Data, "topPtrDatatopPtrData")
-
+    
     const combinedTopData = {
         "2019-20": {
             ADP_Report: ptrLessThanAdp2019,
@@ -115,10 +111,9 @@ export default function TeacherAndSchResourcesReport() {
             : [];
     }, [topPtrData, selectedDistrict, finalData, selectedYear]);
 
-    console.log(filteredTopeData, "filteredTopeData");
+
 
     useEffect(() => {
-        console.log(filteredTopeData, "filteredTopeData inside useEffect");
         if (Array.isArray(filteredTopeData) && filteredTopeData.length > 0) {
             const sortedData = filteredTopeData.sort((a, b) => a.Rank - b.Rank);
 
@@ -132,7 +127,6 @@ export default function TeacherAndSchResourcesReport() {
         }
     }, [selectedOption, filteredTopeData, selectedYear]);
 
-    console.log(filteredTopeData, "filteredTopeData");
 
     function resteData() {
         // dispatch(selectState(SelectState));
