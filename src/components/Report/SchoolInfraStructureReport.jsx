@@ -70,8 +70,8 @@ export default function SchoolInfraStructureReport() {
   const [data, setData] = useState([]);
 
   const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
-  const [topPtrData, setTopPtrData] = useState([])
-  const [top50Data, setTop50Data] = useState([])
+  const [topPtrData, setTopPtrData] = useState([]);
+  const [top50Data, setTop50Data] = useState([]);
   const combinedTopData = {
     "2019-20": {
       ADP_Report: schWithToiletRatioAdp2019,
@@ -100,8 +100,7 @@ export default function SchoolInfraStructureReport() {
   }, [selectReportType, selectedYear]);
 
   const filteredTopeData = useMemo(() => {
-    return Array.isArray(topPtrData) &&
-      topPtrData.length > 0
+    return Array.isArray(topPtrData) && topPtrData.length > 0
       ? topPtrData.filter((topeItem) => {
           const districtMatch =
             selectedDistrict !== "SelectDistrict"
@@ -116,8 +115,6 @@ export default function SchoolInfraStructureReport() {
       : [];
   }, [topPtrData, selectedDistrict, finalData, selectedYear]);
 
-
-
   useEffect(() => {
     if (Array.isArray(filteredTopeData) && filteredTopeData.length > 0) {
       const sortedData = filteredTopeData.sort((a, b) => a.Rank - b.Rank);
@@ -131,7 +128,6 @@ export default function SchoolInfraStructureReport() {
       setTop50Data([]);
     }
   }, [selectedOption, filteredTopeData, selectedYear]);
-
 
   // const [finalData, SetFinalData] = useState([]
   function resteData() {
@@ -899,6 +895,8 @@ export default function SchoolInfraStructureReport() {
                     <div className="d-flex w-m-100 justify-content-end">
                       {selectedState !== SelectState &&
                       selectedDistrict !== SelectDistrict &&
+                      selectReportType !== "ABP_Report" &&
+                      selectReportType !== "ABP_Report" &&
                       selectedDistrict !== AllDistrict ? (
                         <div className="radio-button w-auto">
                           <div className="box-radio me-4">
@@ -964,11 +962,17 @@ export default function SchoolInfraStructureReport() {
                           columnDefs={columns}
                           rowData={
                             selectedOption === "Top_50_Schools"
-                                ? top50Data && top50Data.length > 0 ? top50Data : []
-                                : selectedOption === "Upcoming_50"
-                                    ? top50Data && top50Data.length > 0 ? top50Data : []
-                                    : finalData && finalData.length > 0 ? finalData : []
-                        }
+                              ? top50Data && top50Data.length > 0
+                                ? top50Data
+                                : []
+                              : selectedOption === "Upcoming_50"
+                              ? top50Data && top50Data.length > 0
+                                ? top50Data
+                                : []
+                              : finalData && finalData.length > 0
+                              ? finalData
+                              : []
+                          }
                           defaultColDef={defColumnDefs}
                           onGridReady={onGridReady}
                         />
