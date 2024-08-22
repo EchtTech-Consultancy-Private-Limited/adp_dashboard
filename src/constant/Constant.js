@@ -7,3 +7,7 @@ export const  SelectKpi= "Select KPI";
 export const selectedOptionConst= "upper_primary_to_secondary";
 export const intialYear="2022-23";
 export const PercentageEleSchPTR= "Percentage-of-elementary-schools-having-PTR-less-than-equal-to-30"
+export const Transition_Rate="Transition Rate";
+export const Teacher_and_School_Resources="Teacher and School Resources";
+export const School_Infrastructure="School Infrastructure";
+export const Student_Performance="Student Performance"

@@ -13,17 +13,19 @@ import aspirationalAbpData2020 from "./aspirational-reports-data/aspirationalAbp
 import aspirationalAbpData2021 from "./aspirational-reports-data/aspirationalAbpData2021-22.json";
 import aspirationalAbpData2022 from "./aspirational-reports-data/aspirationalAbpData2022-23.json";
 import aspirationalAbpData2019 from "./aspirational-reports-data/aspirationalAbpData2019-20.json";
+import ptrLessThanAdp2022 from "./aspirational-reports-data/ptrLessThanAdp2022-2023.json";
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { setAspirationalAllData, setselectedDataAllYear } from './redux/slice/reportTypeSlice';
-import { selectState,selectDistrict,selectBlock } from './redux/slice/filterServicesSlice'; 
+import { selectState, selectDistrict, selectBlock } from './redux/slice/filterServicesSlice';
 import Header from './components/Header/Header';
+import { School_Infrastructure, Student_Performance, Teacher_and_School_Resources, Transition_Rate } from './constant/Constant';
 function App() {
   const dispatch = useDispatch()
   const toggleDarkMode = useSelector((state) => state.toggle.toggleDarkLight);
   const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
   const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
-  const aspirationalData=useSelector((state)=>state.reportAdpAbpType.aspirationalAllData)
+  const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
   const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
   const selectedDistricts = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareDistricts
@@ -43,20 +45,20 @@ function App() {
   {/*...............Take data report wise..............*/ }
   const combinedData = {
     "2019-20": {
-      ADP_Report : aspirationalAdpData2019,
-      ABP_Report : aspirationalAbpData2019,
+      ADP_Report: aspirationalAdpData2019,
+      ABP_Report: aspirationalAbpData2019,
     },
     "2020-21": {
-      ADP_Report : aspirationalAdpData2020,
-      ABP_Report : aspirationalAbpData2020,
+      ADP_Report: aspirationalAdpData2020,
+      ABP_Report: aspirationalAbpData2020,
     },
     "2021-22": {
-      ADP_Report : aspirationalAdpData2021,
-      ABP_Report : aspirationalAbpData2021,
+      ADP_Report: aspirationalAdpData2021,
+      ABP_Report: aspirationalAbpData2021,
     },
     "2022-23": {
-      ADP_Report : aspirationalAdpData2022,
-      ABP_Report : aspirationalAbpData2022,
+      ADP_Report: aspirationalAdpData2022,
+      ABP_Report: aspirationalAbpData2022,
     },
   };
 
@@ -66,63 +68,70 @@ function App() {
       dispatch(setselectedDataAllYear(selectedData))
       dispatch(setAspirationalAllData(selectedData));
     }
-  }, [selectReportType,selectedYear]);
+  }, [selectReportType, selectedYear]);
 
   const combinedtopData = {
     "2019-20": {
       ADP_Report: {
-        "Teacher and School Resources": aspirationalAdpData2019,
-        "School Infrastructure": aspirationalAdpData2019,
-        "Student Performance": aspirationalAdpData2019,
+        Teacher_and_School_Resources: aspirationalAdpData2019,
+        School_Infrastructure: aspirationalAdpData2019,
+        Student_Performance: aspirationalAdpData2019,
       }
-     
+
     },
     "2020-21": {
       ADP_Report: {
-        "Teacher and School Resources": aspirationalAdpData2020,
-        "School Infrastructure": aspirationalAdpData2020,
-        "Student Performance": aspirationalAdpData2020,
+        Transition_Rate: aspirationalAdpData2020,
+        Teacher_and_School_Resources: aspirationalAdpData2020,
+        School_Infrastructure: aspirationalAdpData2020,
+        Student_Performance: aspirationalAdpData2020,
       }
-     
+
     },
     "2021-22": {
       ADP_Report: {
-        "Teacher and School Resources": aspirationalAdpData2021,
-        "School Infrastructure": aspirationalAdpData2021,
-        "Student Performance": aspirationalAdpData2021,
+        Transition_Rate: aspirationalAdpData2020,
+        Teacher_and_School_Resources: aspirationalAdpData2021,
+        School_Infrastructure: aspirationalAdpData2021,
+        Student_Performance: aspirationalAdpData2021,
       }
-      
-     
+
+
     },
     "2022-23": {
       ADP_Report: {
-        "Teacher and School Resources": aspirationalAdpData2022,
-        "School Infrastructure": aspirationalAdpData2022,
-        "Student Performance": aspirationalAdpData2022,
+        Transition_Rate: aspirationalAdpData2020,
+        Teacher_and_School_Resources: ptrLessThanAdp2022,
+        School_Infrastructure: aspirationalAdpData2022,
+        Student_Performance: aspirationalAdpData2022,
       }
-     
-    
+
+
     },
   };
-  
+
   useEffect(() => {
     const selectedYearData = combinedtopData[selectedYear];
+    console.log("finalData")
     if (selectedYearData) {
+      console.log("finalData")
       const selectedReportData = selectedYearData[selectReportType];
       if (selectedReportData) {
+        console.log("finalData")
         const specificReportData = selectedReportData[selectedReport];
         if (specificReportData) {
+          console.log("finalData")
           dispatch(setselectedDataAllYear(specificReportData));
           dispatch(setAspirationalAllData(specificReportData));
         }
       }
     }
   }, [selectReportType, selectedYear, selectedReport]);
-  
+
   return (
     <div className="App">
       <HashRouter>
-       <Header/>
+        <Header />
         {routes}
         <Footer />
       </HashRouter>

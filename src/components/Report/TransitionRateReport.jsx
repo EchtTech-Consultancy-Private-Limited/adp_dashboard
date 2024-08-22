@@ -69,6 +69,7 @@ export default function TransitionRateReport() {
     // const [filteredData, setFilteredData] = useState([]);
     // const [finalData, SetFinalData] = useState([]);
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
+    console.log(finalData, "finalData")
     function resteData() {
         // dispatch(selectState(SelectState));
         // dispatch(selectDistrict(SelectDistrict));
