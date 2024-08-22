@@ -6,6 +6,7 @@ const reportTypeSlice = createSlice({
         updateReportType:"ADP_Report",
         loadingStatus:false,
         selectedOption:"upper_primary_to_secondary",
+        selectedOptionTop50:"",
         selectedCompareOption:"upper_primary_to_secondary",
         selectedStateShow:"Select State",
         selectedReport:"Transition Rate",
@@ -19,7 +20,8 @@ const reportTypeSlice = createSlice({
         selectedDataAllYear:[],
         finalData:[],
         currentPage:1,
-        isActiveGraph:false
+        isActiveGraph:false,
+
     },
     reducers: {
       setUpdateReportType(state,action) {
@@ -30,6 +32,9 @@ const reportTypeSlice = createSlice({
       },
       setselectedOption(state,action) {
         state.selectedOption=action.payload;
+      },
+      setselectedOptionTop50(state,action) {
+        state.selectedOptionTop50=action.payload;
       },
       setselectedCompareOption(state,action) {
         state.selectedCompareOption=action.payload;
@@ -79,5 +84,5 @@ const reportTypeSlice = createSlice({
     },
   })
   
-  export const { setUpdateReportType,setUpdateStatus, setselectedOption,setselectedCompareOption,setselectedStateShow,setselectedReport,setselectedCompareDistricts,setselectedCompareBlocks,setSelectedYear,setgirdAPIForCommonData,SetSheetName,SethandleExportData, setAspirationalAllData,setselectedDataAllYear,SetFinalData,setCurrentPage,setIsActiveGraph } = reportTypeSlice.actions
+  export const { setUpdateReportType,setUpdateStatus, setselectedOption,setselectedCompareOption,setselectedStateShow,setselectedReport,setselectedCompareDistricts,setselectedCompareBlocks,setSelectedYear,setgirdAPIForCommonData,SetSheetName,SethandleExportData, setAspirationalAllData,setselectedDataAllYear,SetFinalData,setCurrentPage,setIsActiveGraph,setselectedOptionTop50 } = reportTypeSlice.actions
   export default reportTypeSlice.reducer
