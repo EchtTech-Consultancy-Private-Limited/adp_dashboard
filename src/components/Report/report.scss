@@ -264,7 +264,8 @@
 
 .tab-box {
     margin-left: 20px;
-    width: 260px;
+    width: auto;
+    display: flex;
     
     @media (max-width: 991px) {
         margin-left: 0;
