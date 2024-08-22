@@ -263,8 +263,12 @@
 }
 
 .tab-box {
-    margin-left: 25px;
-    width: 250px;
+    margin-left: 20px;
+    width: 510px;
+
+    .active .text-invert-f{
+        filter:invert(1) !important;
+    }
 
     @media (max-width: 991px) {
         margin-left: 0;
@@ -338,6 +342,13 @@
     white-space: nowrap;
     width: 230px !important;
     appearance: auto !important;
+
+    &.school-btn{
+        background: #fff !important;
+        border: 1px solid #ddd !important;
+        width: auto !important;
+        padding-right: 10px !important;
+    }
 
     @media (max-width:1399px) and (min-width: 1024px) {
         width: 200px !important;

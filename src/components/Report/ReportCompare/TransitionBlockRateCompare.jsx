@@ -179,18 +179,18 @@ export default function TransitionBlockRateCompare() {
   };
 
 
-  const boysData = selectedBlocks.map((block) =>
-    selectedOption === "upper_primary_to_secondary" ? block.upri_b : block.sec_b
+  const boysData = selectedBlocks?.map((block) =>
+    selectedOption === "upper_primary_to_secondary" ? block?.upri_b : block?.sec_b
   );
 
-  const girlsData = selectedBlocks.map((block) =>
+  const girlsData = selectedBlocks?.map((block) =>
     selectedOption === "secondary_to_higher_secondary"
-      ? block.sec_g
-      : block.upri_g
+      ? block?.sec_g
+      : block?.upri_g
   );
 
-  const Total_boys_girls = selectedBlocks.map((block) =>
-    selectedOption === "upper_primary_to_secondary" ? block.upri_t : block.sec_t
+  const Total_boys_girls = selectedBlocks?.map((block) =>
+    selectedOption === "upper_primary_to_secondary" ? block?.upri_t : block?.sec_t
   );
 
   return (
@@ -307,9 +307,8 @@ export default function TransitionBlockRateCompare() {
                   {selectedBlocks &&
                     selectedBlocks?.map((block, index) => (
                       <div
-                        className={`col-sm-12 col-20 ${
-                          selectedBlocks.length === 1 ? "m-auto" : ""
-                        }`}
+                        className={`col-sm-12 col-20 ${selectedBlocks.length === 1 ? "m-auto" : ""
+                          }`}
                       >
                         {selectedBlocks.length === 1 ? (
                           <Card
@@ -328,9 +327,8 @@ export default function TransitionBlockRateCompare() {
                                   <div className="d-flex">
                                     <div>
                                       <div
-                                        className={`number-card card-color-${
-                                          index + 1
-                                        }`}
+                                        className={`number-card card-color-${index + 1
+                                          }`}
                                       >
                                         {index + 1}
                                       </div>
@@ -354,7 +352,7 @@ export default function TransitionBlockRateCompare() {
                                   <p>Boys</p>
                                   <h6 className="sub-title">
                                     {selectedOption ===
-                                    "upper_primary_to_secondary"
+                                      "upper_primary_to_secondary"
                                       ? block?.upri_b
                                       : block?.sec_b}
                                   </h6>
@@ -363,7 +361,7 @@ export default function TransitionBlockRateCompare() {
                                   <p>Girls</p>
                                   <h6 className="sub-title">
                                     {selectedOption ===
-                                    "upper_primary_to_secondary"
+                                      "upper_primary_to_secondary"
                                       ? block?.upri_g
                                       : block?.sec_g}
                                   </h6>
@@ -372,7 +370,7 @@ export default function TransitionBlockRateCompare() {
                                   <p>Total</p>
                                   <h6 className="sub-title">
                                     {selectedOption ===
-                                    "upper_primary_to_secondary"
+                                      "upper_primary_to_secondary"
                                       ? block?.upri_t
                                       : block?.sec_t}
                                   </h6>
@@ -395,7 +393,7 @@ export default function TransitionBlockRateCompare() {
           <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
             <div className="text-btn-d d-flex justify-content-between align-items-center">
               <h2 className="heading-sm">
-                Comparison of States By Transition Rate
+              {t("comparisonByTransitionRate")}
               </h2>
 
               <div className="select-infra button-group-filter">
@@ -407,10 +405,10 @@ export default function TransitionBlockRateCompare() {
                   onChange={handleOptionChange}
                 >
                   <option value="upper_primary_to_secondary">
-                    Upper Primary to Secondary{" "}
+                  {t("upperPrimaryToSecondary")}
                   </option>
                   <option value="secondary_to_higher_secondary">
-                    Secondary to Higher Secondary
+                  {t("secondaryToHigherSecondary")}
                   </option>
                 </select>
               </div>
@@ -420,7 +418,7 @@ export default function TransitionBlockRateCompare() {
               <div className="row align-items-center">
                 <div className="col-md-2 col-lg-2">
                   <h4 className="sub-heading text-left">
-                    Add Blocks to Compare
+                         {t('add_block_to_compare')}
                   </h4>
                 </div>
                 <div className="col-md-10 col-lg-10 pe-2">
@@ -456,122 +454,126 @@ export default function TransitionBlockRateCompare() {
               </div>
             </div>
 
-          
-                <div className="piechart-box row align-items-center">
-                  <HighchartsReact
-                    highcharts={Highcharts}
-                    options={{
-                      chart: {
-                        type: "column",
-                        marginTop: 80,
-                        events: {
-                          beforePrint: function () {
-                            this.exportSVGElements[0].box.hide();
-                            this.exportSVGElements[1].hide();
-                          },
-                          afterPrint: function () {
-                            this.exportSVGElements[0].box.show();
-                            this.exportSVGElements[1].show();
-                          },
+            {selectedBlocks.length === 1 ? (
+              <Card
+                style={{
+                  width: 300,
+                  margin: "20px auto 0",
+                }}
+              >
+                <b>{t("selectOneMoreBlock")}</b>
+              </Card>
+            ) : (
+              <div className="piechart-box row align-items-center">
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  options={{
+                    chart: {
+                      type: "column",
+                      marginTop: 80,
+                      events: {
+                        beforePrint: function () {
+                          this.exportSVGElements[0].box.hide();
+                          this.exportSVGElements[1].hide();
+                        },
+                        afterPrint: function () {
+                          this.exportSVGElements[0].box.show();
+                          this.exportSVGElements[1].show();
                         },
                       },
-                      xAxis: {
-                        categories: selectedBlocks.map(
-                          (district) => district.lgd_block_name
-                        ),
-                      },
-                      yAxis: {
-                        allowDecimals: false,
-                        min: 0,
-                        title: {
-                          text: "",
-                        },
-                      },
+                    },
+                    xAxis: {
+                      categories: selectedBlocks.map(
+                        (district) => district.lgd_block_name
+                      ),
+                    },
+                    yAxis: {
+                      allowDecimals: false,
+                      min: 0,
                       title: {
                         text: "",
                       },
-                      tooltip: {
-                        headerFormat: "<b>{point.x}</b><br/>",
-                        pointFormat: "{series.name}: {point.y}",
-                        pointFormatter: function () {
-                          return `<span style="color:${
-                            this.color
-                          }">\u25CF</span> ${
-                            this.series.name
+                    },
+                    title: {
+                      text: "",
+                    },
+                    tooltip: {
+                      headerFormat: "<b>{point.x}</b><br/>",
+                      pointFormat: "{series.name}: {point.y}",
+                      pointFormatter: function () {
+                        return `<span style="color:${this.color
+                          }">\u25CF</span> ${this.series.name
                           }: <b>${this.y.toLocaleString("en-IN")}</b><br/>`;
-                        },
                       },
-                      plotOptions: {
-                        column: {
-                          stacking: "normal",
-                          dataLabels: {
-                            enabled: true,
-                            crop: false,
-                            overflow: "none",
-                            rotation: 0,
+                    },
+                    plotOptions: {
+                      column: {
+                        stacking: "normal",
+                        dataLabels: {
+                          enabled: true,
+                          crop: false,
+                          overflow: "none",
+                          rotation: 0,
+                          align: "center",
+                          x: -2,
+                          y: -5,
+                          style: {
+                            font: "13px Arial, sans-serif",
+                            fontWeight: "600",
+                            stroke: "transparent",
                             align: "center",
-                            x: -2,
-                            y: -5,
-                            style: {
-                              font: "13px Arial, sans-serif",
-                              fontWeight: "600",
-                              stroke: "transparent",
-                              align: "center",
-                            },
-                            position: "top",
-                            formatter: function () {
-                              // return parseFloat(
-                              //   this.y
-                              // ).toFixed(0);
-                              return this.y.toLocaleString("en-IN");
-                            },
+                          },
+                          position: "top",
+                          formatter: function () {
+                            // return parseFloat(
+                            //   this.y
+                            // ).toFixed(0);
+                            return this.y.toLocaleString("en-IN");
                           },
                         },
                       },
-                      legend: {
-                        layout: "horizontal",
-                        align: "center",
-                        verticalAlign: "bottom",
-                        itemMarginTop: 10,
-                        itemMarginBottom: 10,
+                    },
+                    legend: {
+                      layout: "horizontal",
+                      align: "center",
+                      verticalAlign: "bottom",
+                      itemMarginTop: 10,
+                      itemMarginBottom: 10,
+                    },
+                    credits: {
+                      enabled: false,
+                    },
+                    exports: {
+                      enabled: false,
+                    },
+                    series: [
+                      {
+                        color: "#17AFD2",
+                        name: t('boys'),
+                        data: boysData,
+                        maxPointWidth: 50,
+
                       },
-                      credits: {
-                        enabled: false,
+                      {
+                        color: "#6C6CB0",
+                        name: t('girls'),
+                        data: girlsData,
+                        maxPointWidth: 50,
+
                       },
-                      exports: {
-                        enabled: false,
+                      {
+                        color: "#FFB74BF0",
+                        name: t('total'),
+                        data: Total_boys_girls,
+                        maxPointWidth: 50,
+
                       },
-                      series: [
-                        {
-                          color: "#17AFD2",
-                          name: "Boys",
-                    
-                          data: boysData,
-                          maxPointWidth:50,
-
-                        },
-                        {
-                          color: "#6C6CB0",
-                          name: "Girls",
-
-                     
-                          data: girlsData,
-                          maxPointWidth:50,
-
-                        },
-                        {
-                          color: "#FFB74BF0",
-                          name: "Total",
-                          data: Total_boys_girls,
-                          maxPointWidth:50,
-
-                        },
-                      ],
-                    }}
-                    immutable={true}
-                  />
-                </div>
-           
+                    ],
+                  }}
+                  immutable={true}
+                />
+              </div>
+            )}
           </div>
         </div>
       )}

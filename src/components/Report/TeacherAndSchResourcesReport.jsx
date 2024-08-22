@@ -14,7 +14,9 @@ import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import { GlobalLoading } from "../GlobalLoading/GlobalLoading";
 import {
+    setAspirationalAllData,
     SetFinalData,
+    setselectedDataAllYear,
     setselectedOption,
     SetSheetName,
 } from "../../redux/slice/reportTypeSlice";
@@ -29,6 +31,7 @@ import {
 import { ScrollToTopOnMount } from "../../Scroll/ScrollToTopOnMount";
 import TeacherAndSchoolCompare from "./ReportCompare/TeacherAndSchoolCompare";
 import TeacherAndSchoolBlockCompare from "./ReportCompare/TeacherAndSchoolBlockCompare";
+import ptrLessThanAdp2022 from "../../aspirational-reports-data/ptrLessThanAdp2022-2023.json";
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 
 export default function TeacherAndSchResourcesReport() {
@@ -42,6 +45,7 @@ export default function TeacherAndSchResourcesReport() {
     const { selectedState, selectedDistrict, selectedBlock } = useSelector(
         (state) => state.locationAdp
     );
+    
     const [locationHeader, SetLocationHeader] = useState();
     const aspirationalData = useSelector(
         (state) => state.reportAdpAbpType.aspirationalAllData
@@ -52,10 +56,12 @@ export default function TeacherAndSchResourcesReport() {
     const selectedOption = useSelector(
         (state) => state.reportAdpAbpType.selectedOption
     );
+    console.log(selectedOption, "selectedOption")
     const updateLoading = useSelector(
         (state) => state.reportAdpAbpType.loadingStatus
     );
     const states = useSelector((state) => state.locationAdp.states);
+    console.log(states, "selectedState")
     const selectedYear = useSelector(
         (state) => state.reportAdpAbpType.selectedYear
     );
@@ -64,9 +70,31 @@ export default function TeacherAndSchResourcesReport() {
     const savedReportName = localStorage.getItem("selectedReport");
     const report_name = savedReportName;
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
+    console.log(finalData, "finalData")
     const [data, setData] = useState([]);
     // const [finalData, SetFinalData] = useState([])
-
+    const combinedTopData = {
+        "2019-20": {
+          ADP_Report: ptrLessThanAdp2022,
+        },
+        "2020-21": {
+          ADP_Report: ptrLessThanAdp2022,
+        },
+        "2021-22": {
+          ADP_Report: ptrLessThanAdp2022,
+        },
+        "2022-23": {
+          ADP_Report: ptrLessThanAdp2022,
+        },
+      };
+    
+      useEffect(() => {
+        const selectedData = combinedTopData[selectedYear][selectReportType];
+        if (selectedData) {
+          dispatch(setselectedDataAllYear(selectedData))
+          dispatch(setAspirationalAllData(selectedData));
+        }
+      }, [selectReportType, selectedYear]);
     function resteData() {
         // dispatch(selectState(SelectState));
         // dispatch(selectDistrict(SelectDistrict));
@@ -352,7 +380,57 @@ export default function TeacherAndSchResourcesReport() {
         selectedDistrict,
         selectReportType,
     ]);
-
+    useEffect(() => {
+        if (selectedState !== "All State") {
+            if (selectedOption === "Top_50_Schools") {
+                setColumn([
+                    {
+                        headerName: "Serial Number",
+                        field: "Serial Number",
+                        hide: true,
+                        suppressColumnsToolPanel: true,
+                        suppressFiltersToolPanel: true,
+                    },
+                    ...(selectReportType === "ADP_Report"
+                        ? [
+                            {
+                                headerName: "District",
+                                field: "lgd_district_name",
+                                cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
+                            },
+                        ]
+                        : []),
+                  
+                
+                    {
+                        headerName: "Boys",
+                        // field: "upri_b",
+                        cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+                    {
+                        headerName: "Girls",
+                        // field: "upri_g",
+                        cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+                    {
+                        headerName: "Total",
+                        // field: "upri_t",
+                        cellRenderer: percentageRenderer,
+                        hide: false,
+                    },
+                ]);
+            } 
+          
+        }
+    }, [
+        locationHeader,
+        selectedState,
+        selectedOption,
+        selectedDistrict,
+        selectReportType,
+    ]);
     const compressData = useCallback((data, groupBy) => {
         return data.reduce((acc, curr) => {
             let groupKey = curr[groupBy];
@@ -595,6 +673,13 @@ export default function TeacherAndSchResourcesReport() {
         document.getElementById("export_data").selectedIndex = 0;
     };
 
+    const handleOptionChange = (event) => {
+        dispatch(setselectedOption(event.target.value));
+    };
+    const toggleClass = (e) => {
+       
+        dispatch(setselectedOption(""));
+    };
     return (
         <>
             <ScrollToTopOnMount />
@@ -639,11 +724,11 @@ export default function TeacherAndSchResourcesReport() {
                                                 </h3>
                                             </div>
                                             <div className="tab-box">
-                                                <button className="tab-button active">
+                                                <button className="tab-button active" onClick={toggleClass}>
                                                     <img src={table} alt="Table" />{" "}
                                                     <span>{t("tableView")}</span>
                                                 </button>
-                                                <button className="tab-button">
+                                                <button className="tab-button" onClick={toggleClass}>
                                                     <img src={chart} alt="chart" />{" "}
                                                     <span>{t("chartView")}</span>
                                                 </button>
@@ -652,6 +737,37 @@ export default function TeacherAndSchResourcesReport() {
                                     </div>
                                     <div className="col-md-6">
                                         <div className="d-flex w-m-100 justify-content-end">
+                                            {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) ? (
+                                                <div className="radio-button w-auto">
+                                                <div className="box-radio me-4">
+                                                    <input
+                                                        type="radio"
+                                                        id="radio44"
+                                                        value="Top_50_Schools"
+                                                        checked={selectedOption === "Top_50_Schools"}
+                                                        onChange={handleOptionChange}
+                                                    />
+                                                    <label htmlFor="radio44">
+                                                        Top 50 Schools
+                                                    </label>
+                                                </div>
+
+                                                <div className="box-radio">
+                                                    <input
+                                                        type="radio"
+                                                        id="radio55"
+                                                        value="Upcoming_50"
+                                                        checked={selectedOption === "Upcoming_50"}
+                                                        onChange={handleOptionChange}
+                                                    />
+                                                    <label htmlFor="radio55">
+                                                        Upcoming 50
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            ):("")}
+                                            
+
                                             <div className="">
                                                 {/* <img src={download} alt="download" /> */}
                                                 <select
@@ -687,7 +803,7 @@ export default function TeacherAndSchResourcesReport() {
                                             >
                                                 <AgGridReact
                                                     columnDefs={columns}
-                                                    rowData={finalData || finalData.length>0 ? finalData :""}
+                                                    rowData={finalData || finalData.length > 0 ? finalData : ""}
                                                     defaultColDef={defColumnDefs}
                                                     onGridReady={onGridReady}
                                                 />
