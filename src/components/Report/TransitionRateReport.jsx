@@ -51,7 +51,6 @@ export default function TransitionRateReport() {
     const [locationHeader, SetLocationHeader] = useState();
     const [gridApi, setGridApi] = useState();
     const states = useSelector((state) => state.locationAdp.districts);
-    // console.log(states, "selectedState")
     const selectReportType = useSelector(
         (state) => state.reportAdpAbpType.updateReportType
     );
@@ -771,7 +770,6 @@ export default function TransitionRateReport() {
     };
 
     const [isActive, setIsActive] = useState(false);
-// console.log(isActive, "isActive")
     const toggleClass = (e) => {
        
         dispatch(setIsActiveGraph(!isActiveGraph));

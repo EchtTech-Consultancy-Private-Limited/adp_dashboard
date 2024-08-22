@@ -310,6 +310,10 @@ img {
                 font-size: 18px;
                 font-weight: 700;
                 color: #000;
+
+                @media (max-width:1399px) and (min-width: 1024px) {
+                    font-size: 16px;
+                }
             }
 
             .theme-maintext {
