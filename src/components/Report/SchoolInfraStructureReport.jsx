@@ -882,7 +882,7 @@ export default function SchoolInfraStructureReport() {
                     <div className="d-flex w-m-100 justify-content-end">
                       {selectedState !== SelectState &&
                         selectedDistrict !== SelectDistrict &&
-                        selectedDistrict !== AllDistrict ? (
+                        selectedDistrict !== AllDistrict && selectReportType !== "ABP_Report" ? (
                         <div className="radio-button w-auto">
                           <div className="box-radio me-4">
                             <input

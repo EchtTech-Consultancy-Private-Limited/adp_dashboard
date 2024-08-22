@@ -73,7 +73,7 @@ export default function TeacherAndSchResourcesReport() {
     const [data, setData] = useState([]);
     const [topPtrData, setTopPtrData] = useState([])
     const [top50Data, setTop50Data] = useState([])
-    
+
     const combinedTopData = {
         "2019-20": {
             ADP_Report: ptrLessThanAdp2019,
@@ -802,7 +802,7 @@ export default function TeacherAndSchResourcesReport() {
                                     </div>
                                     <div className="col-md-6">
                                         <div className="d-flex w-m-100 justify-content-end">
-                                            {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectReportType !== "ABP_Report" && selectedDistrict !== AllDistrict) ? (
+                                            {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) ? (
                                                 <div className="radio-button w-auto">
                                                     <div className="box-radio me-4">
                                                         <input
