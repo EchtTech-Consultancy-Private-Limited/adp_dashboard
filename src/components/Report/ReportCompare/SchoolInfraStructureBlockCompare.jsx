@@ -148,7 +148,7 @@ export default function SchoolInfraStructureBlockCompare() {
       <ScrollToTopOnMount />
       <div className="card-box">
         <div className="row align-items-end">
-          <div className="col-md-7">
+          <div className="col-md-12">
             <div className="d-flex align-items-center">
               <div className="title-box">
                 {/* <h5 className='sub-title'>State :
@@ -175,14 +175,12 @@ export default function SchoolInfraStructureBlockCompare() {
                                     </Select>
                                 </h5> */}
                 <h3 className="heading-sm">
-                  {t('comparisonBySchoolInfrastructure')}
+                  {t('comparison By Percentange of Schools having adequate Functional Girls Toilets')}
                 </h3>
               </div>
             </div>
           </div>
-          <div className="col-md-5">
-            <div className="d-flex w-m-100"></div>
-          </div>
+         
         </div>
 
         <div className="row">
