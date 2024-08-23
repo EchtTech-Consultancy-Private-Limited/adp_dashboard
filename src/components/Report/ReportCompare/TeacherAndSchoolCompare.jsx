@@ -163,7 +163,7 @@ export default function TeacherAndSchoolCompare() {
                                     </Select>
                                 </h5> */}
                 <h3 className="heading-sm">
-                  {t("comparison By Percentage of elementary schools having PTR less than equal to 30")}
+                  {t("comparisonByTeacherAndSchoolResources")}
                 </h3>
               </div>
             </div>

@@ -851,9 +851,9 @@ export default function SchoolInfraStructureReport() {
                         </h5>
                         <h3 className="heading-sm">
                           {selectedOption === "Top_50_Schools"
-                            ? "Top 50 Schools with 40:1 Adequate Functional Girls Toilets"
+                            ? t('top_50_schools_with_40_1_girls_toilets')
                             : selectedOption === "Upcoming_50"
-                              ? "Upcoming 50 Schools with 40:1 Adequate Functional Girls Toilets"
+                              ? t('upcoming_50_schools_with_40_1_girls_toilets')
                               : t("schoolInfrastructureReport")}
                         </h3>
 
@@ -889,7 +889,7 @@ export default function SchoolInfraStructureReport() {
                               checked={selectedOption === "Top_50_Schools"}
                               onChange={handleOptionChange}
                             />
-                            <label htmlFor="radio44">Top 50 Schools</label>
+                            <label htmlFor="radio44">  {t('top_50_schools')}</label>
                           </div>
 
                           <div className="box-radio">
@@ -900,7 +900,7 @@ export default function SchoolInfraStructureReport() {
                               checked={selectedOption === "Upcoming_50"}
                               onChange={handleOptionChange}
                             />
-                            <label htmlFor="radio55">Upcoming 50 Schools</label>
+                            <label htmlFor="radio55">{t('upcoming_50_schools')}</label>
                           </div>
                         </div>
                       ) : (
