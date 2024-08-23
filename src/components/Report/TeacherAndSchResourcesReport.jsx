@@ -73,7 +73,7 @@ export default function TeacherAndSchResourcesReport() {
     const [data, setData] = useState([]);
     const [topPtrData, setTopPtrData] = useState([])
     const [top50Data, setTop50Data] = useState([])
-// Code for top 100 Data show
+    // Code for top 100 Data show
     const combinedTopData = {
         "2019-20": {
             ADP_Report: ptrLessThanAdp2019,
@@ -884,7 +884,7 @@ export default function TeacherAndSchResourcesReport() {
                         </div>
 
                         {
-                            selectedState !== "All State" && selectReportType === "ADP_Report" && (selectedOption !== "Top_50_Schools" && selectedOption !== "Upcoming_50")  ? (
+                            selectedState !== "All State" && selectReportType === "ADP_Report" && (selectedOption !== "Top_50_Schools" && selectedOption !== "Upcoming_50") ? (
                                 <TeacherAndSchoolCompare />
                             ) : (selectedState !== "All State" && selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) && selectReportType === "ABP_Report" ? (
                                 <TeacherAndSchoolBlockCompare />
