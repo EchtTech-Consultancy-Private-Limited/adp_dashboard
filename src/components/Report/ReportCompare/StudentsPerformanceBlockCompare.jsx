@@ -5,24 +5,24 @@ import {
   selectState,
   setStates,
   selectBlock,
-} from "../../../redux/slice/filterServicesComprisionSlice";
+} from "../../../redux/slice/filterServicesComprisionSlice.js";
 import {
   setselectedCompareDistricts,
   setselectedCompareOption,
   setUpdateReportType,
   setselectedCompareBlocks,
   setAspirationalAllData,
-} from "../../../redux/slice/reportTypeSlice";
+} from "../../../redux/slice/reportTypeSlice.js";
 import aspirationalAbpData from "../../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../../aspirational-reports-data/aspirationalDistrict.json";
 import table from "../../../assets/images/table.svg";
 import card from "../../../assets/images/card-list.svg";
 import { Card, Select } from "antd";
-import { SelectState } from "../../../constant/Constant";
+import { SelectState } from "../../../constant/Constant.js";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import BlankPage from "../BlankPage";
-import { ScrollToTopOnMount } from "../../../Scroll/ScrollToTopOnMount";
+import BlankPage from "../BlankPage.jsx";
+import { ScrollToTopOnMount } from "../../../Scroll/ScrollToTopOnMount.jsx";
 import { useTranslation } from "react-i18next";
 import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer.jsx";
 
@@ -179,7 +179,7 @@ export default function StudentsPerformanceBlockCompare() {
                                     </Select>
                                 </h5> */}
                 <h3 className="heading-sm">
-                  {t("comparison By Percentage Schools with Teachers trained for teaching CWSN")}
+                  {t("comparisonByStudentPerformance")}
                 </h3>
               </div>
             </div>
