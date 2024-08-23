@@ -2,7 +2,7 @@
     {
       "1": 2,
       "lgd_state_name": "Andhra Pradesh",
-      "state_id": 128,
+      "state_cd": 128,
       "lgd_state_id": 28,
       "lgd_district_name": "KADAPA",
       "lgd_district_id": 3810,
@@ -46,7 +46,7 @@
     {
       "1": 3,
       "lgd_state_name": "Andhra Pradesh",
-      "state_id": 128,
+      "state_cd": 128,
       "lgd_state_id": 28,
       "lgd_district_name": "VISAKHAPATNAM",
       "lgd_district_id": 3803,
@@ -90,7 +90,7 @@
     {
       "1": 4,
       "lgd_state_name": "Andhra Pradesh",
-      "state_id": 128,
+      "state_cd": 128,
       "lgd_state_id": 28,
       "lgd_district_name": "VIZIANAGARAM",
       "lgd_district_id": 3802,
@@ -134,7 +134,7 @@
     {
       "1": 5,
       "lgd_state_name": "Arunachal Pradesh",
-      "state_id": 112,
+      "state_cd": 112,
       "lgd_state_id": 12,
       "lgd_district_name": "NAMSAI",
       "lgd_district_id": 2218,
@@ -177,7 +177,7 @@
     {
       "1": 6,
       "lgd_state_name": "Assam",
-      "state_id": 118,
+      "state_cd": 118,
       "lgd_state_id": 18,
       "lgd_district_name": "BAKSA",
       "lgd_district_id": 2824,
@@ -221,7 +221,7 @@
     {
       "1": 7,
       "lgd_state_name": "Assam",
-      "state_id": 118,
+      "state_cd": 118,
       "lgd_state_id": 18,
       "lgd_district_name": "BARPETA",
       "lgd_district_id": 2805,
@@ -265,7 +265,7 @@
     {
       "1": 8,
       "lgd_state_name": "Assam",
-      "state_id": 118,
+      "state_cd": 118,
       "lgd_state_id": 18,
       "lgd_district_name": "DARRANG",
       "lgd_district_id": 2808,
@@ -309,7 +309,7 @@
     {
       "1": 9,
       "lgd_state_name": "Assam",
-      "state_id": 118,
+      "state_cd": 118,
       "lgd_state_id": 18,
       "lgd_district_name": "DHUBRI",
       "lgd_district_id": 2802,
@@ -353,7 +353,7 @@
     {
       "1": 10,
       "lgd_state_name": "Assam",
-      "state_id": 118,
+      "state_cd": 118,
       "lgd_state_id": 18,
       "lgd_district_name": "GOALPARA",
       "lgd_district_id": 2803,
@@ -397,7 +397,7 @@
     {
       "1": 11,
       "lgd_state_name": "Assam",
-      "state_id": 118,
+      "state_cd": 118,
       "lgd_state_id": 18,
       "lgd_district_name": "HAILAKANDI",
       "lgd_district_id": 2823,
@@ -441,7 +441,7 @@
     {
       "1": 12,
       "lgd_state_name": "Assam",
-      "state_id": 118,
+      "state_cd": 118,
       "lgd_state_id": 18,
       "lgd_district_name": "UDALGURI",
       "lgd_district_id": 2826,
@@ -485,7 +485,7 @@
     {
       "1": 13,
       "lgd_state_name": "Bihar",
-      "state_id": 110,
+      "state_cd": 110,
       "lgd_state_id": 10,
       "lgd_district_name": "ARARIA",
       "lgd_district_id": 2007,
@@ -529,7 +529,7 @@
     {
       "1": 14,
       "lgd_state_name": "Bihar",
-      "state_id": 110,
+      "state_cd": 110,
       "lgd_state_id": 10,
       "lgd_district_name": "AURANGABAD (BIHAR)",
       "lgd_district_id": 2034,
@@ -573,7 +573,7 @@
     {
       "1": 15,
       "lgd_state_name": "Bihar",
-      "state_id": 110,
+      "state_cd": 110,
       "lgd_state_id": 10,
       "lgd_district_name": "BANKA",
       "lgd_district_id": 2023,
@@ -617,7 +617,7 @@
     {
       "1": 16,
       "lgd_state_name": "Bihar",
-      "state_id": 110,
+      "state_cd": 110,
       "lgd_state_id": 10,
       "lgd_district_name": "BEGUSARAI",
       "lgd_district_id": 2020,
@@ -661,7 +661,7 @@
     {
       "1": 17,
       "lgd_state_name": "Bihar",
-      "state_id": 110,
+      "state_cd": 110,
       "lgd_state_id": 10,
       "lgd_district_name": "GAYA",
       "lgd_district_id": 2035,
@@ -705,7 +705,7 @@
     {
       "1": 18,
       "lgd_state_name": "Bihar",
-      "state_id": 110,
+      "state_cd": 110,
       "lgd_state_id": 10,
       "lgd_district_name": "JAMUI",
       "lgd_district_id": 2037,
@@ -749,7 +749,7 @@
     {
       "1": 19,
       "lgd_state_name": "Bihar",
-      "state_id": 110,
+      "state_cd": 110,
       "lgd_state_id": 10,
       "lgd_district_name": "KATIHAR",
       "lgd_district_id": 2010,
@@ -793,7 +793,7 @@
     {
       "1": 20,
       "lgd_state_name": "Bihar",
-      "state_id": 110,
+      "state_cd": 110,
       "lgd_state_id": 10,
       "lgd_district_name": "KHAGARIA",
       "lgd_district_id": 2021,
@@ -837,7 +837,7 @@
     {
       "1": 21,
       "lgd_state_name": "Bihar",
-      "state_id": 110,
+      "state_cd": 110,
       "lgd_state_id": 10,
       "lgd_district_name": "MUZAFFARPUR",
       "lgd_district_id": 2014,
@@ -881,7 +881,7 @@
     {
       "1": 22,
       "lgd_state_name": "Bihar",
-      "state_id": 110,
+      "state_cd": 110,
       "lgd_state_id": 10,
       "lgd_district_name": "NAWADA",
       "lgd_district_id": 2036,
@@ -925,7 +925,7 @@
     {
       "1": 23,
       "lgd_state_name": "Bihar",
-      "state_id": 110,
+      "state_cd": 110,
       "lgd_state_id": 10,
       "lgd_district_name": "PURNIA",
       "lgd_district_id": 2009,
@@ -969,7 +969,7 @@
     {
       "1": 24,
       "lgd_state_name": "Bihar",
-      "state_id": 110,
+      "state_cd": 110,
       "lgd_state_id": 10,
       "lgd_district_name": "SHEIKHPURA",
       "lgd_district_id": 2026,
@@ -1012,7 +1012,7 @@
     {
       "1": 25,
       "lgd_state_name": "Bihar",
-      "state_id": 110,
+      "state_cd": 110,
       "lgd_state_id": 10,
       "lgd_district_name": "SITAMARHI",
       "lgd_district_id": 2004,
@@ -1056,7 +1056,7 @@
     {
       "1": 26,
       "lgd_state_name": "Chhattisgarh",
-      "state_id": 122,
+      "state_cd": 122,
       "lgd_state_id": 22,
       "lgd_district_name": "BASTER",
       "lgd_district_id": 3215,
@@ -1100,7 +1100,7 @@
     {
       "1": 27,
       "lgd_state_name": "Chhattisgarh",
-      "state_id": 122,
+      "state_cd": 122,
       "lgd_state_id": 22,
       "lgd_district_name": "BIJAPUR",
       "lgd_district_id": 3220,
@@ -1143,7 +1143,7 @@
     {
       "1": 28,
       "lgd_state_name": "Chhattisgarh",
-      "state_id": 122,
+      "state_cd": 122,
       "lgd_state_id": 22,
       "lgd_district_name": "DANTEWADA",
       "lgd_district_id": 3216,
@@ -1186,7 +1186,7 @@
     {
       "1": 29,
       "lgd_state_name": "Chhattisgarh",
-      "state_id": 122,
+      "state_cd": 122,
       "lgd_state_id": 22,
       "lgd_district_name": "KANKER",
       "lgd_district_id": 3214,
@@ -1230,7 +1230,7 @@
     {
       "1": 30,
       "lgd_state_name": "Chhattisgarh",
-      "state_id": 122,
+      "state_cd": 122,
       "lgd_state_id": 22,
       "lgd_district_name": "KONDAGAON",
       "lgd_district_id": 3217,
@@ -1274,7 +1274,7 @@
     {
       "1": 31,
       "lgd_state_name": "Chhattisgarh",
-      "state_id": 122,
+      "state_cd": 122,
       "lgd_state_id": 22,
       "lgd_district_name": "KORBA",
       "lgd_district_id": 3205,
@@ -1318,7 +1318,7 @@
     {
       "1": 32,
       "lgd_state_name": "Chhattisgarh",
-      "state_id": 122,
+      "state_cd": 122,
       "lgd_state_id": 22,
       "lgd_district_name": "MAHASAMUND",
       "lgd_district_id": 3212,
@@ -1362,7 +1362,7 @@
     {
       "1": 33,
       "lgd_state_name": "Chhattisgarh",
-      "state_id": 122,
+      "state_cd": 122,
       "lgd_state_id": 22,
       "lgd_district_name": "NARAYANPUR",
       "lgd_district_id": 3218,
@@ -1405,7 +1405,7 @@
     {
       "1": 34,
       "lgd_state_name": "Chhattisgarh",
-      "state_id": 122,
+      "state_cd": 122,
       "lgd_state_id": 22,
       "lgd_district_name": "RAJNANDGAON",
       "lgd_district_id": 3209,
@@ -1449,7 +1449,7 @@
     {
       "1": 35,
       "lgd_state_name": "Chhattisgarh",
-      "state_id": 122,
+      "state_cd": 122,
       "lgd_state_id": 22,
       "lgd_district_name": "SUKMA",
       "lgd_district_id": 3221,
@@ -1492,7 +1492,7 @@
     {
       "1": 36,
       "lgd_state_name": "Gujarat",
-      "state_id": 124,
+      "state_cd": 124,
       "lgd_state_id": 24,
       "lgd_district_name": "DOHAD",
       "lgd_district_id": 3418,
@@ -1536,7 +1536,7 @@
     {
       "1": 37,
       "lgd_state_name": "Gujarat",
-      "state_id": 124,
+      "state_cd": 124,
       "lgd_state_id": 24,
       "lgd_district_name": "NARMADA",
       "lgd_district_id": 3420,
@@ -1579,7 +1579,7 @@
     {
       "1": 38,
       "lgd_state_name": "Haryana",
-      "state_id": 106,
+      "state_cd": 106,
       "lgd_state_id": 6,
       "lgd_district_name": "NUH",
       "lgd_district_id": 1520,
@@ -1623,7 +1623,7 @@
     {
       "1": 39,
       "lgd_state_name": "Himachal Pradesh",
-      "state_id": 102,
+      "state_cd": 102,
       "lgd_state_id": 2,
       "lgd_district_name": "CHAMBA",
       "lgd_district_id": 1101,
@@ -1667,7 +1667,7 @@
     {
       "1": 40,
       "lgd_state_name": "Jammu & Kashmir",
-      "state_id": 101,
+      "state_cd": 101,
       "lgd_state_id": 1,
       "lgd_district_name": "BARAMULA",
       "lgd_district_id": 1002,
@@ -1711,7 +1711,7 @@
     {
       "1": 41,
       "lgd_state_name": "Jammu & Kashmir",
-      "state_id": 101,
+      "state_cd": 101,
       "lgd_state_id": 1,
       "lgd_district_name": "KUPWARA",
       "lgd_district_id": 1001,
@@ -1755,7 +1755,7 @@
     {
       "1": 42,
       "lgd_state_name": "Jharkhand",
-      "state_id": 120,
+      "state_cd": 120,
       "lgd_state_id": 20,
       "lgd_district_name": "BOKARO",
       "lgd_district_id": 3013,
@@ -1799,7 +1799,7 @@
     {
       "1": 43,
       "lgd_state_name": "Jharkhand",
-      "state_id": 120,
+      "state_cd": 120,
       "lgd_state_id": 20,
       "lgd_district_name": "CHATRA",
       "lgd_district_id": 3003,
@@ -1843,7 +1843,7 @@
     {
       "1": 44,
       "lgd_state_name": "Jharkhand",
-      "state_id": 120,
+      "state_cd": 120,
       "lgd_state_id": 20,
       "lgd_district_name": "DUMKA",
       "lgd_district_id": 3011,
@@ -1887,7 +1887,7 @@
     {
       "1": 45,
       "lgd_state_name": "Jharkhand",
-      "state_id": 120,
+      "state_cd": 120,
       "lgd_state_id": 20,
       "lgd_district_name": "GARHWA",
       "lgd_district_id": 3001,
@@ -1931,7 +1931,7 @@
     {
       "1": 46,
       "lgd_state_name": "Jharkhand",
-      "state_id": 120,
+      "state_cd": 120,
       "lgd_state_id": 20,
       "lgd_district_name": "GIRIDIH",
       "lgd_district_id": 3006,
@@ -1975,7 +1975,7 @@
     {
       "1": 47,
       "lgd_state_name": "Jharkhand",
-      "state_id": 120,
+      "state_cd": 120,
       "lgd_state_id": 20,
       "lgd_district_name": "GODDA",
       "lgd_district_id": 3008,
@@ -2019,7 +2019,7 @@
     {
       "1": 48,
       "lgd_state_name": "Jharkhand",
-      "state_id": 120,
+      "state_cd": 120,
       "lgd_state_id": 20,
       "lgd_district_name": "GUMLA",
       "lgd_district_id": 3016,
@@ -2063,7 +2063,7 @@
     {
       "1": 49,
       "lgd_state_name": "Jharkhand",
-      "state_id": 120,
+      "state_cd": 120,
       "lgd_state_id": 20,
       "lgd_district_name": "HAZARIBAG",
       "lgd_district_id": 3004,
@@ -2107,7 +2107,7 @@
     {
       "1": 50,
       "lgd_state_name": "Jharkhand",
-      "state_id": 120,
+      "state_cd": 120,
       "lgd_state_id": 20,
       "lgd_district_name": "KHUNTI",
       "lgd_district_id": 3023,
@@ -2151,7 +2151,7 @@
     {
       "1": 51,
       "lgd_state_name": "Jharkhand",
-      "state_id": 120,
+      "state_cd": 120,
       "lgd_state_id": 20,
       "lgd_district_name": "LATEHAR",
       "lgd_district_id": 3022,
@@ -2195,7 +2195,7 @@
     {
       "1": 52,
       "lgd_state_name": "Jharkhand",
-      "state_id": 120,
+      "state_cd": 120,
       "lgd_state_id": 20,
       "lgd_district_name": "LOHARDAGA",
       "lgd_district_id": 3015,
@@ -2238,7 +2238,7 @@
     {
       "1": 53,
       "lgd_state_name": "Jharkhand",
-      "state_id": 120,
+      "state_cd": 120,
       "lgd_state_id": 20,
       "lgd_district_name": "PAKAUR",
       "lgd_district_id": 3010,
@@ -2282,7 +2282,7 @@
     {
       "1": 54,
       "lgd_state_name": "Jharkhand",
-      "state_id": 120,
+      "state_cd": 120,
       "lgd_state_id": 20,
       "lgd_district_name": "PALAMU",
       "lgd_district_id": 3002,
@@ -2326,7 +2326,7 @@
     {
       "1": 55,
       "lgd_state_name": "Jharkhand",
-      "state_id": 120,
+      "state_cd": 120,
       "lgd_state_id": 20,
       "lgd_district_name": "PASHCHIMI SINGHBHUM",
       "lgd_district_id": 3017,
@@ -2370,7 +2370,7 @@
     {
       "1": 56,
       "lgd_state_name": "Jharkhand",
-      "state_id": 120,
+      "state_cd": 120,
       "lgd_state_id": 20,
       "lgd_district_name": "PURBI SINGHBHUM",
       "lgd_district_id": 3018,
@@ -2414,7 +2414,7 @@
     {
       "1": 57,
       "lgd_state_name": "Jharkhand",
-      "state_id": 120,
+      "state_cd": 120,
       "lgd_state_id": 20,
       "lgd_district_name": "RAMGARH",
       "lgd_district_id": 3024,
@@ -2457,7 +2457,7 @@
     {
       "1": 58,
       "lgd_state_name": "Jharkhand",
-      "state_id": 120,
+      "state_cd": 120,
       "lgd_state_id": 20,
       "lgd_district_name": "RANCHI",
       "lgd_district_id": 3014,
@@ -2501,7 +2501,7 @@
     {
       "1": 59,
       "lgd_state_name": "Jharkhand",
-      "state_id": 120,
+      "state_cd": 120,
       "lgd_state_id": 20,
       "lgd_district_name": "SAHIBGANJ",
       "lgd_district_id": 3009,
@@ -2545,7 +2545,7 @@
     {
       "1": 60,
       "lgd_state_name": "Jharkhand",
-      "state_id": 120,
+      "state_cd": 120,
       "lgd_state_id": 20,
       "lgd_district_name": "SIMDEGA",
       "lgd_district_id": 3021,
@@ -2589,7 +2589,7 @@
     {
       "1": 61,
       "lgd_state_name": "Karnataka",
-      "state_id": 129,
+      "state_cd": 129,
       "lgd_state_id": 29,
       "lgd_district_name": "RAICHUR",
       "lgd_district_id": 3905,
@@ -2633,7 +2633,7 @@
     {
       "1": 62,
       "lgd_state_name": "Karnataka",
-      "state_id": 129,
+      "state_cd": 129,
       "lgd_state_id": 29,
       "lgd_district_name": "YADAGIRI",
       "lgd_district_id": 3931,
@@ -2677,7 +2677,7 @@
     {
       "1": 63,
       "lgd_state_name": "Kerala",
-      "state_id": 132,
+      "state_cd": 132,
       "lgd_state_id": 32,
       "lgd_district_name": "WAYANAD",
       "lgd_district_id": 4203,
@@ -2720,7 +2720,7 @@
     {
       "1": 64,
       "lgd_state_name": "Madhya Pradesh",
-      "state_id": 123,
+      "state_cd": 123,
       "lgd_state_id": 23,
       "lgd_district_name": "BARWANI",
       "lgd_district_id": 3328,
@@ -2764,7 +2764,7 @@
     {
       "1": 65,
       "lgd_state_name": "Madhya Pradesh",
-      "state_id": 123,
+      "state_cd": 123,
       "lgd_state_id": 23,
       "lgd_district_name": "CHHATARPUR",
       "lgd_district_id": 3309,
@@ -2808,7 +2808,7 @@
     {
       "1": 66,
       "lgd_state_name": "Madhya Pradesh",
-      "state_id": 123,
+      "state_cd": 123,
       "lgd_state_id": 23,
       "lgd_district_name": "DAMOH",
       "lgd_district_id": 3312,
@@ -2852,7 +2852,7 @@
     {
       "1": 67,
       "lgd_state_name": "Madhya Pradesh",
-      "state_id": 123,
+      "state_cd": 123,
       "lgd_state_id": 23,
       "lgd_district_name": "GUNA",
       "lgd_district_id": 3307,
@@ -2896,7 +2896,7 @@
     {
       "1": 68,
       "lgd_state_name": "Madhya Pradesh",
-      "state_id": 123,
+      "state_cd": 123,
       "lgd_state_id": 23,
       "lgd_district_name": "KHANDWA",
       "lgd_district_id": 3329,
@@ -2940,7 +2940,7 @@
     {
       "1": 69,
       "lgd_state_name": "Madhya Pradesh",
-      "state_id": 123,
+      "state_cd": 123,
       "lgd_state_id": 23,
       "lgd_district_name": "RAJGARH",
       "lgd_district_id": 3330,
@@ -2984,7 +2984,7 @@
     {
       "1": 70,
       "lgd_state_name": "Madhya Pradesh",
-      "state_id": 123,
+      "state_cd": 123,
       "lgd_state_id": 23,
       "lgd_district_name": "SINGRAULI",
       "lgd_district_id": 3350,
@@ -3028,7 +3028,7 @@
     {
       "1": 71,
       "lgd_state_name": "Madhya Pradesh",
-      "state_id": 123,
+      "state_cd": 123,
       "lgd_state_id": 23,
       "lgd_district_name": "VIDISHA",
       "lgd_district_id": 3331,
@@ -3072,7 +3072,7 @@
     {
       "1": 72,
       "lgd_state_name": "Maharashtra",
-      "state_id": 127,
+      "state_cd": 127,
       "lgd_state_id": 27,
       "lgd_district_name": "GADCHIROLI",
       "lgd_district_id": 3712,
@@ -3116,7 +3116,7 @@
     {
       "1": 73,
       "lgd_state_name": "Maharashtra",
-      "state_id": 127,
+      "state_cd": 127,
       "lgd_state_id": 27,
       "lgd_district_name": "NANDURBAR",
       "lgd_district_id": 3701,
@@ -3160,7 +3160,7 @@
     {
       "1": 74,
       "lgd_state_name": "Maharashtra",
-      "state_id": 127,
+      "state_cd": 127,
       "lgd_state_id": 27,
       "lgd_district_name": "OSMANABAD",
       "lgd_district_id": 3729,
@@ -3204,7 +3204,7 @@
     {
       "1": 75,
       "lgd_state_name": "Maharashtra",
-      "state_id": 127,
+      "state_cd": 127,
       "lgd_state_id": 27,
       "lgd_district_name": "WASHIM",
       "lgd_district_id": 3706,
@@ -3248,7 +3248,7 @@
     {
       "1": 76,
       "lgd_state_name": "Manipur",
-      "state_id": 114,
+      "state_cd": 114,
       "lgd_state_id": 14,
       "lgd_district_name": "CHANDEL",
       "lgd_district_id": 2409,
@@ -3291,7 +3291,7 @@
     {
       "1": 77,
       "lgd_state_name": "Meghalaya",
-      "state_id": 117,
+      "state_cd": 117,
       "lgd_state_id": 17,
       "lgd_district_name": "RI BHOI",
       "lgd_district_id": 2705,
@@ -3335,7 +3335,7 @@
     {
       "1": 78,
       "lgd_state_name": "Mizoram",
-      "state_id": 115,
+      "state_cd": 115,
       "lgd_state_id": 15,
       "lgd_district_name": "MAMIT",
       "lgd_district_id": 2501,
@@ -3378,7 +3378,7 @@
     {
       "1": 79,
       "lgd_state_name": "Nagaland",
-      "state_id": 113,
+      "state_cd": 113,
       "lgd_state_id": 13,
       "lgd_district_name": "KIPHIRE",
       "lgd_district_id": 2310,
@@ -3421,7 +3421,7 @@
     {
       "1": 80,
       "lgd_state_name": "Odisha",
-      "state_id": 121,
+      "state_cd": 121,
       "lgd_state_id": 21,
       "lgd_district_name": "BOLANGIR",
       "lgd_district_id": 3124,
@@ -3465,7 +3465,7 @@
     {
       "1": 81,
       "lgd_state_name": "Odisha",
-      "state_id": 121,
+      "state_cd": 121,
       "lgd_state_id": 21,
       "lgd_district_name": "DHENKANAL",
       "lgd_district_id": 3114,
@@ -3509,7 +3509,7 @@
     {
       "1": 82,
       "lgd_state_name": "Odisha",
-      "state_id": 121,
+      "state_cd": 121,
       "lgd_state_id": 21,
       "lgd_district_name": "GAJAPATI",
       "lgd_district_id": 3120,
@@ -3553,7 +3553,7 @@
     {
       "1": 83,
       "lgd_state_name": "Odisha",
-      "state_id": 121,
+      "state_cd": 121,
       "lgd_state_id": 21,
       "lgd_district_name": "KALAHANDI",
       "lgd_district_id": 3126,
@@ -3597,7 +3597,7 @@
     {
       "1": 84,
       "lgd_state_name": "Odisha",
-      "state_id": 121,
+      "state_cd": 121,
       "lgd_state_id": 21,
       "lgd_district_name": "KANDHAMAL",
       "lgd_district_id": 3121,
@@ -3641,7 +3641,7 @@
     {
       "1": 85,
       "lgd_state_name": "Odisha",
-      "state_id": 121,
+      "state_cd": 121,
       "lgd_state_id": 21,
       "lgd_district_name": "KORAPUT",
       "lgd_district_id": 3129,
@@ -3685,7 +3685,7 @@
     {
       "1": 86,
       "lgd_state_name": "Odisha",
-      "state_id": 121,
+      "state_cd": 121,
       "lgd_state_id": 21,
       "lgd_district_name": "MALKANGIRI",
       "lgd_district_id": 3130,
@@ -3729,7 +3729,7 @@
     {
       "1": 87,
       "lgd_state_name": "Odisha",
-      "state_id": 121,
+      "state_cd": 121,
       "lgd_state_id": 21,
       "lgd_district_name": "NABARANGPUR",
       "lgd_district_id": 3128,
@@ -3773,7 +3773,7 @@
     {
       "1": 88,
       "lgd_state_name": "Odisha",
-      "state_id": 121,
+      "state_cd": 121,
       "lgd_state_id": 21,
       "lgd_district_name": "NUAPADA",
       "lgd_district_id": 3125,
@@ -3817,7 +3817,7 @@
     {
       "1": 89,
       "lgd_state_name": "Odisha",
-      "state_id": 121,
+      "state_cd": 121,
       "lgd_state_id": 21,
       "lgd_district_name": "RAYAGADA",
       "lgd_district_id": 3127,
@@ -3861,7 +3861,7 @@
     {
       "1": 90,
       "lgd_state_name": "Punjab",
-      "state_id": 103,
+      "state_cd": 103,
       "lgd_state_id": 3,
       "lgd_district_name": "FIROZPUR",
       "lgd_district_id": 1211,
@@ -3905,7 +3905,7 @@
     {
       "1": 91,
       "lgd_state_name": "Punjab",
-      "state_id": 103,
+      "state_cd": 103,
       "lgd_state_id": 3,
       "lgd_district_name": "MOGA",
       "lgd_district_id": 1210,
@@ -3948,7 +3948,7 @@
     {
       "1": 92,
       "lgd_state_name": "Rajasthan",
-      "state_id": 108,
+      "state_cd": 108,
       "lgd_state_id": 8,
       "lgd_district_name": "BARAN",
       "lgd_district_id": 1731,
@@ -3992,7 +3992,7 @@
     {
       "1": 93,
       "lgd_state_name": "Rajasthan",
-      "state_id": 108,
+      "state_cd": 108,
       "lgd_state_id": 8,
       "lgd_district_name": "DHAULPUR",
       "lgd_district_id": 1708,
@@ -4036,7 +4036,7 @@
     {
       "1": 94,
       "lgd_state_name": "Rajasthan",
-      "state_id": 108,
+      "state_cd": 108,
       "lgd_state_id": 8,
       "lgd_district_name": "JAISALMER",
       "lgd_district_id": 1716,
@@ -4080,7 +4080,7 @@
     {
       "1": 95,
       "lgd_state_name": "Rajasthan",
-      "state_id": 108,
+      "state_cd": 108,
       "lgd_state_id": 8,
       "lgd_district_name": "KARAULI",
       "lgd_district_id": 1709,
@@ -4124,7 +4124,7 @@
     {
       "1": 96,
       "lgd_state_name": "Rajasthan",
-      "state_id": 108,
+      "state_cd": 108,
       "lgd_state_id": 8,
       "lgd_district_name": "SIROHI",
       "lgd_district_id": 1719,
@@ -4168,7 +4168,7 @@
     {
       "1": 97,
       "lgd_state_name": "Sikkim",
-      "state_id": 111,
+      "state_cd": 111,
       "lgd_state_id": 11,
       "lgd_district_name": "GYALSHING",
       "lgd_district_id": 2102,
@@ -4211,7 +4211,7 @@
     {
       "1": 98,
       "lgd_state_name": "Tamilnadu",
-      "state_id": 133,
+      "state_cd": 133,
       "lgd_state_id": 33,
       "lgd_district_name": "RAMANATHAPURAM",
       "lgd_district_id": 4323,
@@ -4255,7 +4255,7 @@
     {
       "1": 99,
       "lgd_state_name": "Tamilnadu",
-      "state_id": 133,
+      "state_cd": 133,
       "lgd_state_id": 33,
       "lgd_district_name": "VIRUDHUNAGAR",
       "lgd_district_id": 4324,
@@ -4299,7 +4299,7 @@
     {
       "1": 100,
       "lgd_state_name": "Telangana",
-      "state_id": 136,
+      "state_cd": 136,
       "lgd_state_id": 36,
       "lgd_district_name": "ADILABAD",
       "lgd_district_id": 4633,
@@ -4343,7 +4343,7 @@
     {
       "1": 101,
       "lgd_state_name": "Telangana",
-      "state_id": 136,
+      "state_cd": 136,
       "lgd_state_id": 36,
       "lgd_district_name": "BHADRADRI KOTHAGUDEM",
       "lgd_district_id": 4631,
@@ -4387,7 +4387,7 @@
     {
       "1": 102,
       "lgd_state_name": "Telangana",
-      "state_id": 136,
+      "state_cd": 136,
       "lgd_state_id": 36,
       "lgd_district_name": "WARANGAL",
       "lgd_district_id": 4604,
@@ -4431,7 +4431,7 @@
     {
       "1": 103,
       "lgd_state_name": "Tripura",
-      "state_id": 116,
+      "state_cd": 116,
       "lgd_state_id": 16,
       "lgd_district_name": "DHALAI",
       "lgd_district_id": 2603,
@@ -4474,7 +4474,7 @@
     {
       "1": 104,
       "lgd_state_name": "Uttar Pradesh",
-      "state_id": 109,
+      "state_cd": 109,
       "lgd_state_id": 9,
       "lgd_district_name": "BAHRAICH",
       "lgd_district_id": 1850,
@@ -4518,7 +4518,7 @@
     {
       "1": 105,
       "lgd_state_name": "Uttar Pradesh",
-      "state_id": 109,
+      "state_cd": 109,
       "lgd_state_id": 9,
       "lgd_district_name": "BALRAMPUR",
       "lgd_district_id": 1852,
@@ -4562,7 +4562,7 @@
     {
       "1": 106,
       "lgd_state_name": "Uttar Pradesh",
-      "state_id": 109,
+      "state_cd": 109,
       "lgd_state_id": 9,
       "lgd_district_name": "CHANDAULI",
       "lgd_district_id": 1866,
@@ -4606,7 +4606,7 @@
     {
       "1": 107,
       "lgd_state_name": "Uttar Pradesh",
-      "state_id": 109,
+      "state_cd": 109,
       "lgd_state_id": 9,
       "lgd_district_name": "CHITRAKOOT",
       "lgd_district_id": 1841,
@@ -4650,7 +4650,7 @@
     {
       "1": 108,
       "lgd_state_name": "Uttar Pradesh",
-      "state_id": 109,
+      "state_cd": 109,
       "lgd_state_id": 9,
       "lgd_district_name": "FATEHPUR",
       "lgd_district_id": 1842,
@@ -4694,7 +4694,7 @@
     {
       "1": 109,
       "lgd_state_name": "Uttar Pradesh",
-      "state_id": 109,
+      "state_cd": 109,
       "lgd_state_id": 9,
       "lgd_district_name": "SHRAWASTI",
       "lgd_district_id": 1851,
@@ -4738,7 +4738,7 @@
     {
       "1": 110,
       "lgd_state_name": "Uttar Pradesh",
-      "state_id": 109,
+      "state_cd": 109,
       "lgd_state_id": 9,
       "lgd_district_name": "SIDDHARTHNAGAR",
       "lgd_district_id": 1854,
@@ -4782,7 +4782,7 @@
     {
       "1": 111,
       "lgd_state_name": "Uttar Pradesh",
-      "state_id": 109,
+      "state_cd": 109,
       "lgd_state_id": 9,
       "lgd_district_name": "SONBHADRA",
       "lgd_district_id": 1870,
@@ -4826,7 +4826,7 @@
     {
       "1": 112,
       "lgd_state_name": "Uttarakhand",
-      "state_id": 105,
+      "state_cd": 105,
       "lgd_state_id": 5,
       "lgd_district_name": "HARDWAR",
       "lgd_district_id": 1413,
@@ -4869,7 +4869,7 @@
     },
     {
       "lgd_state_name": "Uttarakhand",
-      "state_id": 105,
+      "state_cd": 105,
       "lgd_state_id": 5,
       "lgd_district_name": "UDHAM SINGH NAGAR",
       "lgd_district_id": 1412,
