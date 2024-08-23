@@ -46,17 +46,17 @@ export default function TeacherAndSchoolBlockCompare() {
     resteData();
   }, [dispatch]);
 
-  useEffect(() => {
-    // dispatch(setUpdateReportType('ADP_Report'));
-    dispatch(setAspirationalAllData(aspirationalAdpData));
-  }, [dispatch]);
-  useEffect(() => {
-    if (selectedAdpAbpOption === "ADP_Report") {
-      dispatch(setAspirationalAllData(aspirationalAdpData));
-    } else {
-      dispatch(setAspirationalAllData(aspirationalAbpData));
-    }
-  }, [selectedAdpAbpOption]);
+  // useEffect(() => {
+  //   // dispatch(setUpdateReportType('ADP_Report'));
+  //   dispatch(setAspirationalAllData(aspirationalAdpData));
+  // }, [dispatch]);
+  // useEffect(() => {
+  //   if (selectedAdpAbpOption === "ADP_Report") {
+  //     dispatch(setAspirationalAllData(aspirationalAdpData));
+  //   } else {
+  //     dispatch(setAspirationalAllData(aspirationalAbpData));
+  //   }
+  // }, [selectedAdpAbpOption]);
   // Initialize states and districts from JSON data
   useEffect(() => {
     const structuredData = aspirationalData?.reduce((acc, curr) => {
