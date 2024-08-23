@@ -887,7 +887,7 @@ export default function TeacherAndSchResourcesReport() {
                         </div>
 
                         {
-                            selectedState !== "All State" && selectReportType === "ADP_Report" ? (
+                            selectedState !== "All State" && selectReportType === "ADP_Report" && (selectedOption !== "Top_50_Schools" && selectedOption !== "Upcoming_50")  ? (
                                 <TeacherAndSchoolCompare />
                             ) : (selectedState !== "All State" && selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) && selectReportType === "ABP_Report" ? (
                                 <TeacherAndSchoolBlockCompare />

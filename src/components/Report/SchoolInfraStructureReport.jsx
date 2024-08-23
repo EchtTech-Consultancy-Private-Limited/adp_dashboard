@@ -491,7 +491,7 @@ export default function SchoolInfraStructureReport() {
           },
 
           {
-            headerName: "percentage of Schools having Enrolment toilets in the ratio of 40:1",
+            headerName: "Percentage of Schools having adequate functional girls toilets in the ratio of 40:1",
             field: "Enrolment Toilet ratio(40:1)",
             cellRenderer: percentageRenderer,
             hide: false,
@@ -521,7 +521,7 @@ export default function SchoolInfraStructureReport() {
           },
 
           {
-            headerName: "percentage of Schools having Enrolment toilets in the ratio of 40:1",
+            headerName: "Percentage of Schools having adequate functional girls toilets in the ratio of 40:1",
             field: "Enrolment Toilet ratio(40:1)",
             cellRenderer: percentageRenderer,
             hide: false,
@@ -854,9 +854,9 @@ export default function SchoolInfraStructureReport() {
                         </h5>
                         <h3 className="heading-sm">
                           {selectedOption === "Top_50_Schools"
-                            ? "Top 50 Schools with 40:1 Enrolment Toilet Ratio"
+                            ? "Top 50 Schools with 40:1 Adequate Functional Girls Toilets"
                             : selectedOption === "Upcoming_50"
-                              ? "Upcoming 50 Schools with 40:1 Enrolment Toilet Ratio"
+                              ? "Upcoming 50 Schools with 40:1 Adequate Functional Girls Toilets"
                               : t("schoolInfrastructure")}
                         </h3>
 
@@ -962,7 +962,7 @@ export default function SchoolInfraStructureReport() {
               </div>
             </div>
             {selectedState !== "All State" &&
-              selectReportType === "ADP_Report" ? (
+              selectReportType === "ADP_Report" && (selectedOption !== "Top_50_Schools" && selectedOption !== "Upcoming_50")  ? (
               <SchoolInfraStructureCompare />
             ) : selectedState !== "All State" &&
               selectedDistrict !== SelectDistrict &&
