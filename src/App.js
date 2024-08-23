@@ -3,8 +3,6 @@ import { HashRouter } from 'react-router-dom';
 import { routes } from "./routes/index";
 import './styles/global.scss'
 import Footer from './components/Footer/Footer';
-import aspirationalAbpData from "./aspirational-reports-data/aspirational.json"
-import aspirationalAdpData from "./aspirational-reports-data/aspirationalDistrict.json";
 import aspirationalAdpData2019 from "./aspirational-reports-data/aspirationalAdpData2019-20.json";
 import aspirationalAdpData2020 from "./aspirational-reports-data/aspirationalAdpData2020-21.json";
 import aspirationalAdpData2021 from "./aspirational-reports-data/aspirationalAdpData2021-22.json";
@@ -17,21 +15,14 @@ import ptrLessThanAdp2022 from "./aspirational-reports-data/ptrLessThanAdp2022-2
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { setAspirationalAllData, setselectedDataAllYear } from './redux/slice/reportTypeSlice';
-import { selectState, selectDistrict, selectBlock } from './redux/slice/filterServicesSlice';
 import Header from './components/Header/Header';
-import { School_Infrastructure, Student_Performance, Teacher_and_School_Resources, Transition_Rate } from './constant/Constant';
+
 function App() {
   const dispatch = useDispatch()
   const toggleDarkMode = useSelector((state) => state.toggle.toggleDarkLight);
   const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
   const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
-  const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
-  const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
-  const selectedDistricts = useSelector(
-    (state) => state.reportAdpAbpType.selectedCompareDistricts
-  );
-  const selectedReport = useSelector((state) => state.reportAdpAbpType.selectedReport);
-  
+ 
   useEffect(() => {
     if (toggleDarkMode) {
       localStorage.setItem("dark-mode", "true");
