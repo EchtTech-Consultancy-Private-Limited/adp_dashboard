@@ -288,8 +288,8 @@ const Header = () => {
                             <NavLink to="/teacher-and-school-resources">
                               {t("reports")}
                             </NavLink>
-                          ) : pathName === "/student-performance" ? (
-                            <NavLink to="/student-performance">
+                          ) : pathName === "/teachers-trained-for-teaching-CWSN" ? (
+                            <NavLink to="/teachers-trained-for-teaching-CWSN">
                               {t("reports")}
                             </NavLink>
                           ) : pathName === "/school-infrastructure" ? (

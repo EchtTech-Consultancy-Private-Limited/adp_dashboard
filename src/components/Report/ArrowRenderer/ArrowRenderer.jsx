@@ -23,7 +23,7 @@ export function ArrowRenderer({ data, value }) {
         if (location.pathname === "/teacher-and-school-resources") {
             setArrowData(data?.ele_sch_percent);
         }
-        if (location.pathname === "/student-performance") {
+        if (location.pathname === "/teachers-trained-for-teaching-CWSN") {
             setArrowData(data?.swsn_teacher_percent);
         }
         if (location.pathname === "/school-infrastructure") {
@@ -79,7 +79,7 @@ export function ArrowRenderer({ data, value }) {
             );
         }
     }
-    if (location.pathname === "/student-performance") {
+    if (location.pathname === "/teachers-trained-for-teaching-CWSN") {
         if (arrowData >= 40 && arrowData <= 100) {
             return (
                 <ArrowUpwardIcon
