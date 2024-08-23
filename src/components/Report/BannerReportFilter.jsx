@@ -154,7 +154,6 @@ export default function BannerReportFilter() {
   };
 
   const handleStateChange = (value) => {
-    console.log(value, "valueValue")
     dispatch(selectState(value));
     dispatch(setselectedCompareDistricts([]));
     dispatch(setselectedCompareBlocks([]))
