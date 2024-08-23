@@ -44,7 +44,7 @@ export default function TeacherAndSchResourcesReport() {
     const id = queryParameters.get("id");
     const type = queryParameters.get("type");
     const [loading, setLoading] = useState(true);
-    localStorage.setItem("selectedReport", "Teacher and School Resources");
+    localStorage.setItem("selectedReport", "Percentage of Elementary Schools Having PTR Less Than Equal to 30");
     const { selectedState, selectedDistrict, selectedBlock } = useSelector(
         (state) => state.locationAdp
     );
@@ -781,7 +781,7 @@ export default function TeacherAndSchResourcesReport() {
                                                         ? "Top 50 Elementary Schools with PTR ≤ 30%"
                                                         : selectedOption === "Upcoming_50"
                                                             ? "Upcoming 50 Elementary Schools with PTR ≤ 30%"
-                                                            : t("Percentage of elementary schools having PTR less than equal to 30")}
+                                                            : t("teacherSchoolResourcesReport")}
                                                 </h3>
 
                                             </div>

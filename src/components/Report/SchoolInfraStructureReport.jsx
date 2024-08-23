@@ -44,7 +44,7 @@ export default function SchoolInfraStructureReport() {
   const id = queryParameters.get("id");
   const type = queryParameters.get("type");
   const [loading, setLoading] = useState(true);
-  localStorage.setItem("selectedReport", "School Infrastructure");
+  localStorage.setItem("selectedReport", "Percentange of Schools Having Adequate Functional Girls Toilets");
   const { selectedState, selectedDistrict, selectedBlock } = useSelector(
     (state) => state.locationAdp
   );
@@ -854,7 +854,7 @@ export default function SchoolInfraStructureReport() {
                             ? "Top 50 Schools with 40:1 Adequate Functional Girls Toilets"
                             : selectedOption === "Upcoming_50"
                               ? "Upcoming 50 Schools with 40:1 Adequate Functional Girls Toilets"
-                              : t("Percentange of Schools having adequate Functional Girls Toilets")}
+                              : t("schoolInfrastructureReport")}
                         </h3>
 
                       </div>
