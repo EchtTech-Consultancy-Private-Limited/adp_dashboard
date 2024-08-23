@@ -1,14 +1,14 @@
 
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectDistrict, selectState, setStates } from "../../../redux/slice/filterServicesComprisionSlice";
-import { setAspirationalAllData, setselectedCompareDistricts, setselectedCompareOption, setUpdateReportType } from "../../../redux/slice/reportTypeSlice";
+import { selectDistrict, selectState, setStates } from "../../../redux/slice/filterServicesComprisionSlice.js";
+import { setAspirationalAllData, setselectedCompareDistricts, setselectedCompareOption, setUpdateReportType } from "../../../redux/slice/reportTypeSlice.js";
 import aspirationalAdpData from "../../../aspirational-reports-data/aspirationalDistrict.json";
 import table from '../../../assets/images/table.svg'
 import card from '../../../assets/images/card-list.svg'
 import { Card, Select } from 'antd';
-import { SelectState } from "../../../constant/Constant";
-import BlankPage from "../BlankPage";
+import { SelectState } from "../../../constant/Constant.js";
+import BlankPage from "../BlankPage.jsx";
 import { useTranslation } from "react-i18next";
 import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer.jsx"
 
@@ -154,7 +154,7 @@ export default function StudentsPerformanceCompare() {
                                     </Select>
                                 </h5> */}
                 <h3 className="heading-sm">
-                  {t("comparison By Percentage Schools with Teachers trained for teaching CWSN")}
+                  {t("comparisonByStudentPerformance")}
                 </h3>
               </div>
             </div>
