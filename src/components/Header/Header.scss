@@ -399,10 +399,19 @@
         }
 
         .top-logo {
-            width: auto;
+            width: 237px;
+            object-fit: cover;
             border-right: 1px solid #707070;
             padding-right: 9px;
             margin-right: 9px;
+
+            @media (max-width:1599px) and (min-width: 1400px) {
+                width: 217px;
+            }
+
+            @media (max-width:1399px) and (min-width: 1024px) {
+                width: 197px;
+            }
 
             @media (max-width: 767px) {
                 width: auto;
@@ -440,9 +449,17 @@
                         padding-left: 0px;
                         position: absolute;
                         width: .1px;
-                        height: 52px;
+                        height: 58px;
                         top: 11px;
                         margin-left: 9px;
+
+                        @media (max-width:1599px) and (min-width: 1400px) {
+                            height: 53px;
+                        }
+        
+                        @media (max-width:1399px) and (min-width: 1024px) {
+                            height: 48px;
+                        }
 
                     }
                 }
