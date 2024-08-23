@@ -52,7 +52,7 @@ export default function SchoolInfraStructureReport() {
   const aspirationalData = useSelector(
     (state) => state.reportAdpAbpType.aspirationalAllData
   );
-  console.log(aspirationalData, "aspirationalData")
+  const selectedDataAllYear = useSelector((state)=>state.reportAdpAbpType.selectedDataAllYear);
   const selectReportType = useSelector(
     (state) => state.reportAdpAbpType.updateReportType
   );
@@ -69,7 +69,6 @@ export default function SchoolInfraStructureReport() {
   const report_name = savedReportName;
 
   const [data, setData] = useState([]);
-console.log(data, "datatatat")
   const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
   const [topPtrData, setTopPtrData] = useState([])
   const [top50Data, setTop50Data] = useState([])
@@ -185,7 +184,6 @@ console.log(data, "datatatat")
 
   useEffect(() => {
     let filteredData = aspirationalData;
-console.log(filteredData, "filteredData")
     if (selectedState && selectedState !== SelectState) {
       filteredData = filteredData.filter(
         (item) => item.lgd_state_name === selectedState
@@ -595,7 +593,6 @@ console.log(filteredData, "filteredData")
     }
     return compressData(data, "lgd_state_name");
   }, [data, selectedState, selectedDistrict, selectedBlock]);
-  console.log(compressedData, "compressedData")
   useEffect(() => {
     if (selectedState !== "All State" && selectReportType === "ADP_Report") {
       dispatch(SetFinalData(compressedData));
@@ -605,9 +602,9 @@ console.log(filteredData, "filteredData")
     ) {
       dispatch(SetFinalData(data));
     } else {
-      dispatch(SetFinalData(aspirationalData));
+      dispatch(SetFinalData(selectedDataAllYear));
     }
-  }, [selectedState, data, aspirationalData, selectReportType]);
+  }, [selectedState, data, selectedDataAllYear, selectReportType]);
 
   const defColumnDefs = useMemo(
     () => ({
