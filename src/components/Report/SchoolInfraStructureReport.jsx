@@ -492,7 +492,6 @@ export default function SchoolInfraStructureReport() {
           {
             headerName: "Adequate Girls Toilet",
             field: "Enrolment Toilet ratio(40:1)",
-            cellRenderer: percentageRenderer,
             hide: false,
           },
         ]);
@@ -522,7 +521,6 @@ export default function SchoolInfraStructureReport() {
           {
             headerName: "Adequate Girls Toilet",
             field: "Enrolment Toilet ratio(40:1)",
-            cellRenderer: percentageRenderer,
             hide: false,
           },
         ]);
