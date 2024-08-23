@@ -75,7 +75,7 @@ export default function StudentsPerformanceReport() {
         return Array.isArray(topPtrData) && topPtrData.length > 0
             ? topPtrData.filter(topeItem => {
                 const districtMatch = selectedDistrict !== "SelectDistrict"
-                    ? finalData.some(finalItem => finalItem.lgd_district_id === topeItem.lgd_district_name)
+                    ? finalData.some(finalItem => finalItem.lgd_district_id === topeItem.lgd_district_id)
                     : true;
                 return districtMatch;
             })
@@ -395,7 +395,6 @@ export default function StudentsPerformanceReport() {
                     {
                         headerName: "No. of Teachers",
                         field: "Teacher trained to teach CWSN",
-                        cellRenderer: percentageRenderer,
                         hide: false,
                     },
                 ]);
@@ -426,7 +425,6 @@ export default function StudentsPerformanceReport() {
                     {
                         headerName: "No. of Teachers",
                         field: "Teacher trained to teach CWSN",
-                        cellRenderer: percentageRenderer,
                         hide: false,
                     },
                 ]);
