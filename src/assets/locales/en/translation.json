@@ -95,6 +95,12 @@
   "comparisonByTeacherAndSchoolResources": "Comparison By Percentage of Elementary Schools Having PTR Less Than Equal to 30",
   "comparisonByStudentPerformance": "Comparison By Percentage Schools with Teachers Trained for Teaching CWSN.",
   "comparisonBySchoolInfrastructure": "Comparison By Percentange of Schools Having Adequate Functional Girls Toilets.",
+  "top_50_schools_with_teachers_trained_for_cwsn": "Top 50 Schools with Teachers Trained for CWSN",
+  "upcoming_50_schools_with_teachers_trained_for_cwsn": "Upcoming 50 Schools with Teachers Trained for CWSN",
+  "top_50_elementary_schools_with_ptr_30": "Top 50 Elementary Schools with PTR ≤ 30%",
+  "upcoming_50_elementary_schools_with_ptr_30": "Upcoming 50 Elementary Schools with PTR ≤ 30%",
+   "top_50_schools_with_40_1_girls_toilets": "Top 50 Schools with 40:1 Adequate Functional Girls Toilets",
+  "upcoming_50_schools_with_40_1_girls_toilets": "Upcoming 50 Schools with 40:1 Adequate Functional Girls Toilets",
   "selectBlockToCompare": "Select Block to Compare",
   "top_ten":"Top 10 ",
   "transition_rate":" By Transition Rate",
@@ -104,6 +110,8 @@
   "add_district_to_compare":"Add District to Compare",
   "add_block_to_compare":"Add Blocks to Compare",
   "performance_of":"Performance of",
-  "by_transition_rate":"By Transition Rate"
+  "by_transition_rate":"By Transition Rate",
+   "top_50_schools": "Top 50 Schools",
+   "upcoming_50_schools": "Upcoming 50 Schools"
 }
 

@@ -717,9 +717,9 @@ export default function TeacherTrainedCwsnReport() {
                                                 </h5>
                                                 <h3 className="heading-sm">
                                                     {selectedOption === "Top_50_Schools"
-                                                        ? "Top 50 Schools with Teachers Trained for CWSN"
+                                                        ? t('top_50_schools_with_teachers_trained_for_cwsn')
                                                         : selectedOption === "Upcoming_50"
-                                                            ? "Upcoming 50 Schools with Teachers Trained for CWSN"
+                                                            ? t('upcoming_50_schools_with_teachers_trained_for_cwsn')
                                                             : t("studentPerformanceReport")}
                                                 </h3>
 
@@ -743,7 +743,7 @@ export default function TeacherTrainedCwsnReport() {
                                                             onChange={handleOptionChange}
                                                         />
                                                         <label htmlFor="radio44">
-                                                            Top 50 Schools
+                                                        {t('top_50_schools')}
                                                         </label>
                                                     </div>
 
@@ -756,7 +756,7 @@ export default function TeacherTrainedCwsnReport() {
                                                             onChange={handleOptionChange}
                                                         />
                                                         <label htmlFor="radio55">
-                                                            Upcoming 50 Schools
+                                                        {t('upcoming_50_schools')}
                                                         </label>
                                                     </div>
                                                 </div>

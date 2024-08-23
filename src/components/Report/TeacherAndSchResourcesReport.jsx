@@ -778,9 +778,9 @@ export default function TeacherAndSchResourcesReport() {
                                                 </h5>
                                                 <h3 className="heading-sm">
                                                     {selectedOption === "Top_50_Schools"
-                                                        ? "Top 50 Elementary Schools with PTR ≤ 30%"
+                                                        ? t('top_50_elementary_schools_with_ptr_30')
                                                         : selectedOption === "Upcoming_50"
-                                                            ? "Upcoming 50 Elementary Schools with PTR ≤ 30%"
+                                                            ? t('upcoming_50_elementary_schools_with_ptr_30')
                                                             : t("teacherSchoolResourcesReport")}
                                                 </h3>
 
@@ -810,7 +810,7 @@ export default function TeacherAndSchResourcesReport() {
                                                             onChange={handleOptionChange}
                                                         />
                                                         <label htmlFor="radio44">
-                                                            Top 50 Schools
+                                                        {t('top_50_schools')}
                                                         </label>
                                                     </div>
 
@@ -823,7 +823,7 @@ export default function TeacherAndSchResourcesReport() {
                                                             onChange={handleOptionChange}
                                                         />
                                                         <label htmlFor="radio55">
-                                                            Upcoming 50 Schools
+                                                        {t('upcoming_50_schools')}
                                                         </label>
                                                     </div>
                                                 </div>
