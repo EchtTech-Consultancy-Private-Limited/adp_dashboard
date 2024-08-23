@@ -75,10 +75,7 @@ export default function StudentsPerformanceReport() {
         return Array.isArray(topPtrData) && topPtrData.length > 0
             ? topPtrData.filter(topeItem => {
                 const districtMatch = selectedDistrict !== "SelectDistrict"
-                    ? finalData.some(finalItem => {
-                        const isMatch = finalItem.district_id === topeItem.lgd_district_id;
-                        return isMatch;
-                    })
+                    ? finalData.some(finalItem => finalItem.lgd_district_id === topeItem.lgd_district_name)
                     : true;
                 return districtMatch;
             })
@@ -396,7 +393,7 @@ export default function StudentsPerformanceReport() {
                     },
 
                     {
-                        headerName: "Percentage Schools with Teachers trained for teaching CWSN",
+                        headerName: "No. of Teachers",
                         field: "Teacher trained to teach CWSN",
                         cellRenderer: percentageRenderer,
                         hide: false,
@@ -427,7 +424,7 @@ export default function StudentsPerformanceReport() {
                     },
 
                     {
-                        headerName: "Percentage Schools with Teachers trained for teaching CWSN",
+                        headerName: "No. of Teachers",
                         field: "Teacher trained to teach CWSN",
                         cellRenderer: percentageRenderer,
                         hide: false,

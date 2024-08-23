@@ -73,7 +73,7 @@ export default function TeacherAndSchResourcesReport() {
     const [data, setData] = useState([]);
     const [topPtrData, setTopPtrData] = useState([])
     const [top50Data, setTop50Data] = useState([])
-
+// Code for top 100 Data show
     const combinedTopData = {
         "2019-20": {
             ADP_Report: ptrLessThanAdp2019,
@@ -91,7 +91,6 @@ export default function TeacherAndSchResourcesReport() {
 
     useEffect(() => {
         const reportData = combinedTopData[selectedYear] && combinedTopData[selectedYear][selectReportType];
-
         if (reportData && reportData.length > 0) {
             setTopPtrData(reportData);
         } else {
@@ -103,7 +102,7 @@ export default function TeacherAndSchResourcesReport() {
         return Array.isArray(topPtrData) && topPtrData.length > 0
             ? topPtrData.filter(topeItem => {
                 const districtMatch = selectedDistrict !== "SelectDistrict"
-                    ? finalData.some(finalItem => finalItem.district_id === topeItem.lgd_district_id)
+                    ? finalData.some(finalItem => finalItem.lgd_district_id === topeItem.lgd_district_name)
                     : true;
 
                 return districtMatch;
@@ -444,7 +443,7 @@ export default function TeacherAndSchResourcesReport() {
                     },
 
                     {
-                        headerName: "Percentage of elementary schools having PTR less than equal to 30",
+                        headerName: "PTR",
                         field: "PTR<=30",
                         cellRenderer: percentageRenderer,
                         hide: false,
@@ -475,7 +474,7 @@ export default function TeacherAndSchResourcesReport() {
                     },
 
                     {
-                        headerName: "Percentage of elementary schools having PTR less than equal to 30",
+                        headerName: "PTR",
                         field: "PTR<=30",
                         cellRenderer: percentageRenderer,
                         hide: false,
