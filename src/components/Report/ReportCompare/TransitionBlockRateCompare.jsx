@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectDistrict,
   selectState,
   setStates,
   selectBlock,
 } from "../../../redux/slice/filterServicesComprisionSlice";
 import {
-  setselectedCompareDistricts,
   setselectedCompareOption,
-  setUpdateReportType,
   setselectedCompareBlocks,
   setAspirationalAllData,
 } from "../../../redux/slice/reportTypeSlice";
@@ -19,16 +16,12 @@ import table from "../../../assets/images/table.svg";
 import card from "../../../assets/images/card-list.svg";
 import { Card, Select } from "antd";
 import { SelectState } from "../../../constant/Constant";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BlankPage from "../BlankPage";
 import { ScrollToTopOnMount } from "../../../Scroll/ScrollToTopOnMount";
 import { useTranslation } from "react-i18next";
 import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer.jsx";
 import Highcharts, { color } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
 import "../graph/graph.scss";
 export default function TransitionBlockRateCompare() {
   const { t, i18n } = useTranslation();

@@ -52,6 +52,7 @@ export default function SchoolInfraStructureReport() {
   const aspirationalData = useSelector(
     (state) => state.reportAdpAbpType.aspirationalAllData
   );
+  const selectedDataAllYear = useSelector((state)=>state.reportAdpAbpType.selectedDataAllYear);
   const selectReportType = useSelector(
     (state) => state.reportAdpAbpType.updateReportType
   );
@@ -68,7 +69,6 @@ export default function SchoolInfraStructureReport() {
   const report_name = savedReportName;
 
   const [data, setData] = useState([]);
-
   const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
   const [topPtrData, setTopPtrData] = useState([])
   const [top50Data, setTop50Data] = useState([])
@@ -107,7 +107,7 @@ export default function SchoolInfraStructureReport() {
           selectedDistrict !== "SelectDistrict"
             ? finalData.some(
               (finalItem) =>
-                finalItem.lgd_district_name === topeItem.lgd_district_name
+                finalItem.lgd_district_id === topeItem.lgd_district_id
             )
             : true;
 
@@ -184,7 +184,6 @@ export default function SchoolInfraStructureReport() {
 
   useEffect(() => {
     let filteredData = aspirationalData;
-
     if (selectedState && selectedState !== SelectState) {
       filteredData = filteredData.filter(
         (item) => item.lgd_state_name === selectedState
@@ -491,9 +490,8 @@ export default function SchoolInfraStructureReport() {
           },
 
           {
-            headerName: "Percentage of Schools having adequate functional girls toilets in the ratio of 40:1",
+            headerName: "Adequate Girls Toilet",
             field: "Enrolment Toilet ratio(40:1)",
-            cellRenderer: percentageRenderer,
             hide: false,
           },
         ]);
@@ -521,9 +519,8 @@ export default function SchoolInfraStructureReport() {
           },
 
           {
-            headerName: "Percentage of Schools having adequate functional girls toilets in the ratio of 40:1",
+            headerName: "Adequate Girls Toilet",
             field: "Enrolment Toilet ratio(40:1)",
-            cellRenderer: percentageRenderer,
             hide: false,
           },
         ]);
@@ -603,9 +600,9 @@ export default function SchoolInfraStructureReport() {
     ) {
       dispatch(SetFinalData(data));
     } else {
-      dispatch(SetFinalData(aspirationalData));
+      dispatch(SetFinalData(selectedDataAllYear));
     }
-  }, [selectedState, data, aspirationalData, selectReportType]);
+  }, [selectedState, data, selectedDataAllYear, selectReportType]);
 
   const defColumnDefs = useMemo(
     () => ({

@@ -14,8 +14,6 @@ import table from '../../../assets/images/table.svg'
 import card from '../../../assets/images/card-list.svg'
 import { Card, Select } from 'antd';
 import { SelectState } from "../../../constant/Constant";
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import BlankPage from "../BlankPage";
 import { useTranslation } from "react-i18next";
 import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer.jsx"
