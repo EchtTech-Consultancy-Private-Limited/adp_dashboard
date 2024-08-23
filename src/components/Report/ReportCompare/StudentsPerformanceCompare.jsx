@@ -34,9 +34,9 @@ export default function StudentsPerformanceCompare() {
   }, [dispatch]);
 
 
-  useEffect(() => {
-    dispatch(setAspirationalAllData(aspirationalAdpData))
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(setAspirationalAllData(aspirationalAdpData))
+  // }, [dispatch]);
 
 
   useEffect(() => {
