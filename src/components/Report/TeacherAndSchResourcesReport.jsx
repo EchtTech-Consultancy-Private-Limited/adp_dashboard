@@ -103,7 +103,7 @@ export default function TeacherAndSchResourcesReport() {
         return Array.isArray(topPtrData) && topPtrData.length > 0
             ? topPtrData.filter(topeItem => {
                 const districtMatch = selectedDistrict !== "SelectDistrict"
-                    ? finalData.some(finalItem => finalItem.lgd_district_name === topeItem.lgd_district_name)
+                    ? finalData.some(finalItem => finalItem.district_id === topeItem.lgd_district_id)
                     : true;
 
                 return districtMatch;
