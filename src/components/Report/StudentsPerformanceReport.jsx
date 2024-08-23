@@ -15,8 +15,8 @@ import { GlobalLoading } from '../GlobalLoading/GlobalLoading'
 import { SetFinalData, setselectedOption, setselectedOptionTop50, SetSheetName } from '../../redux/slice/reportTypeSlice'
 import { AllBlock, AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
 import { ScrollToTopOnMount } from '../../Scroll/ScrollToTopOnMount'
-import StudentsPerformanceCompare from './ReportCompare/StudentsPerformanceCompare'
-import StudentsPerformanceBlockCompare from './ReportCompare/StudentsPerformanceBlockCompare'
+import StudentsPerformanceCompare from './ReportCompare/TeacherTrainedCwsnCompare'
+import StudentsPerformanceBlockCompare from './ReportCompare/TeacherTrainedCwsnBlockCompare'
 import teacherTrainedCwsnAdp2019 from "../../aspirational-reports-data/teacherTrainedCwsnAdp2019-2020.json";
 import teacherTrainedCwsnAdp2020 from "../../aspirational-reports-data/teacherTrainedCwsnAdp2020-2021.json";
 import teacherTrainedCwsnAdp2021 from "../../aspirational-reports-data/teacherTrainedCwsnAdp2021-2022.json";
@@ -25,11 +25,11 @@ import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 
 
 
-export default function StudentsPerformanceReport() {
+export default function TeacherTrainedCwsnReport() {
     const dispatch = useDispatch()
     const { t, i18n } = useTranslation();
     const [loading, setLoading] = useState(true);
-    localStorage.setItem('selectedReport', "Student Performance");
+    localStorage.setItem('selectedReport', "Percentage Schools with Teachers Trained for Teaching CWSN");
     const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
     const [locationHeader, SetLocationHeader] = useState();
     const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData);
@@ -720,7 +720,7 @@ export default function StudentsPerformanceReport() {
                                                         ? "Top 50 Schools with Teachers Trained for CWSN"
                                                         : selectedOption === "Upcoming_50"
                                                             ? "Upcoming 50 Schools with Teachers Trained for CWSN"
-                                                            : t("Percentage Schools with Teachers trained for teaching CWSN")}
+                                                            : t("studentPerformanceReport")}
                                                 </h3>
 
                                             </div>
