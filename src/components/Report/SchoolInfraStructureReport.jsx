@@ -52,7 +52,7 @@ export default function SchoolInfraStructureReport() {
   const aspirationalData = useSelector(
     (state) => state.reportAdpAbpType.aspirationalAllData
   );
-  console.log(aspirationalData, "aspirationalData")
+  const selectedDataAllYear = useSelector((state)=>state.reportAdpAbpType.selectedDataAllYear);
   const selectReportType = useSelector(
     (state) => state.reportAdpAbpType.updateReportType
   );
@@ -605,9 +605,9 @@ console.log(filteredData, "filteredData")
     ) {
       dispatch(SetFinalData(data));
     } else {
-      dispatch(SetFinalData(aspirationalData));
+      dispatch(SetFinalData(selectedDataAllYear));
     }
-  }, [selectedState, data, aspirationalData, selectReportType]);
+  }, [selectedState, data, selectedDataAllYear, selectReportType]);
 
   const defColumnDefs = useMemo(
     () => ({
