@@ -162,7 +162,7 @@ export default function StudentsPerformanceCompare() {
                                     </Select>
                                 </h5> */}
                 <h3 className="heading-sm">
-                  {t("comparisonByStudentPerformance")}
+                  {t("comparison By Percentage Schools with Teachers trained for teaching CWSN")}
                 </h3>
               </div>
             </div>

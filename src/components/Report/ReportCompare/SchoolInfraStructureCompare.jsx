@@ -187,7 +187,7 @@ export default function SchoolInfraStructureCompare() {
                                     </Select>
                                 </h5> */}
                 <h3 className="heading-sm">
-                  {t('comparisonBySchoolInfrastructure')}
+                  {t('comparison By Percentange of Schools having adequate Functional Girls Toilets')}
                 </h3>
               </div>
             </div>

@@ -724,7 +724,7 @@ export default function StudentsPerformanceReport() {
                                                         ? "Top 50 Schools with Teachers Trained for CWSN"
                                                         : selectedOption === "Upcoming_50"
                                                             ? "Upcoming 50 Schools with Teachers Trained for CWSN"
-                                                            : t("studentPerformance")}
+                                                            : t("Percentage Schools with Teachers trained for teaching CWSN")}
                                                 </h3>
 
                                             </div>
