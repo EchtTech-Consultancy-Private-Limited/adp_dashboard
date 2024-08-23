@@ -49,14 +49,15 @@ export default function BannerReportFilter() {
   //  }
   //   }, [finalData])
 
-  useEffect(() => {
-    const savedReportName = localStorage.getItem('selectedReport');
-    if (savedReportName) {
-      dispatch(setselectedReport(savedReportName));
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   const savedReportName = localStorage.getItem('selectedReport');
+  //   if (savedReportName) {
+  //     dispatch(setselectedReport(savedReportName));
+  //   }
+  // }, [dispatch]);
 
   const handleReportChange = (value) => {
+    console.log("value=======================>    ",value)
     // dispatch(setUpdateReportType('ADP_Report'));
     localStorage.setItem('selectedReport', value);
     dispatch(setselectedReport(value));
@@ -64,14 +65,14 @@ export default function BannerReportFilter() {
       case 'Transition Rate':
         navigate('/transition-rate');
         break;
-      case 'Teacher and School Resources':
-        navigate('/teacher-and-school-resources');
+      case 'Percentage of elementary schools having PTR less than equal to 30':
+        navigate('/Percentage-of-elementary-schools-having-PTR-less-than-equal-to-30');
         break;
-      case 'Student Performance':
-        navigate('/student-performance');
+      case 'Percentage Schools with Teachers trained for teaching CWSN':
+        navigate('/Percentage-Schools-with-Teachers-trained-for-teaching-CWSN');
         break;
-      case 'School Infrastructure':
-        navigate('/school-infrastructure');
+      case 'Percentange of Schools having adequate Functional Girls Toilets':
+        navigate('/Percentange-of-Schools-having-adequate-Functional-Girls-Toilets');
         break;
       case 'Enrollment and Retention':
         navigate('/enrollment-retention');
@@ -176,6 +177,10 @@ export default function BannerReportFilter() {
     // dispatch(setselectedCompareBlocks([]))
   };
 
+
+
+
+  console.log("selectedReport",selectedReport)
   return (
     <section className='internal-banner-bg'>
       <div className="container">
@@ -183,7 +188,7 @@ export default function BannerReportFilter() {
           <div className="row align-items-center">
             <div className="col-md-3">
               <div className='main-title'>{t('reports')} </div>
-              <div className="brudcrumb-text">Home / <span>{showBreadcomeAdpAbp}</span> / <span>{savedReportName}</span></div>
+              <div className="brudcrumb-text">Home / <span>{showBreadcomeAdpAbp}</span> / <span>{selectedReport}</span></div>
             </div>
             <div className="col-md-9">
               <div className="row select-infra Comparison-select-group">
@@ -274,9 +279,9 @@ export default function BannerReportFilter() {
                     }
                     <Select style={{ width: '100%' }} placeholder="Select KPI" mode="single" showSearch className="form-select" value={selectedReport || SelectKpi} onChange={handleReportChange}>
                       <Select.Option key="Transition Rate" value="Transition Rate">Transition Rate</Select.Option>
-                      <Select.Option key="Teacher and School Resources" value="Teacher and School Resources">Teacher and School Resources</Select.Option>
-                      <Select.Option key="Student Performance" value="Student Performance">Teachers Trained for Teaching CWSN</Select.Option>
-                      <Select.Option key="School Infrastructure" value="School Infrastructure">School Infrastructure</Select.Option>
+                      <Select.Option key="Percentage of elementary schools having PTR less than equal to 30" value="Percentage of elementary schools having PTR less than equal to 30">Percentage of elementary schools having PTR less than equal to 30</Select.Option>
+                      <Select.Option key="Percentage Schools with Teachers trained for teaching CWSN" value="Percentage Schools with Teachers trained for teaching CWSN">Percentage Schools with Teachers trained for teaching CWSN</Select.Option>
+                      <Select.Option key="Percentange of Schools having adequate Functional Girls Toilets" value="Percentange of Schools having adequate Functional Girls Toilets">Percentage of Schools having adequate Functional Girls Toilets</Select.Option>
                       {/* <Select.Option key="Enrollment and Retention" value="Enrollment and Retention">Enrollment and Retention</Select.Option> */}
                     </Select>
                   </div>

@@ -781,7 +781,7 @@ export default function TeacherAndSchResourcesReport() {
                                                         ? "Top 50 Elementary Schools with PTR ≤ 30%"
                                                         : selectedOption === "Upcoming_50"
                                                             ? "Upcoming 50 Elementary Schools with PTR ≤ 30%"
-                                                            : t("teacherSchoolResources")}
+                                                            : t("Percentage of elementary schools having PTR less than equal to 30")}
                                                 </h3>
 
                                             </div>

@@ -854,7 +854,7 @@ export default function SchoolInfraStructureReport() {
                             ? "Top 50 Schools with 40:1 Adequate Functional Girls Toilets"
                             : selectedOption === "Upcoming_50"
                               ? "Upcoming 50 Schools with 40:1 Adequate Functional Girls Toilets"
-                              : t("schoolInfrastructure")}
+                              : t("Percentange of Schools having adequate Functional Girls Toilets")}
                         </h3>
 
                       </div>

@@ -13,9 +13,9 @@ export const routes = (
 
         <Route exact path="/" element={<Home />} />
         <Route exact path="/transition-rate" element={<TransitionRateReport/>} />
-        <Route exact path="/teacher-and-school-resources" element={<TeacherAndSchResourcesReport/>} />
-        <Route exact path="/student-performance" element={<StudentsPerformanceReport />} />
-        <Route exact path="/school-infrastructure" element={<SchoolInfraStructureReport />} />
+        <Route exact path="/Percentage-of-elementary-schools-having-PTR-less-than-equal-to-30" element={<TeacherAndSchResourcesReport/>} />
+        <Route exact path="/Percentage-Schools-with-Teachers-trained-for-teaching-CWSN" element={<StudentsPerformanceReport />} />
+        <Route exact path="/Percentange-of-Schools-having-adequate-Functional-Girls-Toilets" element={<SchoolInfraStructureReport />} />
         <Route exact path="/enrollment-retention" element={<EnrollmentAndRetentionReport />} />
         <Route exact path="/screen-reader-access" element={<ScreenReader/>} />
 
