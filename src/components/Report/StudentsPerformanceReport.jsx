@@ -32,7 +32,8 @@ export default function StudentsPerformanceReport() {
     localStorage.setItem('selectedReport', "Student Performance");
     const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
     const [locationHeader, SetLocationHeader] = useState();
-    const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
+    const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData);
+    const selectedDataAllYear = useSelector((state)=>state.reportAdpAbpType.selectedDataAllYear);
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOptionTop50);
     const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
@@ -76,13 +77,10 @@ export default function StudentsPerformanceReport() {
                 const districtMatch = selectedDistrict !== "SelectDistrict"
                     ? finalData.some(finalItem => finalItem.lgd_district_id === topeItem.lgd_district_name)
                     : true;
-
                 return districtMatch;
             })
             : [];
     }, [topPtrData, selectedDistrict, finalData, selectedYear]);
-
-
 
     useEffect(() => {
         if (Array.isArray(filteredTopeData) && filteredTopeData.length > 0) {
@@ -492,9 +490,9 @@ export default function StudentsPerformanceReport() {
         }
 
         else {
-            dispatch(SetFinalData(aspirationalData))
+            dispatch(SetFinalData(selectedDataAllYear))
         }
-    }, [selectedState, data, aspirationalData, selectReportType])
+    }, [selectedState, data, selectedDataAllYear, selectReportType])
 
     const defColumnDefs = useMemo(() => ({
         flex: 1,
