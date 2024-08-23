@@ -107,7 +107,7 @@ export default function SchoolInfraStructureReport() {
           selectedDistrict !== "SelectDistrict"
             ? finalData.some(
               (finalItem) =>
-                finalItem.lgd_district_name === topeItem.lgd_district_name
+                finalItem.district_id === topeItem.lgd_district_id
             )
             : true;
 

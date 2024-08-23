@@ -74,15 +74,15 @@ export default function StudentsPerformanceReport() {
         return Array.isArray(topPtrData) && topPtrData.length > 0
             ? topPtrData.filter(topeItem => {
                 const districtMatch = selectedDistrict !== "SelectDistrict"
-                    ? finalData.some(finalItem => finalItem.lgd_district_name === topeItem.lgd_district_name)
+                    ? finalData.some(finalItem => {
+                        const isMatch = finalItem.district_id === topeItem.lgd_district_id;
+                        return isMatch;
+                    })
                     : true;
-
                 return districtMatch;
             })
             : [];
     }, [topPtrData, selectedDistrict, finalData, selectedYear]);
-
-
 
     useEffect(() => {
         if (Array.isArray(filteredTopeData) && filteredTopeData.length > 0) {
