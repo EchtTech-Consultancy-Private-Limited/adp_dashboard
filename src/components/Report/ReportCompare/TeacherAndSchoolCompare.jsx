@@ -42,9 +42,9 @@ export default function TeacherAndSchoolCompare() {
   }, [dispatch]);
 
 
-  useEffect(() => {
-    dispatch(setAspirationalAllData(aspirationalAdpData))
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(setAspirationalAllData(aspirationalAdpData))
+  // }, [dispatch]);
 
 
   // Initialize states and districts from JSON data

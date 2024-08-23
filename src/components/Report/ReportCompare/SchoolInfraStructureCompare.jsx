@@ -47,10 +47,10 @@ export default function SchoolInfraStructureCompare() {
     resteData();
   }, [dispatch]);
 
-  useEffect(() => {
-    // dispatch(setUpdateReportType('ADP_Report'));
-    dispatch(setAspirationalAllData(aspirationalAdpData));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   // dispatch(setUpdateReportType('ADP_Report'));
+  //   dispatch(setAspirationalAllData(aspirationalAdpData));
+  // }, [dispatch]);
 
 
   // Initialize states and districts from JSON data
