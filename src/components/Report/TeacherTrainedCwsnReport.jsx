@@ -29,11 +29,10 @@ export default function TeacherTrainedCwsnReport() {
     const dispatch = useDispatch()
     const { t, i18n } = useTranslation();
     const [loading, setLoading] = useState(true);
-    localStorage.setItem('selectedReport', "Percentage Schools with Teachers Trained for Teaching CWSN");
     const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
     const [locationHeader, SetLocationHeader] = useState();
     const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData);
-    const selectedDataAllYear = useSelector((state)=>state.reportAdpAbpType.selectedDataAllYear);
+    const selectedDataAllYear = useSelector((state) => state.reportAdpAbpType.selectedDataAllYear);
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOptionTop50);
     const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
@@ -47,6 +46,19 @@ export default function TeacherTrainedCwsnReport() {
     // const [finalData, SetFinalData] = useState([])
     const [topPtrData, setTopPtrData] = useState([])
     const [top50Data, setTop50Data] = useState([])
+    
+    {/* Set Report Title Start*/ }
+
+    const reportTitle = selectedOption === "Top_50_Schools"
+        ? t('top_50_schools_with_teachers_trained_for_cwsn')
+        : selectedOption === "Upcoming_50"
+            ? t('upcoming_50_schools_with_teachers_trained_for_cwsn')
+            : t("studentPerformanceReport")
+    localStorage.setItem("selectedReport", reportTitle);
+
+    {/* Set Report Title End*/ }
+
+    {/* Show top 100 Data start*/ }
     const combinedTopData = {
         "2019-20": {
             ADP_Report: teacherTrainedCwsnAdp2019,
@@ -95,6 +107,7 @@ export default function TeacherTrainedCwsnReport() {
             setTop50Data([]);
         }
     }, [selectedOption, filteredTopeData, selectedYear]);
+    {/* Show top 100 Data End*/ }
     function resteData() {
         // dispatch(selectState(SelectState));
         // dispatch(selectDistrict(SelectDistrict));
@@ -201,7 +214,7 @@ export default function TeacherTrainedCwsnReport() {
             return value;
         }
     };
-    
+
 
     const [columns, setColumn] = useState([
         {
@@ -323,13 +336,6 @@ export default function TeacherTrainedCwsnReport() {
                     ]
                     : []),
 
-
-                // {
-                //     headerName: locationHeader,
-                //     cellRenderer: ArrowRenderer,
-                //     field: "Location",
-                // },
-
                 ...(selectReportType === "ABP_Report"
                     ? [
                         {
@@ -370,75 +376,36 @@ export default function TeacherTrainedCwsnReport() {
 
     useEffect(() => {
         if (selectedState !== "All State") {
-            if (selectedOption === "Top_50_Schools") {
-                setColumn([
-                    {
-                        headerName: "Serial Number",
-                        field: "Serial Number",
-                        hide: true,
-                        suppressColumnsToolPanel: true,
-                        suppressFiltersToolPanel: true,
-                    },
-                    {
-                        headerName: "UDISE School Code",
-                        field: "Udise School Code",
-                        hide: false,
-                    },
+            const baseColumns = [
+                {
+                    headerName: "Serial Number",
+                    field: "Serial Number",
+                    hide: true,
+                    suppressColumnsToolPanel: true,
+                    suppressFiltersToolPanel: true,
+                },
+                {
+                    headerName: "UDISE School Code",
+                    field: "Udise School Code",
+                    hide: false,
+                },
+                {
+                    headerName: "School Name",
+                    field: "School Name",
+                    hide: false,
+                },
+                {
+                    headerName: "No. of Teachers",
+                    field: "Teacher trained to teach CWSN",
+                    hide: false,
+                },
+            ];
 
-
-                    {
-                        headerName: "School Name",
-                        field: "School Name",
-                        hide: false,
-                    },
-
-                    {
-                        headerName: "No. of Teachers",
-                        field: "Teacher trained to teach CWSN",
-                        hide: false,
-                    },
-                ]);
+            if (selectedOption === "Top_50_Schools" || selectedOption === "Upcoming_50") {
+                setColumn(baseColumns);
             }
-            else if (selectedOption === "Upcoming_50") {
-                setColumn([
-                    {
-                        headerName: "Serial Number",
-                        field: "Serial Number",
-                        hide: true,
-                        suppressColumnsToolPanel: true,
-                        suppressFiltersToolPanel: true,
-                    },
-                    {
-                        headerName: "Udise School Code",
-                        field: "Udise School Code",
-                        // cellRenderer: percentageRenderer,
-                        hide: false,
-                    },
-
-                    {
-                        headerName: "School Name",
-                        field: "School Name",
-                        // cellRenderer: percentageRenderer,
-                        hide: false,
-                    },
-
-                    {
-                        headerName: "No. of Teachers",
-                        field: "Teacher trained to teach CWSN",
-                        hide: false,
-                    },
-                ]);
-            }
-
         }
-    }, [
-
-        locationHeader,
-        selectedState,
-        selectedOption,
-        selectedDistrict,
-        selectReportType,
-    ]);
+    }, [locationHeader, selectedState, selectedOption, selectedDistrict, selectReportType]);
 
     const compressData = useCallback((data, groupBy) => {
         return data.reduce((acc, curr) => {
@@ -716,11 +683,7 @@ export default function TeacherTrainedCwsnReport() {
                                                             : selectedBlock}
                                                 </h5>
                                                 <h3 className="heading-sm">
-                                                    {selectedOption === "Top_50_Schools"
-                                                        ? t('top_50_schools_with_teachers_trained_for_cwsn')
-                                                        : selectedOption === "Upcoming_50"
-                                                            ? t('upcoming_50_schools_with_teachers_trained_for_cwsn')
-                                                            : t("studentPerformanceReport")}
+                                                    {reportTitle}
                                                 </h3>
 
                                             </div>
@@ -732,7 +695,7 @@ export default function TeacherTrainedCwsnReport() {
                                     </div>
                                     <div className="col-md-6">
                                         <div className="d-flex justify-content-end w-m-100">
-                                            {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectReportType !== "ABP_Report"  && selectedDistrict !== AllDistrict) ? (
+                                            {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectReportType !== "ABP_Report" && selectedDistrict !== AllDistrict) ? (
                                                 <div className="radio-button w-auto">
                                                     <div className="box-radio me-4">
                                                         <input
@@ -743,7 +706,7 @@ export default function TeacherTrainedCwsnReport() {
                                                             onChange={handleOptionChange}
                                                         />
                                                         <label htmlFor="radio44">
-                                                        {t('top_50_schools')}
+                                                            {t('top_50_schools')}
                                                         </label>
                                                     </div>
 
@@ -756,7 +719,7 @@ export default function TeacherTrainedCwsnReport() {
                                                             onChange={handleOptionChange}
                                                         />
                                                         <label htmlFor="radio55">
-                                                        {t('upcoming_50_schools')}
+                                                            {t('upcoming_50_schools')}
                                                         </label>
                                                     </div>
                                                 </div>

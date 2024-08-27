@@ -44,7 +44,7 @@ export default function TeacherAndSchResourcesReport() {
     const id = queryParameters.get("id");
     const type = queryParameters.get("type");
     const [loading, setLoading] = useState(true);
-    localStorage.setItem("selectedReport", "Percentage of Elementary Schools Having PTR Less Than Equal to 30");
+
     const { selectedState, selectedDistrict, selectedBlock } = useSelector(
         (state) => state.locationAdp
     );
@@ -73,7 +73,17 @@ export default function TeacherAndSchResourcesReport() {
     const [data, setData] = useState([]);
     const [topPtrData, setTopPtrData] = useState([])
     const [top50Data, setTop50Data] = useState([])
-    // Code for top 100 Data show
+
+    {/* Set Report Title Start*/ }
+    const reportTitle = selectedOption === "Top_50_Schools"
+        ? t('top_50_elementary_schools_with_ptr_30')
+        : selectedOption === "Upcoming_50"
+            ? t('upcoming_50_elementary_schools_with_ptr_30')
+            : t("teacherSchoolResourcesReport")
+    localStorage.setItem("selectedReport", reportTitle);
+
+    {/* Set Report Title End*/ }
+    {/* Show top 100 Data start*/ }
     const combinedTopData = {
         "2019-20": {
             ADP_Report: ptrLessThanAdp2019,
@@ -126,7 +136,7 @@ export default function TeacherAndSchResourcesReport() {
         }
     }, [selectedOption, filteredTopeData, selectedYear]);
 
-
+    {/* Show top 100 Data End*/ }
     function resteData() {
         // dispatch(selectState(SelectState));
         // dispatch(selectDistrict(SelectDistrict));
@@ -777,11 +787,7 @@ export default function TeacherAndSchResourcesReport() {
                                                             : selectedBlock}
                                                 </h5>
                                                 <h3 className="heading-sm">
-                                                    {selectedOption === "Top_50_Schools"
-                                                        ? t('top_50_elementary_schools_with_ptr_30')
-                                                        : selectedOption === "Upcoming_50"
-                                                            ? t('upcoming_50_elementary_schools_with_ptr_30')
-                                                            : t("teacherSchoolResourcesReport")}
+                                                    {reportTitle}
                                                 </h3>
 
                                             </div>
@@ -810,7 +816,7 @@ export default function TeacherAndSchResourcesReport() {
                                                             onChange={handleOptionChange}
                                                         />
                                                         <label htmlFor="radio44">
-                                                        {t('top_50_schools')}
+                                                            {t('top_50_schools')}
                                                         </label>
                                                     </div>
 
@@ -823,7 +829,7 @@ export default function TeacherAndSchResourcesReport() {
                                                             onChange={handleOptionChange}
                                                         />
                                                         <label htmlFor="radio55">
-                                                        {t('upcoming_50_schools')}
+                                                            {t('upcoming_50_schools')}
                                                         </label>
                                                     </div>
                                                 </div>
