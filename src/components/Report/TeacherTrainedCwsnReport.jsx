@@ -323,13 +323,6 @@ export default function TeacherTrainedCwsnReport() {
                     ]
                     : []),
 
-
-                // {
-                //     headerName: locationHeader,
-                //     cellRenderer: ArrowRenderer,
-                //     field: "Location",
-                // },
-
                 ...(selectReportType === "ABP_Report"
                     ? [
                         {
@@ -368,10 +361,9 @@ export default function TeacherTrainedCwsnReport() {
         selectedDistrict,
         selectReportType,]);
 
-    useEffect(() => {
-        if (selectedState !== "All State") {
-            if (selectedOption === "Top_50_Schools") {
-                setColumn([
+        useEffect(() => {
+            if (selectedState !== "All State") {
+                const baseColumns = [
                     {
                         headerName: "Serial Number",
                         field: "Serial Number",
@@ -384,62 +376,24 @@ export default function TeacherTrainedCwsnReport() {
                         field: "Udise School Code",
                         hide: false,
                     },
-
-
                     {
                         headerName: "School Name",
                         field: "School Name",
                         hide: false,
                     },
-
                     {
                         headerName: "No. of Teachers",
                         field: "Teacher trained to teach CWSN",
                         hide: false,
                     },
-                ]);
+                ];
+        
+                if (selectedOption === "Top_50_Schools" || selectedOption === "Upcoming_50") {
+                    setColumn(baseColumns);
+                }
             }
-            else if (selectedOption === "Upcoming_50") {
-                setColumn([
-                    {
-                        headerName: "Serial Number",
-                        field: "Serial Number",
-                        hide: true,
-                        suppressColumnsToolPanel: true,
-                        suppressFiltersToolPanel: true,
-                    },
-                    {
-                        headerName: "Udise School Code",
-                        field: "Udise School Code",
-                        // cellRenderer: percentageRenderer,
-                        hide: false,
-                    },
-
-                    {
-                        headerName: "School Name",
-                        field: "School Name",
-                        // cellRenderer: percentageRenderer,
-                        hide: false,
-                    },
-
-                    {
-                        headerName: "No. of Teachers",
-                        field: "Teacher trained to teach CWSN",
-                        hide: false,
-                    },
-                ]);
-            }
-
-        }
-    }, [
-
-        locationHeader,
-        selectedState,
-        selectedOption,
-        selectedDistrict,
-        selectReportType,
-    ]);
-
+        }, [locationHeader, selectedState, selectedOption, selectedDistrict, selectReportType]);
+        
     const compressData = useCallback((data, groupBy) => {
         return data.reduce((acc, curr) => {
             let groupKey = curr[groupBy];
