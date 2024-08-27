@@ -52,7 +52,7 @@ export default function SchoolInfraStructureReport() {
   const aspirationalData = useSelector(
     (state) => state.reportAdpAbpType.aspirationalAllData
   );
-  const selectedDataAllYear = useSelector((state)=>state.reportAdpAbpType.selectedDataAllYear);
+  const selectedDataAllYear = useSelector((state) => state.reportAdpAbpType.selectedDataAllYear);
   const selectReportType = useSelector(
     (state) => state.reportAdpAbpType.updateReportType
   );
@@ -62,14 +62,7 @@ export default function SchoolInfraStructureReport() {
   const selectedYear = useSelector(
     (state) => state.reportAdpAbpType.selectedYear
   );
-  const reportTitle = selectedOption === "Top_50_Schools"
-  ? t('top_50_schools_with_40_1_girls_toilets')
-  : selectedOption === "Upcoming_50"
-    ? t('upcoming_50_schools_with_40_1_girls_toilets')
-    : t("schoolInfrastructureReport");
 
-
-localStorage.setItem("selectedReport", reportTitle);
   const states = useSelector((state) => state.locationAdp.states);
   const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName);
   const [gridApi, setGridApi] = useState();
@@ -80,6 +73,18 @@ localStorage.setItem("selectedReport", reportTitle);
   const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
   const [topPtrData, setTopPtrData] = useState([])
   const [top50Data, setTop50Data] = useState([])
+
+  {/* Set Report Title Start*/ }
+  const reportTitle = selectedOption === "Top_50_Schools"
+    ? t('top_50_schools_with_40_1_girls_toilets')
+    : selectedOption === "Upcoming_50"
+      ? t('upcoming_50_schools_with_40_1_girls_toilets')
+      : t("schoolInfrastructureReport");
+
+  localStorage.setItem("selectedReport", reportTitle);
+  {/* Set Report Title End*/ }
+
+  {/* Show top 100 Data start*/ }
   const combinedTopData = {
     "2019-20": {
       ADP_Report: schWithToiletRatioAdp2019,
@@ -140,7 +145,7 @@ localStorage.setItem("selectedReport", reportTitle);
     }
   }, [selectedOption, filteredTopeData, selectedYear]);
 
-
+  {/* Show top 100 Data End*/ }
   // const [finalData, SetFinalData] = useState([]
   function resteData() {
     // dispatch(selectState(SelectState));
@@ -858,7 +863,7 @@ localStorage.setItem("selectedReport", reportTitle);
                               : selectedBlock}
                         </h5>
                         <h3 className="heading-sm">
-                        {reportTitle}
+                          {reportTitle}
                         </h3>
 
                       </div>
@@ -963,7 +968,7 @@ localStorage.setItem("selectedReport", reportTitle);
               </div>
             </div>
             {selectedState !== "All State" &&
-              selectReportType === "ADP_Report" && (selectedOption !== "Top_50_Schools" && selectedOption !== "Upcoming_50")  ? (
+              selectReportType === "ADP_Report" && (selectedOption !== "Top_50_Schools" && selectedOption !== "Upcoming_50") ? (
               <SchoolInfraStructureCompare />
             ) : selectedState !== "All State" &&
               selectedDistrict !== SelectDistrict &&
