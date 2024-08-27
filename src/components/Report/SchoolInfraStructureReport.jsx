@@ -44,7 +44,7 @@ export default function SchoolInfraStructureReport() {
   const id = queryParameters.get("id");
   const type = queryParameters.get("type");
   const [loading, setLoading] = useState(true);
-  localStorage.setItem("selectedReport", "Percentange of Schools Having Adequate Functional Girls Toilets");
+
   const { selectedState, selectedDistrict, selectedBlock } = useSelector(
     (state) => state.locationAdp
   );
@@ -62,6 +62,14 @@ export default function SchoolInfraStructureReport() {
   const selectedYear = useSelector(
     (state) => state.reportAdpAbpType.selectedYear
   );
+  const reportTitle = selectedOption === "Top_50_Schools"
+  ? t('top_50_schools_with_40_1_girls_toilets')
+  : selectedOption === "Upcoming_50"
+    ? t('upcoming_50_schools_with_40_1_girls_toilets')
+    : t("schoolInfrastructureReport");
+
+
+localStorage.setItem("selectedReport", reportTitle);
   const states = useSelector((state) => state.locationAdp.states);
   const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName);
   const [gridApi, setGridApi] = useState();
@@ -850,11 +858,7 @@ export default function SchoolInfraStructureReport() {
                               : selectedBlock}
                         </h5>
                         <h3 className="heading-sm">
-                          {selectedOption === "Top_50_Schools"
-                            ? t('top_50_schools_with_40_1_girls_toilets')
-                            : selectedOption === "Upcoming_50"
-                              ? t('upcoming_50_schools_with_40_1_girls_toilets')
-                              : t("schoolInfrastructureReport")}
+                        {reportTitle}
                         </h3>
 
                       </div>
