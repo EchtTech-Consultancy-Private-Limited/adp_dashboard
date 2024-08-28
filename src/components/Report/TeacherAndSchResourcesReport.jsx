@@ -20,6 +20,8 @@ import {
     setselectedOption,
     setselectedOptionTop50,
     SetSheetName,
+
+    setIsActiveGraph
 } from "../../redux/slice/reportTypeSlice";
 import {
     AllBlock,
@@ -37,6 +39,8 @@ import ptrLessThanAdp2020 from "../../aspirational-reports-data/ptrLessThanAdp20
 import ptrLessThanAdp2021 from "../../aspirational-reports-data/ptrLessThanAdp2021-2022.json";
 import ptrLessThanAdp2022 from "../../aspirational-reports-data/ptrLessThanAdp2022-2023.json";
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
+import TeacherAndSchResourcesColumnGraph from "./graph/TeacherAndSchResourcesColumnGraph";
+import TeacherAndSchoolgraphB from "./graph/TeacherAndSchResourcesReportGraphB";
 export default function TeacherAndSchResourcesReport() {
     const dispatch = useDispatch();
     const { t, i18n } = useTranslation();
@@ -70,6 +74,9 @@ export default function TeacherAndSchResourcesReport() {
     const savedReportName = localStorage.getItem("selectedReport");
     const report_name = savedReportName;
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
+    const isActiveGraph=useSelector((state)=>state.reportAdpAbpType.isActiveGraph)
+
+
     const [data, setData] = useState([]);
     const [topPtrData, setTopPtrData] = useState([])
     const [top50Data, setTop50Data] = useState([])
@@ -745,6 +752,7 @@ export default function TeacherAndSchResourcesReport() {
         dispatch(setselectedOptionTop50(event.target.value));
     };
     const toggleClass = (e) => {
+        dispatch(setIsActiveGraph(!isActiveGraph))
         dispatch(setselectedOptionTop50(""));
     };
     return (
@@ -792,11 +800,11 @@ export default function TeacherAndSchResourcesReport() {
 
                                             </div>
                                             <div className="tab-box">
-                                                <button className="tab-button active" onClick={toggleClass}>
+                                                <button className={`tab-button  ${isActiveGraph ? '' : 'active'}`} onClick={toggleClass}>
                                                     <img src={table} alt="Table" />{" "}
                                                     <span>{t("tableView")}</span>
                                                 </button>
-                                                <button className="tab-button" onClick={toggleClass}>
+                                                <button className={`tab-button  ${isActiveGraph ? 'active' : ''}`} onClick={toggleClass}>
                                                     <img src={chart} alt="chart" />{" "}
                                                     <span>{t("chartView")}</span>
                                                 </button>
@@ -804,8 +812,9 @@ export default function TeacherAndSchResourcesReport() {
                                         </div>
                                     </div>
                                     <div className="col-md-6">
+
                                         <div className="d-flex w-m-100 justify-content-end">
-                                            {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict && selectReportType !== "ABP_Report") ? (
+                                            {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict && selectReportType !== "ABP_Report") && isActiveGraph === false? (
                                                 <div className="radio-button w-auto">
                                                     <div className="box-radio me-4">
                                                         <input
@@ -836,7 +845,7 @@ export default function TeacherAndSchResourcesReport() {
                                             ) : ("")}
 
 
-                                            <div className="">
+                                            <div className={`${isActiveGraph ? 'd-none' : ''}`}>
                                                 {/* <img src={download} alt="download" /> */}
                                                 <select
                                                     id="export_data"
@@ -863,7 +872,7 @@ export default function TeacherAndSchResourcesReport() {
 
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <div className="table-box mt-4">
+                                        <div  className={`table-box mt-4  ${isActiveGraph ? 'd-none' : ''}`}>
                                             <div
                                                 id="content"
                                                 className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
@@ -884,6 +893,14 @@ export default function TeacherAndSchResourcesReport() {
 
                                             </div>
                                         </div>
+
+                                        <div className={`graph-box  ${isActiveGraph ? '' : 'd-none'}`}>
+                                        <TeacherAndSchoolgraphB></TeacherAndSchoolgraphB>
+                                          <TeacherAndSchResourcesColumnGraph/>
+                                      
+                                        </div>
+
+
                                     </div>
                                 </div>
                             </div>

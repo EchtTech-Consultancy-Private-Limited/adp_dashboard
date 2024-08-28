@@ -128,9 +128,9 @@ export default function StudentsPerformanceCompare() {
   const cwsnTrainedTeacher = selectedDistricts?.map(district => district?.total_school_cwsn);
 
   const percentageCwsnTrainedTeach = selectedDistricts?.map(district => Number(parseFloat(district?.swsn_teacher_percent).toFixed(2)));
-  const handleOptionChange = (event) => {
-    dispatch(setselectedCompareOption(event.target.value));
-  };
+  // const handleOptionChange = (event) => {
+  //   dispatch(setselectedCompareOption(event.target.value));
+  // };
   return (
     <>
       {!isActiveGraph ? (<div className="card-box">
@@ -280,14 +280,15 @@ export default function StudentsPerformanceCompare() {
             <BlankPage />
           )}
         </div>
-      </div>) : (<div className="col-md-12 graph-box">
+      </div>) : (
+        <div className="col-md-12 graph-box">
         <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
           <div className="text-btn-d d-flex justify-content-between align-items-center">
             <h2 className="heading-sm">
-              {t("comparisonByTransitionRate")}
+            Percentage of Elementary Schools Having PTR Less Than Equal to 30
             </h2>
 
-            <div className="select-infra button-group-filter">
+            {/* <div className="select-infra button-group-filter">
               <select id="export_data" className="form-select bg-grey2" defaultValue={"upper_primary_to_secondary"}
                 value={selectedOption}
                 onChange={handleOptionChange}
@@ -295,7 +296,7 @@ export default function StudentsPerformanceCompare() {
                 <option value="upper_primary_to_secondary"> {t("upperPrimaryToSecondary")}</option>
                 <option value="secondary_to_higher_secondary">  {t("secondaryToHigherSecondary")}</option>
               </select>
-            </div>
+            </div> */}
 
           </div>
 
