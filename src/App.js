@@ -33,7 +33,7 @@ function App() {
       document.getElementById("root").classList.remove("dark-mode");
     }
   }, [toggleDarkMode]);
-  {/*...............Take data report wise..............*/ }
+  {/*...............Take data report and Year wise For All Reports Start..............*/ }
   const combinedData = {
     "2019-20": {
       ADP_Report: aspirationalAdpData2019,
@@ -61,7 +61,7 @@ function App() {
     }
   }, [selectReportType, selectedYear]);
 
-
+ {/*...............Take data report and Year wise For All Reports End..............*/ }
 
   return (
     <div className="App">

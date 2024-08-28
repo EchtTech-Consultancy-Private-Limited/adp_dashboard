@@ -25,7 +25,8 @@ import BlankPage from "../BlankPage.jsx";
 import { ScrollToTopOnMount } from "../../../Scroll/ScrollToTopOnMount.jsx";
 import { useTranslation } from "react-i18next";
 import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer.jsx";
-
+import Highcharts, { color } from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 export default function StudentsPerformanceBlockCompare() {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
@@ -41,6 +42,10 @@ export default function StudentsPerformanceBlockCompare() {
   const selectedState = useSelector((state) => state.locationAdp.selectedState);
   const selectedBlocks = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareBlock
+  );
+
+  const isActiveGraph = useSelector(
+    (state) => state.reportAdpAbpType.isActiveGraph
   );
 
   function resteData() {
@@ -147,9 +152,20 @@ export default function StudentsPerformanceBlockCompare() {
   };
 
 
+
+  const totalSch = selectedBlocks?.map(district => district?.tot_school);
+
+  const cwsnTrainedTeacher = selectedBlocks?.map(district => district?.total_school_cwsn);
+
+  const percentageCwsnTrainedTeach = selectedBlocks?.map(district => Number(parseFloat(district?.swsn_teacher_percent).toFixed(2)));
+
+
+
   return (
     <>
       <ScrollToTopOnMount />
+
+      {!isActiveGraph ? (
       <div className="card-box">
         <div className="row align-items-end">
           <div className="col-md-12">
@@ -317,6 +333,197 @@ export default function StudentsPerformanceBlockCompare() {
           )}
         </div>
       </div>
+      ):(
+      <div className="col-md-12 graph-box">
+      <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
+        <div className="text-btn-d d-flex justify-content-between align-items-center">
+          <h2 className="heading-sm">
+          {t("comparisonByTransitionRate")}
+          </h2>
+
+          {/* <div className="select-infra button-group-filter">
+            <select
+              id="export_data"
+              className="form-select bg-grey2"
+              defaultValue={"upper_primary_to_secondary"}
+              value={selectedOption}
+              onChange={handleOptionChange}
+            >
+              <option value="upper_primary_to_secondary">
+              {t("upperPrimaryToSecondary")}
+              </option>
+              <option value="secondary_to_higher_secondary">
+              {t("secondaryToHigherSecondary")}
+              </option>
+            </select>
+          </div> */}
+        </div>
+
+        <div className="Comparison-box">
+          <div className="row align-items-center">
+            <div className="col-md-2 col-lg-2">
+              <h4 className="sub-heading text-left">
+                     {t('add_block_to_compare')}
+              </h4>
+            </div>
+            <div className="col-md-10 col-lg-10 pe-2">
+              <div className="select-infra Comparison-select-group">
+                {[...Array(MAX_BLOCKS)]?.map((_, index) => (
+                  <div key={index} className="width-20">
+                    <Select
+                      className="form-select bg-grey2"
+                      onChange={(value) => handleBlockChange(value, index)}
+                      style={{ width: "100%" }}
+                      placeholder={`${t("addBlock")} ${index + 1}`}
+                      mode="single"
+                      showSearch
+                      value={
+                        selectedBlocks[index]?.lgd_block_name ||
+                        `${t("addBlock")}`
+                      }
+                      disabled={index > 0 && !selectedBlocks[index - 1]}
+                    >
+                      {getFilteredBlocks(index).map((block) => (
+                        <Select.Option
+                          key={block?.lgd_block_id}
+                          value={block?.lgd_block_name}
+                        >
+                          {block?.lgd_block_name}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {selectedBlocks.length === 1 ? (
+          <Card
+            style={{
+              width: 300,
+              margin: "20px auto 0",
+            }}
+          >
+            <b>{t("selectOneMoreBlock")}</b>
+          </Card>
+        ) : (
+          <div className="piechart-box row align-items-center">
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={{
+                chart: {
+                  type: "column",
+                  marginTop: 80,
+                  events: {
+                    beforePrint: function () {
+                      this.exportSVGElements[0].box.hide();
+                      this.exportSVGElements[1].hide();
+                    },
+                    afterPrint: function () {
+                      this.exportSVGElements[0].box.show();
+                      this.exportSVGElements[1].show();
+                    },
+                  },
+                },
+                xAxis: {
+                  categories: selectedBlocks.map(
+                    (district) => district.lgd_block_name
+                  ),
+                },
+                yAxis: {
+                  allowDecimals: false,
+                  min: 0,
+                  title: {
+                    text: "",
+                  },
+                },
+                title: {
+                  text: "",
+                },
+                tooltip: {
+                  headerFormat: "<b>{point.x}</b><br/>",
+                  pointFormat: "{series.name}: {point.y}",
+                  pointFormatter: function () {
+                    return `<span style="color:${this.color
+                      }">\u25CF</span> ${this.series.name
+                      }: <b>${this.y.toLocaleString("en-IN")}</b><br/>`;
+                  },
+                },
+                plotOptions: {
+                  column: {
+                    stacking: "normal",
+                    dataLabels: {
+                      enabled: true,
+                      crop: false,
+                      overflow: "none",
+                      rotation: 0,
+                      align: "center",
+                      x: -2,
+                      y: -5,
+                      style: {
+                        font: "13px Arial, sans-serif",
+                        fontWeight: "600",
+                        stroke: "transparent",
+                        align: "center",
+                      },
+                      position: "top",
+                      formatter: function () {
+                        // return parseFloat(
+                        //   this.y
+                        // ).toFixed(0);
+                        return this.y.toLocaleString("en-IN");
+                      },
+                    },
+                  },
+                },
+                legend: {
+                  layout: "horizontal",
+                  align: "center",
+                  verticalAlign: "bottom",
+                  itemMarginTop: 10,
+                  itemMarginBottom: 10,
+                },
+                credits: {
+                  enabled: false,
+                },
+                exports: {
+                  enabled: false,
+                },
+                series: [
+                  {
+                    color: "#FFB74BF0",
+                    name: t('percentage_Schools_with_CWSN-Trained'),
+                    data: percentageCwsnTrainedTeach,
+                    maxPointWidth: 50,
+                  },
+                  {
+                    color: "#6C6CB0",
+                    name: t('schools_with_CWSN_trained_teachers_of'),
+                    data: cwsnTrainedTeacher,
+                    maxPointWidth: 50,
+
+                  },
+
+                  {
+                    color: "#17AFD2",
+                    name: t('total_schools_data'),
+                    data: totalSch,
+                    maxPointWidth: 50,
+                  },
+
+
+                ]
+              }}
+              immutable={true}
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  )}
+
     </>
   );
 }

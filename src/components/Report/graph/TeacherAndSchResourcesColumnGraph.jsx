@@ -28,6 +28,13 @@ export default function TeacherAndSchResourcesColumnGraph() {
 
   const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
 
+  const { selectedState,} = useSelector(
+    (state) => state.locationAdp
+);
+
+console.log("selectedState",selectedState)
+
+
   const [chartHeight, setChartHeight] = useState(450);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [limit] = useState(5);
@@ -109,15 +116,15 @@ export default function TeacherAndSchResourcesColumnGraph() {
         id: item.lgd_district_name,
         parent: "INDIA",
         name: `${item.lgd_district_name} `,
-        value: item.ptrTotal,
+        value: item.lgd_district_name,
         color: getColorCode(item.ele_sch_percent),
       };
 
       let ele_sch_percent = {
         id: ++count,
         parent: item.lgd_district_name,
-        name: `Percentage of elementary  ${item.ele_sch_percent}`,
-        value: item.ptrHSec,
+        name: `Percentage of elementary  ${item.ele_sch_percent.toFixed(2)}`,
+        value: item.ele_sch_percent,
         color: getColorCode(item.ele_sch_percent),
       };
 
@@ -131,15 +138,15 @@ export default function TeacherAndSchResourcesColumnGraph() {
         id: item.lgd_block_name,
         parent: "INDIA",
         name: `${item.lgd_block_name} `,
-        value: item.ptrTotal,
+        value: item.lgd_block_name,
         color: getColorCode(item.ele_sch_percent),
       };
 
       let ele_sch_percent = {
         id: ++count,
         parent: item.lgd_block_name,
-        name: `Percentage of elementary  ${item.ele_sch_percent}`,
-        value: item.ptrHSec,
+        name: `Percentage of elementary  ${item.ele_sch_percent.toFixed(2)}`,
+        value: item.ele_sch_percent,
         color: getColorCode(item.ele_sch_percent),
       };
 
@@ -207,6 +214,15 @@ export default function TeacherAndSchResourcesColumnGraph() {
 
   // *******end Tree graph********
 
+
+ 
+
+  const headingText = TopDistrictsAndBlocksColumnGraph.length < 10
+  ? `${t('performance_of')} ${selectReportType === "ADP_Report" ? t('district') : t('block')} ${t('By Elementary Schools with PTR ≤ 30%')}`
+  : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}  ${t('By Elementary Schools with PTR ≤ 30%')}`;
+
+
+
   return (
     <section className="infrastructure-main-card p-0" id="content">
       <div className="ptb-30">
@@ -218,7 +234,10 @@ export default function TeacherAndSchResourcesColumnGraph() {
                   <div className="col-md-12">
                     <div className="graph-card">
                       <div className="text-btn-d">
-                        <h2 className="heading-sm">  {selectReportType === "ADP_Report" ? "top_performing_districts" : "top_performing_blocks"}
+                        <h2 className="heading-sm"> 
+
+                        {headingText}
+    
                         </h2>
                       </div>
                       <div className="graph mt-4">
@@ -338,8 +357,8 @@ export default function TeacherAndSchResourcesColumnGraph() {
                   <div className="col-md-12 mt-4">
                     <div className="graph-card">
                       <div className="text-btn-d">
-                        <h2 className="heading-sm"> {selectReportType === "ADP_Report" ? "top_performing_districts" : "top_performing_blocks"}</h2>
-                      </div>
+                      <h2 className="heading-sm">  {selectReportType === "ADP_Report" ? "Performance of Districts By Elementary Schools with PTR ≤ 30%" : "Performance of  Blocks By Elementary Schools with PTR ≤ 30%"}
+                      </h2>                      </div>
 
                       <div
                         className={`scroll-btn-graph ${

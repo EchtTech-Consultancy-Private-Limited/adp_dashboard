@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { jsPDF } from "jspdf";
 import 'jspdf-autotable';
 import { GlobalLoading } from '../GlobalLoading/GlobalLoading'
-import { SetFinalData, setselectedOption, setselectedOptionTop50, SetSheetName } from '../../redux/slice/reportTypeSlice'
+import { SetFinalData, setIsActiveGraph, setselectedOption, setselectedOptionTop50, SetSheetName } from '../../redux/slice/reportTypeSlice'
 import { AllBlock, AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
 import { ScrollToTopOnMount } from '../../Scroll/ScrollToTopOnMount'
 import StudentsPerformanceCompare from './ReportCompare/TeacherTrainedCwsnCompare'
@@ -22,6 +22,7 @@ import teacherTrainedCwsnAdp2020 from "../../aspirational-reports-data/teacherTr
 import teacherTrainedCwsnAdp2021 from "../../aspirational-reports-data/teacherTrainedCwsnAdp2021-2022.json";
 import teacherTrainedCwsnAdp2022 from "../../aspirational-reports-data/teacherTrainedCwsnAdp2022-2023.json";
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
+import TeacherTrainedCwsnBarGraph from './graph/TeacherTrainedCwsnBarGraph'
 
 
 
@@ -29,11 +30,10 @@ export default function TeacherTrainedCwsnReport() {
     const dispatch = useDispatch()
     const { t, i18n } = useTranslation();
     const [loading, setLoading] = useState(true);
-    localStorage.setItem('selectedReport', "Percentage Schools with Teachers Trained for Teaching CWSN");
     const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
     const [locationHeader, SetLocationHeader] = useState();
     const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData);
-    const selectedDataAllYear = useSelector((state)=>state.reportAdpAbpType.selectedDataAllYear);
+    const selectedDataAllYear = useSelector((state) => state.reportAdpAbpType.selectedDataAllYear);
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOptionTop50);
     const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
@@ -43,10 +43,25 @@ export default function TeacherTrainedCwsnReport() {
     const savedReportName = localStorage.getItem('selectedReport');
     const report_name = savedReportName
     const [data, setData] = useState([]);
+    const isActiveGraph = useSelector((state) => state.reportAdpAbpType.isActiveGraph)
+    console.log(isActiveGraph, "isActiveGraph")
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData)
     // const [finalData, SetFinalData] = useState([])
     const [topPtrData, setTopPtrData] = useState([])
     const [top50Data, setTop50Data] = useState([])
+
+    {/* Set Report Title Start*/ }
+
+    const reportTitle = selectedOption === "Top_50_Schools"
+        ? t('top_50_schools_with_teachers_trained_for_cwsn')
+        : selectedOption === "Upcoming_50"
+            ? t('upcoming_50_schools_with_teachers_trained_for_cwsn')
+            : t("studentPerformanceReport")
+    localStorage.setItem("selectedReport", reportTitle);
+
+    {/* Set Report Title End*/ }
+
+    {/* Show top 100 Data start*/ }
     const combinedTopData = {
         "2019-20": {
             ADP_Report: teacherTrainedCwsnAdp2019,
@@ -95,6 +110,7 @@ export default function TeacherTrainedCwsnReport() {
             setTop50Data([]);
         }
     }, [selectedOption, filteredTopeData, selectedYear]);
+    {/* Show top 100 Data End*/ }
     function resteData() {
         // dispatch(selectState(SelectState));
         // dispatch(selectDistrict(SelectDistrict));
@@ -201,7 +217,7 @@ export default function TeacherTrainedCwsnReport() {
             return value;
         }
     };
-    
+
 
     const [columns, setColumn] = useState([
         {
@@ -323,13 +339,6 @@ export default function TeacherTrainedCwsnReport() {
                     ]
                     : []),
 
-
-                // {
-                //     headerName: locationHeader,
-                //     cellRenderer: ArrowRenderer,
-                //     field: "Location",
-                // },
-
                 ...(selectReportType === "ABP_Report"
                     ? [
                         {
@@ -370,75 +379,36 @@ export default function TeacherTrainedCwsnReport() {
 
     useEffect(() => {
         if (selectedState !== "All State") {
-            if (selectedOption === "Top_50_Schools") {
-                setColumn([
-                    {
-                        headerName: "Serial Number",
-                        field: "Serial Number",
-                        hide: true,
-                        suppressColumnsToolPanel: true,
-                        suppressFiltersToolPanel: true,
-                    },
-                    {
-                        headerName: "UDISE School Code",
-                        field: "Udise School Code",
-                        hide: false,
-                    },
+            const baseColumns = [
+                {
+                    headerName: "Serial Number",
+                    field: "Serial Number",
+                    hide: true,
+                    suppressColumnsToolPanel: true,
+                    suppressFiltersToolPanel: true,
+                },
+                {
+                    headerName: "UDISE School Code",
+                    field: "Udise School Code",
+                    hide: false,
+                },
+                {
+                    headerName: "School Name",
+                    field: "School Name",
+                    hide: false,
+                },
+                {
+                    headerName: "No. of Teachers",
+                    field: "Teacher trained to teach CWSN",
+                    hide: false,
+                },
+            ];
 
-
-                    {
-                        headerName: "School Name",
-                        field: "School Name",
-                        hide: false,
-                    },
-
-                    {
-                        headerName: "No. of Teachers",
-                        field: "Teacher trained to teach CWSN",
-                        hide: false,
-                    },
-                ]);
+            if (selectedOption === "Top_50_Schools" || selectedOption === "Upcoming_50") {
+                setColumn(baseColumns);
             }
-            else if (selectedOption === "Upcoming_50") {
-                setColumn([
-                    {
-                        headerName: "Serial Number",
-                        field: "Serial Number",
-                        hide: true,
-                        suppressColumnsToolPanel: true,
-                        suppressFiltersToolPanel: true,
-                    },
-                    {
-                        headerName: "Udise School Code",
-                        field: "Udise School Code",
-                        // cellRenderer: percentageRenderer,
-                        hide: false,
-                    },
-
-                    {
-                        headerName: "School Name",
-                        field: "School Name",
-                        // cellRenderer: percentageRenderer,
-                        hide: false,
-                    },
-
-                    {
-                        headerName: "No. of Teachers",
-                        field: "Teacher trained to teach CWSN",
-                        hide: false,
-                    },
-                ]);
-            }
-
         }
-    }, [
-
-        locationHeader,
-        selectedState,
-        selectedOption,
-        selectedDistrict,
-        selectReportType,
-    ]);
+    }, [locationHeader, selectedState, selectedOption, selectedDistrict, selectReportType]);
 
     const compressData = useCallback((data, groupBy) => {
         return data.reduce((acc, curr) => {
@@ -676,6 +646,7 @@ export default function TeacherTrainedCwsnReport() {
         dispatch(setselectedOptionTop50(event.target.value));
     };
     const toggleClass = (e) => {
+        dispatch(setIsActiveGraph(!isActiveGraph));
         dispatch(setselectedOptionTop50(""));
     };
     return (
@@ -716,23 +687,19 @@ export default function TeacherTrainedCwsnReport() {
                                                             : selectedBlock}
                                                 </h5>
                                                 <h3 className="heading-sm">
-                                                    {selectedOption === "Top_50_Schools"
-                                                        ? t('top_50_schools_with_teachers_trained_for_cwsn')
-                                                        : selectedOption === "Upcoming_50"
-                                                            ? t('upcoming_50_schools_with_teachers_trained_for_cwsn')
-                                                            : t("studentPerformanceReport")}
+                                                    {reportTitle}
                                                 </h3>
 
                                             </div>
                                             <div className="tab-box">
-                                                <button className='tab-button active' onClick={toggleClass}><img src={table} alt="Table" /> <span>{t('tableView')}</span></button>
-                                                <button className='tab-button' onClick={toggleClass}><img src={chart} alt="chart" /> <span>{t('chartView')}</span></button>
+                                                <button className={`tab-button  ${isActiveGraph ? '' : 'active'}`} onClick={toggleClass}><img src={table} alt="Table" /> <span>{t('tableView')}</span></button>
+                                                <button className={`tab-button  ${isActiveGraph ? 'active' : ''}`} onClick={toggleClass}><img src={chart} alt="chart" /> <span>{t('chartView')}</span></button>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="d-flex justify-content-end w-m-100">
-                                            {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectReportType !== "ABP_Report"  && selectedDistrict !== AllDistrict) ? (
+                                            {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectReportType !== "ABP_Report" && selectedDistrict !== AllDistrict) && isActiveGraph === false ? (
                                                 <div className="radio-button w-auto">
                                                     <div className="box-radio me-4">
                                                         <input
@@ -743,7 +710,7 @@ export default function TeacherTrainedCwsnReport() {
                                                             onChange={handleOptionChange}
                                                         />
                                                         <label htmlFor="radio44">
-                                                        {t('top_50_schools')}
+                                                            {t('top_50_schools')}
                                                         </label>
                                                     </div>
 
@@ -756,19 +723,22 @@ export default function TeacherTrainedCwsnReport() {
                                                             onChange={handleOptionChange}
                                                         />
                                                         <label htmlFor="radio55">
-                                                        {t('upcoming_50_schools')}
+                                                            {t('upcoming_50_schools')}
                                                         </label>
                                                     </div>
                                                 </div>
                                             ) : ("")}
-                                            <div className="">
-                                                {/* <img src={download} alt="download" /> */}
-                                                <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
-                                                    <option className="option-hide">  {t('downloadReport')} {selectedYear}</option>
-                                                    <option value="export_pdf">{t('downloadAsPdf')}</option>
-                                                    <option value="export_excel">   {t('downloadAsExcel')}</option>
-                                                </select>
-                                            </div>
+                                            {isActiveGraph === false ? (
+                                                <div className="">
+                                                    {/* <img src={download} alt="download" /> */}
+                                                    <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
+                                                        <option className="option-hide">  {t('downloadReport')} {selectedYear}</option>
+                                                        <option value="export_pdf">{t('downloadAsPdf')}</option>
+                                                        <option value="export_excel">   {t('downloadAsExcel')}</option>
+                                                    </select>
+                                                </div>
+                                            ) : ("")}
+
                                         </div>
 
                                     </div>
@@ -776,7 +746,7 @@ export default function TeacherTrainedCwsnReport() {
 
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <div className="table-box mt-4">
+                                        <div className={`table-box mt-4  ${isActiveGraph ? 'd-none' : ''}`}>
                                             <div id="content" className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
                                                 style={{ width: "100%", height: 400 }} >
                                                 <AgGridReact
@@ -792,6 +762,9 @@ export default function TeacherTrainedCwsnReport() {
                                                     onGridReady={onGridReady}
                                                 />
                                             </div>
+                                        </div>
+                                        <div className={`graph-box  ${isActiveGraph ? '' : 'd-none'}`}>
+                                            <TeacherTrainedCwsnBarGraph />
                                         </div>
                                     </div>
                                 </div>

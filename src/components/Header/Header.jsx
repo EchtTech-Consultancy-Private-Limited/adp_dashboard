@@ -190,12 +190,13 @@ const Header = () => {
                       <div>
                         <div className="select-right">
                           <select
-                            className="form-select Langchange"
+                         className="form-select Langchange"
                             onChange={changeSizeByBtn}
+                            title="Accessibility Dropdown" 
                           >
-                            <option value="average">{t("gradeA")}</option>
-                            <option value="max">{t("gradeAPlus")}</option>
-                            <option value="normal">{t("gradeAMinus")}</option>
+                            <option value="average" title="Normal Font Size">{t("gradeA")}</option>
+                            <option value="max" title="Increase Font Size">{t("gradeAPlus")}</option>
+                            <option value="normal" title="Decrease Font Size">{t("gradeAMinus")}</option>
                           </select>
                         </div>
                       </div>
@@ -225,6 +226,7 @@ const Header = () => {
                         src={ministry}
                         alt="logo"
                         className="img-fluid logo-main"
+                        title="Ministry Logo"
                       />
                     </Link>
                     <div className='header-logo-text'>

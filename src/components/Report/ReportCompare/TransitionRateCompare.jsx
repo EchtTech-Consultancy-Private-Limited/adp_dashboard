@@ -167,7 +167,8 @@ export default function TransitionRateCompare() {
 
   return (
     <>
-      {!isActiveGraph ? (<div className="card-box">
+      {!isActiveGraph ? 
+      (<div className="card-box">
         <div className="row align-items-end">
           <div className="col-md-5">
             <div className="d-flex align-items-end">
