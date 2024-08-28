@@ -40,6 +40,7 @@ import ptrLessThanAdp2021 from "../../aspirational-reports-data/ptrLessThanAdp20
 import ptrLessThanAdp2022 from "../../aspirational-reports-data/ptrLessThanAdp2022-2023.json";
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 import TeacherAndSchResourcesColumnGraph from "./graph/TeacherAndSchResourcesColumnGraph";
+import TeacherAndSchoolgraphB from "./graph/TeacherAndSchResourcesReportGraphB";
 export default function TeacherAndSchResourcesReport() {
     const dispatch = useDispatch();
     const { t, i18n } = useTranslation();
@@ -894,8 +895,9 @@ export default function TeacherAndSchResourcesReport() {
                                         </div>
 
                                         <div className={`graph-box  ${isActiveGraph ? '' : 'd-none'}`}>
-                                          
+                                        <TeacherAndSchoolgraphB></TeacherAndSchoolgraphB>
                                           <TeacherAndSchResourcesColumnGraph/>
+                                      
                                         </div>
 
 
