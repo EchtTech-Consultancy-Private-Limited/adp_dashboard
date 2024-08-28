@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { jsPDF } from "jspdf";
 import 'jspdf-autotable';
 import { GlobalLoading } from '../GlobalLoading/GlobalLoading'
-import { SetFinalData, setselectedOption, setselectedOptionTop50, SetSheetName } from '../../redux/slice/reportTypeSlice'
+import { SetFinalData, setIsActiveGraph, setselectedOption, setselectedOptionTop50, SetSheetName } from '../../redux/slice/reportTypeSlice'
 import { AllBlock, AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
 import { ScrollToTopOnMount } from '../../Scroll/ScrollToTopOnMount'
 import StudentsPerformanceCompare from './ReportCompare/TeacherTrainedCwsnCompare'
@@ -22,6 +22,7 @@ import teacherTrainedCwsnAdp2020 from "../../aspirational-reports-data/teacherTr
 import teacherTrainedCwsnAdp2021 from "../../aspirational-reports-data/teacherTrainedCwsnAdp2021-2022.json";
 import teacherTrainedCwsnAdp2022 from "../../aspirational-reports-data/teacherTrainedCwsnAdp2022-2023.json";
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
+import TeacherTrainedCwsnBarGraph from './graph/TeacherTrainedCwsnBarGraph'
 
 
 
@@ -42,11 +43,13 @@ export default function TeacherTrainedCwsnReport() {
     const savedReportName = localStorage.getItem('selectedReport');
     const report_name = savedReportName
     const [data, setData] = useState([]);
+    const isActiveGraph = useSelector((state) => state.reportAdpAbpType.isActiveGraph)
+    console.log(isActiveGraph, "isActiveGraph")
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData)
     // const [finalData, SetFinalData] = useState([])
     const [topPtrData, setTopPtrData] = useState([])
     const [top50Data, setTop50Data] = useState([])
-    
+
     {/* Set Report Title Start*/ }
 
     const reportTitle = selectedOption === "Top_50_Schools"
@@ -643,6 +646,7 @@ export default function TeacherTrainedCwsnReport() {
         dispatch(setselectedOptionTop50(event.target.value));
     };
     const toggleClass = (e) => {
+        dispatch(setIsActiveGraph(!isActiveGraph));
         dispatch(setselectedOptionTop50(""));
     };
     return (
@@ -688,14 +692,14 @@ export default function TeacherTrainedCwsnReport() {
 
                                             </div>
                                             <div className="tab-box">
-                                                <button className='tab-button active' onClick={toggleClass}><img src={table} alt="Table" /> <span>{t('tableView')}</span></button>
-                                                <button className='tab-button' onClick={toggleClass}><img src={chart} alt="chart" /> <span>{t('chartView')}</span></button>
+                                                <button className={`tab-button  ${isActiveGraph ? '' : 'active'}`} onClick={toggleClass}><img src={table} alt="Table" /> <span>{t('tableView')}</span></button>
+                                                <button className={`tab-button  ${isActiveGraph ? 'active' : ''}`} onClick={toggleClass}><img src={chart} alt="chart" /> <span>{t('chartView')}</span></button>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="d-flex justify-content-end w-m-100">
-                                            {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectReportType !== "ABP_Report" && selectedDistrict !== AllDistrict) ? (
+                                            {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectReportType !== "ABP_Report" && selectedDistrict !== AllDistrict) && isActiveGraph === false ? (
                                                 <div className="radio-button w-auto">
                                                     <div className="box-radio me-4">
                                                         <input
@@ -724,14 +728,17 @@ export default function TeacherTrainedCwsnReport() {
                                                     </div>
                                                 </div>
                                             ) : ("")}
-                                            <div className="">
-                                                {/* <img src={download} alt="download" /> */}
-                                                <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
-                                                    <option className="option-hide">  {t('downloadReport')} {selectedYear}</option>
-                                                    <option value="export_pdf">{t('downloadAsPdf')}</option>
-                                                    <option value="export_excel">   {t('downloadAsExcel')}</option>
-                                                </select>
-                                            </div>
+                                            {isActiveGraph === false ? (
+                                                <div className="">
+                                                    {/* <img src={download} alt="download" /> */}
+                                                    <select id="export_data" className="form-select download-button" defaultValue={""} onChange={handleExportData}>
+                                                        <option className="option-hide">  {t('downloadReport')} {selectedYear}</option>
+                                                        <option value="export_pdf">{t('downloadAsPdf')}</option>
+                                                        <option value="export_excel">   {t('downloadAsExcel')}</option>
+                                                    </select>
+                                                </div>
+                                            ) : ("")}
+
                                         </div>
 
                                     </div>
@@ -739,7 +746,7 @@ export default function TeacherTrainedCwsnReport() {
 
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <div className="table-box mt-4">
+                                        <div className={`table-box mt-4  ${isActiveGraph ? 'd-none' : ''}`}>
                                             <div id="content" className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
                                                 style={{ width: "100%", height: 400 }} >
                                                 <AgGridReact
@@ -755,6 +762,9 @@ export default function TeacherTrainedCwsnReport() {
                                                     onGridReady={onGridReady}
                                                 />
                                             </div>
+                                        </div>
+                                        <div className={`graph-box  ${isActiveGraph ? '' : 'd-none'}`}>
+                                            <TeacherTrainedCwsnBarGraph />
                                         </div>
                                     </div>
                                 </div>
