@@ -129,16 +129,16 @@ const Header = () => {
                 <div className="header-top-skipwrap">
                   <ul className="ps-0 mb-0">
                     <li>
-                      <Link to="#">{t("sitemap")}</Link>
+                      <Link to="#" title='Sitemap'>{t("sitemap")}</Link>
                     </li>
                     <li>
-                      <Link to="#" onClick={handleClickScroll}>
+                      <Link to="#" onClick={handleClickScroll} title='Skip To Main Content'>
                         {" "}
                         {t("skipToMainContent")}
                       </Link>
                     </li>
                     <li>
-                      <Link to="/screen-reader-access">
+                      <Link to="/screen-reader-access" title='Screen Reader Access'>
                         {t("screenReaderAccess")}
                       </Link>
                     </li>
@@ -233,7 +233,7 @@ const Header = () => {
                       <Link
                         to=""
                         onClick={goToPageOnClick}
-                        className="logo-text ordernav-sm-2">
+                        className="logo-text ordernav-sm-2" title='Aspirational District Programme'>
                         {" "}
                         {t("aspirational")} <br />
                         {t("districtProgramme")}{" "}
@@ -242,7 +242,7 @@ const Header = () => {
                       <Link
                         to=""
                         onClick={goToPageOnClick}
-                        className="logo-text ordernav-sm-2">
+                        className="logo-text ordernav-sm-2" title='Aspirational Block Programme'>
                         {" "}
                         {t("aspirational")} <br />
                         {t("blockProgramme")}{" "}
