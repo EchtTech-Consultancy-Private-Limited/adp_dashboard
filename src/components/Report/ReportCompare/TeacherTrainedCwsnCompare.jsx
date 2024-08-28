@@ -11,7 +11,8 @@ import { SelectState } from "../../../constant/Constant.js";
 import BlankPage from "../BlankPage.jsx";
 import { useTranslation } from "react-i18next";
 import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer.jsx"
-
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 
 export default function StudentsPerformanceCompare() {
   const { t, i18n } = useTranslation();
@@ -25,6 +26,7 @@ export default function StudentsPerformanceCompare() {
   const selectedState = useSelector((state) => state.locationAdp.selectedState);
   const selectedDistricts = useSelector((state) => state.reportAdpAbpType.selectedCompareDistricts)
   const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
+  const isActiveGraph = useSelector((state) => state.reportAdpAbpType.isActiveGraph)
   function resteData() {
     dispatch(selectState(SelectState));
     dispatch(setselectedCompareOption("upper_primary_to_secondary"));
@@ -121,45 +123,28 @@ export default function StudentsPerformanceCompare() {
         !selected.map((d) => d.lgd_district_name).includes(district.lgd_district_name)
     );
   };
+  const totalSch = selectedDistricts?.map(district => district?.tot_school);
 
+  const cwsnTrainedTeacher = selectedDistricts?.map(district => district?.total_school_cwsn);
 
+  const percentageCwsnTrainedTeach = selectedDistricts?.map(district => Number(parseFloat(district?.swsn_teacher_percent).toFixed(2)));
+  const handleOptionChange = (event) => {
+    dispatch(setselectedCompareOption(event.target.value));
+  };
   return (
     <>
-      <div className="card-box">
+      {!isActiveGraph ? (<div className="card-box">
         <div className="row align-items-end">
           <div className="col-md-12">
             <div className="d-flex align-items-center">
               <div className="title-box">
-                {/* <h5 className='sub-title'>State :
-                                    <Select
-                                        className='state-select'
-                                        onChange={handleStateChange}
-                                        style={{ width: "50%" }}
-                                        placeholder="Select State"
-                                        mode="single"
-                                        showSearch
-                                        value={selectedState || SelectState}
-                                    >
-                                        <Select.Option key="Select State" value={SelectState}>
-                                            Select State
-                                        </Select.Option>
-                                        {states.map((state) => (
-                                            <Select.Option
-                                                key={state.lgd_state_id}
-                                                value={state.lgd_state_name}
-                                            >
-                                                {state.lgd_state_name}
-                                            </Select.Option>
-                                        ))}
-                                    </Select>
-                                </h5> */}
                 <h3 className="heading-sm">
                   {t("comparisonByStudentPerformance")}
                 </h3>
               </div>
             </div>
           </div>
-          
+
         </div>
 
         <div className="row">
@@ -295,7 +280,182 @@ export default function StudentsPerformanceCompare() {
             <BlankPage />
           )}
         </div>
-      </div>
+      </div>) : (<div className="col-md-12 graph-box">
+        <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
+          <div className="text-btn-d d-flex justify-content-between align-items-center">
+            <h2 className="heading-sm">
+              {t("comparisonByTransitionRate")}
+            </h2>
+
+            <div className="select-infra button-group-filter">
+              <select id="export_data" className="form-select bg-grey2" defaultValue={"upper_primary_to_secondary"}
+                value={selectedOption}
+                onChange={handleOptionChange}
+              >
+                <option value="upper_primary_to_secondary"> {t("upperPrimaryToSecondary")}</option>
+                <option value="secondary_to_higher_secondary">  {t("secondaryToHigherSecondary")}</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div className="Comparison-box">
+            <div className="row align-items-center">
+              <div className="col-md-2 col-lg-2">
+                <h4 className="sub-heading text-left">{t('add_district_to_compare')}</h4>
+              </div>
+              <div className="col-md-10 col-lg-10 pe-2">
+                <div className="select-infra Comparison-select-group">
+
+
+                  {[...Array(MAX_DISTRICTS)]?.map((_, index) => (
+                    <div key={index} class="width-20">
+                      <Select
+                        className="form-select bg-grey2"
+                        onChange={(value) => handleDistrictChange(value, index)}
+                        style={{ width: "100%" }}
+                        placeholder={`${t('addDistrict')} ${index + 1}`}
+                        mode="single"
+                        showSearch
+                        value={selectedDistricts[index]?.lgd_district_name || `${t('addDistrict')}`}
+                        disabled={index > 0 && !selectedDistricts[index - 1]}
+                      >
+                        {getFilteredDistricts().map((district) => (
+                          <Select.Option
+                            key={district?.lgd_district_id}
+                            value={district?.lgd_district_name}
+                          >
+                            {district?.lgd_district_name}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          {selectedDistricts.length === 1 ? (<Card
+            style={{
+              width: 300,
+              margin: "20px auto 0",
+            }}
+          >
+            <b>{t("selectOneMoreDistrict")}</b>
+          </Card>) : (<div className="piechart-box row align-items-center">
+
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={{
+                chart: {
+                  type: "column",
+                  marginTop: 80,
+                  events: {
+                    beforePrint: function () {
+                      this.exportSVGElements[0].box.hide();
+                      this.exportSVGElements[1].hide();
+                    },
+                    afterPrint: function () {
+                      this.exportSVGElements[0].box.show();
+                      this.exportSVGElements[1].show();
+                    },
+                  },
+                },
+                xAxis: {
+                  categories: selectedDistricts.map(district => district.lgd_district_name),
+                },
+                yAxis: {
+                  allowDecimals: false,
+                  min: 0,
+                  title: {
+                    text: "",
+                  },
+                },
+                title: {
+                  text: ""
+                },
+                tooltip: {
+                  headerFormat: "<b>{point.x}</b><br/>",
+                  pointFormat: "{series.name}: {point.y}",
+                  pointFormatter: function () {
+                    return `<span style="color:${this.color
+                      }">\u25CF</span> ${this.series.name
+                      }: <b>${this.y.toLocaleString(
+                        "en-IN"
+                      )}</b><br/>`;
+                  },
+                },
+                plotOptions: {
+                  column: {
+                    stacking: "normal",
+                    dataLabels: {
+                      enabled: true,
+                      crop: false,
+                      overflow: "none",
+                      rotation: 0,
+                      align: "center",
+                      x: -2,
+                      y: -5,
+                      style: {
+                        font: "13px Arial, sans-serif",
+                        fontWeight: "600",
+                        stroke: "transparent",
+                        align: "center",
+                      },
+                      position: "top",
+                      formatter: function () {
+                        return this.y.toLocaleString("en-IN");
+                      },
+                    },
+                    minPointLength:15
+                  },
+                },
+                legend: {
+                  layout: "horizontal",
+                  align: "center",
+                  verticalAlign: "bottom",
+                  itemMarginTop: 10,
+                  itemMarginBottom: 10,
+                },
+                credits: {
+                  enabled: false,
+                },
+                exports: {
+                  enabled: false,
+                },
+                series: [
+                  {
+                    color: "#FFB74BF0",
+                    name: t('percentage_Schools_with_CWSN-Trained'),
+                    data: percentageCwsnTrainedTeach,
+                    maxPointWidth: 50,
+                  },
+                  {
+                    color: "#6C6CB0",
+                    name: t('schools_with_CWSN_trained_teachers_of'),
+                    data: cwsnTrainedTeacher,
+                    maxPointWidth: 50,
+
+                  },
+
+                  {
+                    color: "#17AFD2",
+                    name: t('total_schools_data'),
+                    data: totalSch,
+                    maxPointWidth: 50,
+                  },
+
+
+                ]
+              }}
+              immutable={true}
+            />
+          </div>)}
+
+        </div>
+
+      </div>)}
+
     </>
   );
 }
