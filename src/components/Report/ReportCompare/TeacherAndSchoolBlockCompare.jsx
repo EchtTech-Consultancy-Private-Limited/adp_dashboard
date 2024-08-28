@@ -20,11 +20,19 @@ import BlankPage from "../BlankPage";
 import { ScrollToTopOnMount } from "../../../Scroll/ScrollToTopOnMount";
 import { useTranslation } from "react-i18next";
 import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer.jsx"
+import Highcharts, { color } from "highcharts";
+
+import HighchartsReact from "highcharts-react-official";
+
 
 export default function TeacherAndSchoolBlockCompare() {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
+
+  const selectedOption = useSelector(
+    (state) => state.reportAdpAbpType.selectedCompareOption
+  );
   const selectedAdpAbpOption = useSelector(
     (state) => state.reportAdpAbpType.updateReportType
   );
@@ -37,6 +45,9 @@ export default function TeacherAndSchoolBlockCompare() {
   const selectedBlocks = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareBlock
   );
+
+  const isActiveGraph = useSelector((state) => state.reportAdpAbpType.isActiveGraph)
+
 
   function resteData() {
     dispatch(selectState(SelectState));
@@ -141,10 +152,35 @@ export default function TeacherAndSchoolBlockCompare() {
     );
   };
 
+
+
+            
+  const totalU_ptr = selectedBlocks?.map(block => block?.u_ptr);
+
+  const totalSchEle = selectedBlocks?.map(block => block?.total_sch_ele);
+
+  const totalEleSchPercent = selectedBlocks?.map(block => block?.ele_sch_percent);
+
+
+
+
+  // Handle option change
+  const handleOptionChange = (event) => {
+    dispatch(setselectedCompareOption(event.target.value));
+  };
+
+
+
+
+
+
+
+
+
   return (
     <>
       <ScrollToTopOnMount />
-      <div className="card-box">
+      {!isActiveGraph ? (   <div className="card-box">
         <div className="row align-items-end">
           <div className="col-md-12">
             <div className="d-flex align-items-center">
@@ -311,7 +347,207 @@ export default function TeacherAndSchoolBlockCompare() {
             <BlankPage />
           )}
         </div>
+      </div>)
+      :(
+
+
+
+        <div className="col-md-12 graph-box">
+        <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
+          <div className="text-btn-d d-flex justify-content-between align-items-center">
+            <h2 className="heading-sm">
+
+            Comparison By  Elementary Schools with PTR ≤ 30%
+
+
+            {/* {t("comparisonByTransitionRate")} */}
+            </h2>
+
+            {/* <div className="select-infra button-group-filter">
+              <select
+                id="export_data"
+                className="form-select bg-grey2"
+                defaultValue={"upper_primary_to_secondary"}
+                value={selectedOption}
+                onChange={handleOptionChange}
+              >
+                <option value="upper_primary_to_secondary">
+                {t("upperPrimaryToSecondary")}
+                </option>
+                <option value="secondary_to_higher_secondary">
+                {t("secondaryToHigherSecondary")}
+                </option>
+              </select>
+            </div> */}
+          </div>
+
+          <div className="Comparison-box">
+            <div className="row align-items-center">
+              <div className="col-md-2 col-lg-2">
+                <h4 className="sub-heading text-left">
+                       {t('add_block_to_compare')}
+                </h4>
+              </div>
+              <div className="col-md-10 col-lg-10 pe-2">
+                <div className="select-infra Comparison-select-group">
+                  {[...Array(MAX_BLOCKS)]?.map((_, index) => (
+                    <div key={index} className="width-20">
+                      <Select
+                        className="form-select bg-grey2"
+                        onChange={(value) => handleBlockChange(value, index)}
+                        style={{ width: "100%" }}
+                        placeholder={`${t("addBlock")} ${index + 1}`}
+                        mode="single"
+                        showSearch
+                        value={
+                          selectedBlocks[index]?.lgd_block_name ||
+                          `${t("addBlock")}`
+                        }
+                        disabled={index > 0 && !selectedBlocks[index - 1]}
+                      >
+                        {getFilteredBlocks(index).map((block) => (
+                          <Select.Option
+                            key={block?.lgd_block_id}
+                            value={block?.lgd_block_name}
+                          >
+                            {block?.lgd_block_name}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {selectedBlocks.length === 1 ? (
+            <Card
+              style={{
+                width: 300,
+                margin: "20px auto 0",
+              }}
+            >
+              <b>{t("selectOneMoreBlock")}</b>
+            </Card>
+          ) : (
+            <div className="piechart-box row align-items-center">
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={{
+                  chart: {
+                    type: "column",
+                    marginTop: 80,
+                    events: {
+                      beforePrint: function () {
+                        this.exportSVGElements[0].box.hide();
+                        this.exportSVGElements[1].hide();
+                      },
+                      afterPrint: function () {
+                        this.exportSVGElements[0].box.show();
+                        this.exportSVGElements[1].show();
+                      },
+                    },
+                  },
+                  xAxis: {
+                    categories: selectedBlocks.map(
+                      (district) => district.lgd_block_name
+                    ),
+                  },
+                  yAxis: {
+                    allowDecimals: false,
+                    min: 0,
+                    title: {
+                      text: "",
+                    },
+                  },
+                  title: {
+                    text: "",
+                  },
+                  tooltip: {
+                    headerFormat: "<b>{point.x}</b><br/>",
+                    pointFormat: "{series.name}: {point.y}",
+                    pointFormatter: function () {
+                      return `<span style="color:${this.color
+                        }">\u25CF</span> ${this.series.name
+                        }: <b>${this.y.toLocaleString("en-IN")}</b><br/>`;
+                    },
+                  },
+                  plotOptions: {
+                    column: {
+                      stacking: "normal",
+                      dataLabels: {
+                        enabled: true,
+                        crop: false,
+                        overflow: "none",
+                        rotation: 0,
+                        align: "center",
+                        x: -2,
+                        y: -5,
+                        style: {
+                          font: "13px Arial, sans-serif",
+                          fontWeight: "600",
+                          stroke: "transparent",
+                          align: "center",
+                        },
+                        position: "top",
+                        formatter: function () {
+                          // return parseFloat(
+                          //   this.y
+                          // ).toFixed(0);
+                          return this.y.toLocaleString("en-IN");
+                        },
+                      },
+                    },
+                  },
+                  legend: {
+                    layout: "horizontal",
+                    align: "center",
+                    verticalAlign: "bottom",
+                    itemMarginTop: 10,
+                    itemMarginBottom: 10,
+                  },
+                  credits: {
+                    enabled: false,
+                  },
+                  exports: {
+                    enabled: false,
+                  },
+                  series: [
+                    {
+                      color: "#17AFD2",
+                      name: t('PTR < 30'),
+                      data: totalU_ptr,
+                      maxPointWidth: 50,
+
+                    },
+                    {
+                      color: "#6C6CB0",
+                      name: t('Elementry School'),
+                      data: totalSchEle,
+                      maxPointWidth: 50,
+
+                    },
+                    {
+                      color: "#FFB74BF0",
+                      name: t('% PTR < 30'),
+                      data: totalEleSchPercent,
+                      maxPointWidth: 50,
+
+                    },
+                  ],
+                }}
+                immutable={true}
+              />
+            </div>
+          )}
+        </div>
       </div>
+
+
+
+        
+      )}
     </>
   );
 }
