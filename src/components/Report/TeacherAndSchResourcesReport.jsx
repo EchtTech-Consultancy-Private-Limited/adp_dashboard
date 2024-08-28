@@ -814,7 +814,7 @@ export default function TeacherAndSchResourcesReport() {
                                     <div className="col-md-6">
 
                                         <div className="d-flex w-m-100 justify-content-end">
-                                            {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict && selectReportType !== "ABP_Report") ? (
+                                            {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict && selectReportType !== "ABP_Report") && isActiveGraph === false? (
                                                 <div className="radio-button w-auto">
                                                     <div className="box-radio me-4">
                                                         <input

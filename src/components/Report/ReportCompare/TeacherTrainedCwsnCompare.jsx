@@ -285,7 +285,7 @@ export default function StudentsPerformanceCompare() {
         <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
           <div className="text-btn-d d-flex justify-content-between align-items-center">
             <h2 className="heading-sm">
-              {t("comparisonByTransitionRate")}
+            Percentage of Elementary Schools Having PTR Less Than Equal to 30
             </h2>
 
             {/* <div className="select-infra button-group-filter">
