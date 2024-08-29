@@ -81,7 +81,6 @@ const reportTypeSlice = createSlice({
       state.isActiveGraph = action.payload;
     },
     setAllYearDataForGraph(state, action) {
-      console.log(action.payload, "action.payload")
       state.allYearDataForGraph = action.payload;
     },
   },

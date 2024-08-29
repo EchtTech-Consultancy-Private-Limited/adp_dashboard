@@ -11,7 +11,6 @@ export default function TeacherTrainedCwsnBarGraph() {
     const { t } = useTranslation();
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
-    console.log(finalData, "finalData")
     const combinedData = (data) => data?.map((district) => ({
         ...district,
         combinedScore: district.swsn_teacher_percent,

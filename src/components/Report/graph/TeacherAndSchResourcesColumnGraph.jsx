@@ -32,9 +32,6 @@ export default function TeacherAndSchResourcesColumnGraph() {
     (state) => state.locationAdp
 );
 
-console.log("selectedState",selectedState)
-
-
   const [chartHeight, setChartHeight] = useState(450);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [limit] = useState(5);

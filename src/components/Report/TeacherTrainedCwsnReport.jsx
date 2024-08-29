@@ -44,7 +44,6 @@ export default function TeacherTrainedCwsnReport() {
     const report_name = savedReportName
     const [data, setData] = useState([]);
     const isActiveGraph = useSelector((state) => state.reportAdpAbpType.isActiveGraph)
-    console.log(isActiveGraph, "isActiveGraph")
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData)
     // const [finalData, SetFinalData] = useState([])
     const [topPtrData, setTopPtrData] = useState([])
