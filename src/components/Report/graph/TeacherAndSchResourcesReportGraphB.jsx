@@ -133,21 +133,24 @@ export default function TeacherAndSchoolgraphB() {
   };
 
   {/*Bind Data for All years Data Start*/}
-  const categoriesYear = Array.from(new Set(data.map(item => item.year))); 
+  const categoriesYear = Array.from(new Set(data.map(item => item.year)));
 
   const seriesData = categoriesYear.map(year => {
     const yearData = data.filter(item => item.year === year);
-    const countDistrict = yearData.length;
-    const ptrLessThan = yearData.map(countDis => countDis.ele_sch_percent); 
+    const ptrLessThan = yearData.map(countDis => parseFloat((countDis.ele_sch_percent)).toFixed(2)).filter(val => !isNaN(val)); 
+    
+    if (ptrLessThan.length === 0) {
+      return 0; 
+    }
+    const totalPtrLessThan = ptrLessThan.reduce((acc, curr) => acc + parseFloat(curr), 0);
+    const averagePtrLessThan = (totalPtrLessThan / ptrLessThan.length);
   
-    const totalPtrLessThan = ptrLessThan.reduce((acc, curr) => acc + curr, 0);
-  
-    const averagePtrLessThan = totalPtrLessThan / countDistrict;
-  
-    return averagePtrLessThan; 
+    return averagePtrLessThan;
   });
+  const formateSeriesData=seriesData.map(num=>parseFloat(num.toFixed(2)))
+  
    {/*Bind Data for All years Data Start*/}
- 
+
   
   const percentageRenderer = (value) => {
     if (typeof value === "number") {
@@ -203,8 +206,8 @@ export default function TeacherAndSchoolgraphB() {
     },
     series: [
       {
-        name: "Years",
-        data: seriesData,
+        name: "Elementary Schools with PTR ≤ 30%",
+        data: formateSeriesData,
         color: "#E6694A",
         marker: {
           symbol: "circle",
