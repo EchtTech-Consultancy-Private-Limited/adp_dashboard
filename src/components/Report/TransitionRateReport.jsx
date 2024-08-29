@@ -39,7 +39,7 @@ export default function TransitionRateReport() {
     const id = queryParameters.get("id");
     const type = queryParameters.get("type");
     const [loading, setLoading] = useState(true);
-    localStorage.setItem("selectedReport", "Transition Rate");
+    localStorage.setItem("selectedReportValue", "Transition Rate");
     const { selectedState, selectedDistrict, selectedBlock } = useSelector(
         (state) => state.locationAdp
     );

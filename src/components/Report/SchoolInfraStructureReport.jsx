@@ -73,7 +73,7 @@ export default function SchoolInfraStructureReport() {
   const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
   const [topPtrData, setTopPtrData] = useState([])
   const [top50Data, setTop50Data] = useState([])
-
+  localStorage.setItem("selectedReportValue", "Percentange of Schools Having Adequate Functional Girls Toilets");
   {/* Set Report Title Start*/ }
   const reportTitle = selectedOption === "Top_50_Schools"
     ? t('top_50_schools_with_40_1_girls_toilets')

@@ -13,7 +13,7 @@ export default function BannerReportFilter() {
   const location = useLocation();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
-  const savedReportName = localStorage.getItem('selectedReport');
+  const savedReportName = localStorage.getItem('selectedReportValue');
   const states = useSelector((state) => state.locationAdp.states);
   const districts = useSelector((state) => state.locationAdp.districts);
   const blocks = useSelector((state) => state.locationAdp.blocks);
@@ -50,7 +50,7 @@ export default function BannerReportFilter() {
   //   }, [finalData])
 
   useEffect(() => {
-    const savedReportName = localStorage.getItem('selectedReport');
+    const savedReportName = localStorage.getItem('selectedReportValue');
     if (savedReportName) {
       dispatch(setselectedReport(savedReportName));
     }

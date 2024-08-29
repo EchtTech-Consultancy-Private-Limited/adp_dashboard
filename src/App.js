@@ -14,7 +14,7 @@ import aspirationalAbpData2019 from "./aspirational-reports-data/aspirationalAbp
 import ptrLessThanAdp2022 from "./aspirational-reports-data/ptrLessThanAdp2022-2023.json";
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { setAspirationalAllData, setselectedDataAllYear } from './redux/slice/reportTypeSlice';
+import { setAllYearDataForGraph, setAspirationalAllData, setselectedDataAllYear } from './redux/slice/reportTypeSlice';
 import Header from './components/Header/Header';
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
   const toggleDarkMode = useSelector((state) => state.toggle.toggleDarkLight);
   const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
   const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
- 
+
   useEffect(() => {
     if (toggleDarkMode) {
       localStorage.setItem("dark-mode", "true");
@@ -58,6 +58,23 @@ function App() {
     if (selectedData) {
       dispatch(setselectedDataAllYear(selectedData))
       dispatch(setAspirationalAllData(selectedData));
+    }
+  }, [selectReportType, selectedYear]);
+
+  {/*Take all Year Data for show in Graph */}
+  useEffect(() => {
+    const years = ["2019-20", "2020-21", "2021-22", "2022-23"];
+    let allYearsData = [];
+  
+    years.forEach(year => {
+      const selectedData = combinedData[year][selectReportType];
+      if (selectedData) {
+        allYearsData.push({ year, data: selectedData });
+      }
+    });
+    if (allYearsData.length > 0) {
+      console.log(allYearsData, "allYearsData")
+      dispatch(setAllYearDataForGraph(allYearsData))
     }
   }, [selectReportType, selectedYear]);
 

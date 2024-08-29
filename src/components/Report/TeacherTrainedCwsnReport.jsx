@@ -51,7 +51,7 @@ export default function TeacherTrainedCwsnReport() {
     const [top50Data, setTop50Data] = useState([])
 
     {/* Set Report Title Start*/ }
-
+    localStorage.setItem("selectedReportValue", "Percentage Schools with Teachers Trained for Teaching CWSN");
     const reportTitle = selectedOption === "Top_50_Schools"
         ? t('top_50_schools_with_teachers_trained_for_cwsn')
         : selectedOption === "Upcoming_50"
