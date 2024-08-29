@@ -51,7 +51,7 @@ export default function TeacherAndSchoolgraphB() {
   } else {
     console.log('allYearsData is not an array');
   }
-  console.log(data, "combinedData");
+  
   useEffect(() => {
     setCompinedData(combinedDatas)
   }, [finalData])
@@ -132,6 +132,23 @@ export default function TeacherAndSchoolgraphB() {
     return "";
   };
 
+  {/*Bind Data for All years Data Start*/}
+  const categoriesYear = Array.from(new Set(data.map(item => item.year))); 
+
+  const seriesData = categoriesYear.map(year => {
+    const yearData = data.filter(item => item.year === year);
+    const countDistrict = yearData.length;
+    const ptrLessThan = yearData.map(countDis => countDis.ele_sch_percent); 
+  
+    const totalPtrLessThan = ptrLessThan.reduce((acc, curr) => acc + curr, 0);
+  
+    const averagePtrLessThan = totalPtrLessThan / countDistrict;
+  
+    return averagePtrLessThan; 
+  });
+   {/*Bind Data for All years Data Start*/}
+ 
+  
   const percentageRenderer = (value) => {
     if (typeof value === "number") {
       return value.toFixed(2);
@@ -148,15 +165,15 @@ export default function TeacherAndSchoolgraphB() {
       text: "",
     },
     xAxis: {
-      // categories: categoriesYear,
-      gridLineWidth: 0, // Remove horizontal grid lines
+      categories: categoriesYear,
+      gridLineWidth: 0, 
       lineWidth: 0,
     },
     yAxis: {
       title: {
         text: "",
       },
-      gridLineWidth: 0, // Remove horizontal grid lines
+      gridLineWidth: 0, 
       lineWidth: 0,
     },
     plotOptions: {
@@ -187,7 +204,7 @@ export default function TeacherAndSchoolgraphB() {
     series: [
       {
         name: "Years",
-        data: [],
+        data: seriesData,
         color: "#E6694A",
         marker: {
           symbol: "circle",
@@ -215,7 +232,7 @@ export default function TeacherAndSchoolgraphB() {
         <div className="col-md-12">
           <div className="graph-card">
             <div className="text-btn-d">
-              <h2 className="heading-sm">Year Wise Data</h2>
+              <h2 className="heading-sm">Year Wise Elementary Schools Data with PTR ≤ 30%</h2>
             </div>
             <div className="graph">
               <HighchartsReact
