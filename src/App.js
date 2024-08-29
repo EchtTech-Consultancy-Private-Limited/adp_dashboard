@@ -73,7 +73,6 @@ function App() {
       }
     });
     if (allYearsData.length > 0) {
-      console.log(allYearsData, "allYearsData")
       dispatch(setAllYearDataForGraph(allYearsData))
     }
   }, [selectReportType, selectedYear]);
