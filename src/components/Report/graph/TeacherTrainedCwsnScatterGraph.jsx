@@ -41,7 +41,7 @@ export default function TeacherTrainedCwsnScatterGraph() {
                             chart: {
                                 type: 'scatter',
                                 marginTop: 50,
-                                height: 500,
+                                height: 490,
                                 zooming: {
                                     type: 'xy'
                                 }
