@@ -70,6 +70,9 @@ export default function TeacherAndSchResourcesColumnGraph() {
   const { categories: topCategories, elementry_sch_per: topElementrySchPer } =
     getColumnGraphData(TopDistrictsAndBlocksColumnGraph || []);
 
+    const formatedTopElementrySchPer=topElementrySchPer.map(num=>parseFloat(num.toFixed(2)))
+
+
   // *******end Column graph********
 
   // *******Start Tree graph******
@@ -219,6 +222,12 @@ export default function TeacherAndSchResourcesColumnGraph() {
   : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}  ${t('By Elementary Schools with PTR ≤ 30%')}`;
 
 
+  // Elementary Schools with PTR ≤ 30%
+
+
+  console.log("topElementrySchPer",topElementrySchPer)
+
+
 
   return (
     <section className="infrastructure-main-card p-0" id="content">
@@ -276,7 +285,7 @@ export default function TeacherAndSchResourcesColumnGraph() {
                                   headerFormat: "<b>{point.x}</b><br/>",
                                   valueSuffix: " ",
                                   pointFormat:
-                                    "{series.name}: {point.y}<br/>Total: {point.stackTotal}",
+                                    "{series.name}  : {point.y}",
                                 },
 
                                 plotOptions: {
@@ -321,8 +330,8 @@ export default function TeacherAndSchResourcesColumnGraph() {
                                   //   color: "#E6694A",
                                   // },
                                   {
-                                    name: t("available"),
-                                    data: topElementrySchPer,
+                                    name: t("Elementary Schools with PTR ≤ 30%"),
+                                    data: formatedTopElementrySchPer,
                                     color: "#BCE263",
                                     maxPointWidth: 50,
                                   },
