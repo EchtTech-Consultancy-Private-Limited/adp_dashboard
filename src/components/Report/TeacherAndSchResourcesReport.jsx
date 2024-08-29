@@ -75,13 +75,12 @@ export default function TeacherAndSchResourcesReport() {
     const report_name = savedReportName;
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
     const isActiveGraph=useSelector((state)=>state.reportAdpAbpType.isActiveGraph)
-    const allYearsData=useSelector((state)=>state.reportAdpAbpType.allYearDataForGraph)
-    console.log(allYearsData, "aspirationalData")
 
     const [data, setData] = useState([]);
     const [topPtrData, setTopPtrData] = useState([])
     const [top50Data, setTop50Data] = useState([])
-
+   
+    
     {/* Set Report Title Start*/ }
     const reportTitle = selectedOption === "Top_50_Schools"
         ? t('top_50_elementary_schools_with_ptr_30')

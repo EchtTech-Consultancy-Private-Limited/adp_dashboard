@@ -14,7 +14,9 @@ import aspirationalAbpData2022 from "../../../aspirational-reports-data/aspirati
 import aspirationalAbpData2019 from "../../../aspirational-reports-data/aspirationalAbpData2019-20.json";
 import { selectDistrict } from "../../../redux/slice/filterServicesComprisionSlice";
 import {
+  AllBlock,
   AllDistrict,
+  SelectBlock,
   SelectDistrict,
   SelectState,
 } from "../../../constant/Constant";
@@ -30,125 +32,105 @@ export default function TeacherAndSchoolgraphB() {
   const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
 
   const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
-  const [combinedData, setCombinedData] = useState([]);
-
-  const countDistrictsOrBlocks = (data) => {
-    let totalCount = 0;
-
-    if (selectReportType === "ADP_Report") {
-    
-      if (selectedState === SelectState) {
-        totalCount = new Set(data.map((item) => item.lgd_district_name)).size;
-      } else if (selectedState !== SelectState) {
-        const filteredData = data.filter(
-          (item) => item.lgd_state_name === selectedState
-        );
-        totalCount = new Set(filteredData.map((item) => item.lgd_district_name))
-          .size;
-      }   
-      else if (selectedDistrict !== AllDistrict && selectedDistrict !== SelectDistrict) { 
-        const filteredData = data.filter(
-          (item) => item.lgd_district_name === selectedDistrict
-        );
-        
-        totalCount = new Set(filteredData.map((item) => item.lgd_district_name))
-          .size
+  const allYearsData = useSelector((state) => state.reportAdpAbpType.allYearDataForGraph)
+  const [combinedData, setCompinedData] = useState([])
+  const [data, setData] = useState([])
+  let combinedDatas
+  if (Array.isArray(allYearsData)) {
+    combinedDatas = allYearsData.reduce((acc, yearData) => {
+      if (Array.isArray(yearData.data)) {
+        return acc.concat(yearData.data.map(item => ({
+          ...item,
+          year: yearData.year
+        })));
       }
-    } else {
-      if (selectedState === SelectState) {
-        totalCount = new Set(data.map((item) => item.lgd_block_id)).size;
-      } else {
-        const filteredData = data.filter(
-          (item) => item.lgd_state_name === selectedState
-        );
-        totalCount = new Set(filteredData.map((item) => item.lgd_block_name))
-          .size;
-      }
-    }
-
-    return totalCount;
-  };
+      return acc;
+    }, []);
 
 
-
-  const processData = (data) => {
-    const totalCount = countDistrictsOrBlocks(data);
-    if (selectedState === SelectState) {
-      const total = data.reduce(
-        (acc, item) => acc + (item.ele_sch_percent || 0),
-        0
-      );
-      return parseFloat((total / totalCount).toFixed(2));
-    } else if(selectedState !== SelectState){
-      const filteredData = data.filter(
+  } else {
+    console.log('allYearsData is not an array');
+  }
+  console.log(data, "combinedData");
+  useEffect(() => {
+    setCompinedData(combinedDatas)
+  }, [finalData])
+  useEffect(() => {
+    let filteredData = combinedData;
+    if (selectedState && selectedState !== SelectState) {
+      filteredData = filteredData?.filter(
         (item) => item.lgd_state_name === selectedState
       );
-      const total = filteredData.reduce(
-        (acc, item) => acc + (item.ele_sch_percent || 0),
-        0
-      );
-      return parseFloat((total / totalCount).toFixed(2));
     }
-    else if(selectedDistrict !== AllDistrict && selectedDistrict !== SelectDistrict){
-      const filteredData = data.filter(
+
+    if (
+      selectedDistrict &&
+      selectedDistrict !== AllDistrict &&
+      selectedDistrict !== SelectDistrict
+    ) {
+      filteredData = filteredData.filter(
         (item) => item.lgd_district_name === selectedDistrict
       );
-      const total = filteredData.reduce(
-        (acc, item) => acc + (item.ele_sch_percent || 0),
-        0
-      );
-      return parseFloat((total / totalCount).toFixed(2));
     }
+
+    if (
+      selectedBlock &&
+      selectedBlock !== AllBlock &&
+      selectedBlock !== SelectBlock
+    ) {
+      filteredData = filteredData?.filter(
+        (item) => item.lgd_block_name === selectedBlock
+      );
+    }
+    filteredData = filteredData?.map((item) => ({
+      ...item,
+      Location: getLocationName(item),
+    }));
+    setData(filteredData);
+
+
+    // dispatch(setUpdateStatus(false))
+  }, [
+    selectedState,
+    selectedDistrict,
+    selectedBlock,
+    combinedData,
+    selectReportType,
+  ]);
+  const getLocationName = (item) => {
+    if (selectReportType === "ABP_Report") {
+      if (
+        selectedBlock &&
+        selectedBlock !== AllBlock &&
+        selectedBlock !== SelectBlock
+      ) {
+        return `${item.lgd_block_name}`;
+      } else if (
+        selectedDistrict &&
+        selectedDistrict !== AllDistrict &&
+        selectedDistrict !== SelectDistrict
+      ) {
+        return `${item.lgd_block_name}`;
+      } else if (selectedState && selectedState !== SelectState) {
+        return `${item.lgd_district_name}`;
+      } else if (selectedState === SelectState) {
+        return `${item.lgd_state_name}`;
+      }
+
+    } else if (selectReportType === "ADP_Report") {
+      if (selectedState && selectedState !== SelectState) {
+        return `${item.lgd_district_name}`;
+      } else if (
+        selectedState !== SelectState &&
+        selectedState !== AllDistrict
+      ) {
+        return `${item.lgd_district_name}`;
+      } else if (selectedState === SelectState) {
+        return `${item.lgd_state_name}`;
+      }
+    }
+    return "";
   };
-
-
-  useEffect(() => {
-    const dataForChart = [];
-  
-    if (selectReportType === "ADP_Report") {
-   
-      dataForChart.push(
-        {
-          year: "2020-21",
-          value: processData(aspirationalAdpData2020),
-        },
-        {
-          year: "2021-22",
-          value: processData(aspirationalAdpData2021),
-        },
-        {
-          year: "2022-23",
-          value: processData(aspirationalAdpData2022),
-        }
-      );
-    } else {
-      
-      dataForChart.push(
-        {
-          year: "2019-20",
-          value: processData(aspirationalAbpData2019),
-        },
-        {
-          year: "2020-21",
-          value: processData(aspirationalAbpData2020),
-        },
-        {
-          year: "2021-22",
-          value: processData(aspirationalAbpData2021),
-        },
-        {
-          year: "2022-23",
-          value: processData(aspirationalAbpData2022),
-        }
-      );
-    }
-  
-    setCombinedData(dataForChart);
-  }, [selectedState, selectReportType]);
-  
-
-  const categoriesYear = combinedData.map((data) => data.year);
-  const eleSchPercentValues = combinedData.map((data) => data.value);
 
   const percentageRenderer = (value) => {
     if (typeof value === "number") {
@@ -166,7 +148,7 @@ export default function TeacherAndSchoolgraphB() {
       text: "",
     },
     xAxis: {
-      categories: categoriesYear,
+      // categories: categoriesYear,
       gridLineWidth: 0, // Remove horizontal grid lines
       lineWidth: 0,
     },
@@ -205,7 +187,7 @@ export default function TeacherAndSchoolgraphB() {
     series: [
       {
         name: "Years",
-        data: eleSchPercentValues,
+        data: [],
         color: "#E6694A",
         marker: {
           symbol: "circle",
@@ -225,26 +207,26 @@ export default function TeacherAndSchoolgraphB() {
     },
   };
 
- 
+
 
   return (
-   <div className="graph-box">
-    <div className="row">
-      <div className="col-md-12">
-        <div className="graph-card">
-        <div className="text-btn-d">
-        <h2 className="heading-sm">Year Wise Data</h2>
-      </div>
-      <div className="graph">
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={chartOptions}
-          immutable={true}
-        />
-      </div>
+    <div className="graph-box">
+      <div className="row">
+        <div className="col-md-12">
+          <div className="graph-card">
+            <div className="text-btn-d">
+              <h2 className="heading-sm">Year Wise Data</h2>
+            </div>
+            <div className="graph">
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={chartOptions}
+                immutable={true}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
-   </div>
   );
 }
