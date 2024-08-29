@@ -515,7 +515,8 @@ export default function TeacherAndSchoolBlockCompare() {
                   },
                   series: [
                     {
-                      color: "#17AFD2",
+                      color: "#FFB74BF0",
+
                       name: t('PTR < 30'),
                       data: totalU_ptr,
                       maxPointWidth: 50,
@@ -529,7 +530,7 @@ export default function TeacherAndSchoolBlockCompare() {
 
                     },
                     {
-                      color: "#FFB74BF0",
+                      color: "#17AFD2",
                       name: t('% PTR < 30'),
                       data: totalEleSchPercent,
                       maxPointWidth: 50,

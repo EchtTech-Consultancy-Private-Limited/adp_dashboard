@@ -128,6 +128,8 @@ export default function StudentsPerformanceCompare() {
   const cwsnTrainedTeacher = selectedDistricts?.map(district => district?.total_school_cwsn);
 
   const percentageCwsnTrainedTeach = selectedDistricts?.map(district => Number(parseFloat(district?.swsn_teacher_percent).toFixed(2)));
+
+               
   // const handleOptionChange = (event) => {
   //   dispatch(setselectedCompareOption(event.target.value));
   // };
@@ -285,7 +287,7 @@ export default function StudentsPerformanceCompare() {
         <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
           <div className="text-btn-d d-flex justify-content-between align-items-center">
             <h2 className="heading-sm">
-            Percentage of Elementary Schools Having PTR Less Than Equal to 30
+            Comparison By Percentage of Schools with CWSN-Trained Teachers
             </h2>
 
             {/* <div className="select-infra button-group-filter">
@@ -377,7 +379,7 @@ export default function StudentsPerformanceCompare() {
                 },
                 tooltip: {
                   headerFormat: "<b>{point.x}</b><br/>",
-                  pointFormat: "{series.name}: {point.y}",
+                  pointFormat: "{series.name}: {point.y} ",
                   pointFormatter: function () {
                     return `<span style="color:${this.color
                       }">\u25CF</span> ${this.series.name
