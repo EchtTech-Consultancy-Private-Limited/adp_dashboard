@@ -46,7 +46,7 @@ export default function Themes() {
   };
   const handleStudentPerformanceClick = (reportType) => {
     dispatch(setUpdateReportType(reportType));
-    dispatch(setselectedReport("Student Performance"));
+    dispatch(setselectedReport("Teachers Trained For Teaching CWSN"));
   };
   const handleSchoolInfraClick = (reportType) => {
     dispatch(setUpdateReportType(reportType));
@@ -212,7 +212,7 @@ export default function Themes() {
 
                     <div className="link-box">
                       <Link
-                        to="/student-performance"
+                        to="/teachers-trained-for-teaching-CWSN"
                         className="link"
                         onClick={() =>
                           handleStudentPerformanceClick("ADP_Report")
@@ -224,7 +224,7 @@ export default function Themes() {
                         </span>
                       </Link>
                       <Link
-                        to="/student-performance"
+                        to="/teachers-trained-for-teaching-CWSN"
                         className="link"
                         onClick={() =>
                           handleStudentPerformanceClick("ABP_Report")

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from "react";
 import "./header.scss";
-import ministry from '../../assets/images/education_ministry.png';
+import ministry from '../../assets/images/education_ministry.svg';
 import search from '../../assets/images/search.png';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -129,16 +129,16 @@ const Header = () => {
                 <div className="header-top-skipwrap">
                   <ul className="ps-0 mb-0">
                     <li>
-                      <Link to="#">{t("sitemap")}</Link>
+                      <Link to="#" title='Sitemap'>{t("sitemap")}</Link>
                     </li>
                     <li>
-                      <Link to="#" onClick={handleClickScroll}>
+                      <Link to="#" onClick={handleClickScroll} title='Skip To Main Content'>
                         {" "}
                         {t("skipToMainContent")}
                       </Link>
                     </li>
                     <li>
-                      <Link to="/screen-reader-access">
+                      <Link to="/screen-reader-access" title='Screen Reader Access'>
                         {t("screenReaderAccess")}
                       </Link>
                     </li>
@@ -190,12 +190,13 @@ const Header = () => {
                       <div>
                         <div className="select-right">
                           <select
-                            className="form-select Langchange"
+                         className="form-select Langchange"
                             onChange={changeSizeByBtn}
+                            title="Accessibility Dropdown" 
                           >
-                            <option value="average">{t("gradeA")}</option>
-                            <option value="max">{t("gradeAPlus")}</option>
-                            <option value="normal">{t("gradeAMinus")}</option>
+                            <option value="average" title="Normal Font Size">{t("gradeA")}</option>
+                            <option value="max" title="Increase Font Size">{t("gradeAPlus")}</option>
+                            <option value="normal" title="Decrease Font Size">{t("gradeAMinus")}</option>
                           </select>
                         </div>
                       </div>
@@ -225,13 +226,14 @@ const Header = () => {
                         src={ministry}
                         alt="logo"
                         className="img-fluid logo-main"
+                        title="Ministry Logo"
                       />
                     </Link>
                     <div className='header-logo-text'>
                       <Link
                         to=""
                         onClick={goToPageOnClick}
-                        className="logo-text ordernav-sm-2">
+                        className="logo-text ordernav-sm-2" title='Aspirational District Programme'>
                         {" "}
                         {t("aspirational")} <br />
                         {t("districtProgramme")}{" "}
@@ -240,7 +242,7 @@ const Header = () => {
                       <Link
                         to=""
                         onClick={goToPageOnClick}
-                        className="logo-text ordernav-sm-2">
+                        className="logo-text ordernav-sm-2" title='Aspirational Block Programme'>
                         {" "}
                         {t("aspirational")} <br />
                         {t("blockProgramme")}{" "}
@@ -288,8 +290,8 @@ const Header = () => {
                             <NavLink to="/teacher-and-school-resources">
                               {t("reports")}
                             </NavLink>
-                          ) : pathName === "/student-performance" ? (
-                            <NavLink to="/student-performance">
+                          ) : pathName === "/teachers-trained-for-teaching-CWSN" ? (
+                            <NavLink to="/teachers-trained-for-teaching-CWSN">
                               {t("reports")}
                             </NavLink>
                           ) : pathName === "/school-infrastructure" ? (

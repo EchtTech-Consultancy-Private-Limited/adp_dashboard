@@ -20,6 +20,8 @@ import {
     setselectedOption,
     setselectedOptionTop50,
     SetSheetName,
+
+    setIsActiveGraph
 } from "../../redux/slice/reportTypeSlice";
 import {
     AllBlock,
@@ -37,6 +39,8 @@ import ptrLessThanAdp2020 from "../../aspirational-reports-data/ptrLessThanAdp20
 import ptrLessThanAdp2021 from "../../aspirational-reports-data/ptrLessThanAdp2021-2022.json";
 import ptrLessThanAdp2022 from "../../aspirational-reports-data/ptrLessThanAdp2022-2023.json";
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
+import TeacherAndSchResourcesColumnGraph from "./graph/TeacherAndSchResourcesColumnGraph";
+import TeacherAndSchoolgraphB from "./graph/TeacherAndSchResourcesReportGraphB";
 export default function TeacherAndSchResourcesReport() {
     const dispatch = useDispatch();
     const { t, i18n } = useTranslation();
@@ -44,7 +48,7 @@ export default function TeacherAndSchResourcesReport() {
     const id = queryParameters.get("id");
     const type = queryParameters.get("type");
     const [loading, setLoading] = useState(true);
-    localStorage.setItem("selectedReport", "Teacher and School Resources");
+
     const { selectedState, selectedDistrict, selectedBlock } = useSelector(
         (state) => state.locationAdp
     );
@@ -70,10 +74,24 @@ export default function TeacherAndSchResourcesReport() {
     const savedReportName = localStorage.getItem("selectedReport");
     const report_name = savedReportName;
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
+    const isActiveGraph=useSelector((state)=>state.reportAdpAbpType.isActiveGraph)
+
     const [data, setData] = useState([]);
     const [topPtrData, setTopPtrData] = useState([])
     const [top50Data, setTop50Data] = useState([])
-
+   
+    
+    {/* Set Report Title Start*/ }
+    const reportTitle = selectedOption === "Top_50_Schools"
+        ? t('top_50_elementary_schools_with_ptr_30')
+        : selectedOption === "Upcoming_50"
+            ? t('upcoming_50_elementary_schools_with_ptr_30')
+            : t("teacherSchoolResourcesReport")
+    localStorage.setItem("selectedReport", reportTitle);
+    localStorage.setItem("selectedReportValue", "Percentage of Elementary Schools Having PTR Less Than Equal to 30");
+    
+    {/* Set Report Title End*/ }
+    {/* Show top 100 Data start*/ }
     const combinedTopData = {
         "2019-20": {
             ADP_Report: ptrLessThanAdp2019,
@@ -91,7 +109,6 @@ export default function TeacherAndSchResourcesReport() {
 
     useEffect(() => {
         const reportData = combinedTopData[selectedYear] && combinedTopData[selectedYear][selectReportType];
-
         if (reportData && reportData.length > 0) {
             setTopPtrData(reportData);
         } else {
@@ -103,7 +120,7 @@ export default function TeacherAndSchResourcesReport() {
         return Array.isArray(topPtrData) && topPtrData.length > 0
             ? topPtrData.filter(topeItem => {
                 const districtMatch = selectedDistrict !== "SelectDistrict"
-                    ? finalData.some(finalItem => finalItem.lgd_district_name === topeItem.lgd_district_name)
+                    ? finalData.some(finalItem => finalItem.lgd_district_id === topeItem.lgd_district_id)
                     : true;
 
                 return districtMatch;
@@ -127,7 +144,7 @@ export default function TeacherAndSchResourcesReport() {
         }
     }, [selectedOption, filteredTopeData, selectedYear]);
 
-
+    {/* Show top 100 Data End*/ }
     function resteData() {
         // dispatch(selectState(SelectState));
         // dispatch(selectDistrict(SelectDistrict));
@@ -185,6 +202,7 @@ export default function TeacherAndSchResourcesReport() {
             dispatch(setselectedOptionTop50(""));
         }
     }, [selectedDistrict])
+    
     useEffect(() => {
         let filteredData = aspirationalData;
 
@@ -444,9 +462,8 @@ export default function TeacherAndSchResourcesReport() {
                     },
 
                     {
-                        headerName: "Percentage of elementary schools having PTR less than equal to 30",
+                        headerName: "PTR",
                         field: "PTR<=30",
-                        cellRenderer: percentageRenderer,
                         hide: false,
                     },
                 ]);
@@ -475,9 +492,8 @@ export default function TeacherAndSchResourcesReport() {
                     },
 
                     {
-                        headerName: "Percentage of elementary schools having PTR less than equal to 30",
+                        headerName: "PTR",
                         field: "PTR<=30",
-                        cellRenderer: percentageRenderer,
                         hide: false,
                     },
                 ]);
@@ -738,6 +754,7 @@ export default function TeacherAndSchResourcesReport() {
         dispatch(setselectedOptionTop50(event.target.value));
     };
     const toggleClass = (e) => {
+        dispatch(setIsActiveGraph(!isActiveGraph))
         dispatch(setselectedOptionTop50(""));
     };
     return (
@@ -780,20 +797,16 @@ export default function TeacherAndSchResourcesReport() {
                                                             : selectedBlock}
                                                 </h5>
                                                 <h3 className="heading-sm">
-                                                    {selectedOption === "Top_50_Schools"
-                                                        ? "Top 50 Elementary Schools with PTR ≤ 30%"
-                                                        : selectedOption === "Upcoming_50"
-                                                            ? "Upcoming 50 Elementary Schools with PTR ≤ 30%"
-                                                            : t("teacherSchoolResources")}
+                                                    {reportTitle}
                                                 </h3>
 
                                             </div>
                                             <div className="tab-box">
-                                                <button className="tab-button active" onClick={toggleClass}>
+                                                <button className={`tab-button  ${isActiveGraph ? '' : 'active'}`} onClick={toggleClass}>
                                                     <img src={table} alt="Table" />{" "}
                                                     <span>{t("tableView")}</span>
                                                 </button>
-                                                <button className="tab-button" onClick={toggleClass}>
+                                                <button className={`tab-button  ${isActiveGraph ? 'active' : ''}`} onClick={toggleClass}>
                                                     <img src={chart} alt="chart" />{" "}
                                                     <span>{t("chartView")}</span>
                                                 </button>
@@ -801,8 +814,9 @@ export default function TeacherAndSchResourcesReport() {
                                         </div>
                                     </div>
                                     <div className="col-md-6">
+
                                         <div className="d-flex w-m-100 justify-content-end">
-                                            {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) ? (
+                                            {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict && selectReportType !== "ABP_Report") && isActiveGraph === false? (
                                                 <div className="radio-button w-auto">
                                                     <div className="box-radio me-4">
                                                         <input
@@ -813,7 +827,7 @@ export default function TeacherAndSchResourcesReport() {
                                                             onChange={handleOptionChange}
                                                         />
                                                         <label htmlFor="radio44">
-                                                            Top 50 Schools
+                                                            {t('top_50_schools')}
                                                         </label>
                                                     </div>
 
@@ -826,14 +840,14 @@ export default function TeacherAndSchResourcesReport() {
                                                             onChange={handleOptionChange}
                                                         />
                                                         <label htmlFor="radio55">
-                                                            Upcoming 50 Schools
+                                                            {t('upcoming_50_schools')}
                                                         </label>
                                                     </div>
                                                 </div>
                                             ) : ("")}
 
 
-                                            <div className="">
+                                            <div className={`${isActiveGraph ? 'd-none' : ''}`}>
                                                 {/* <img src={download} alt="download" /> */}
                                                 <select
                                                     id="export_data"
@@ -860,7 +874,7 @@ export default function TeacherAndSchResourcesReport() {
 
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <div className="table-box mt-4">
+                                        <div  className={`table-box mt-4  ${isActiveGraph ? 'd-none' : ''}`}>
                                             <div
                                                 id="content"
                                                 className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
@@ -881,13 +895,21 @@ export default function TeacherAndSchResourcesReport() {
 
                                             </div>
                                         </div>
+
+                                        <div className={`graph-box  ${isActiveGraph ? '' : 'd-none'}`}>
+                                        <TeacherAndSchoolgraphB></TeacherAndSchoolgraphB>
+                                          <TeacherAndSchResourcesColumnGraph/>
+                                      
+                                        </div>
+
+
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         {
-                            selectedState !== "All State" && selectReportType === "ADP_Report" ? (
+                            selectedState !== "All State" && selectReportType === "ADP_Report" && (selectedOption !== "Top_50_Schools" && selectedOption !== "Upcoming_50") ? (
                                 <TeacherAndSchoolCompare />
                             ) : (selectedState !== "All State" && selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) && selectReportType === "ABP_Report" ? (
                                 <TeacherAndSchoolBlockCompare />

@@ -1,87 +1,90 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const reportTypeSlice = createSlice({
-    name: 'reportTypeSlice',
-    initialState:{
-        updateReportType:"ADP_Report",
-        loadingStatus:false,
-        selectedOption:"upper_primary_to_secondary",
-        selectedOptionTop50:"",
-        selectedCompareOption:"upper_primary_to_secondary",
-        selectedStateShow:"Select State",
-        selectedReport:"Transition Rate",
-        selectedCompareDistricts:[],
-        selectedCompareBlock:[],
-        selectedYear:"2022-23",
-        girdAPIForCommonData:null,
-        sheetName:"",
-        handleExportData:null,
-        aspirationalAllData:[],
-        selectedDataAllYear:[],
-        finalData:[],
-        currentPage:1,
-        isActiveGraph:false,
+  name: 'reportTypeSlice',
+  initialState: {
+    updateReportType: "ADP_Report",
+    loadingStatus: false,
+    selectedOption: "upper_primary_to_secondary",
+    selectedOptionTop50: "",
+    selectedCompareOption: "upper_primary_to_secondary",
+    selectedStateShow: "Select State",
+    selectedReport: "Transition Rate",
+    selectedCompareDistricts: [],
+    selectedCompareBlock: [],
+    selectedYear: "2022-23",
+    girdAPIForCommonData: null,
+    sheetName: "",
+    handleExportData: null,
+    aspirationalAllData: [],
+    selectedDataAllYear: [],
+    finalData: [],
+    currentPage: 1,
+    isActiveGraph: false,
+    allYearDataForGraph:{}
+
+  },
+  reducers: {
+    setUpdateReportType(state, action) {
+      state.updateReportType = action.payload;
+    },
+    setUpdateStatus(state, action) {
+      state.loadingStatus = action.payload;
+    },
+    setselectedOption(state, action) {
+      state.selectedOption = action.payload;
+    },
+    setselectedOptionTop50(state, action) {
+      state.selectedOptionTop50 = action.payload;
+    },
+    setselectedCompareOption(state, action) {
+      state.selectedCompareOption = action.payload;
+    },
+    setselectedStateShow(state, action) {
+      state.selectedStateShow = action.payload;
+    },
+    setselectedReport(state, action) {
+      state.selectedReport = action.payload;
+    },
+    setselectedCompareDistricts(state, action) {
+      state.selectedCompareDistricts = action.payload;
+    },
+    setselectedCompareBlocks(state, action) {
+      state.selectedCompareBlock = action.payload;
+    },
+    setSelectedYear(state, action) {
+      state.selectedYear = action.payload;
+    },
+    setgirdAPIForCommonData(state, action) {
+      state.girdAPIForCommonData = action.payload;
+    },
+    SetSheetName(state, action) {
+      state.sheetName = action.payload;
+    },
+    SethandleExportData(state, action) {
+      state.handleExportData = action.payload;
 
     },
-    reducers: {
-      setUpdateReportType(state,action) {
-        state.updateReportType=action.payload;
-      },
-      setUpdateStatus(state,action) {
-        state.loadingStatus=action.payload;
-      },
-      setselectedOption(state,action) {
-        state.selectedOption=action.payload;
-      },
-      setselectedOptionTop50(state,action) {
-        state.selectedOptionTop50=action.payload;
-      },
-      setselectedCompareOption(state,action) {
-        state.selectedCompareOption=action.payload;
-      },
-      setselectedStateShow(state,action) {
-        state.selectedStateShow=action.payload;
-      },
-      setselectedReport(state,action) {
-        state.selectedReport=action.payload;
-      },
-      setselectedCompareDistricts(state,action) {
-        state.selectedCompareDistricts=action.payload;
-      },
-      setselectedCompareBlocks(state,action) {
-        state.selectedCompareBlock=action.payload;
-      },
-      setSelectedYear(state,action) {
-        state.selectedYear=action.payload;
-      },
-      setgirdAPIForCommonData(state,action) {
-        state.girdAPIForCommonData=action.payload;
-      },
-      SetSheetName(state,action) {
-        state.sheetName=action.payload;
-      },
-      SethandleExportData(state,action) {
-        state.handleExportData=action.payload;
-
-      },
-      setAspirationalAllData(state,action) {
-        state.aspirationalAllData=action.payload;
-
-      },
-      setselectedDataAllYear(state,action) {
-        state.selectedDataAllYear=action.payload;
-      },
-      SetFinalData(state,action) {
-        state.finalData=action.payload;
-      },
-      setCurrentPage(state,action) {
-        state.currentPage=action.payload;
-      },
-      setIsActiveGraph(state,action) {
-        state.isActiveGraph=action.payload;
-      },
+    setAspirationalAllData(state, action) {
+      state.aspirationalAllData = action.payload;
     },
-  })
-  
-  export const { setUpdateReportType,setUpdateStatus, setselectedOption,setselectedCompareOption,setselectedStateShow,setselectedReport,setselectedCompareDistricts,setselectedCompareBlocks,setSelectedYear,setgirdAPIForCommonData,SetSheetName,SethandleExportData, setAspirationalAllData,setselectedDataAllYear,SetFinalData,setCurrentPage,setIsActiveGraph,setselectedOptionTop50 } = reportTypeSlice.actions
-  export default reportTypeSlice.reducer
+    setselectedDataAllYear(state, action) {
+      state.selectedDataAllYear = action.payload;
+    },
+    SetFinalData(state, action) {
+      state.finalData = action.payload;
+    },
+    setCurrentPage(state, action) {
+      state.currentPage = action.payload;
+    },
+    setIsActiveGraph(state, action) {
+      state.isActiveGraph = action.payload;
+    },
+    setAllYearDataForGraph(state, action) {
+      state.allYearDataForGraph = action.payload;
+    },
+  },
+})
+
+export const { setUpdateReportType, setUpdateStatus, setselectedOption, setselectedCompareOption, setselectedStateShow, setselectedReport, setselectedCompareDistricts, setselectedCompareBlocks, setSelectedYear, setgirdAPIForCommonData, SetSheetName, SethandleExportData, setAspirationalAllData, setselectedDataAllYear, SetFinalData, setCurrentPage, setIsActiveGraph, setselectedOptionTop50,setAllYearDataForGraph } = reportTypeSlice.actions
+export default reportTypeSlice.reducer

@@ -9,21 +9,13 @@ import {
   setAspirationalAllData,
   setselectedCompareDistricts,
   setselectedCompareOption,
-  setUpdateReportType,
 } from "../../../redux/slice/reportTypeSlice";
-import aspirationalAbpData from "../../../aspirational-reports-data/aspirational.json";
 import aspirationalAdpData from "../../../aspirational-reports-data/aspirationalDistrict.json";
-import aspirationalAdpData2020 from "../../../aspirational-reports-data/aspirationalAdpData2020-21.json";
-// import aspirationalAbpData2021 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2021 from "../../../aspirational-reports-data/aspirationalAdpData2021-22.json";
-// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
 import aspirationalAdpData2022 from "../../../aspirational-reports-data/aspirationalAdpData2022-23.json";
 import table from "../../../assets/images/table.svg";
 import card from "../../../assets/images/card-list.svg";
 import { Card, Select } from "antd";
 import { SelectState } from "../../../constant/Constant";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BlankPage from "../BlankPage";
 import { t } from "i18next";
 import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer.jsx"
@@ -55,10 +47,10 @@ export default function SchoolInfraStructureCompare() {
     resteData();
   }, [dispatch]);
 
-  useEffect(() => {
-    // dispatch(setUpdateReportType('ADP_Report'));
-    dispatch(setAspirationalAllData(aspirationalAdpData));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   // dispatch(setUpdateReportType('ADP_Report'));
+  //   dispatch(setAspirationalAllData(aspirationalAdpData));
+  // }, [dispatch]);
 
 
   // Initialize states and districts from JSON data
@@ -157,10 +149,10 @@ export default function SchoolInfraStructureCompare() {
 
 
   return (
-    <>
+    
       <div className="card-box">
         <div className="row align-items-end">
-          <div className="col-md-7">
+          <div className="col-md-12">
             <div className="d-flex align-items-center">
               <div className="title-box">
                 {/* <h5 className='sub-title'>State :
@@ -192,11 +184,7 @@ export default function SchoolInfraStructureCompare() {
               </div>
             </div>
           </div>
-          <div className="col-md-5">
-            <div className="d-flex w-m-100">
-
-            </div>
-          </div>
+         
         </div>
 
         <div className="row">
@@ -341,6 +329,6 @@ export default function SchoolInfraStructureCompare() {
           )}
         </div>
       </div>
-    </>
+    
   );
 }

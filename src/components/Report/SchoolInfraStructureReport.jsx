@@ -44,7 +44,7 @@ export default function SchoolInfraStructureReport() {
   const id = queryParameters.get("id");
   const type = queryParameters.get("type");
   const [loading, setLoading] = useState(true);
-  localStorage.setItem("selectedReport", "School Infrastructure");
+
   const { selectedState, selectedDistrict, selectedBlock } = useSelector(
     (state) => state.locationAdp
   );
@@ -52,6 +52,7 @@ export default function SchoolInfraStructureReport() {
   const aspirationalData = useSelector(
     (state) => state.reportAdpAbpType.aspirationalAllData
   );
+  const selectedDataAllYear = useSelector((state) => state.reportAdpAbpType.selectedDataAllYear);
   const selectReportType = useSelector(
     (state) => state.reportAdpAbpType.updateReportType
   );
@@ -61,6 +62,7 @@ export default function SchoolInfraStructureReport() {
   const selectedYear = useSelector(
     (state) => state.reportAdpAbpType.selectedYear
   );
+
   const states = useSelector((state) => state.locationAdp.states);
   const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName);
   const [gridApi, setGridApi] = useState();
@@ -68,10 +70,21 @@ export default function SchoolInfraStructureReport() {
   const report_name = savedReportName;
 
   const [data, setData] = useState([]);
-
   const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
   const [topPtrData, setTopPtrData] = useState([])
   const [top50Data, setTop50Data] = useState([])
+  localStorage.setItem("selectedReportValue", "Percentange of Schools Having Adequate Functional Girls Toilets");
+  {/* Set Report Title Start*/ }
+  const reportTitle = selectedOption === "Top_50_Schools"
+    ? t('top_50_schools_with_40_1_girls_toilets')
+    : selectedOption === "Upcoming_50"
+      ? t('upcoming_50_schools_with_40_1_girls_toilets')
+      : t("schoolInfrastructureReport");
+
+  localStorage.setItem("selectedReport", reportTitle);
+  {/* Set Report Title End*/ }
+
+  {/* Show top 100 Data start*/ }
   const combinedTopData = {
     "2019-20": {
       ADP_Report: schWithToiletRatioAdp2019,
@@ -107,7 +120,7 @@ export default function SchoolInfraStructureReport() {
           selectedDistrict !== "SelectDistrict"
             ? finalData.some(
               (finalItem) =>
-                finalItem.lgd_district_name === topeItem.lgd_district_name
+                finalItem.lgd_district_id === topeItem.lgd_district_id
             )
             : true;
 
@@ -132,7 +145,7 @@ export default function SchoolInfraStructureReport() {
     }
   }, [selectedOption, filteredTopeData, selectedYear]);
 
-
+  {/* Show top 100 Data End*/ }
   // const [finalData, SetFinalData] = useState([]
   function resteData() {
     // dispatch(selectState(SelectState));
@@ -184,7 +197,6 @@ export default function SchoolInfraStructureReport() {
 
   useEffect(() => {
     let filteredData = aspirationalData;
-
     if (selectedState && selectedState !== SelectState) {
       filteredData = filteredData.filter(
         (item) => item.lgd_state_name === selectedState
@@ -491,9 +503,8 @@ export default function SchoolInfraStructureReport() {
           },
 
           {
-            headerName: "percentage of Schools having Enrolment toilets in the ratio of 40:1",
+            headerName: "Adequate Girls Toilet",
             field: "Enrolment Toilet ratio(40:1)",
-            cellRenderer: percentageRenderer,
             hide: false,
           },
         ]);
@@ -521,9 +532,8 @@ export default function SchoolInfraStructureReport() {
           },
 
           {
-            headerName: "percentage of Schools having Enrolment toilets in the ratio of 40:1",
+            headerName: "Adequate Girls Toilet",
             field: "Enrolment Toilet ratio(40:1)",
-            cellRenderer: percentageRenderer,
             hide: false,
           },
         ]);
@@ -603,9 +613,9 @@ export default function SchoolInfraStructureReport() {
     ) {
       dispatch(SetFinalData(data));
     } else {
-      dispatch(SetFinalData(aspirationalData));
+      dispatch(SetFinalData(selectedDataAllYear));
     }
-  }, [selectedState, data, aspirationalData, selectReportType]);
+  }, [selectedState, data, selectedDataAllYear, selectReportType]);
 
   const defColumnDefs = useMemo(
     () => ({
@@ -853,11 +863,7 @@ export default function SchoolInfraStructureReport() {
                               : selectedBlock}
                         </h5>
                         <h3 className="heading-sm">
-                          {selectedOption === "Top_50_Schools"
-                            ? "Top 50 Schools with 40:1 Enrolment Toilet Ratio"
-                            : selectedOption === "Upcoming_50"
-                              ? "Upcoming 50 Schools with 40:1 Enrolment Toilet Ratio"
-                              : t("schoolInfrastructure")}
+                          {reportTitle}
                         </h3>
 
                       </div>
@@ -892,7 +898,7 @@ export default function SchoolInfraStructureReport() {
                               checked={selectedOption === "Top_50_Schools"}
                               onChange={handleOptionChange}
                             />
-                            <label htmlFor="radio44">Top 50 Schools</label>
+                            <label htmlFor="radio44">  {t('top_50_schools')}</label>
                           </div>
 
                           <div className="box-radio">
@@ -903,7 +909,7 @@ export default function SchoolInfraStructureReport() {
                               checked={selectedOption === "Upcoming_50"}
                               onChange={handleOptionChange}
                             />
-                            <label htmlFor="radio55">Upcoming 50 Schools</label>
+                            <label htmlFor="radio55">{t('upcoming_50_schools')}</label>
                           </div>
                         </div>
                       ) : (
@@ -962,7 +968,7 @@ export default function SchoolInfraStructureReport() {
               </div>
             </div>
             {selectedState !== "All State" &&
-              selectReportType === "ADP_Report" ? (
+              selectReportType === "ADP_Report" && (selectedOption !== "Top_50_Schools" && selectedOption !== "Upcoming_50") ? (
               <SchoolInfraStructureCompare />
             ) : selectedState !== "All State" &&
               selectedDistrict !== SelectDistrict &&

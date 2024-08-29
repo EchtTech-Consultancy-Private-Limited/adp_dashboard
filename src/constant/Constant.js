@@ -10,6 +10,6 @@ export const PercentageEleSchPTR= "Percentage-of-elementary-schools-having-PTR-l
 export const Transition_Rate="Transition Rate";
 export const Teacher_and_School_Resources="Teacher and School Resources";
 export const School_Infrastructure="School Infrastructure";
-export const Student_Performance="Student Performance"
+export const Student_Performance="Teachers Trained For Teaching CWSN"
 export const top50Data="Top_50_Schools";
 export const upcomingTop50Data="Upcoming_50"

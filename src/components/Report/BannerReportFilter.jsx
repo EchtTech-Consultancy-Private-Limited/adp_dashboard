@@ -13,7 +13,7 @@ export default function BannerReportFilter() {
   const location = useLocation();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
-  const savedReportName = localStorage.getItem('selectedReport');
+  const savedReportName = localStorage.getItem('selectedReportValue');
   const states = useSelector((state) => state.locationAdp.states);
   const districts = useSelector((state) => state.locationAdp.districts);
   const blocks = useSelector((state) => state.locationAdp.blocks);
@@ -50,7 +50,7 @@ export default function BannerReportFilter() {
   //   }, [finalData])
 
   useEffect(() => {
-    const savedReportName = localStorage.getItem('selectedReport');
+    const savedReportName = localStorage.getItem('selectedReportValue');
     if (savedReportName) {
       dispatch(setselectedReport(savedReportName));
     }
@@ -64,13 +64,14 @@ export default function BannerReportFilter() {
       case 'Transition Rate':
         navigate('/transition-rate');
         break;
-      case 'Teacher and School Resources':
+      case 'Percentage of Elementary Schools Having PTR Less Than Equal to 30':
         navigate('/teacher-and-school-resources');
+      //  navigate('/Percentage-of-elementary-schools-having-PTR-less-than-tqual-to-30');
         break;
-      case 'Student Performance':
-        navigate('/student-performance');
+      case 'Percentage Schools with Teachers Trained for Teaching CWSN':
+        navigate('/teachers-trained-for-teaching-CWSN');
         break;
-      case 'School Infrastructure':
+      case 'Percentange of Schools Having Adequate Functional Girls Toilets':
         navigate('/school-infrastructure');
         break;
       case 'Enrollment and Retention':
@@ -274,9 +275,9 @@ export default function BannerReportFilter() {
                     }
                     <Select style={{ width: '100%' }} placeholder="Select KPI" mode="single" showSearch className="form-select" value={selectedReport || SelectKpi} onChange={handleReportChange}>
                       <Select.Option key="Transition Rate" value="Transition Rate">Transition Rate</Select.Option>
-                      <Select.Option key="Teacher and School Resources" value="Teacher and School Resources">Teacher and School Resources</Select.Option>
-                      <Select.Option key="Student Performance" value="Student Performance">Teachers Trained for Teaching CWSN</Select.Option>
-                      <Select.Option key="School Infrastructure" value="School Infrastructure">School Infrastructure</Select.Option>
+                      <Select.Option key="Teacher and School Resources" value="Percentage of Elementary Schools Having PTR Less Than Equal to 30">Percentage of Elementary Schools Having PTR Less Than Equal to 30</Select.Option>
+                      <Select.Option key="Teachers Trained For Teaching CWSN" value="Percentage Schools with Teachers Trained for Teaching CWSN">Percentage Schools with Teachers Trained for Teaching CWSN</Select.Option>
+                      <Select.Option key="School Infrastructure" value="Percentange of Schools Having Adequate Functional Girls Toilets">Percentange of Schools Having Adequate Functional Girls Toilets</Select.Option>
                       {/* <Select.Option key="Enrollment and Retention" value="Enrollment and Retention">Enrollment and Retention</Select.Option> */}
                     </Select>
                   </div>
