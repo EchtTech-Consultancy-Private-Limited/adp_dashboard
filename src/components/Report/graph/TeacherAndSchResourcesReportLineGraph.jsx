@@ -21,9 +21,9 @@ import {
   SelectState,
 } from "../../../constant/Constant";
 
-import useReportFilterData from "../ReportCompare/useReportFilterData";
+import useReportFilterData from "../../../CustomHook/useReportFilterData";
 
-export default function TeacherAndSchoolgraphB() {
+export default function TeacherAndSchResourcesReportLineGraph() {
   const { t } = useTranslation();
   const selectReportType = useSelector(
     (state) => state.reportAdpAbpType.updateReportType

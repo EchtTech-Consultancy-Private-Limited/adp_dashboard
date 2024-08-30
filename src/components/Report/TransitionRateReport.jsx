@@ -32,7 +32,7 @@ import TransitionBlockRateCompare from "./ReportCompare/TransitionBlockRateCompa
 import { useTranslation } from "react-i18next";
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 import TransitionRateGraph from "./graph/TransitionRateGraph";
-import useReportFilterData from "./ReportCompare/useReportFilterData";
+import useReportFilterData from "../../CustomHook/useReportFilterData";
 export default function TransitionRateReport() {
     const dispatch = useDispatch();
     const { t, i18n } = useTranslation();
