@@ -41,13 +41,18 @@ import ptrLessThanAdp2022 from "../../aspirational-reports-data/ptrLessThanAdp20
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 import TeacherAndSchResourcesColumnGraph from "./graph/TeacherAndSchResourcesColumnGraph";
 import TeacherAndSchoolgraphB from "./graph/TeacherAndSchResourcesReportGraphB";
+import useReportFilterData from "./ReportCompare/useReportFilterData";
 export default function TeacherAndSchResourcesReport() {
     const dispatch = useDispatch();
     const { t, i18n } = useTranslation();
     const [queryParameters] = useSearchParams();
     const id = queryParameters.get("id");
     const type = queryParameters.get("type");
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
+
+    const loading = useSelector(
+        (state) => state.reportAdpAbpType.loading
+    );
 
     const { selectedState, selectedDistrict, selectedBlock } = useSelector(
         (state) => state.locationAdp
@@ -76,7 +81,7 @@ export default function TeacherAndSchResourcesReport() {
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
     const isActiveGraph=useSelector((state)=>state.reportAdpAbpType.isActiveGraph)
 
-    const [data, setData] = useState([]);
+    // const [data, setData] = useState([]);
     const [topPtrData, setTopPtrData] = useState([])
     const [top50Data, setTop50Data] = useState([])
    
@@ -203,77 +208,80 @@ export default function TeacherAndSchResourcesReport() {
         }
     }, [selectedDistrict])
     
-    useEffect(() => {
-        let filteredData = aspirationalData;
+    // useEffect(() => {
+    //     let filteredData = aspirationalData;
 
-        if (selectedState && selectedState !== SelectState) {
-            filteredData = filteredData.filter(
-                (item) => item.lgd_state_name === selectedState
-            );
-        }
+    //     if (selectedState && selectedState !== SelectState) {
+    //         filteredData = filteredData.filter(
+    //             (item) => item.lgd_state_name === selectedState
+    //         );
+    //     }
 
-        if (
-            selectedDistrict &&
-            selectedDistrict !== AllDistrict &&
-            selectedDistrict !== SelectDistrict
-        ) {
-            filteredData = filteredData.filter(
-                (item) => item.lgd_district_name === selectedDistrict
-            );
-        }
+    //     if (
+    //         selectedDistrict &&
+    //         selectedDistrict !== AllDistrict &&
+    //         selectedDistrict !== SelectDistrict
+    //     ) {
+    //         filteredData = filteredData.filter(
+    //             (item) => item.lgd_district_name === selectedDistrict
+    //         );
+    //     }
 
-        if (
-            selectedBlock &&
-            selectedBlock !== AllBlock &&
-            selectedBlock !== SelectBlock
-        ) {
-            filteredData = filteredData.filter(
-                (item) => item.lgd_block_name === selectedBlock
-            );
-        }
-        filteredData = filteredData.map((item) => ({
-            ...item,
-            Location: getLocationName(item),
-        }));
-        setData(filteredData);
-        setLoading(false);
+    //     if (
+    //         selectedBlock &&
+    //         selectedBlock !== AllBlock &&
+    //         selectedBlock !== SelectBlock
+    //     ) {
+    //         filteredData = filteredData.filter(
+    //             (item) => item.lgd_block_name === selectedBlock
+    //         );
+    //     }
+    //     filteredData = filteredData.map((item) => ({
+    //         ...item,
+    //         Location: getLocationName(item),
+    //     }));
+    //     setData(filteredData);
+    //     setLoading(false);
 
-        // dispatch(setUpdateStatus(false))
-    }, [selectedState, selectedDistrict, selectedBlock, aspirationalData, selectReportType]);
-    const getLocationName = (item) => {
-        if (selectReportType === "ABP_Report") {
-            if (
-                selectedBlock &&
-                selectedBlock !== AllBlock &&
-                selectedBlock !== SelectBlock
-            ) {
-                return `${item.lgd_block_name}`;
-            } else if (
-                selectedDistrict &&
-                selectedDistrict !== AllDistrict &&
-                selectedDistrict !== SelectDistrict
-            ) {
-                return `${item.lgd_block_name}`;
-            } else if (selectedState && selectedState !== SelectState) {
-                return `${item.lgd_district_name}`;
-            } else if (selectedState === SelectState) {
-                return `${item.lgd_state_name}`;
-            }
+    //     // dispatch(setUpdateStatus(false))
+    // }, [selectedState, selectedDistrict, selectedBlock, aspirationalData, selectReportType]);
+    // const getLocationName = (item) => {
+    //     if (selectReportType === "ABP_Report") {
+    //         if (
+    //             selectedBlock &&
+    //             selectedBlock !== AllBlock &&
+    //             selectedBlock !== SelectBlock
+    //         ) {
+    //             return `${item.lgd_block_name}`;
+    //         } else if (
+    //             selectedDistrict &&
+    //             selectedDistrict !== AllDistrict &&
+    //             selectedDistrict !== SelectDistrict
+    //         ) {
+    //             return `${item.lgd_block_name}`;
+    //         } else if (selectedState && selectedState !== SelectState) {
+    //             return `${item.lgd_district_name}`;
+    //         } else if (selectedState === SelectState) {
+    //             return `${item.lgd_state_name}`;
+    //         }
 
-        } else if (selectReportType === "ADP_Report") {
-            if (selectedState && selectedState !== SelectState) {
-                return `${item.lgd_district_name}`;
-            } else if (
-                selectedState !== SelectState &&
-                selectedState !== AllDistrict
-            ) {
-                return `${item.lgd_district_name}`;
-            } else if (selectedState === SelectState) {
-                return `${item.lgd_state_name}`;
-            }
-        }
-        return "";
-    };
+    //     } else if (selectReportType === "ADP_Report") {
+    //         if (selectedState && selectedState !== SelectState) {
+    //             return `${item.lgd_district_name}`;
+    //         } else if (
+    //             selectedState !== SelectState &&
+    //             selectedState !== AllDistrict
+    //         ) {
+    //             return `${item.lgd_district_name}`;
+    //         } else if (selectedState === SelectState) {
+    //             return `${item.lgd_state_name}`;
+    //         }
+    //     }
+    //     return "";
+    // };
+
+
+    const data = useReportFilterData(aspirationalData)
 
     const percentageRenderer = (params) => {
         const value = params.value;
@@ -757,6 +765,7 @@ export default function TeacherAndSchResourcesReport() {
         dispatch(setIsActiveGraph(!isActiveGraph))
         dispatch(setselectedOptionTop50(""));
     };
+
     return (
         <>
             <ScrollToTopOnMount />
