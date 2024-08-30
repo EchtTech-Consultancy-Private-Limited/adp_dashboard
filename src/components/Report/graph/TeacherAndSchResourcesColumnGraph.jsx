@@ -222,10 +222,10 @@ export default function TeacherAndSchResourcesColumnGraph() {
   : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}  ${t('By Elementary Schools with PTR ≤ 30%')}`;
   return (
     <section className="infrastructure-main-card p-0" id="content">
-      <div className="ptb-30">
+      <div className="">
         <div className="container tab-for-graph">
           <div className="row align-items-center report-inner-tab">
-            <div className="col-md-12 col-lg-12">
+            <div className="col-md-12 col-lg-12 p-0">
               <div className="graph-box">
                 <div className="row">
                   <div className="col-md-12">
@@ -352,7 +352,7 @@ export default function TeacherAndSchResourcesColumnGraph() {
                   </div>
 
                   <div className="col-md-12 mt-4">
-                    <div className="graph-card">
+                    <div className="graph-card mt-2">
                       <div className="text-btn-d">
                       <h2 className="heading-sm">  {selectReportType === "ADP_Report" ? "Performance of Districts By Elementary Schools with PTR ≤ 30%" : "Performance of  Blocks By Elementary Schools with PTR ≤ 30%"}
                       </h2>                      </div>
