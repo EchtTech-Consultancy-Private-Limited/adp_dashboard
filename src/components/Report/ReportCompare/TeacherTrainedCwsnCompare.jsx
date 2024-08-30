@@ -140,15 +140,10 @@ const [data,setData]=useState([]);
 useEffect(()=>{
 percentageCwsnTrainedTeach.map((percentage, index) => (
       setData(percentage)
-  // console.log("percentage",percentage)
 ))
 
 },[percentageCwsnTrainedTeach])
- console.log("percentage",data)
-console.log("percentageCwsnTrainedTeach", percentageCwsnTrainedTeach)
 
-
-  // console.log("formatpercentageCwsnTrainedTeach",formatpercentageCwsnTrainedTeach)
   return (
     <>
       {!isActiveGraph ? (<div className="card-box">

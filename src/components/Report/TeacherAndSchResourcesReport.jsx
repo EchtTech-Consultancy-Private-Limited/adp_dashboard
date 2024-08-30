@@ -39,9 +39,9 @@ import ptrLessThanAdp2020 from "../../aspirational-reports-data/ptrLessThanAdp20
 import ptrLessThanAdp2021 from "../../aspirational-reports-data/ptrLessThanAdp2021-2022.json";
 import ptrLessThanAdp2022 from "../../aspirational-reports-data/ptrLessThanAdp2022-2023.json";
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
-import TeacherAndSchResourcesColumnGraph from "./graph/TeacherAndSchResourcesColumnGraph";
-import TeacherAndSchoolgraphB from "./graph/TeacherAndSchResourcesReportGraphB";
-import useReportFilterData from "./ReportCompare/useReportFilterData";
+import TeacherAndSchResourcesColumnGraph from "./graph/TeacherAndSchResourcesColumnAndTreeGraph";
+import TeacherAndSchoolgraphB from "./graph/TeacherAndSchResourcesReportLineGraph";
+import useReportFilterData from "../../CustomHook/useReportFilterData";
 export default function TeacherAndSchResourcesReport() {
     const dispatch = useDispatch();
     const { t, i18n } = useTranslation();
@@ -760,11 +760,19 @@ export default function TeacherAndSchResourcesReport() {
 
     const handleOptionChange = (event) => {
         dispatch(setselectedOptionTop50(event.target.value));
+       
     };
-    const toggleClass = (e) => {
-        dispatch(setIsActiveGraph(!isActiveGraph))
+   
+  
+    const [isActive, setIsActive] = useState(false);
+    const toggleClass = (isGraph) => {
         dispatch(setselectedOptionTop50(""));
-    };
+        if (isGraph !== isActive) {
+            setIsActive(isGraph);
+            dispatch(setIsActiveGraph(!isActiveGraph))
+            
+        }
+     };
 
     return (
         <>
@@ -811,11 +819,11 @@ export default function TeacherAndSchResourcesReport() {
 
                                             </div>
                                             <div className="tab-box">
-                                                <button className={`tab-button  ${isActiveGraph ? '' : 'active'}`} onClick={toggleClass}>
+                                                <button className={`tab-button  ${isActiveGraph ? '' : 'active'}`} onClick={() => toggleClass(false)}>
                                                     <img src={table} alt="Table" />{" "}
                                                     <span>{t("tableView")}</span>
                                                 </button>
-                                                <button className={`tab-button  ${isActiveGraph ? 'active' : ''}`} onClick={toggleClass}>
+                                                <button className={`tab-button  ${isActiveGraph ? 'active' : ''}`} onClick={() => toggleClass(true)}>
                                                     <img src={chart} alt="chart" />{" "}
                                                     <span>{t("chartView")}</span>
                                                 </button>

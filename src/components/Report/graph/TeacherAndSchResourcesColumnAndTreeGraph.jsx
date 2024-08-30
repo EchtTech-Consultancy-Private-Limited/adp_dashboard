@@ -21,7 +21,7 @@ require("highcharts/modules/treemap")(Highcharts);
 require("highcharts/modules/treegraph")(Highcharts);
 HC_more(Highcharts);
 
-export default function TeacherAndSchResourcesColumnGraph() {
+export default function TeacherAndSchResourcesColumnAndTreeGraph() {
   const selectReportType = useSelector(
     (state) => state.reportAdpAbpType.updateReportType
   );
