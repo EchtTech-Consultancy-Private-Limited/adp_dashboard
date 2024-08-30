@@ -220,15 +220,6 @@ export default function TeacherAndSchResourcesColumnGraph() {
   const headingText = TopDistrictsAndBlocksColumnGraph.length < 10
   ? `${t('performance_of')} ${selectReportType === "ADP_Report" ? t('district') : t('block')} ${t('By Elementary Schools with PTR ≤ 30%')}`
   : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}  ${t('By Elementary Schools with PTR ≤ 30%')}`;
-
-
-  // Elementary Schools with PTR ≤ 30%
-
-
-  console.log("topElementrySchPer",topElementrySchPer)
-
-
-
   return (
     <section className="infrastructure-main-card p-0" id="content">
       <div className="ptb-30">

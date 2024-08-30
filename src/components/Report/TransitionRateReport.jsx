@@ -32,13 +32,14 @@ import TransitionBlockRateCompare from "./ReportCompare/TransitionBlockRateCompa
 import { useTranslation } from "react-i18next";
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 import TransitionRateGraph from "./graph/TransitionRateGraph";
+import useReportFilterData from "./ReportCompare/useReportFilterData";
 export default function TransitionRateReport() {
     const dispatch = useDispatch();
     const { t, i18n } = useTranslation();
     const [queryParameters] = useSearchParams();
     const id = queryParameters.get("id");
     const type = queryParameters.get("type");
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
     localStorage.setItem("selectedReportValue", "Transition Rate");
     const { selectedState, selectedDistrict, selectedBlock } = useSelector(
         (state) => state.locationAdp
@@ -47,6 +48,10 @@ export default function TransitionRateReport() {
     // const [aspirationalData, setAspirationalData] = useState([]);
     const aspirationalData = useSelector(
         (state) => state.reportAdpAbpType.aspirationalAllData
+    );
+
+    const loading = useSelector(
+        (state) => state.reportAdpAbpType.loading
     );
     const [locationHeader, SetLocationHeader] = useState();
     const [gridApi, setGridApi] = useState();
@@ -64,7 +69,7 @@ export default function TransitionRateReport() {
     const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName);
     const savedReportName = localStorage.getItem("selectedReport");
     const report_name = savedReportName;
-    const [data, setData] = useState([]);
+    // const [data, setData] = useState([]);
     // const [filteredData, setFilteredData] = useState([]);
     // const [finalData, SetFinalData] = useState([]);
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
@@ -117,48 +122,48 @@ export default function TransitionRateReport() {
 
     /*...............Take data report wise..............*/
 
-    useEffect(() => {
-        let filteredData = aspirationalData;
-        if (selectedState && selectedState !== SelectState) {
-            filteredData = filteredData.filter(
-                (item) => item.lgd_state_name === selectedState
-            );
-        }
+    // useEffect(() => {
+    //     let filteredData = aspirationalData;
+    //     if (selectedState && selectedState !== SelectState) {
+    //         filteredData = filteredData.filter(
+    //             (item) => item.lgd_state_name === selectedState
+    //         );
+    //     }
 
-        if (
-            selectedDistrict &&
-            selectedDistrict !== AllDistrict &&
-            selectedDistrict !== SelectDistrict
-        ) {
-            filteredData = filteredData.filter(
-                (item) => item.lgd_district_name === selectedDistrict
-            );
-        }
+    //     if (
+    //         selectedDistrict &&
+    //         selectedDistrict !== AllDistrict &&
+    //         selectedDistrict !== SelectDistrict
+    //     ) {
+    //         filteredData = filteredData.filter(
+    //             (item) => item.lgd_district_name === selectedDistrict
+    //         );
+    //     }
 
-        if (
-            selectedBlock &&
-            selectedBlock !== AllBlock &&
-            selectedBlock !== SelectBlock
-        ) {
-            filteredData = filteredData.filter(
-                (item) => item.lgd_block_name === selectedBlock
-            );
-        }
-        filteredData = filteredData.map((item) => ({
-            ...item,
-            Location: getLocationName(item),
-        }));
-        setData(filteredData);
-        setLoading(false);
+    //     if (
+    //         selectedBlock &&
+    //         selectedBlock !== AllBlock &&
+    //         selectedBlock !== SelectBlock
+    //     ) {
+    //         filteredData = filteredData.filter(
+    //             (item) => item.lgd_block_name === selectedBlock
+    //         );
+    //     }
+    //     filteredData = filteredData.map((item) => ({
+    //         ...item,
+    //         Location: getLocationName(item),
+    //     }));
+    //     setData(filteredData);
+    //     setLoading(false);
 
-        // dispatch(setUpdateStatus(false))
-    }, [
-        selectedState,
-        selectedDistrict,
-        selectedBlock,
-        aspirationalData,
-        selectReportType,
-    ]);
+    //     // dispatch(setUpdateStatus(false))
+    // }, [
+    //     selectedState,
+    //     selectedDistrict,
+    //     selectedBlock,
+    //     aspirationalData,
+    //     selectReportType,
+    // ]);
 
     // useEffect(() => {
     //   if (selectedState) {
@@ -175,39 +180,42 @@ export default function TransitionRateReport() {
     //   }
     // }, [selectedState, aspirationalData]);
 
-    const getLocationName = (item) => {
-        if (selectReportType === "ABP_Report") {
-            if (
-                selectedBlock &&
-                selectedBlock !== AllBlock &&
-                selectedBlock !== SelectBlock
-            ) {
-                return `${item.lgd_block_name}`;
-            } else if (
-                selectedDistrict &&
-                selectedDistrict !== AllDistrict &&
-                selectedDistrict !== SelectDistrict
-            ) {
-                return `${item.lgd_block_name}`;
-            } else if (selectedState && selectedState !== SelectState) {
-                return `${item.lgd_district_name}`;
-            } else if (selectedState === SelectState) {
-                return `${item.lgd_state_name}`;
-            }
-        } else if (selectReportType === "ADP_Report") {
-            if (selectedState && selectedState !== SelectState) {
-                return `${item.lgd_district_name}`;
-            } else if (
-                selectedState !== SelectState &&
-                selectedState !== AllDistrict
-            ) {
-                return `${item.lgd_district_name}`;
-            } else if (selectedState === SelectState) {
-                return `${item.lgd_state_name}`;
-            }
-        }
-        return "";
-    };
+    // const getLocationName = (item) => {
+    //     if (selectReportType === "ABP_Report") {
+    //         if (
+    //             selectedBlock &&
+    //             selectedBlock !== AllBlock &&
+    //             selectedBlock !== SelectBlock
+    //         ) {
+    //             return `${item.lgd_block_name}`;
+    //         } else if (
+    //             selectedDistrict &&
+    //             selectedDistrict !== AllDistrict &&
+    //             selectedDistrict !== SelectDistrict
+    //         ) {
+    //             return `${item.lgd_block_name}`;
+    //         } else if (selectedState && selectedState !== SelectState) {
+    //             return `${item.lgd_district_name}`;
+    //         } else if (selectedState === SelectState) {
+    //             return `${item.lgd_state_name}`;
+    //         }
+    //     } else if (selectReportType === "ADP_Report") {
+    //         if (selectedState && selectedState !== SelectState) {
+    //             return `${item.lgd_district_name}`;
+    //         } else if (
+    //             selectedState !== SelectState &&
+    //             selectedState !== AllDistrict
+    //         ) {
+    //             return `${item.lgd_district_name}`;
+    //         } else if (selectedState === SelectState) {
+    //             return `${item.lgd_state_name}`;
+    //         }
+    //     }
+    //     return "";
+    // };
+
+
+    const data=useReportFilterData(aspirationalData);
 
     const percentageRenderer = (params) => {
         const value = params.value;
