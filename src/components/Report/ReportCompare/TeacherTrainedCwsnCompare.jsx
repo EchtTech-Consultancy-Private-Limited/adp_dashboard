@@ -127,12 +127,28 @@ export default function StudentsPerformanceCompare() {
 
   const cwsnTrainedTeacher = selectedDistricts?.map(district => district?.total_school_cwsn);
 
-  const percentageCwsnTrainedTeach = selectedDistricts?.map(district => Number(parseFloat(district?.swsn_teacher_percent).toFixed(2)));
 
-               
-  // const handleOptionChange = (event) => {
-  //   dispatch(setselectedCompareOption(event.target.value));
-  // };
+  // const percentageCwsnTrainedTeach = selectedDistricts?.map(district => Number(parseFloat(district?.swsn_teacher_percent).toFixed(2)));
+
+const [data,setData]=useState([]);
+
+  const percentageCwsnTrainedTeach = selectedDistricts?.map(district => {
+    const percentage = parseFloat(district?.swsn_teacher_percent).toFixed(2);
+    return `${percentage}%`;
+});
+
+useEffect(()=>{
+percentageCwsnTrainedTeach.map((percentage, index) => (
+      setData(percentage)
+  // console.log("percentage",percentage)
+))
+
+},[percentageCwsnTrainedTeach])
+ console.log("percentage",data)
+console.log("percentageCwsnTrainedTeach", percentageCwsnTrainedTeach)
+
+
+  // console.log("formatpercentageCwsnTrainedTeach",formatpercentageCwsnTrainedTeach)
   return (
     <>
       {!isActiveGraph ? (<div className="card-box">
