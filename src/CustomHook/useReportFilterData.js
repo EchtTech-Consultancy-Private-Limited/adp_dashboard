@@ -7,9 +7,9 @@ import {
   SelectBlock,
   SelectDistrict,
   SelectState,
-} from "../../../constant/Constant";
+} from "../constant/Constant";
 
-import { setLoading } from '../../../redux/slice/reportTypeSlice';
+import { setLoading } from '../redux/slice/reportTypeSlice';
 
 const useReportFilterData = (combinedData) => {
   const [data, setData] = useState([])

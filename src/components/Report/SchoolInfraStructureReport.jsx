@@ -36,7 +36,7 @@ import schWithToiletRatioAdp2020 from "../../aspirational-reports-data/schWithTo
 import schWithToiletRatioAdp2021 from "../../aspirational-reports-data/schWithToiletRatioAdp2021-2022.json";
 import schWithToiletRatioAdp2022 from "../../aspirational-reports-data/schWithToiletRatioAdp2022-2023.json";
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
-import useReportFilterData from "./ReportCompare/useReportFilterData";
+import useReportFilterData from "../../CustomHook/useReportFilterData";
 
 export default function SchoolInfraStructureReport() {
   const dispatch = useDispatch();

@@ -39,9 +39,9 @@ import ptrLessThanAdp2020 from "../../aspirational-reports-data/ptrLessThanAdp20
 import ptrLessThanAdp2021 from "../../aspirational-reports-data/ptrLessThanAdp2021-2022.json";
 import ptrLessThanAdp2022 from "../../aspirational-reports-data/ptrLessThanAdp2022-2023.json";
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
-import TeacherAndSchResourcesColumnGraph from "./graph/TeacherAndSchResourcesColumnGraph";
-import TeacherAndSchoolgraphB from "./graph/TeacherAndSchResourcesReportGraphB";
-import useReportFilterData from "./ReportCompare/useReportFilterData";
+import TeacherAndSchResourcesColumnGraph from "./graph/TeacherAndSchResourcesColumnAndTreeGraph";
+import TeacherAndSchoolgraphB from "./graph/TeacherAndSchResourcesReportLineGraph";
+import useReportFilterData from "../../CustomHook/useReportFilterData";
 export default function TeacherAndSchResourcesReport() {
     const dispatch = useDispatch();
     const { t, i18n } = useTranslation();
