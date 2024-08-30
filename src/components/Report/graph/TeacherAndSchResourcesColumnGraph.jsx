@@ -225,10 +225,6 @@ export default function TeacherAndSchResourcesColumnGraph() {
   // Elementary Schools with PTR ≤ 30%
 
 
-  console.log("topElementrySchPer",topElementrySchPer)
-
-
-
   return (
     <section className="infrastructure-main-card p-0" id="content">
       <div className="ptb-30">

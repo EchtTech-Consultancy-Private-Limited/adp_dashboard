@@ -43,7 +43,7 @@ export default function TransitionRateReport() {
     const { selectedState, selectedDistrict, selectedBlock } = useSelector(
         (state) => state.locationAdp
     );
-   
+
     // const [aspirationalData, setAspirationalData] = useState([]);
     const aspirationalData = useSelector(
         (state) => state.reportAdpAbpType.aspirationalAllData
@@ -60,7 +60,7 @@ export default function TransitionRateReport() {
     const selectedYear = useSelector(
         (state) => state.reportAdpAbpType.selectedYear
     );
-    const isActiveGraph=useSelector((state)=>state.reportAdpAbpType.isActiveGraph)
+    const isActiveGraph = useSelector((state) => state.reportAdpAbpType.isActiveGraph)
     const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName);
     const savedReportName = localStorage.getItem("selectedReport");
     const report_name = savedReportName;
@@ -771,7 +771,7 @@ export default function TransitionRateReport() {
 
     const [isActive, setIsActive] = useState(false);
     const toggleClass = (e) => {
-       
+
         dispatch(setIsActiveGraph(!isActiveGraph));
 
     };
@@ -790,7 +790,7 @@ export default function TransitionRateReport() {
                                 <div className="row align-items-end">
                                     <div
                                         className={
-                                            (selectedState !== "All State" && !isActiveGraph) || ((selectedState === "All State"  || selectedState !== "All State" ) && isActiveGraph) ? "col-md-5" : "col-md-6"
+                                            (selectedState !== "All State" && !isActiveGraph) || ((selectedState === "All State" || selectedState !== "All State") && isActiveGraph) ? "col-md-5" : "col-md-6"
                                         }
                                     >
                                         <div className="d-flex align-items-end">
@@ -835,7 +835,7 @@ export default function TransitionRateReport() {
                                     </div>
                                     <div
                                         className={
-                                            (selectedState !== "All State" && !isActiveGraph) || ((selectedState === "All State"  || selectedState !== "All State" ) && isActiveGraph) ? "col-md-7" : "col-md-6"}>
+                                            (selectedState !== "All State" && !isActiveGraph) || ((selectedState === "All State" || selectedState !== "All State") && isActiveGraph) ? "col-md-7" : "col-md-6"}>
                                         <div
                                             className={
                                                 selectedState !== "All State"
@@ -845,10 +845,10 @@ export default function TransitionRateReport() {
                                         >
                                             <div
                                                 className={
-                                                    (selectedState !== "All State" && !isActiveGraph) || ((selectedState === "All State"  || selectedState !== "All State" ) && isActiveGraph) ? "radio-button" : ""
+                                                    (selectedState !== "All State" && !isActiveGraph) || ((selectedState === "All State" || selectedState !== "All State") && isActiveGraph) ? "radio-button" : ""
                                                 }
                                             >
-                                                {(selectedState !== "All State" && !isActiveGraph) || ((selectedState === "All State"  || selectedState !== "All State" ) && isActiveGraph) ? (
+                                                {(selectedState !== "All State" && !isActiveGraph) || ((selectedState === "All State" || selectedState !== "All State") && isActiveGraph) ? (
                                                     <>
                                                         <div className="box-radio">
                                                             <input
@@ -928,9 +928,9 @@ export default function TransitionRateReport() {
                         </div>
 
                         {
-                            selectedState !== "All State" && selectReportType === "ADP_Report"   ? (
+                            selectedState !== "All State" && selectReportType === "ADP_Report" ? (
                                 <TransitionRateCompare />
-                            ) : (selectedState !== "All State" && selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) &&   selectReportType === "ABP_Report" ? (
+                            ) : (selectedState !== "All State" && selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) && selectReportType === "ABP_Report" ? (
                                 <TransitionBlockRateCompare />
                             ) : (
                                 ""
