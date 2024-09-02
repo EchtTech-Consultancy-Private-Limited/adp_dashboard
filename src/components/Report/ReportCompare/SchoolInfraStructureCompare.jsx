@@ -19,6 +19,8 @@ import { SelectState } from "../../../constant/Constant";
 import BlankPage from "../BlankPage";
 import { t } from "i18next";
 import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer.jsx"
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 
 export default function SchoolInfraStructureCompare() {
   const dispatch = useDispatch();
@@ -29,6 +31,7 @@ export default function SchoolInfraStructureCompare() {
   const selectedAdpAbpOption = useSelector(
     (state) => state.reportAdpAbpType.updateReportType
   );
+  const isActiveGraph = useSelector((state) => state.reportAdpAbpType.isActiveGraph)
   const MAX_DISTRICTS = 5;
   const states = useSelector((state) => state.locationAdp.states);
   const districts = useSelector((state) => state.locationAdp.districts);
@@ -47,13 +50,7 @@ export default function SchoolInfraStructureCompare() {
     resteData();
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   // dispatch(setUpdateReportType('ADP_Report'));
-  //   dispatch(setAspirationalAllData(aspirationalAdpData));
-  // }, [dispatch]);
 
-
-  // Initialize states and districts from JSON data
   useEffect(() => {
     const structuredData = aspirationalData.reduce((acc, curr) => {
       const stateIndex = acc?.findIndex(
@@ -147,44 +144,31 @@ export default function SchoolInfraStructureCompare() {
     );
   };
 
+  const coedAndgirlSchoolData = selectedDistricts?.map(district => district?.tot_school_girl_co_ed);
 
+  const schHavingFunGirlsToiletData = selectedDistricts?.map(district => district?.functional_toilet_girls_percent);
+  const noSchHavingFunGirlsToiletData = selectedDistricts?.map(district => district?.total_no_of_fun_girls_toilet);
+  const SchHavingFunGirlsToiletRatioData = selectedDistricts?.map(district => district?.sch_having_toilet_40_percent);
+  const noSchHavingFunGirlsToiletRatioData = selectedDistricts?.map(district => district?.toilet_40);
+
+  const handleOptionChange = (event) => {
+    dispatch(setselectedCompareOption(event.target.value));
+  };
   return (
-    
-      <div className="card-box">
+    <>
+      {!isActiveGraph ? (<div className="card-box">
         <div className="row align-items-end">
           <div className="col-md-12">
             <div className="d-flex align-items-center">
               <div className="title-box">
-                {/* <h5 className='sub-title'>State :
-                                    <Select
-                                        className='state-select'
-                                        onChange={handleStateChange}
-                                        style={{ width: "50%" }}
-                                        placeholder="Select State"
-                                        mode="single"
-                                        showSearch
-                                        value={selectedState || SelectState}
-                                    >
-                                        <Select.Option key="Select State" value={SelectState}>
-                                            Select State
-                                        </Select.Option>
-                                        {states.map((state) => (
-                                            <Select.Option
-                                                key={state.lgd_state_id}
-                                                value={state.lgd_state_name}
-                                            >
-                                                {state.lgd_state_name}
-                                            </Select.Option>
-                                        ))}
-                                    </Select>
-                                </h5> */}
+
                 <h3 className="heading-sm">
                   {t('comparisonBySchoolInfrastructure')}
                 </h3>
               </div>
             </div>
           </div>
-         
+
         </div>
 
         <div className="row">
@@ -328,7 +312,181 @@ export default function SchoolInfraStructureCompare() {
             <BlankPage />
           )}
         </div>
-      </div>
-    
+      </div>) : (
+        <div className="col-md-12 graph-box">
+          <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
+            <div className="text-btn-d d-flex justify-content-between align-items-center">
+              <h2 className="heading-sm">
+                {t("comparisonBySchoolInfrastructure")}
+              </h2>
+
+            </div>
+
+            <div className="Comparison-box">
+              <div className="row align-items-center">
+                <div className="col-md-2 col-lg-2">
+                  <h4 className="sub-heading text-left">{t('add_district_to_compare')}</h4>
+                </div>
+                <div className="col-md-10 col-lg-10 pe-2">
+                  <div className="select-infra Comparison-select-group">
+
+
+                    {[...Array(MAX_DISTRICTS)]?.map((_, index) => (
+                      <div key={index} class="width-20">
+                        <Select
+                          className="form-select bg-grey2"
+                          onChange={(value) => handleDistrictChange(value, index)}
+                          style={{ width: "100%" }}
+                          placeholder={`${t('addDistrict')} ${index + 1}`}
+                          mode="single"
+                          showSearch
+                          value={selectedDistricts[index]?.lgd_district_name || `${t('addDistrict')}`}
+                          disabled={index > 0 && !selectedDistricts[index - 1]}
+                        >
+                          {getFilteredDistricts().map((district) => (
+                            <Select.Option
+                              key={district?.lgd_district_id}
+                              value={district?.lgd_district_name}
+                            >
+                              {district?.lgd_district_name}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {selectedDistricts.length === 1 ? (<Card
+              style={{
+                width: 300,
+                margin: "20px auto 0",
+              }}
+            >
+              <b>{t("selectOneMoreDistrict")}</b>
+            </Card>) : (<div className="piechart-box row align-items-center">
+
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={{
+                  chart: {
+                    type: "column",
+                    marginTop: 80,
+                    events: {
+                      beforePrint: function () {
+                        this.exportSVGElements[0].box.hide();
+                        this.exportSVGElements[1].hide();
+                      },
+                      afterPrint: function () {
+                        this.exportSVGElements[0].box.show();
+                        this.exportSVGElements[1].show();
+                      },
+                    },
+                  },
+                  xAxis: {
+                    categories: selectedDistricts.map(district => district.lgd_district_name),
+                  },
+                  yAxis: {
+                    allowDecimals: false,
+                    min: 0,
+                    title: {
+                      text: "",
+                    },
+                  },
+                  title: {
+                    text: ""
+                  },
+                  tooltip: {
+                    headerFormat: "<b>{point.x}</b><br/>",
+                    pointFormat: "{series.name}: {point.y}",
+                    pointFormatter: function () {
+                      return `<span style="color:${this.color
+                        }">\u25CF</span> ${this.series.name
+                        }: <b>${this.y.toLocaleString(
+                          "en-IN"
+                        )}</b><br/>`;
+                    },
+                  },
+                  plotOptions: {
+                    column: {
+                      stacking: "normal",
+                      dataLabels: {
+                        enabled: true,
+                        crop: false,
+                        overflow: "none",
+                        rotation: 0,
+                        align: "center",
+                        x: -2,
+                        y: -5,
+                        style: {
+                          font: "13px Arial, sans-serif",
+                          fontWeight: "600",
+                          stroke: "transparent",
+                          align: "center",
+                        },
+                        position: "top",
+                        formatter: function () {
+                          return this.y.toLocaleString("en-IN");
+                        },
+                      },
+                    },
+                  },
+                  legend: {
+                    layout: "horizontal",
+                    align: "center",
+                    verticalAlign: "bottom",
+                    itemMarginTop: 10,
+                    itemMarginBottom: 10,
+                  },
+                  credits: {
+                    enabled: false,
+                  },
+                  exports: {
+                    enabled: false,
+                  },
+                  series: [{
+                    color: "#17AFD2",
+                    name: t('Tot Coed & Girls Sch'),
+                    data: coedAndgirlSchoolData,
+                    maxPointWidth: 50,
+                  }, {
+                    color: "#6C6CB0",
+                    name: t('Tot Sch Fun girls toilets'),
+                    data: noSchHavingFunGirlsToiletData,
+                    maxPointWidth: 50,
+
+                  },
+                  {
+                    color: "#FFB74BF0",
+                    name: t('Per Sch Fun girls toilets'),
+                    data: schHavingFunGirlsToiletData,
+                    maxPointWidth: 50,
+                  },
+                  {
+                    color: "#FFB74BF0",
+                    name: t('Tot Sch Fun girls toilets 40:1'),
+                    data: noSchHavingFunGirlsToiletRatioData,
+                    maxPointWidth: 50,
+                  }
+                    ,
+                  {
+                    color: "#FFB74BF0",
+                    name: t('Per Sch Fun girls toilets 40:1'),
+                    data: SchHavingFunGirlsToiletRatioData,
+                    maxPointWidth: 50,
+                  }
+
+                  ]
+                }}
+                immutable={true}
+              />
+            </div>)}
+
+          </div>
+
+        </div>)}
+    </>
+
   );
 }
