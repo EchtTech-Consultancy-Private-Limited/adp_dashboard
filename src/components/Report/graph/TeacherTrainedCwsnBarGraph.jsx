@@ -19,8 +19,8 @@ export default function TeacherTrainedCwsnBarGraph() {
     const TopDistricts = combinedData(finalData?.slice(0, 10));
 
     const getChartData = (data) => {
-        const categories = data.map((district) => selectReportType === "ADP_Report" ? district.lgd_district_name : district.lgd_block_name);
-        const cwsnData = data.map((district) =>  Number(parseFloat(district.swsn_teacher_percent).toFixed(2)));
+        const categories = data?.map((district) => selectReportType === "ADP_Report" ? district.lgd_district_name : district.lgd_block_name);
+        const cwsnData = data?.map((district) =>  Number(parseFloat(district.swsn_teacher_percent).toFixed(2)));
 
         return { categories, cwsnData };
     };

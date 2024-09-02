@@ -18,10 +18,10 @@ export default function TeacherAndSchResourcesReportLineGraph() {
   // const [data, setData] = useState([])
   let combinedDatas;
   if (Array.isArray(allYearsData)) {
-    combinedDatas = allYearsData.reduce((acc, yearData) => {
+    combinedDatas = allYearsData?.reduce((acc, yearData) => {
       if (Array.isArray(yearData.data)) {
         return acc.concat(
-          yearData.data.map((item) => ({
+          yearData?.data?.map((item) => ({
             ...item,
             year: yearData.year,
           }))
@@ -117,12 +117,12 @@ export default function TeacherAndSchResourcesReportLineGraph() {
   {
     /*Bind Data for All years Data Start*/
   }
-  const categoriesYear = Array.from(new Set(data.map((item) => item.year)));
+  const categoriesYear = Array.from(new Set(data?.map((item) => item.year)));
 
   const seriesData = categoriesYear.map((year) => {
-    const yearData = data.filter((item) => item.year === year);
+    const yearData = data?.filter((item) => item.year === year);
     const ptrLessThan = yearData
-      .map((countDis) => parseFloat(countDis.ele_sch_percent).toFixed(2))
+      .map((countDis) => parseFloat(countDis?.ele_sch_percent)?.toFixed(2))
       .filter((val) => !isNaN(val));
 
     if (ptrLessThan.length === 0) {
@@ -136,7 +136,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
 
     return averagePtrLessThan;
   });
-  const formateSeriesData = seriesData.map((num) => parseFloat(num.toFixed(2)));
+  const formateSeriesData = seriesData.map((num) => parseFloat(num?.toFixed(2)));
 
   {
     /*Bind Data for All years Data Start*/
@@ -144,7 +144,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
 
   const percentageRenderer = (value) => {
     if (typeof value === "number") {
-      return value.toFixed(2);
+      return value?.toFixed(2);
     }
     return value;
   };

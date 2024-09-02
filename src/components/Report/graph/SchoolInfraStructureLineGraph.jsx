@@ -119,7 +119,7 @@ export default function SchoolInfraStructureLineGraph() {
   {
     /*Bind Data for All years Data Start*/
   }
-  const categoriesYear = Array.from(new Set(data.map((item) => item.year)));
+  const categoriesYear = Array.from(new Set(data?.map((item) => item.year)));
 
   const seriesData = categoriesYear?.map((year) => {
     const yearData = data?.filter((item) => item?.year === year);
