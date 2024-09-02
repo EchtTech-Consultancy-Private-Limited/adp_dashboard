@@ -457,7 +457,7 @@ export default function TransitionBlockRateCompare() {
                 <b>{t("selectOneMoreBlock")}</b>
               </Card>
             ) : (
-              <div className="piechart-box row align-items-center">
+              <div className="row align-items-center">
                 <HighchartsReact
                   highcharts={Highcharts}
                   options={{

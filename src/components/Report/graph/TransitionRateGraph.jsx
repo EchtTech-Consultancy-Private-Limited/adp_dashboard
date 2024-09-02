@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 export default function TransitionRateGraph() {
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
-    const { t} = useTranslation();
+    const { t } = useTranslation();
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
 
@@ -104,14 +104,14 @@ export default function TransitionRateGraph() {
         }],
     });
     const headingText = TopDistricts.length < 10
-    ? `${t('performance_of')} ${selectReportType === "ADP_Report" ? t('district') : t('block')} ${t('by_transition_rate')}`
-    : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}  ${t('transition_rate')}`;
+        ? `${t('performance_of')} ${selectReportType === "ADP_Report" ? t('district') : t('block')} ${t('by_transition_rate')}`
+        : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}  ${t('transition_rate')}`;
 
     return (
         <div className="row">
             <div className="col-md-6">
                 <div className="graph-card">
-                <h4 className='heading-sm'>{headingText}</h4>
+                    <h4 className='heading-sm'>{headingText}</h4>
                     <div className='graph'>
                         <HighchartsReact
                             highcharts={Highcharts}
@@ -124,6 +124,9 @@ export default function TransitionRateGraph() {
 
             <div className="col-md-6">
                 <TransitionRateGraphA />
+
+
+               
 
             </div>
         </div>

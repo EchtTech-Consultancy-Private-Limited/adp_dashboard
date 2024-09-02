@@ -152,14 +152,15 @@ export default function TeacherAndSchResourcesReportLineGraph() {
   const chartOptions = {
     chart: {
       type: "line",
-      marginTop: 50,
+      marginTop: 70,
+      height:430,
     },
     title: {
       text: "",
     },
     xAxis: {
       title: {
-        text:t('elementary_schools_with_ptr'),
+        // text:t('elementary_schools_with_ptr'),
         y: 50,
       },
       categories: categoriesYear,
@@ -201,7 +202,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
     },
     series: [
       {
-        name: "",
+        name: "Elementary Schools with PTR ≤ 30%",
         data: formateSeriesData,
         color: "#E6694A",
           // marker: {
@@ -223,7 +224,8 @@ export default function TeacherAndSchResourcesReportLineGraph() {
   };
 
   return (
-    <div className="graph-box">
+   <div className="col-md-6">
+     <div className="graph-box">
       <div className="row">
         <div className="col-md-12">
           <div className="graph-card">
@@ -243,5 +245,6 @@ export default function TeacherAndSchResourcesReportLineGraph() {
         </div>
       </div>
     </div>
+   </div>
   );
 }

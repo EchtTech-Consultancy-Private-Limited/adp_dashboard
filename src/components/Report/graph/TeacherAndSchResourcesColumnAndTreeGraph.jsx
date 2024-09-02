@@ -254,7 +254,9 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
   ? `${t('performance_of')} ${selectReportType === "ADP_Report" ? t('district') : t('block')} ${t('byElementarySchoolsWithPTR30')}`  
   : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}  ${t('byElementarySchoolsWithPTR30')}`;
   return (
-    <section className="infrastructure-main-card p-0" id="content">
+    <>
+   <div className="col-md-6">
+     <section className="infrastructure-main-card p-0">
       <div className="">
         <div className="container tab-for-graph">
           <div className="row align-items-center report-inner-tab">
@@ -382,10 +384,26 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div>                 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+   </div>
 
-                  <div className="col-md-12 mt-4">
-                    <div className="graph-card mt-2">
+   <div className="col-md-12">
+   <section className="infrastructure-main-card p-0">
+      <div className="">
+        <div className="container tab-for-graph">
+          <div className="row align-items-center report-inner-tab">
+            <div className="col-md-12 col-lg-12 p-0">
+              <div className="graph-box">
+                <div className="row">                
+                  <div className="col-md-12">
+                    <div className="graph-card">
                       <div className="text-btn-d">
                       <h2 className="heading-sm">  
                         {selectReportType === "ADP_Report" ? t('performanceOfDistrictsByPTR30') : t('performanceOfBlocksByPTR30')}
@@ -528,5 +546,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
         </div>
       </div>
     </section>
+   </div>
+   </>
   );
 }
