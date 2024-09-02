@@ -338,7 +338,7 @@ export default function StudentsPerformanceBlockCompare() {
       <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
         <div className="text-btn-d d-flex justify-content-between align-items-center">
           <h2 className="heading-sm">
-          Comparison By Percentage of Schools with CWSN-Trained Teachers
+          {t('comparison_by_percentage_schools_cwsn_trained_teachers')}
           </h2>
 
           {/* <div className="select-infra button-group-filter">
@@ -514,7 +514,21 @@ export default function StudentsPerformanceBlockCompare() {
                   },
 
 
-                ]
+                ],
+                exporting: {
+                  filename:t('comparison_by_percentage_schools_cwsn_trained_teachers'),
+                  csv: {
+                    columnHeaderFormatter: function (item) {
+                      if (
+                        !item ||
+                        item instanceof Highcharts.Axis
+                      ) {
+                        return t("category");
+                      }
+                      return item.name;
+                    },
+                  },
+                },
               }}
               immutable={true}
             />

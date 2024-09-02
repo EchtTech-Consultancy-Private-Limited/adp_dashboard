@@ -298,7 +298,7 @@ percentageCwsnTrainedTeach.map((percentage, index) => (
         <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
           <div className="text-btn-d d-flex justify-content-between align-items-center">
             <h2 className="heading-sm">
-            Comparison By Percentage of Schools with CWSN-Trained Teachers
+            {t('comparison_by_percentage_schools_cwsn_trained_teachers')}
             </h2>
 
             {/* <div className="select-infra button-group-filter">

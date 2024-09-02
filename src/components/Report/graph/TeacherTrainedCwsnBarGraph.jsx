@@ -27,6 +27,11 @@ export default function TeacherTrainedCwsnBarGraph() {
 
     const { categories: topCategories, cwsnData: topCwsnData } = getChartData(TopDistricts || []);
 
+    const headingText = TopDistricts.length < 10
+    ? `${t('performance_of')} ${selectReportType === "ADP_Report" ? t('district') : t('block')} ${t('by_teacher_trained_cwsn')}`
+    : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}  ${t('teacher_trained_cwsn')}`;
+
+
 
     const chartOptions = (categories, cwsnData, title) => ({
         chart: {
@@ -97,11 +102,22 @@ export default function TeacherTrainedCwsnBarGraph() {
             data: cwsnData,
             pointWidth: 12,
         },],
+        exporting: {
+            filename: headingText,
+            csv: {
+              columnHeaderFormatter: function (item) {
+                if (
+                  !item ||
+                  item instanceof Highcharts.Axis
+                ) {
+                  return t("category");
+                }
+                return item.name;
+              },
+            },
+          },
     });
-    const headingText = TopDistricts.length < 10
-        ? `${t('performance_of')} ${selectReportType === "ADP_Report" ? t('district') : t('block')} ${t('by_teacher_trained_cwsn')}`
-        : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}  ${t('teacher_trained_cwsn')}`;
-
+   
     return (
         <div className="row">
             <div className="col-md-6">
