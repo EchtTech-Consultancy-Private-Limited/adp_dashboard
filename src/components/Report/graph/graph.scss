@@ -142,7 +142,11 @@
     }
 
     h2.heading-sm {
-        font-size: 22px !important;
+        font-size: 21px !important;
+
+        @media (max-width: 1399px) and (min-width: 1024px) {
+            font-size: 15px !important;
+        }
     }
 
     span.subfont {
