@@ -133,7 +133,21 @@ export default function TeacherTrainedCwsnScatterGraph() {
                                     color: '#FFB74BF0',
                                     pointWidth: 20
                                 }
-                            ]
+                            ],
+                            exporting: {
+                                filename: t('label_wise_teacher_trained_cwsn'),
+                                csv: {
+                                  columnHeaderFormatter: function (item) {
+                                    if (
+                                      !item ||
+                                      item instanceof Highcharts.Axis
+                                    ) {
+                                      return t("category");
+                                    }
+                                    return item.name;
+                                  },
+                                },
+                              },
                         }}
                         immutable={true}
                     />
