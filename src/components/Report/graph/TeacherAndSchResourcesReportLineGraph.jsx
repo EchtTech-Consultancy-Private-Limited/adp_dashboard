@@ -239,7 +239,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
                   chart: {
                     type: "line",
                     marginTop: 50,
-                    height:420,
+                    height:425,
                   },
                   title: {
                     text: "",
@@ -251,7 +251,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
                     },
                     categories: categoriesYear,
                     gridLineWidth: 0,
-                    lineWidth: 0,
+                    lineWidth: 0,                   
                   },
                   yAxis: {
                     title: {

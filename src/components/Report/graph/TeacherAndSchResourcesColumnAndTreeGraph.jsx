@@ -295,6 +295,10 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
 
                                 xAxis: {
                                   categories: topCategories,
+                                  labels: {
+                                    rotation: -30,
+                                   
+                                }
                                 },
 
                                 yAxis: {

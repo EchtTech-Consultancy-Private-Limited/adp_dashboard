@@ -153,7 +153,7 @@ export default function SchoolInfraStructureLineGraph() {
     chart: {
       type: "line",
       marginTop: 50,
-      height:420,
+      height:425,
     },
     title: {
       text: "",

@@ -85,6 +85,9 @@ export default function SchoolInfraColumnGraph() {
 
                   xAxis: {
                     categories: topCategories,
+                    labels: {
+                      rotation: -30
+                  }
                   },
 
                   yAxis: {
