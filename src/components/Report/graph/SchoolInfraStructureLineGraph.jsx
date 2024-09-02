@@ -6,10 +6,12 @@ import { useSelector } from "react-redux";
 
 import useReportFilterData from "../../../CustomHook/useReportFilterData";
 
-export default function TeacherAndSchResourcesReportLineGraph() {
+export default function SchoolInfraStructureLineGraph() {
   const { t } = useTranslation();
 
   const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
+
+  console.log("finalData",finalData)
   const allYearsData = useSelector(
     (state) => state.reportAdpAbpType.allYearDataForGraph
   );
@@ -122,7 +124,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
   const seriesData = categoriesYear.map((year) => {
     const yearData = data.filter((item) => item.year === year);
     const ptrLessThan = yearData
-      .map((countDis) => parseFloat(countDis.ele_sch_percent).toFixed(2))
+      .map((countDis) => parseFloat(countDis.sch_having_toilet_40_percent).toFixed(2))
       .filter((val) => !isNaN(val));
 
     if (ptrLessThan.length === 0) {
@@ -153,14 +155,14 @@ export default function TeacherAndSchResourcesReportLineGraph() {
     chart: {
       type: "line",
       marginTop: 70,
-      height:430,
+      height:425,
     },
     title: {
       text: "",
     },
     xAxis: {
       title: {
-        // text:t('elementary_schools_with_ptr'),
+        // text: "Percentage of schools with girls' toilets at a 40:1 ",
         y: 50,
       },
       categories: categoriesYear,
@@ -185,7 +187,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
       },
     },
     legend: {
-      layout: "vertical",
+      layout: "horizontal",
       align: "center",
       verticalAlign: "bottom",
       itemMarginTop: 10,
@@ -201,13 +203,16 @@ export default function TeacherAndSchResourcesReportLineGraph() {
     },
     series: [
       {
-        name: "Elementary Schools with PTR ≤ 30%",
+        name: "Percentage of schools with girls' toilets at a 40:1 ",
         data: formateSeriesData,
         color: "#E6694A",
+        marker: {
+          symbol: "circle",
+        },
       },
     ],
     exporting: {
-      filename: t("ptr_last_five_years_school_category"),
+      filename: t("Percentage of schools with girls' toilets at a 40:1 "),
       csv: {
         columnHeaderFormatter: function (item) {
           if (!item || item instanceof Highcharts.Axis) {
@@ -218,18 +223,15 @@ export default function TeacherAndSchResourcesReportLineGraph() {
       },
     },
   };
-  
-  
 
   return (
-   <div className="col-md-6">
-     <div className="graph-box">
+    <div className="graph-box mt-0">
       <div className="row">
         <div className="col-md-12">
           <div className="graph-card">
             <div className="text-btn-d">
               <h2 className="heading-sm">
-                Year Wise Elementary Schools Data with PTR ≤ 30%
+                Year Wise Percentage of schools with girls' toilets at a 40:1 
               </h2>
             </div>
             <div className="graph">
@@ -243,6 +245,5 @@ export default function TeacherAndSchResourcesReportLineGraph() {
         </div>
       </div>
     </div>
-   </div>
   );
 }
