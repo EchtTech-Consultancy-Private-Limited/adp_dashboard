@@ -301,7 +301,7 @@ export default function TeacherAndSchoolCompare() {
           <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
             <div className="text-btn-d d-flex justify-content-between align-items-center">
               <h2 className="heading-sm">
-              Comparison By Elementary Schools with PTR ≤ 30%
+              {t('comparisonByElementarySchoolsPTR30')}
 
                 {/* {t("comparisonByTransitionRate")} */}
               </h2>
@@ -445,20 +445,20 @@ export default function TeacherAndSchoolCompare() {
                   series: [
                     {
                       color: "#FFB74BF0",
-                      name: t('PTR < 30'),
+                      name: t('ptrLessThan30'),
                       data: totalU_ptr,
                       maxPointWidth: 50,
                     },
                     {
                       color: "#6C6CB0",
-                      name: t('Elementry School'),
+                      name: t('elementarySchool'),
                       data: totalSchEle,
                       maxPointWidth: 50,
   
                     },
                     {
                       color: "#17AFD2",
-                      name: t('% PTR < 30'),
+                      name: t('ptrLessThan30Percent'),
                       data: totalEleSchPercent,
                       maxPointWidth: 50,
                     },

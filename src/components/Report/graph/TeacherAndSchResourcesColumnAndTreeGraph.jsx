@@ -251,8 +251,8 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
  
 
   const headingText = TopDistrictsAndBlocksColumnGraph.length < 10
-  ? `${t('performance_of')} ${selectReportType === "ADP_Report" ? t('district') : t('block')} ${t('By Elementary Schools with PTR ≤ 30%')}`
-  : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}  ${t('By Elementary Schools with PTR ≤ 30%')}`;
+  ? `${t('performance_of')} ${selectReportType === "ADP_Report" ? t('district') : t('block')} ${t('byElementarySchoolsWithPTR30')}`  
+  : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}  ${t('byElementarySchoolsWithPTR30')}`;
   return (
     <section className="infrastructure-main-card p-0" id="content">
       <div className="">
@@ -361,7 +361,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                                   },
                                 ],
                                 exporting: {
-                                  filename: t("top_performing_states_ptr"),
+                                  filename: headingText,
                                   csv: {
                                     columnHeaderFormatter: function (item) {
                                       if (
@@ -387,9 +387,10 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                   <div className="col-md-12 mt-4">
                     <div className="graph-card mt-2">
                       <div className="text-btn-d">
-                      <h2 className="heading-sm">  {selectReportType === "ADP_Report" ? "Performance of Districts By Elementary Schools with PTR ≤ 30%" : "Performance of  Blocks By Elementary Schools with PTR ≤ 30%"}
-                      </h2>                      </div>
-
+                      <h2 className="heading-sm">  
+                        {selectReportType === "ADP_Report" ? t('performanceOfDistrictsByPTR30') : t('performanceOfBlocksByPTR30')}
+                      </h2>                      
+                      </div>
                       <div
                         className={`scroll-btn-graph ${
                           currentIndex === 0 ? "disabled" : ""
@@ -403,7 +404,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                         highcharts={Highcharts}
                         options={{
                           title: {
-                            text: t("pupil_teacher_ratio_overview"),
+                            text: selectReportType === "ADP_Report" ? t('performanceOfDistrictsByPTR30') : t('performanceOfBlocksByPTR30')
                           },
                           credits: {
                             enabled: false,
@@ -477,7 +478,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                             },
                           ],
                           exporting: {
-                            filename: t("pupil_teacher_ratio_overview"),
+                            filename: selectReportType === "ADP_Report" ? t('performanceOfDistrictsByPTR30') : t('performanceOfBlocksByPTR30'),
                             csv: {
                               columnHeaderFormatter: function (item) {
                                 if (!item || item instanceof Highcharts.Axis) {
