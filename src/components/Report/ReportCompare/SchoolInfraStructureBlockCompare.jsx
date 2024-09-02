@@ -20,6 +20,8 @@ import BlankPage from "../BlankPage";
 import { ScrollToTopOnMount } from "../../../Scroll/ScrollToTopOnMount";
 import { useTranslation } from "react-i18next";
 import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer.jsx"
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 
 export default function SchoolInfraStructureBlockCompare() {
 
@@ -38,7 +40,7 @@ export default function SchoolInfraStructureBlockCompare() {
   const selectedBlocks = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareBlock
   );
-
+  const isActiveGraph = useSelector((state) => state.reportAdpAbpType.isActiveGraph)
   function resteData() {
     dispatch(selectState(SelectState));
     dispatch(setselectedCompareOption("upper_primary_to_secondary"));
@@ -47,18 +49,6 @@ export default function SchoolInfraStructureBlockCompare() {
     resteData();
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   // dispatch(setUpdateReportType('ADP_Report'));
-  //   dispatch(setAspirationalAllData(aspirationalAdpData));
-  // }, [dispatch]);
-  // useEffect(() => {
-  //   if (selectedAdpAbpOption === "ADP_Report") {
-  //     dispatch(setAspirationalAllData(aspirationalAdpData));
-  //   } else {
-  //     dispatch(setAspirationalAllData(aspirationalAbpData));
-  //   }
-  // }, [selectedAdpAbpOption]);
-  // Initialize states and districts from JSON data
   useEffect(() => {
     const structuredData = aspirationalData.reduce((acc, curr) => {
       const stateIndex = acc?.findIndex(
@@ -139,48 +129,31 @@ export default function SchoolInfraStructureBlockCompare() {
     );
   };
 
-  // Handle option change
+  const coedAndgirlSchoolData = selectedBlocks?.map(block => block?.tot_school_girl_co_ed);
+  const schHavingFunGirlsToiletData = selectedBlocks?.map(block => block?.functional_toilet_girls_percent);
+  const noSchHavingFunGirlsToiletData = selectedBlocks?.map(block => block?.total_no_of_fun_girls_toilet);
+  const SchHavingFunGirlsToiletRatioData = selectedBlocks?.map(block => block?.sch_having_toilet_40_percent);
+  const noSchHavingFunGirlsToiletRatioData = selectedBlocks?.map(block => block?.toilet_40);
+
   const handleOptionChange = (event) => {
     dispatch(setselectedCompareOption(event.target.value));
   };
   return (
     <>
       <ScrollToTopOnMount />
-      <div className="card-box">
+      {!isActiveGraph ? (<div className="card-box">
         <div className="row align-items-end">
           <div className="col-md-12">
             <div className="d-flex align-items-center">
               <div className="title-box">
-                {/* <h5 className='sub-title'>State :
-                                    <Select
-                                        className='state-select'
-                                        onChange={handleStateChange}
-                                        style={{ width: "50%" }}
-                                        placeholder="Select State"
-                                        mode="single"
-                                        showSearch
-                                        value={selectedState || SelectState}
-                                    >
-                                        <Select.Option key="Select State" value={SelectState}>
-                                            Select State
-                                        </Select.Option>
-                                        {states.map((state) => (
-                                            <Select.Option
-                                                key={state.lgd_state_id}
-                                                value={state.lgd_state_name}
-                                            >
-                                                {state.lgd_state_name}
-                                            </Select.Option>
-                                        ))}
-                                    </Select>
-                                </h5> */}
+
                 <h3 className="heading-sm">
                   {t('comparisonBySchoolInfrastructure')}
                 </h3>
               </div>
             </div>
           </div>
-         
+
         </div>
 
         <div className="row">
@@ -329,7 +302,189 @@ export default function SchoolInfraStructureBlockCompare() {
             <BlankPage />
           )}
         </div>
-      </div>
+      </div>) : (<div className="col-md-12 graph-box">
+        <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
+          <div className="text-btn-d d-flex justify-content-between align-items-center">
+            <h2 className="heading-sm">
+
+            {t("comparisonBySchoolInfrastructure")}
+
+            </h2>
+          </div>
+
+          <div className="Comparison-box">
+            <div className="row align-items-center">
+              <div className="col-md-2 col-lg-2">
+                <h4 className="sub-heading text-left">
+                  {t('add_block_to_compare')}
+                </h4>
+              </div>
+              <div className="col-md-10 col-lg-10 pe-2">
+                <div className="select-infra Comparison-select-group">
+                  {[...Array(MAX_BLOCKS)]?.map((_, index) => (
+                    <div key={index} className="width-20">
+                      <Select
+                        className="form-select bg-grey2"
+                        onChange={(value) => handleBlockChange(value, index)}
+                        style={{ width: "100%" }}
+                        placeholder={`${t("addBlock")} ${index + 1}`}
+                        mode="single"
+                        showSearch
+                        value={
+                          selectedBlocks[index]?.lgd_block_name ||
+                          `${t("addBlock")}`
+                        }
+                        disabled={index > 0 && !selectedBlocks[index - 1]}
+                      >
+                        {getFilteredBlocks(index).map((block) => (
+                          <Select.Option
+                            key={block?.lgd_block_id}
+                            value={block?.lgd_block_name}
+                          >
+                            {block?.lgd_block_name}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {selectedBlocks.length === 1 ? (
+            <Card
+              style={{
+                width: 300,
+                margin: "20px auto 0",
+              }}
+            >
+              <b>{t("selectOneMoreBlock")}</b>
+            </Card>
+          ) : (
+            <div className="piechart-box row align-items-center">
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={{
+                  chart: {
+                    type: "column",
+                    marginTop: 80,
+                    events: {
+                      beforePrint: function () {
+                        this.exportSVGElements[0].box.hide();
+                        this.exportSVGElements[1].hide();
+                      },
+                      afterPrint: function () {
+                        this.exportSVGElements[0].box.show();
+                        this.exportSVGElements[1].show();
+                      },
+                    },
+                  },
+                  xAxis: {
+                    categories: selectedBlocks.map(
+                      (district) => district.lgd_block_name
+                    ),
+                  },
+                  yAxis: {
+                    allowDecimals: false,
+                    min: 0,
+                    title: {
+                      text: "",
+                    },
+                  },
+                  title: {
+                    text: "",
+                  },
+                  tooltip: {
+                    headerFormat: "<b>{point.x}</b><br/>",
+                    pointFormat: "{series.name}: {point.y}",
+                    pointFormatter: function () {
+                      return `<span style="color:${this.color
+                        }">\u25CF</span> ${this.series.name
+                        }: <b>${this.y.toLocaleString("en-IN")}</b><br/>`;
+                    },
+                  },
+                  plotOptions: {
+                    column: {
+                      stacking: "normal",
+                      dataLabels: {
+                        enabled: true,
+                        crop: false,
+                        overflow: "none",
+                        rotation: 0,
+                        align: "center",
+                        x: -2,
+                        y: -5,
+                        style: {
+                          font: "13px Arial, sans-serif",
+                          fontWeight: "600",
+                          stroke: "transparent",
+                          align: "center",
+                        },
+                        position: "top",
+                        formatter: function () {
+                          // return parseFloat(
+                          //   this.y
+                          // ).toFixed(0);
+                          return this.y.toLocaleString("en-IN");
+                        },
+                      },
+                    },
+                  },
+                  legend: {
+                    layout: "horizontal",
+                    align: "center",
+                    verticalAlign: "bottom",
+                    itemMarginTop: 10,
+                    itemMarginBottom: 10,
+                  },
+                  credits: {
+                    enabled: false,
+                  },
+                  exports: {
+                    enabled: false,
+                  },
+                  series: [{
+                    color: "#17AFD2",
+                    name: t('Tot Coed & Girls Sch'),
+                    data: coedAndgirlSchoolData,
+                    maxPointWidth: 50,
+                  }, {
+                    color: "#6C6CB0",
+                    name: t('Tot Sch Fun girls toilets'),
+                    data: noSchHavingFunGirlsToiletData,
+                    maxPointWidth: 50,
+
+                  },
+                  {
+                    color: "#FFB74BF0",
+                    name: t('Per Sch Fun girls toilets'),
+                    data: schHavingFunGirlsToiletData,
+                    maxPointWidth: 50,
+                  },
+                  {
+                    color: "#FFB74BF0",
+                    name: t('Tot Sch Fun girls toilets 40:1'),
+                    data: noSchHavingFunGirlsToiletRatioData,
+                    maxPointWidth: 50,
+                  }
+                    ,
+                  {
+                    color: "#FFB74BF0",
+                    name: t('Per Sch Fun girls toilets 40:1'),
+                    data: SchHavingFunGirlsToiletRatioData,
+                    maxPointWidth: 50,
+                  }
+
+                  ]
+                }}
+                immutable={true}
+              />
+            </div>
+          )}
+        </div>
+      </div>)}
+
     </>
   );
 }

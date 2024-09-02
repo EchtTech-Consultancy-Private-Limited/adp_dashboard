@@ -19,6 +19,7 @@ import {
   setselectedOption,
   setselectedOptionTop50,
   SetSheetName,
+  setIsActiveGraph
 } from "../../redux/slice/reportTypeSlice";
 import {
   AllBlock,
@@ -37,6 +38,7 @@ import schWithToiletRatioAdp2021 from "../../aspirational-reports-data/schWithTo
 import schWithToiletRatioAdp2022 from "../../aspirational-reports-data/schWithToiletRatioAdp2022-2023.json";
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 import useReportFilterData from "../../CustomHook/useReportFilterData";
+import SchoolInfraStructureLineGraph from "./graph/SchoolInfraStructureLineGraph";
 
 export default function SchoolInfraStructureReport() {
   const dispatch = useDispatch();
@@ -71,6 +73,8 @@ export default function SchoolInfraStructureReport() {
 
   const states = useSelector((state) => state.locationAdp.states);
   const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName);
+  const isActiveGraph = useSelector((state) => state.reportAdpAbpType.isActiveGraph)
+
   const [gridApi, setGridApi] = useState();
   const savedReportName = localStorage.getItem("selectedReport");
   const report_name = savedReportName;
@@ -827,9 +831,21 @@ export default function SchoolInfraStructureReport() {
   const handleOptionChange = (event) => {
     dispatch(setselectedOptionTop50(event.target.value));
   };
-  const toggleClass = (e) => {
-    dispatch(setselectedOptionTop50(""));
-  };
+  // const toggleClass = (e) => {
+  //   dispatch(setselectedOptionTop50(""));
+  // };
+
+  const toggleClass = (isGraph) => {
+    if (isGraph !== false) {
+        
+        dispatch(setIsActiveGraph(true));
+    }
+    else{
+        dispatch(setIsActiveGraph(false));
+        dispatch(setselectedOptionTop50(""));
+    }
+};
+
 
   return (
     <>
@@ -876,27 +892,16 @@ export default function SchoolInfraStructureReport() {
 
                       </div>
                       <div className="tab-box">
-                        <button
-                          className="tab-button active"
-                          onClick={toggleClass}
-                        >
-                          <img src={table} alt="Table" />{" "}
-                          <span>{t("tableView")}</span>
-                        </button>
-                        <button className="tab-button" onClick={toggleClass}>
-                          <img src={chart} alt="chart" />{" "}
-                          <span>{t("chartView")}</span>
-                        </button>
-                      </div>
+                                                <button className={`tab-button  ${isActiveGraph ? '' : 'active'}`} onClick={() => { toggleClass(false) }}><img src={table} alt="Table" /> <span>{t('tableView')}</span></button>
+                                                <button className={`tab-button  ${isActiveGraph ? 'active' : ''}`} onClick={() => { toggleClass(true) }}><img src={chart} alt="chart" /> <span>{t('chartView')}</span></button>
+                                            </div>
                     </div>
                   </div>
 
 
                   <div className="col-md-6">
                     <div className="d-flex w-m-100 justify-content-end">
-                      {selectedState !== SelectState &&
-                        selectedDistrict !== SelectDistrict &&
-                        selectedDistrict !== AllDistrict && selectReportType !== "ABP_Report" ? (
+                      {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict && selectReportType !== "ABP_Report"  && selectedDistrict !== AllDistrict ) && isActiveGraph ===false  ? (
                         <div className="radio-button w-auto">
                           <div className="box-radio me-4">
                             <input
@@ -923,7 +928,7 @@ export default function SchoolInfraStructureReport() {
                       ) : (
                         ""
                       )}
-
+                 {isActiveGraph ===false ? (
                       <div className="">
                         {/* <img src={download} alt="download" /> */}
                         <select
@@ -945,14 +950,15 @@ export default function SchoolInfraStructureReport() {
                           </option>
                         </select>
                       </div>
+): ("") }
                     </div>
                   </div>
                 </div>
 
                 <div className="row">
                   <div className="col-md-12">
-                    <div className="table-box mt-4">
-                      <div
+                  <div className={`table-box mt-4  ${isActiveGraph ? 'd-none' : ''}`}>
+                  <div
                         id="content"
                         className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
                         style={{ width: "100%", height: 400 }}
@@ -970,6 +976,9 @@ export default function SchoolInfraStructureReport() {
                           onGridReady={onGridReady}
                         />
                       </div>
+                    </div>
+                    <div className={`graph-box  ${isActiveGraph ? '' : 'd-none'}`}>
+                    <SchoolInfraStructureLineGraph />
                     </div>
                   </div>
                 </div>
