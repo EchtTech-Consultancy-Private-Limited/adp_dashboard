@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import useReportFilterData from "../../../CustomHook/useReportFilterData";
 
@@ -159,7 +159,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
     },
     xAxis: {
       title: {
-        text:t('elementary_schools_with_ptr'),
+        // text: "Elementary Schools with PTR ≤ 30%",
         y: 50,
       },
       categories: categoriesYear,
@@ -183,9 +183,8 @@ export default function TeacherAndSchResourcesReportLineGraph() {
         },
       },
     },
-    
     legend: {
-      layout: "horizontal",
+      layout: "vertical",
       align: "center",
       verticalAlign: "bottom",
       itemMarginTop: 10,
@@ -201,16 +200,13 @@ export default function TeacherAndSchResourcesReportLineGraph() {
     },
     series: [
       {
-        name: "",
+        name: "Elementary Schools with PTR ≤ 30%",
         data: formateSeriesData,
         color: "#E6694A",
-          // marker: {
-          //   symbol: "circle",
-          // },
       },
     ],
     exporting: {
-      filename:t('year_wise_elementary_schools_data_with_ptr'),
+      filename: t("ptr_last_five_years_school_category"),
       csv: {
         columnHeaderFormatter: function (item) {
           if (!item || item instanceof Highcharts.Axis) {
@@ -221,6 +217,8 @@ export default function TeacherAndSchResourcesReportLineGraph() {
       },
     },
   };
+  
+  
 
   return (
     <div className="graph-box">
@@ -229,7 +227,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
           <div className="graph-card">
             <div className="text-btn-d">
               <h2 className="heading-sm">
-              {t('year_wise_elementary_schools_data_with_ptr')}
+                Year Wise Elementary Schools Data with PTR ≤ 30%
               </h2>
             </div>
             <div className="graph">

@@ -35,12 +35,6 @@ export default function StudentsPerformanceCompare() {
     resteData()
   }, [dispatch]);
 
-
-  // useEffect(() => {
-  //   dispatch(setAspirationalAllData(aspirationalAdpData))
-  // }, [dispatch]);
-
-
   useEffect(() => {
     const structuredData = aspirationalData.reduce((acc, curr) => {
       const stateIndex = acc?.findIndex(
@@ -300,16 +294,6 @@ percentageCwsnTrainedTeach.map((percentage, index) => (
             <h2 className="heading-sm">
             {t('comparison_by_percentage_schools_cwsn_trained_teachers')}
             </h2>
-
-            {/* <div className="select-infra button-group-filter">
-              <select id="export_data" className="form-select bg-grey2" defaultValue={"upper_primary_to_secondary"}
-                value={selectedOption}
-                onChange={handleOptionChange}
-              >
-                <option value="upper_primary_to_secondary"> {t("upperPrimaryToSecondary")}</option>
-                <option value="secondary_to_higher_secondary">  {t("secondaryToHigherSecondary")}</option>
-              </select>
-            </div> */}
 
           </div>
 
