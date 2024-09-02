@@ -255,7 +255,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
   : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}  ${t('byElementarySchoolsWithPTR30')}`;
   return (
     <>
-   <div className="col-md-6">
+   <div className="col-md-7">
      <section className="infrastructure-main-card p-0">
       <div className="">
         <div className="container tab-for-graph">
@@ -280,7 +280,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                               options={{
                                 chart: {
                                   type: "column",
-                                  // marginTop: 50,
+                                  marginTop: 50,
                                   events: {
                                     beforePrint: function () {
                                       this.exportSVGElements[0].box.hide();
