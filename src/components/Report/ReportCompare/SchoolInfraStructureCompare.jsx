@@ -464,14 +464,14 @@ export default function SchoolInfraStructureCompare() {
                     maxPointWidth: 50,
                   },
                   {
-                    color: "#FFB74BF0",
+                    color: "#0d266c",
                     name: t('Tot Sch Fun girls toilets 40:1'),
                     data: noSchHavingFunGirlsToiletRatioData,
                     maxPointWidth: 50,
                   }
                     ,
                   {
-                    color: "#FFB74BF0",
+                    color: "#A33C64",
                     name: t('Per Sch Fun girls toilets 40:1'),
                     data: SchHavingFunGirlsToiletRatioData,
                     maxPointWidth: 50,
