@@ -159,7 +159,7 @@ export default function SchoolInfraStructureLineGraph() {
     },
     xAxis: {
       title: {
-        text: "Elementary Schools with PTR ≤ 30%",
+        text: "Schools with Adequate Girls' Toilets",
         y: 50,
       },
       categories: categoriesYear,
@@ -200,7 +200,7 @@ export default function SchoolInfraStructureLineGraph() {
     },
     series: [
       {
-        name: "Elementary Schools with PTR ≤ 30%",
+        name: "Schools with Adequate Girls' Toilets",
         data: formateSeriesData,
         color: "#E6694A",
         marker: {
@@ -228,7 +228,7 @@ export default function SchoolInfraStructureLineGraph() {
           <div className="graph-card">
             <div className="text-btn-d">
               <h2 className="heading-sm">
-                Year Wise Elementary Schools Data with PTR ≤ 30%
+                Year Wise Schools with Adequate Girls' Toilets
               </h2>
             </div>
             <div className="graph">

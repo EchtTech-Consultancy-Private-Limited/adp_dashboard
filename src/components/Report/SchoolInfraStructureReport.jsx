@@ -37,6 +37,7 @@ import schWithToiletRatioAdp2021 from "../../aspirational-reports-data/schWithTo
 import schWithToiletRatioAdp2022 from "../../aspirational-reports-data/schWithToiletRatioAdp2022-2023.json";
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 import useReportFilterData from "../../CustomHook/useReportFilterData";
+import SchoolInfraStructureLineGraph from "./graph/SchoolInfraStructureLineGraph";
 
 export default function SchoolInfraStructureReport() {
   const dispatch = useDispatch();
@@ -71,6 +72,8 @@ export default function SchoolInfraStructureReport() {
 
   const states = useSelector((state) => state.locationAdp.states);
   const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName);
+  const isActiveGraph = useSelector((state) => state.reportAdpAbpType.isActiveGraph)
+
   const [gridApi, setGridApi] = useState();
   const savedReportName = localStorage.getItem("selectedReport");
   const report_name = savedReportName;
@@ -971,6 +974,13 @@ export default function SchoolInfraStructureReport() {
                         />
                       </div>
                     </div>
+
+                    {/* <div className={`graph-box  ${isActiveGraph ? '' : 'd-none'}`}> */}
+                                            {/* <SchoolInfraStructureLineGraph /> */}
+                                        {/* </div> */}
+
+
+
                   </div>
                 </div>
               </div>
