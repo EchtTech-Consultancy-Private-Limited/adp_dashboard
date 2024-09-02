@@ -222,7 +222,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
   
 
   return (
-   <div className="col-md-6">
+   <div className="col-md-5">
      <div className="graph-box">
       <div className="row">
         <div className="col-md-12">

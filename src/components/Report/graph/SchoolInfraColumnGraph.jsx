@@ -51,12 +51,10 @@ export default function SchoolInfraColumnGraph() {
   });
   const headingText =
     TopDistrictsAndBlocksColumnGraph.length < 10
-      ? `${t("performance_of")} ${
-          selectReportType === "ADP_Report" ? t("district") : t("block")
-        } ${t("percentage_schools_girls_toilets_40_1")}`
-      : `${t("top_ten")} ${
-          selectReportType === "ADP_Report" ? t("district") : t("block")
-        }  ${t("percentage_schools_girls_toilets_40_1")}`;
+      ? `${t("performance_of")} ${selectReportType === "ADP_Report" ? t("district") : t("block")
+      } ${t("percentage_schools_girls_toilets_40_1")}`
+      : `${t("top_ten")} ${selectReportType === "ADP_Report" ? t("district") : t("block")
+      }  ${t("percentage_schools_girls_toilets_40_1")}`;
 
   return (
     <div className="col-md-12">
