@@ -53,12 +53,12 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
   )?.slice(0, 10);
 
   const getColumnGraphData = (data) => {
-    const categories = data.map((district) =>
+    const categories = data?.map((district) =>
       selectReportType === "ADP_Report"
         ? district.lgd_district_name
         : district.lgd_block_name
     );
-    const elementry_sch_per = data.map((district) =>
+    const elementry_sch_per = data?.map((district) =>
       selectReportType === "ADP_Report"
         ? district.ele_sch_percent
         : district.ele_sch_percent
@@ -70,7 +70,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
   const { categories: topCategories, elementry_sch_per: topElementrySchPer } =
     getColumnGraphData(TopDistrictsAndBlocksColumnGraph || []);
 
-    const formatedTopElementrySchPer=topElementrySchPer.map(num=>parseFloat(num.toFixed(2)))
+    const formatedTopElementrySchPer=topElementrySchPer?.map(num=>parseFloat(num?.toFixed(2)))
 
 
   // *******end Column graph********
@@ -123,14 +123,14 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
       let total_sch_ele = {
         id: ++count,
         parent: item.lgd_district_name,
-        name: `Number of Elementary Schools : ${item.total_sch_ele.toFixed(2)}`,
+        name: `Number of Elementary Schools : ${item?.total_sch_ele?.toFixed(2)}`,
         value: item.total_sch_ele,
         color: getColorCode(item.total_sch_ele),
       };
       let u_ptr = {
         id: ++count,
         parent: item.lgd_district_name,
-        name: `Elementary Schools with PTR ≤ 30 : ${item.u_ptr.toFixed(2)}`,
+        name: `Elementary Schools with PTR ≤ 30 : ${item?.u_ptr?.toFixed(2)}`,
         value: item.u_ptr,
         color: getColorCode(item.u_ptr),
       };
@@ -139,7 +139,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
       let ele_sch_percent = {
         id: ++count,
         parent: item.lgd_district_name,
-        name: `Percentage of Elementary Schools with PTR ≤ 30% : ${item.ele_sch_percent.toFixed(2)}`,
+        name: `Percentage of Elementary Schools with PTR ≤ 30% : ${item?.ele_sch_percent?.toFixed(2)}`,
         value: item.ele_sch_percent,
         color: getColorCode(item.ele_sch_percent),
       };
@@ -161,7 +161,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
       let total_sch_ele = {
         id: ++count,
         parent: item.lgd_block_name,
-        name: `Number of Elementary Schools : ${item.total_sch_ele.toFixed(2)}`,
+        name: `Number of Elementary Schools : ${item?.total_sch_ele?.toFixed(2)}`,
         value: item.total_sch_ele,
         color: getColorCode(item.total_sch_ele),
       };
@@ -169,7 +169,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
       let u_ptr = {
         id: ++count,
         parent: item.lgd_block_name,
-        name: `Elementary Schools with PTR ≤ 30 :  ${item.u_ptr.toFixed(2)}`,
+        name: `Elementary Schools with PTR ≤ 30 :  ${item?.u_ptr?.toFixed(2)}`,
         value: item.u_ptr,
         color: getColorCode(item.u_ptr),
       };
@@ -178,7 +178,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
       let ele_sch_percent = {
         id: ++count,
         parent: item.lgd_block_name,
-        name: `Percentage of Elementary Schools with PTR ≤ 30% :  ${item.ele_sch_percent.toFixed(2)}`,
+        name: `Percentage of Elementary Schools with PTR ≤ 30% :  ${item?.ele_sch_percent?.toFixed(2)}`,
         value: item.ele_sch_percent,
         color: getColorCode(item.ele_sch_percent),
       };
@@ -333,7 +333,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                                       },
                                       position: "top",
                                       formatter: function () {
-                                        return parseFloat(this.y).toFixed(2);
+                                        return parseFloat(this.y)?.toFixed(2);
                                       },
                                     },
                                   },
