@@ -901,9 +901,7 @@ export default function SchoolInfraStructureReport() {
 
                   <div className="col-md-6">
                     <div className="d-flex w-m-100 justify-content-end">
-                      {selectedState !== SelectState &&
-                        selectedDistrict !== SelectDistrict &&
-                        selectedDistrict !== AllDistrict && selectReportType !== "ABP_Report" ? (
+                      {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict && selectReportType !== "ABP_Report"  && selectedDistrict !== AllDistrict ) && isActiveGraph ===false  ? (
                         <div className="radio-button w-auto">
                           <div className="box-radio me-4">
                             <input
@@ -930,7 +928,7 @@ export default function SchoolInfraStructureReport() {
                       ) : (
                         ""
                       )}
-
+                 {isActiveGraph ===false ? (
                       <div className="">
                         {/* <img src={download} alt="download" /> */}
                         <select
@@ -952,6 +950,7 @@ export default function SchoolInfraStructureReport() {
                           </option>
                         </select>
                       </div>
+): ("") }
                     </div>
                   </div>
                 </div>

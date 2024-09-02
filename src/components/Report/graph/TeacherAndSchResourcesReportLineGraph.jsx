@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import useReportFilterData from "../../../CustomHook/useReportFilterData";
 
@@ -159,7 +159,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
     },
     xAxis: {
       title: {
-        text: "Elementary Schools with PTR ≤ 30%",
+        text:t('elementary_schools_with_ptr'),
         y: 50,
       },
       categories: categoriesYear,
@@ -183,6 +183,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
         },
       },
     },
+    
     legend: {
       layout: "horizontal",
       align: "center",
@@ -200,16 +201,16 @@ export default function TeacherAndSchResourcesReportLineGraph() {
     },
     series: [
       {
-        name: "Elementary Schools with PTR ≤ 30%",
+        name: "",
         data: formateSeriesData,
         color: "#E6694A",
-        marker: {
-          symbol: "circle",
-        },
+          // marker: {
+          //   symbol: "circle",
+          // },
       },
     ],
     exporting: {
-      filename: t("ptr_last_five_years_school_category"),
+      filename:t('year_wise_elementary_schools_data_with_ptr'),
       csv: {
         columnHeaderFormatter: function (item) {
           if (!item || item instanceof Highcharts.Axis) {
@@ -228,7 +229,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
           <div className="graph-card">
             <div className="text-btn-d">
               <h2 className="heading-sm">
-                Year Wise Elementary Schools Data with PTR ≤ 30%
+              {t('year_wise_elementary_schools_data_with_ptr')}
               </h2>
             </div>
             <div className="graph">

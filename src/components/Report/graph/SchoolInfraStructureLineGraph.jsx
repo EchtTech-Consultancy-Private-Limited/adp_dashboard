@@ -10,6 +10,8 @@ export default function SchoolInfraStructureLineGraph() {
   const { t } = useTranslation();
 
   const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
+
+  console.log("finalData",finalData)
   const allYearsData = useSelector(
     (state) => state.reportAdpAbpType.allYearDataForGraph
   );
@@ -122,7 +124,7 @@ export default function SchoolInfraStructureLineGraph() {
   const seriesData = categoriesYear.map((year) => {
     const yearData = data.filter((item) => item.year === year);
     const ptrLessThan = yearData
-      .map((countDis) => parseFloat(countDis.ele_sch_percent).toFixed(2))
+      .map((countDis) => parseFloat(countDis.sch_having_toilet_40_percent).toFixed(2))
       .filter((val) => !isNaN(val));
 
     if (ptrLessThan.length === 0) {
@@ -159,7 +161,7 @@ export default function SchoolInfraStructureLineGraph() {
     },
     xAxis: {
       title: {
-        text: "Schools with Adequate Girls' Toilets",
+        text: "Percentage of schools with girls' toilets at a 40:1 ",
         y: 50,
       },
       categories: categoriesYear,
@@ -200,7 +202,7 @@ export default function SchoolInfraStructureLineGraph() {
     },
     series: [
       {
-        name: "Schools with Adequate Girls' Toilets",
+        name: "Percentage of schools with girls' toilets at a 40:1 ",
         data: formateSeriesData,
         color: "#E6694A",
         marker: {
@@ -209,7 +211,7 @@ export default function SchoolInfraStructureLineGraph() {
       },
     ],
     exporting: {
-      filename: t("ptr_last_five_years_school_category"),
+      filename: t("Percentage of schools with girls' toilets at a 40:1 "),
       csv: {
         columnHeaderFormatter: function (item) {
           if (!item || item instanceof Highcharts.Axis) {
@@ -228,7 +230,7 @@ export default function SchoolInfraStructureLineGraph() {
           <div className="graph-card">
             <div className="text-btn-d">
               <h2 className="heading-sm">
-                Year Wise Schools with Adequate Girls' Toilets
+                Year Wise Percentage of schools with girls' toilets at a 40:1 
               </h2>
             </div>
             <div className="graph">

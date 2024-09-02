@@ -215,7 +215,7 @@ export default function TransitionRateReport() {
     // };
 
 
-    const data=useReportFilterData(aspirationalData);
+    const data = useReportFilterData(aspirationalData);
 
     const percentageRenderer = (params) => {
         const value = params.value;
@@ -779,18 +779,20 @@ export default function TransitionRateReport() {
 
     // const [isActive, setIsActive] = useState(false);
     // const toggleClass = (e) => {
-       
+
     //     dispatch(setIsActiveGraph(!isActiveGraph));
 
     // };
 
-     const [isActive, setIsActive] = useState(false);
-     const toggleClass = (isGraph) => {
-        if (isGraph !== isActive) {
-            setIsActive(isGraph);
-            dispatch(setIsActiveGraph(!isActiveGraph));
+    const toggleClass = (isGraph) => {
+        if (isGraph !== false) {
+
+            dispatch(setIsActiveGraph(true));
         }
-     };
+        else {
+            dispatch(setIsActiveGraph(false));
+        }
+    };
 
     return (
         <>
@@ -838,16 +840,16 @@ export default function TransitionRateReport() {
                                                 <h3 className="heading-sm">{t("transitionRate")}</h3>
                                             </div>
                                             <div className="tab-box">
-                                                <button 
-                                                    className={`tab-button ${!isActiveGraph ? 'active' : ''}`} 
+                                                <button
+                                                    className={`tab-button ${!isActiveGraph ? 'active' : ''}`}
                                                     onClick={() => toggleClass(false)}>
-                                                    <img src={table} alt="Table" /> 
+                                                    <img src={table} alt="Table" />
                                                     <span>{t("tableView")}</span>
                                                 </button>
-                                                <button 
-                                                    className={`tab-button ${isActiveGraph ? 'active' : ''}`} 
+                                                <button
+                                                    className={`tab-button ${isActiveGraph ? 'active' : ''}`}
                                                     onClick={() => toggleClass(true)}>
-                                                    <img src={chart} alt="Chart" /> 
+                                                    <img src={chart} alt="Chart" />
                                                     <span>{t("chartView")}</span>
                                                 </button>
                                             </div>
