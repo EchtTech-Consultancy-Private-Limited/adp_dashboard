@@ -19,6 +19,7 @@ import {
   setselectedOption,
   setselectedOptionTop50,
   SetSheetName,
+  setIsActiveGraph
 } from "../../redux/slice/reportTypeSlice";
 import {
   AllBlock,
@@ -830,9 +831,21 @@ export default function SchoolInfraStructureReport() {
   const handleOptionChange = (event) => {
     dispatch(setselectedOptionTop50(event.target.value));
   };
-  const toggleClass = (e) => {
-    dispatch(setselectedOptionTop50(""));
-  };
+  // const toggleClass = (e) => {
+  //   dispatch(setselectedOptionTop50(""));
+  // };
+
+  const toggleClass = (isGraph) => {
+    if (isGraph !== false) {
+        
+        dispatch(setIsActiveGraph(true));
+    }
+    else{
+        dispatch(setIsActiveGraph(false));
+        dispatch(setselectedOptionTop50(""));
+    }
+};
+
 
   return (
     <>
@@ -879,18 +892,9 @@ export default function SchoolInfraStructureReport() {
 
                       </div>
                       <div className="tab-box">
-                        <button
-                          className="tab-button active"
-                          onClick={toggleClass}
-                        >
-                          <img src={table} alt="Table" />{" "}
-                          <span>{t("tableView")}</span>
-                        </button>
-                        <button className="tab-button" onClick={toggleClass}>
-                          <img src={chart} alt="chart" />{" "}
-                          <span>{t("chartView")}</span>
-                        </button>
-                      </div>
+                                                <button className={`tab-button  ${isActiveGraph ? '' : 'active'}`} onClick={() => { toggleClass(false) }}><img src={table} alt="Table" /> <span>{t('tableView')}</span></button>
+                                                <button className={`tab-button  ${isActiveGraph ? 'active' : ''}`} onClick={() => { toggleClass(true) }}><img src={chart} alt="chart" /> <span>{t('chartView')}</span></button>
+                                            </div>
                     </div>
                   </div>
 
@@ -954,8 +958,8 @@ export default function SchoolInfraStructureReport() {
 
                 <div className="row">
                   <div className="col-md-12">
-                    <div className="table-box mt-4">
-                      <div
+                  <div className={`table-box mt-4  ${isActiveGraph ? 'd-none' : ''}`}>
+                  <div
                         id="content"
                         className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
                         style={{ width: "100%", height: 400 }}
@@ -974,13 +978,9 @@ export default function SchoolInfraStructureReport() {
                         />
                       </div>
                     </div>
-
-                    {/* <div className={`graph-box  ${isActiveGraph ? '' : 'd-none'}`}> */}
-                                            {/* <SchoolInfraStructureLineGraph /> */}
-                                        {/* </div> */}
-
-
-
+                    <div className={`graph-box  ${isActiveGraph ? '' : 'd-none'}`}>
+                    <SchoolInfraStructureLineGraph />
+                    </div>
                   </div>
                 </div>
               </div>
