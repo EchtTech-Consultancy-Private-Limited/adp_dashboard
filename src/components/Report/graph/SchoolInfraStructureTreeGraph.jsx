@@ -99,7 +99,7 @@ export default function SchoolInfraStructureTreeGraph() {
       let functional_toilet_girls_percent = {
         id: ++count,
         parent: item.lgd_district_name,
-        name: `% schools with functional girls' toilets : ${item.functional_toilet_girls_percent.toFixed(2)}`,
+        name: `Per schools with functional girls' toilets : ${item.functional_toilet_girls_percent.toFixed(2)} %`,
         value: item.functional_toilet_girls_percent,
         color: getColorCode(item.functional_toilet_girls_percent),
       };
@@ -113,7 +113,7 @@ export default function SchoolInfraStructureTreeGraph() {
       let sch_having_toilet_40_percent = {
         id: ++count,
         parent: item.lgd_district_name,
-        name: `% of schools with girls' toilets at 40:1  :  ${item.sch_having_toilet_40_percent.toFixed(2)}`,
+        name: `Per of schools with girls' toilets at 40:1  :  ${item.sch_having_toilet_40_percent.toFixed(2)} %`,
         value: item.sch_having_toilet_40_percent,
         color: getColorCode(item.sch_having_toilet_40_percent),
       };
@@ -152,7 +152,7 @@ export default function SchoolInfraStructureTreeGraph() {
       let functional_toilet_girls_percent = {
         id: ++count,
         parent: item.lgd_block_name,
-        name: `% schools with functional girls' toilets : ${item.functional_toilet_girls_percent.toFixed(2)}`,
+        name: `Per schools with functional girls' toilets : ${item.functional_toilet_girls_percent.toFixed(2)} %`,
         value: item.functional_toilet_girls_percent,
         color: getColorCode(item.functional_toilet_girls_percent),
       };
@@ -166,7 +166,7 @@ export default function SchoolInfraStructureTreeGraph() {
       let sch_having_toilet_40_percent = {
         id: ++count,
         parent: item.lgd_block_name,
-        name: `% of schools with girls' toilets at 40:1  : ${item.sch_having_toilet_40_percent.toFixed(2)}`,
+        name: `Per of schools with girls' toilets at 40:1  : ${item.sch_having_toilet_40_percent.toFixed(2)} % `,
         value: item.sch_having_toilet_40_percent,
         color: getColorCode(item.sch_having_toilet_40_percent),
       };

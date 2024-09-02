@@ -20,7 +20,7 @@ export default function SchoolInfraColumnGraph() {
           district.sch_having_toilet_40_percent +
           district.sch_having_toilet_40_percent,
       }))
-      .sort((a, b) => a.combinedScore - b.combinedScore);
+      .sort((a, b) => b.combinedScore - a.combinedScore);
 
   const TopDistrictsAndBlocksColumnGraph = combinedDataForColumnGraph(
     finalData
@@ -51,12 +51,10 @@ export default function SchoolInfraColumnGraph() {
   });
   const headingText =
     TopDistrictsAndBlocksColumnGraph.length < 10
-      ? `${t("performance_of")} ${
-          selectReportType === "ADP_Report" ? t("district") : t("block")
-        } ${t("percentage_schools_girls_toilets_40_1")}`
-      : `${t("top_ten")} ${
-          selectReportType === "ADP_Report" ? t("district") : t("block")
-        }  ${t("percentage_schools_girls_toilets_40_1")}`;
+      ? `${t("performance_of")} ${selectReportType === "ADP_Report" ? t("district") : t("block")
+      } ${t("percentage_schools_girls_toilets_40_1")}`
+      : `${t("top_ten")} ${selectReportType === "ADP_Report" ? t("district") : t("block")
+      }  ${t("percentage_schools_girls_toilets_40_1")}`;
 
   return (
     <div className="col-md-12">

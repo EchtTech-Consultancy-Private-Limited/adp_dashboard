@@ -9,18 +9,18 @@ import useReportFilterData from "../../../CustomHook/useReportFilterData";
 export default function SchoolInfraStructureLineGraph() {
   const { t } = useTranslation();
 
-  const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
+  const finalData = useSelector((state) => state?.reportAdpAbpType?.finalData);
 
   console.log("finalData",finalData)
   const allYearsData = useSelector(
-    (state) => state.reportAdpAbpType.allYearDataForGraph
+    (state) => state?.reportAdpAbpType?.allYearDataForGraph
   );
 
   const [combinedData, setCompinedData] = useState([]);
   // const [data, setData] = useState([])
   let combinedDatas;
   if (Array.isArray(allYearsData)) {
-    combinedDatas = allYearsData.reduce((acc, yearData) => {
+    combinedDatas = allYearsData?.reduce((acc, yearData) => {
       if (Array.isArray(yearData.data)) {
         return acc.concat(
           yearData.data.map((item) => ({
@@ -121,11 +121,9 @@ export default function SchoolInfraStructureLineGraph() {
   }
   const categoriesYear = Array.from(new Set(data.map((item) => item.year)));
 
-  const seriesData = categoriesYear.map((year) => {
-    const yearData = data.filter((item) => item.year === year);
-    const ptrLessThan = yearData
-      .map((countDis) => parseFloat(countDis.sch_having_toilet_40_percent).toFixed(2))
-      .filter((val) => !isNaN(val));
+  const seriesData = categoriesYear?.map((year) => {
+    const yearData = data?.filter((item) => item?.year === year);
+    const ptrLessThan = yearData?.map((countDis) => parseFloat(countDis?.sch_having_toilet_40_percent)?.toFixed(2))?.filter((val) => !isNaN(val));
 
     if (ptrLessThan.length === 0) {
       return 0;
@@ -138,7 +136,7 @@ export default function SchoolInfraStructureLineGraph() {
 
     return averagePtrLessThan;
   });
-  const formateSeriesData = seriesData.map((num) => parseFloat(num.toFixed(2)));
+  const formateSeriesData = seriesData?.map((num) => parseFloat(num?.toFixed(2)));
 
   {
     /*Bind Data for All years Data Start*/
@@ -146,7 +144,7 @@ export default function SchoolInfraStructureLineGraph() {
 
   const percentageRenderer = (value) => {
     if (typeof value === "number") {
-      return value.toFixed(2);
+      return value?.toFixed(2);
     }
     return value;
   };
