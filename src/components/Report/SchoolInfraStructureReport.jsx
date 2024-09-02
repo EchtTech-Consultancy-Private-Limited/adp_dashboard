@@ -40,6 +40,7 @@ import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 import useReportFilterData from "../../CustomHook/useReportFilterData";
 import SchoolInfraStructureLineGraph from "./graph/SchoolInfraStructureLineGraph";
 import SchoolInfraStructureTreeGraph from "./graph/SchoolInfraStructureTreeGraph";
+import SchoolInfraColumnGraph from "./graph/SchoolInfraColumnGraph";
 
 export default function SchoolInfraStructureReport() {
   const dispatch = useDispatch();
@@ -980,7 +981,8 @@ export default function SchoolInfraStructureReport() {
                     </div>
                     <div className={`graph-box  ${isActiveGraph ? '' : 'd-none'}`}>
                     <SchoolInfraStructureLineGraph />
-                    <SchoolInfraStructureTreeGraph />
+                    <SchoolInfraColumnGraph/>
+                    <SchoolInfraStructureTreeGraph/>
                     </div>
                   </div>
                 </div>

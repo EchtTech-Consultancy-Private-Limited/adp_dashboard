@@ -44,12 +44,6 @@ export default function TeacherAndSchoolCompare() {
   }, [dispatch]);
 
 
-  // useEffect(() => {
-  //   dispatch(setAspirationalAllData(aspirationalAdpData))
-  // }, [dispatch]);
-
-
-  // Initialize states and districts from JSON data
   useEffect(() => {
     const structuredData = aspirationalData.reduce((acc, curr) => {
       const stateIndex = acc?.findIndex(
@@ -305,16 +299,6 @@ export default function TeacherAndSchoolCompare() {
 
                 {/* {t("comparisonByTransitionRate")} */}
               </h2>
-  
-              {/* <div className="select-infra button-group-filter">
-                <select id="export_data" className="form-select bg-grey2" defaultValue={"upper_primary_to_secondary"}
-                  value={selectedOption}
-                  onChange={handleOptionChange}
-                >
-                  <option value="upper_primary_to_secondary"> {t("upperPrimaryToSecondary")}</option>
-                  <option value="secondary_to_higher_secondary">  {t("secondaryToHigherSecondary")}</option>
-                </select>
-              </div> */}
   
             </div>
   

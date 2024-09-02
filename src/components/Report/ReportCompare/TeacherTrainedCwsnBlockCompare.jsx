@@ -56,18 +56,7 @@ export default function StudentsPerformanceBlockCompare() {
     resteData();
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   // dispatch(setUpdateReportType('ADP_Report'));
-  //   dispatch(setAspirationalAllData(aspirationalAdpData));
-  // }, [dispatch]);
-  // useEffect(() => {
-  //   if (selectedAdpAbpOption === "ADP_Report") {
-  //     dispatch(setAspirationalAllData(aspirationalAdpData));
-  //   } else {
-  //     dispatch(setAspirationalAllData(aspirationalAbpData));
-  //   }
-  // }, [selectedAdpAbpOption]);
-  // Initialize states and districts from JSON data
+
   useEffect(() => {
     const structuredData = aspirationalData?.reduce((acc, curr) => {
       const stateIndex = acc?.findIndex(
@@ -171,29 +160,6 @@ export default function StudentsPerformanceBlockCompare() {
           <div className="col-md-12">
             <div className="d-flex align-items-center">
               <div className="title-box">
-                {/* <h5 className='sub-title'>State :
-                                    <Select
-                                        className='state-select'
-                                        onChange={handleStateChange}
-                                        style={{ width: "50%" }}
-                                        placeholder="Select State"
-                                        mode="single"
-                                        showSearch
-                                        value={selectedState || SelectState}
-                                    >
-                                        <Select.Option key="Select State" value={SelectState}>
-                                            Select State
-                                        </Select.Option>
-                                        {states.map((state) => (
-                                            <Select.Option
-                                                key={state.lgd_state_id}
-                                                value={state.lgd_state_name}
-                                            >
-                                                {state.lgd_state_name}
-                                            </Select.Option>
-                                        ))}
-                                    </Select>
-                                </h5> */}
                 <h3 className="heading-sm">
                   {t("comparisonByStudentPerformance")}
                 </h3>
@@ -341,22 +307,6 @@ export default function StudentsPerformanceBlockCompare() {
           {t('comparison_by_percentage_schools_cwsn_trained_teachers')}
           </h2>
 
-          {/* <div className="select-infra button-group-filter">
-            <select
-              id="export_data"
-              className="form-select bg-grey2"
-              defaultValue={"upper_primary_to_secondary"}
-              value={selectedOption}
-              onChange={handleOptionChange}
-            >
-              <option value="upper_primary_to_secondary">
-              {t("upperPrimaryToSecondary")}
-              </option>
-              <option value="secondary_to_higher_secondary">
-              {t("secondaryToHigherSecondary")}
-              </option>
-            </select>
-          </div> */}
         </div>
 
         <div className="Comparison-box">

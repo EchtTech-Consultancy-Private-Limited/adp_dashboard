@@ -154,7 +154,7 @@ export default function TeacherAndSchoolBlockCompare() {
 
 
 
-            
+
   const totalU_ptr = selectedBlocks?.map(block => block?.u_ptr);
 
   const totalSchEle = selectedBlocks?.map(block => block?.total_sch_ele);
@@ -180,41 +180,18 @@ export default function TeacherAndSchoolBlockCompare() {
   return (
     <>
       <ScrollToTopOnMount />
-      {!isActiveGraph ? (   <div className="card-box">
+      {!isActiveGraph ? (<div className="card-box">
         <div className="row align-items-end">
           <div className="col-md-12">
             <div className="d-flex align-items-center">
               <div className="title-box">
-                {/* <h5 className='sub-title'>State :
-                                    <Select
-                                        className='state-select'
-                                        onChange={handleStateChange}
-                                        style={{ width: "50%" }}
-                                        placeholder="Select State"
-                                        mode="single"
-                                        showSearch
-                                        value={selectedState || SelectState}
-                                    >
-                                        <Select.Option key="Select State" value={SelectState}>
-                                            Select State
-                                        </Select.Option>
-                                        {states.map((state) => (
-                                            <Select.Option
-                                                key={state.lgd_state_id}
-                                                value={state.lgd_state_name}
-                                            >
-                                                {state.lgd_state_name}
-                                            </Select.Option>
-                                        ))}
-                                    </Select>
-                                </h5> */}
                 <h3 className="heading-sm mt-2">
                   {t("comparisonByTeacherAndSchoolResources")}
                 </h3>
               </div>
-            </div>  
+            </div>
           </div>
-          
+
         </div>
 
         <div className="row">
@@ -348,207 +325,188 @@ export default function TeacherAndSchoolBlockCompare() {
           )}
         </div>
       </div>)
-      :(
+        : (
 
 
 
-        <div className="col-md-12 graph-box">
-        <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
-          <div className="text-btn-d d-flex justify-content-between align-items-center">
-            <h2 className="heading-sm">
+          <div className="col-md-12 graph-box">
+            <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
+              <div className="text-btn-d d-flex justify-content-between align-items-center">
+                <h2 className="heading-sm">
+                  Comparison By  Elementary Schools with PTR ≤ 30%
+                </h2>
 
-            Comparison By  Elementary Schools with PTR ≤ 30%
 
-
-            {/* {t("comparisonByTransitionRate")} */}
-            </h2>
-
-            {/* <div className="select-infra button-group-filter">
-              <select
-                id="export_data"
-                className="form-select bg-grey2"
-                defaultValue={"upper_primary_to_secondary"}
-                value={selectedOption}
-                onChange={handleOptionChange}
-              >
-                <option value="upper_primary_to_secondary">
-                {t("upperPrimaryToSecondary")}
-                </option>
-                <option value="secondary_to_higher_secondary">
-                {t("secondaryToHigherSecondary")}
-                </option>
-              </select>
-            </div> */}
-          </div>
-
-          <div className="Comparison-box">
-            <div className="row align-items-center">
-              <div className="col-md-2 col-lg-2">
-                <h4 className="sub-heading text-left">
-                       {t('add_block_to_compare')}
-                </h4>
               </div>
-              <div className="col-md-10 col-lg-10 pe-2">
-                <div className="select-infra Comparison-select-group">
-                  {[...Array(MAX_BLOCKS)]?.map((_, index) => (
-                    <div key={index} className="width-20">
-                      <Select
-                        className="form-select bg-grey2"
-                        onChange={(value) => handleBlockChange(value, index)}
-                        style={{ width: "100%" }}
-                        placeholder={`${t("addBlock")} ${index + 1}`}
-                        mode="single"
-                        showSearch
-                        value={
-                          selectedBlocks[index]?.lgd_block_name ||
-                          `${t("addBlock")}`
-                        }
-                        disabled={index > 0 && !selectedBlocks[index - 1]}
-                      >
-                        {getFilteredBlocks(index).map((block) => (
-                          <Select.Option
-                            key={block?.lgd_block_id}
-                            value={block?.lgd_block_name}
+
+              <div className="Comparison-box">
+                <div className="row align-items-center">
+                  <div className="col-md-2 col-lg-2">
+                    <h4 className="sub-heading text-left">
+                      {t('add_block_to_compare')}
+                    </h4>
+                  </div>
+                  <div className="col-md-10 col-lg-10 pe-2">
+                    <div className="select-infra Comparison-select-group">
+                      {[...Array(MAX_BLOCKS)]?.map((_, index) => (
+                        <div key={index} className="width-20">
+                          <Select
+                            className="form-select bg-grey2"
+                            onChange={(value) => handleBlockChange(value, index)}
+                            style={{ width: "100%" }}
+                            placeholder={`${t("addBlock")} ${index + 1}`}
+                            mode="single"
+                            showSearch
+                            value={
+                              selectedBlocks[index]?.lgd_block_name ||
+                              `${t("addBlock")}`
+                            }
+                            disabled={index > 0 && !selectedBlocks[index - 1]}
                           >
-                            {block?.lgd_block_name}
-                          </Select.Option>
-                        ))}
-                      </Select>
+                            {getFilteredBlocks(index).map((block) => (
+                              <Select.Option
+                                key={block?.lgd_block_id}
+                                value={block?.lgd_block_name}
+                              >
+                                {block?.lgd_block_name}
+                              </Select.Option>
+                            ))}
+                          </Select>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  </div>
                 </div>
               </div>
+
+              {selectedBlocks.length === 1 ? (
+                <Card
+                  style={{
+                    width: 300,
+                    margin: "20px auto 0",
+                  }}
+                >
+                  <b>{t("selectOneMoreBlock")}</b>
+                </Card>
+              ) : (
+                <div className="piechart-box row align-items-center">
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={{
+                      chart: {
+                        type: "column",
+                        marginTop: 80,
+                        events: {
+                          beforePrint: function () {
+                            this.exportSVGElements[0].box.hide();
+                            this.exportSVGElements[1].hide();
+                          },
+                          afterPrint: function () {
+                            this.exportSVGElements[0].box.show();
+                            this.exportSVGElements[1].show();
+                          },
+                        },
+                      },
+                      xAxis: {
+                        categories: selectedBlocks.map(
+                          (district) => district.lgd_block_name
+                        ),
+                      },
+                      yAxis: {
+                        allowDecimals: false,
+                        min: 0,
+                        title: {
+                          text: "",
+                        },
+                      },
+                      title: {
+                        text: "",
+                      },
+                      tooltip: {
+                        headerFormat: "<b>{point.x}</b><br/>",
+                        pointFormat: "{series.name}: {point.y}",
+                        pointFormatter: function () {
+                          return `<span style="color:${this.color
+                            }">\u25CF</span> ${this.series.name
+                            }: <b>${this.y.toLocaleString("en-IN")}</b><br/>`;
+                        },
+                      },
+                      plotOptions: {
+                        column: {
+                          stacking: "normal",
+                          dataLabels: {
+                            enabled: true,
+                            crop: false,
+                            overflow: "none",
+                            rotation: 0,
+                            align: "center",
+                            x: -2,
+                            y: -5,
+                            style: {
+                              font: "13px Arial, sans-serif",
+                              fontWeight: "600",
+                              stroke: "transparent",
+                              align: "center",
+                            },
+                            position: "top",
+                            formatter: function () {
+                              // return parseFloat(
+                              //   this.y
+                              // ).toFixed(0);
+                              return this.y.toLocaleString("en-IN");
+                            },
+                          },
+                        },
+                      },
+                      legend: {
+                        layout: "horizontal",
+                        align: "center",
+                        verticalAlign: "bottom",
+                        itemMarginTop: 10,
+                        itemMarginBottom: 10,
+                      },
+                      credits: {
+                        enabled: false,
+                      },
+                      exports: {
+                        enabled: false,
+                      },
+                      series: [
+                        {
+                          color: "#FFB74BF0",
+
+                          name: t('PTR < 30'),
+                          data: totalU_ptr,
+                          maxPointWidth: 50,
+
+                        },
+                        {
+                          color: "#6C6CB0",
+                          name: t('Elementry School'),
+                          data: totalSchEle,
+                          maxPointWidth: 50,
+
+                        },
+                        {
+                          color: "#17AFD2",
+                          name: t('% PTR < 30'),
+                          data: totalEleSchPercent,
+                          maxPointWidth: 50,
+
+                        },
+                      ],
+                    }}
+                    immutable={true}
+                  />
+                </div>
+              )}
             </div>
           </div>
 
-          {selectedBlocks.length === 1 ? (
-            <Card
-              style={{
-                width: 300,
-                margin: "20px auto 0",
-              }}
-            >
-              <b>{t("selectOneMoreBlock")}</b>
-            </Card>
-          ) : (
-            <div className="piechart-box row align-items-center">
-              <HighchartsReact
-                highcharts={Highcharts}
-                options={{
-                  chart: {
-                    type: "column",
-                    marginTop: 80,
-                    events: {
-                      beforePrint: function () {
-                        this.exportSVGElements[0].box.hide();
-                        this.exportSVGElements[1].hide();
-                      },
-                      afterPrint: function () {
-                        this.exportSVGElements[0].box.show();
-                        this.exportSVGElements[1].show();
-                      },
-                    },
-                  },
-                  xAxis: {
-                    categories: selectedBlocks.map(
-                      (district) => district.lgd_block_name
-                    ),
-                  },
-                  yAxis: {
-                    allowDecimals: false,
-                    min: 0,
-                    title: {
-                      text: "",
-                    },
-                  },
-                  title: {
-                    text: "",
-                  },
-                  tooltip: {
-                    headerFormat: "<b>{point.x}</b><br/>",
-                    pointFormat: "{series.name}: {point.y}",
-                    pointFormatter: function () {
-                      return `<span style="color:${this.color
-                        }">\u25CF</span> ${this.series.name
-                        }: <b>${this.y.toLocaleString("en-IN")}</b><br/>`;
-                    },
-                  },
-                  plotOptions: {
-                    column: {
-                      stacking: "normal",
-                      dataLabels: {
-                        enabled: true,
-                        crop: false,
-                        overflow: "none",
-                        rotation: 0,
-                        align: "center",
-                        x: -2,
-                        y: -5,
-                        style: {
-                          font: "13px Arial, sans-serif",
-                          fontWeight: "600",
-                          stroke: "transparent",
-                          align: "center",
-                        },
-                        position: "top",
-                        formatter: function () {
-                          // return parseFloat(
-                          //   this.y
-                          // ).toFixed(0);
-                          return this.y.toLocaleString("en-IN");
-                        },
-                      },
-                    },
-                  },
-                  legend: {
-                    layout: "horizontal",
-                    align: "center",
-                    verticalAlign: "bottom",
-                    itemMarginTop: 10,
-                    itemMarginBottom: 10,
-                  },
-                  credits: {
-                    enabled: false,
-                  },
-                  exports: {
-                    enabled: false,
-                  },
-                  series: [
-                    {
-                      color: "#FFB74BF0",
-
-                      name: t('PTR < 30'),
-                      data: totalU_ptr,
-                      maxPointWidth: 50,
-
-                    },
-                    {
-                      color: "#6C6CB0",
-                      name: t('Elementry School'),
-                      data: totalSchEle,
-                      maxPointWidth: 50,
-
-                    },
-                    {
-                      color: "#17AFD2",
-                      name: t('% PTR < 30'),
-                      data: totalEleSchPercent,
-                      maxPointWidth: 50,
-
-                    },
-                  ],
-                }}
-                immutable={true}
-              />
-            </div>
-          )}
-        </div>
-      </div>
 
 
 
-        
-      )}
+        )}
     </>
   );
 }
