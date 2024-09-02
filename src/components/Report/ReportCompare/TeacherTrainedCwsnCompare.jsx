@@ -340,7 +340,7 @@ percentageCwsnTrainedTeach.map((percentage, index) => (
             }}
           >
             <b>{t("selectOneMoreDistrict")}</b>
-          </Card>) : (<div className="piechart-box row align-items-center">
+          </Card>) : (<div className="row align-items-center">
 
             <HighchartsReact
               highcharts={Highcharts}

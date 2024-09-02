@@ -72,7 +72,7 @@ export default function SchoolInfraColumnGraph() {
                 options={{
                   chart: {
                     type: "column",
-                    // marginTop: 50,
+                    marginTop: 50,
                     events: {
                       beforePrint: function () {
                         this.exportSVGElements[0].box.hide();
@@ -114,6 +114,7 @@ export default function SchoolInfraColumnGraph() {
                         overflow: "none",
                         rotation: 0,
                         align: "center",
+                        // rotation:-90,
                         x: -2,
                         y: -5,
                         style: {

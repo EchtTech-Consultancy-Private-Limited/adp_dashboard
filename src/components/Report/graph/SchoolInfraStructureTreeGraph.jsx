@@ -247,8 +247,8 @@ export default function SchoolInfraStructureTreeGraph() {
               <div className="graph-box">
                 <div className="row">
            
-                  <div className="col-md-12 mt-4">
-                    <div className="graph-card mt-2">
+                  <div className="col-md-12">
+                    <div className="graph-card">
                       <div className="text-btn-d">
                       <h2 className="heading-sm">  
                         {selectReportType === "ADP_Report" ? " Performance of Districts By Percentage of schools with girls' toilets at a 40:1"  : "Performance of Blocks By Percentage of schools with girls' toilets at a 40:1"}

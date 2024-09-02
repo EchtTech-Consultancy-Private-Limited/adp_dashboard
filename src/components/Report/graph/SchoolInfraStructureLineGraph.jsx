@@ -154,14 +154,15 @@ export default function SchoolInfraStructureLineGraph() {
   const chartOptions = {
     chart: {
       type: "line",
-      marginTop: 50,
+      marginTop: 70,
+      height:425,
     },
     title: {
       text: "",
     },
     xAxis: {
       title: {
-        text: "Percentage of schools with girls' toilets at a 40:1 ",
+        // text: "Percentage of schools with girls' toilets at a 40:1 ",
         y: 50,
       },
       categories: categoriesYear,
@@ -227,7 +228,7 @@ export default function SchoolInfraStructureLineGraph() {
   };
 
   return (
-    <div className="graph-box">
+    <div className="graph-box mt-0">
       <div className="row">
         <div className="col-md-12">
           <div className="graph-card">

@@ -915,9 +915,13 @@ export default function TeacherAndSchResourcesReport() {
                                         </div>
 
                                         <div className={`graph-box  ${isActiveGraph ? '' : 'd-none'}`}>
-                                        <TeacherAndSchoolgraphB></TeacherAndSchoolgraphB>
+                                       <div className="row">
+                                       
+                                        <TeacherAndSchoolgraphB/>
                                           <TeacherAndSchResourcesColumnGraph/>
                                       
+                                       
+                                       </div>
                                         </div>
 
 

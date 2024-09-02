@@ -980,9 +980,17 @@ export default function SchoolInfraStructureReport() {
                       </div>
                     </div>
                     <div className={`graph-box  ${isActiveGraph ? '' : 'd-none'}`}>
-                    <SchoolInfraStructureLineGraph />
+                  <div className="row">
+                    <div className="col-md-5">
+                    <SchoolInfraStructureLineGraph />                    
+                    </div>
+                    <div className="col-md-7">
                     <SchoolInfraColumnGraph/>
+                    </div>
+                    <div className="col-md-12">
                     <SchoolInfraStructureTreeGraph/>
+                    </div>
+                  </div>
                     </div>
                   </div>
                 </div>
