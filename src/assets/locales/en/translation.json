@@ -109,7 +109,7 @@
   "swsn_teacher_percent_data":"Percentage Schools with Teachers Trained for Teaching CWSN",
   "total_schools_data":"Total Schools",
   "block":"Blocks",
-  "label_wise_transition_rate":"Level Wise Transition Rate of",
+  "label_wise_transition_rate":"Level Wise Transition Rate ",
   "label_wise_teacher_trained_cwsn":"Level Wise Schools with CWSN-Trained Teachers of",
   "schools_with_CWSN_trained_teachers_of":"Schools with CWSN-Trained Teachers",
   "total_transition_rate":"Total Transition Rate",

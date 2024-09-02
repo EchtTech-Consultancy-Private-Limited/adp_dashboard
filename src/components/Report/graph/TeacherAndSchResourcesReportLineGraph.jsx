@@ -3,47 +3,18 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { selectState } from "../../../redux/slice/filterServicesSlice";
-import aspirationalAdpData2019 from "../../../aspirational-reports-data/aspirationalAdpData2019-20.json";
-import aspirationalAdpData2020 from "../../../aspirational-reports-data/aspirationalAdpData2020-21.json";
-import aspirationalAdpData2021 from "../../../aspirational-reports-data/aspirationalAdpData2021-22.json";
-import aspirationalAdpData2022 from "../../../aspirational-reports-data/aspirationalAdpData2022-23.json";
-import aspirationalAbpData2020 from "../../../aspirational-reports-data/aspirationalAbpData2020-21.json";
-import aspirationalAbpData2021 from "../../../aspirational-reports-data/aspirationalAbpData2021-22.json";
-import aspirationalAbpData2022 from "../../../aspirational-reports-data/aspirationalAbpData2022-23.json";
-import aspirationalAbpData2019 from "../../../aspirational-reports-data/aspirationalAbpData2019-20.json";
-import { selectDistrict } from "../../../redux/slice/filterServicesComprisionSlice";
-import {
-  AllBlock,
-  AllDistrict,
-  SelectBlock,
-  SelectDistrict,
-  SelectState,
-} from "../../../constant/Constant";
 
 import useReportFilterData from "../../../CustomHook/useReportFilterData";
 
 export default function TeacherAndSchResourcesReportLineGraph() {
   const { t } = useTranslation();
-  const selectReportType = useSelector(
-    (state) => state.reportAdpAbpType.updateReportType
-  );
-  const selectedOption = useSelector(
-    (state) => state.reportAdpAbpType.selectedOption
-  );
-  const { selectedState, selectedDistrict, selectedBlock } = useSelector(
-    (state) => state.locationAdp
-  );
+ 
 
   const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
   const allYearsData = useSelector(
     (state) => state.reportAdpAbpType.allYearDataForGraph
   );
-  const loading = useSelector(
-    (state) => state.reportAdpAbpType.loading
-  );
 
-  
 
   const [combinedData, setCompinedData] = useState([]);
   // const [data, setData] = useState([])
@@ -189,6 +160,10 @@ export default function TeacherAndSchResourcesReportLineGraph() {
       text: "",
     },
     xAxis: {
+      title: {
+        text: "Elementary Schools with PTR ≤ 30%",
+
+      },
       categories: categoriesYear,
       gridLineWidth: 0,
       lineWidth: 0,
