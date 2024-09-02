@@ -120,15 +120,31 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
         color: getColorCode(item.ele_sch_percent),
       };
 
+      let total_sch_ele = {
+        id: ++count,
+        parent: item.lgd_district_name,
+        name: `total_sch_ele ${item.total_sch_ele.toFixed(2)}`,
+        value: item.total_sch_ele,
+        color: getColorCode(item.total_sch_ele),
+      };
+      let u_ptr = {
+        id: ++count,
+        parent: item.lgd_district_name,
+        name: `u_ptr ${item.u_ptr.toFixed(2)}`,
+        value: item.u_ptr,
+        color: getColorCode(item.u_ptr),
+      };
+
+
       let ele_sch_percent = {
         id: ++count,
         parent: item.lgd_district_name,
-        name: `Percentage of elementary  ${item.ele_sch_percent.toFixed(2)}`,
+        name: `ele_sch_percent ${item.ele_sch_percent.toFixed(2)}`,
         value: item.ele_sch_percent,
         color: getColorCode(item.ele_sch_percent),
       };
 
-      return [lgd_district_name, ele_sch_percent];
+      return [lgd_district_name,u_ptr, total_sch_ele, ele_sch_percent];
     }
   );
 
@@ -142,15 +158,32 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
         color: getColorCode(item.ele_sch_percent),
       };
 
+      let total_sch_ele = {
+        id: ++count,
+        parent: item.lgd_block_name,
+        name: `total_sch_ele  ${item.total_sch_ele.toFixed(2)}`,
+        value: item.total_sch_ele,
+        color: getColorCode(item.total_sch_ele),
+      };
+
+      let u_ptr = {
+        id: ++count,
+        parent: item.lgd_block_name,
+        name: `u_ptr  ${item.u_ptr.toFixed(2)}`,
+        value: item.u_ptr,
+        color: getColorCode(item.u_ptr),
+      };
+
+
       let ele_sch_percent = {
         id: ++count,
         parent: item.lgd_block_name,
-        name: `Percentage of elementary  ${item.ele_sch_percent.toFixed(2)}`,
+        name: `ele_sch_percent  ${item.ele_sch_percent.toFixed(2)}`,
         value: item.ele_sch_percent,
         color: getColorCode(item.ele_sch_percent),
       };
 
-      return [lgd_block_name, ele_sch_percent];
+      return [lgd_block_name,total_sch_ele, u_ptr,ele_sch_percent];
     }
   );
 
@@ -401,7 +434,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                               marker: {
                                 symbol: "rect",
                                 width: "25%",
-                                height: "25",
+                                height: "30",
                               },
                               borderRadius: 10,
                               dataLabels: {
