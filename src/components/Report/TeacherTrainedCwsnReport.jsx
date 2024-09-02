@@ -656,12 +656,15 @@ export default function TeacherTrainedCwsnReport() {
     //     dispatch(setselectedOptionTop50(""));
     // };
 
-    const [isActive, setIsActive] = useState(false);
+
     const toggleClass = (isGraph) => {
-        dispatch(setselectedOptionTop50(""));
-        if (isGraph !== isActive) {
-            setIsActive(isGraph);
-            dispatch(setIsActiveGraph(!isActiveGraph));
+        if (isGraph !== false) {
+            
+            dispatch(setIsActiveGraph(true));
+        }
+        else{
+            dispatch(setIsActiveGraph(false));
+            dispatch(setselectedOptionTop50(""));
         }
     };
     return (

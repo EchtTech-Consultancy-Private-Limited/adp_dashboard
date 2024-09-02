@@ -123,14 +123,14 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
       let total_sch_ele = {
         id: ++count,
         parent: item.lgd_district_name,
-        name: `total_sch_ele ${item.total_sch_ele.toFixed(2)}`,
+        name: `Number of Elementary Schools : ${item.total_sch_ele.toFixed(2)}`,
         value: item.total_sch_ele,
         color: getColorCode(item.total_sch_ele),
       };
       let u_ptr = {
         id: ++count,
         parent: item.lgd_district_name,
-        name: `u_ptr ${item.u_ptr.toFixed(2)}`,
+        name: `Elementary Schools with PTR ≤ 30 : ${item.u_ptr.toFixed(2)}`,
         value: item.u_ptr,
         color: getColorCode(item.u_ptr),
       };
@@ -139,7 +139,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
       let ele_sch_percent = {
         id: ++count,
         parent: item.lgd_district_name,
-        name: `ele_sch_percent ${item.ele_sch_percent.toFixed(2)}`,
+        name: `Percentage of Elementary Schools with PTR ≤ 30% : ${item.ele_sch_percent.toFixed(2)}`,
         value: item.ele_sch_percent,
         color: getColorCode(item.ele_sch_percent),
       };
@@ -161,7 +161,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
       let total_sch_ele = {
         id: ++count,
         parent: item.lgd_block_name,
-        name: `total_sch_ele  ${item.total_sch_ele.toFixed(2)}`,
+        name: `Number of Elementary Schools : ${item.total_sch_ele.toFixed(2)}`,
         value: item.total_sch_ele,
         color: getColorCode(item.total_sch_ele),
       };
@@ -169,7 +169,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
       let u_ptr = {
         id: ++count,
         parent: item.lgd_block_name,
-        name: `u_ptr  ${item.u_ptr.toFixed(2)}`,
+        name: `Elementary Schools with PTR ≤ 30 :  ${item.u_ptr.toFixed(2)}`,
         value: item.u_ptr,
         color: getColorCode(item.u_ptr),
       };
@@ -178,7 +178,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
       let ele_sch_percent = {
         id: ++count,
         parent: item.lgd_block_name,
-        name: `ele_sch_percent  ${item.ele_sch_percent.toFixed(2)}`,
+        name: `Percentage of Elementary Schools with PTR ≤ 30% :  ${item.ele_sch_percent.toFixed(2)}`,
         value: item.ele_sch_percent,
         color: getColorCode(item.ele_sch_percent),
       };

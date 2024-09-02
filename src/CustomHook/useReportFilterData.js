@@ -56,6 +56,8 @@ const useReportFilterData = (combinedData) => {
     }));
     setData(filteredData);
     dispatch(setLoading(false));
+   
+  
 
     // dispatch(setUpdateStatus(false))
   }, [

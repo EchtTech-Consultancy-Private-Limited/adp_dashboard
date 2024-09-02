@@ -8,13 +8,11 @@ import useReportFilterData from "../../../CustomHook/useReportFilterData";
 
 export default function TeacherAndSchResourcesReportLineGraph() {
   const { t } = useTranslation();
- 
 
   const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
   const allYearsData = useSelector(
     (state) => state.reportAdpAbpType.allYearDataForGraph
   );
-
 
   const [combinedData, setCompinedData] = useState([]);
   // const [data, setData] = useState([])
@@ -162,7 +160,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
     xAxis: {
       title: {
         text:t('elementary_schools_with_ptr'),
-
+        y: 50,
       },
       categories: categoriesYear,
       gridLineWidth: 0,
