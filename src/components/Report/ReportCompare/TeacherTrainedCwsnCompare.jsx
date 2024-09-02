@@ -127,12 +127,23 @@ export default function StudentsPerformanceCompare() {
 
   const cwsnTrainedTeacher = selectedDistricts?.map(district => district?.total_school_cwsn);
 
-  const percentageCwsnTrainedTeach = selectedDistricts?.map(district => Number(parseFloat(district?.swsn_teacher_percent).toFixed(2)));
 
-               
-  // const handleOptionChange = (event) => {
-  //   dispatch(setselectedCompareOption(event.target.value));
-  // };
+  // const percentageCwsnTrainedTeach = selectedDistricts?.map(district => Number(parseFloat(district?.swsn_teacher_percent).toFixed(2)));
+
+const [data,setData]=useState([]);
+
+  const percentageCwsnTrainedTeach = selectedDistricts?.map(district => {
+    const percentage = parseFloat(district?.swsn_teacher_percent).toFixed(2);
+    return `${percentage}%`;
+});
+
+useEffect(()=>{
+percentageCwsnTrainedTeach.map((percentage, index) => (
+      setData(percentage)
+))
+
+},[percentageCwsnTrainedTeach])
+
   return (
     <>
       {!isActiveGraph ? (<div className="card-box">
@@ -287,7 +298,7 @@ export default function StudentsPerformanceCompare() {
         <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
           <div className="text-btn-d d-flex justify-content-between align-items-center">
             <h2 className="heading-sm">
-            Comparison By Percentage of Schools with CWSN-Trained Teachers
+            {t('comparison_by_percentage_schools_cwsn_trained_teachers')}
             </h2>
 
             {/* <div className="select-infra button-group-filter">

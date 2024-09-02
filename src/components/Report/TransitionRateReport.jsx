@@ -32,21 +32,26 @@ import TransitionBlockRateCompare from "./ReportCompare/TransitionBlockRateCompa
 import { useTranslation } from "react-i18next";
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 import TransitionRateGraph from "./graph/TransitionRateGraph";
+import useReportFilterData from "../../CustomHook/useReportFilterData";
 export default function TransitionRateReport() {
     const dispatch = useDispatch();
     const { t, i18n } = useTranslation();
     const [queryParameters] = useSearchParams();
     const id = queryParameters.get("id");
     const type = queryParameters.get("type");
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
     localStorage.setItem("selectedReportValue", "Transition Rate");
     const { selectedState, selectedDistrict, selectedBlock } = useSelector(
         (state) => state.locationAdp
     );
-   
+
     // const [aspirationalData, setAspirationalData] = useState([]);
     const aspirationalData = useSelector(
         (state) => state.reportAdpAbpType.aspirationalAllData
+    );
+
+    const loading = useSelector(
+        (state) => state.reportAdpAbpType.loading
     );
     const [locationHeader, SetLocationHeader] = useState();
     const [gridApi, setGridApi] = useState();
@@ -60,11 +65,11 @@ export default function TransitionRateReport() {
     const selectedYear = useSelector(
         (state) => state.reportAdpAbpType.selectedYear
     );
-    const isActiveGraph=useSelector((state)=>state.reportAdpAbpType.isActiveGraph)
+    const isActiveGraph = useSelector((state) => state.reportAdpAbpType.isActiveGraph)
     const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName);
     const savedReportName = localStorage.getItem("selectedReport");
     const report_name = savedReportName;
-    const [data, setData] = useState([]);
+    // const [data, setData] = useState([]);
     // const [filteredData, setFilteredData] = useState([]);
     // const [finalData, SetFinalData] = useState([]);
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
@@ -117,48 +122,48 @@ export default function TransitionRateReport() {
 
     /*...............Take data report wise..............*/
 
-    useEffect(() => {
-        let filteredData = aspirationalData;
-        if (selectedState && selectedState !== SelectState) {
-            filteredData = filteredData.filter(
-                (item) => item.lgd_state_name === selectedState
-            );
-        }
+    // useEffect(() => {
+    //     let filteredData = aspirationalData;
+    //     if (selectedState && selectedState !== SelectState) {
+    //         filteredData = filteredData.filter(
+    //             (item) => item.lgd_state_name === selectedState
+    //         );
+    //     }
 
-        if (
-            selectedDistrict &&
-            selectedDistrict !== AllDistrict &&
-            selectedDistrict !== SelectDistrict
-        ) {
-            filteredData = filteredData.filter(
-                (item) => item.lgd_district_name === selectedDistrict
-            );
-        }
+    //     if (
+    //         selectedDistrict &&
+    //         selectedDistrict !== AllDistrict &&
+    //         selectedDistrict !== SelectDistrict
+    //     ) {
+    //         filteredData = filteredData.filter(
+    //             (item) => item.lgd_district_name === selectedDistrict
+    //         );
+    //     }
 
-        if (
-            selectedBlock &&
-            selectedBlock !== AllBlock &&
-            selectedBlock !== SelectBlock
-        ) {
-            filteredData = filteredData.filter(
-                (item) => item.lgd_block_name === selectedBlock
-            );
-        }
-        filteredData = filteredData.map((item) => ({
-            ...item,
-            Location: getLocationName(item),
-        }));
-        setData(filteredData);
-        setLoading(false);
+    //     if (
+    //         selectedBlock &&
+    //         selectedBlock !== AllBlock &&
+    //         selectedBlock !== SelectBlock
+    //     ) {
+    //         filteredData = filteredData.filter(
+    //             (item) => item.lgd_block_name === selectedBlock
+    //         );
+    //     }
+    //     filteredData = filteredData.map((item) => ({
+    //         ...item,
+    //         Location: getLocationName(item),
+    //     }));
+    //     setData(filteredData);
+    //     setLoading(false);
 
-        // dispatch(setUpdateStatus(false))
-    }, [
-        selectedState,
-        selectedDistrict,
-        selectedBlock,
-        aspirationalData,
-        selectReportType,
-    ]);
+    //     // dispatch(setUpdateStatus(false))
+    // }, [
+    //     selectedState,
+    //     selectedDistrict,
+    //     selectedBlock,
+    //     aspirationalData,
+    //     selectReportType,
+    // ]);
 
     // useEffect(() => {
     //   if (selectedState) {
@@ -175,39 +180,42 @@ export default function TransitionRateReport() {
     //   }
     // }, [selectedState, aspirationalData]);
 
-    const getLocationName = (item) => {
-        if (selectReportType === "ABP_Report") {
-            if (
-                selectedBlock &&
-                selectedBlock !== AllBlock &&
-                selectedBlock !== SelectBlock
-            ) {
-                return `${item.lgd_block_name}`;
-            } else if (
-                selectedDistrict &&
-                selectedDistrict !== AllDistrict &&
-                selectedDistrict !== SelectDistrict
-            ) {
-                return `${item.lgd_block_name}`;
-            } else if (selectedState && selectedState !== SelectState) {
-                return `${item.lgd_district_name}`;
-            } else if (selectedState === SelectState) {
-                return `${item.lgd_state_name}`;
-            }
-        } else if (selectReportType === "ADP_Report") {
-            if (selectedState && selectedState !== SelectState) {
-                return `${item.lgd_district_name}`;
-            } else if (
-                selectedState !== SelectState &&
-                selectedState !== AllDistrict
-            ) {
-                return `${item.lgd_district_name}`;
-            } else if (selectedState === SelectState) {
-                return `${item.lgd_state_name}`;
-            }
-        }
-        return "";
-    };
+    // const getLocationName = (item) => {
+    //     if (selectReportType === "ABP_Report") {
+    //         if (
+    //             selectedBlock &&
+    //             selectedBlock !== AllBlock &&
+    //             selectedBlock !== SelectBlock
+    //         ) {
+    //             return `${item.lgd_block_name}`;
+    //         } else if (
+    //             selectedDistrict &&
+    //             selectedDistrict !== AllDistrict &&
+    //             selectedDistrict !== SelectDistrict
+    //         ) {
+    //             return `${item.lgd_block_name}`;
+    //         } else if (selectedState && selectedState !== SelectState) {
+    //             return `${item.lgd_district_name}`;
+    //         } else if (selectedState === SelectState) {
+    //             return `${item.lgd_state_name}`;
+    //         }
+    //     } else if (selectReportType === "ADP_Report") {
+    //         if (selectedState && selectedState !== SelectState) {
+    //             return `${item.lgd_district_name}`;
+    //         } else if (
+    //             selectedState !== SelectState &&
+    //             selectedState !== AllDistrict
+    //         ) {
+    //             return `${item.lgd_district_name}`;
+    //         } else if (selectedState === SelectState) {
+    //             return `${item.lgd_state_name}`;
+    //         }
+    //     }
+    //     return "";
+    // };
+
+
+    const data = useReportFilterData(aspirationalData);
 
     const percentageRenderer = (params) => {
         const value = params.value;
@@ -769,11 +777,21 @@ export default function TransitionRateReport() {
         document.getElementById("export_data").selectedIndex = 0;
     };
 
-    const [isActive, setIsActive] = useState(false);
-    const toggleClass = (e) => {
-       
-        dispatch(setIsActiveGraph(!isActiveGraph));
+    // const [isActive, setIsActive] = useState(false);
+    // const toggleClass = (e) => {
 
+    //     dispatch(setIsActiveGraph(!isActiveGraph));
+
+    // };
+
+    const toggleClass = (isGraph) => {
+        if (isGraph !== false) {
+
+            dispatch(setIsActiveGraph(true));
+        }
+        else {
+            dispatch(setIsActiveGraph(false));
+        }
     };
 
     return (
@@ -790,7 +808,7 @@ export default function TransitionRateReport() {
                                 <div className="row align-items-end">
                                     <div
                                         className={
-                                            (selectedState !== "All State" && !isActiveGraph) || ((selectedState === "All State"  || selectedState !== "All State" ) && isActiveGraph) ? "col-md-5" : "col-md-6"
+                                            (selectedState !== "All State" && !isActiveGraph) || ((selectedState === "All State" || selectedState !== "All State") && isActiveGraph) ? "col-md-5" : "col-md-6"
                                         }
                                     >
                                         <div className="d-flex align-items-end">
@@ -822,12 +840,16 @@ export default function TransitionRateReport() {
                                                 <h3 className="heading-sm">{t("transitionRate")}</h3>
                                             </div>
                                             <div className="tab-box">
-                                                <button className={`tab-button  ${isActiveGraph ? '' : 'active'}`} onClick={toggleClass}>
-                                                    <img src={table} alt="Table" />{" "}
+                                                <button
+                                                    className={`tab-button ${!isActiveGraph ? 'active' : ''}`}
+                                                    onClick={() => toggleClass(false)}>
+                                                    <img src={table} alt="Table" />
                                                     <span>{t("tableView")}</span>
                                                 </button>
-                                                <button className={`tab-button  ${isActiveGraph ? 'active' : ''}`} onClick={toggleClass}>
-                                                    <img src={chart} alt="chart" />{" "}
+                                                <button
+                                                    className={`tab-button ${isActiveGraph ? 'active' : ''}`}
+                                                    onClick={() => toggleClass(true)}>
+                                                    <img src={chart} alt="Chart" />
                                                     <span>{t("chartView")}</span>
                                                 </button>
                                             </div>
@@ -835,7 +857,7 @@ export default function TransitionRateReport() {
                                     </div>
                                     <div
                                         className={
-                                            (selectedState !== "All State" && !isActiveGraph) || ((selectedState === "All State"  || selectedState !== "All State" ) && isActiveGraph) ? "col-md-7" : "col-md-6"}>
+                                            (selectedState !== "All State" && !isActiveGraph) || ((selectedState === "All State" || selectedState !== "All State") && isActiveGraph) ? "col-md-7" : "col-md-6"}>
                                         <div
                                             className={
                                                 selectedState !== "All State"
@@ -845,10 +867,10 @@ export default function TransitionRateReport() {
                                         >
                                             <div
                                                 className={
-                                                    (selectedState !== "All State" && !isActiveGraph) || ((selectedState === "All State"  || selectedState !== "All State" ) && isActiveGraph) ? "radio-button" : ""
+                                                    (selectedState !== "All State" && !isActiveGraph) || ((selectedState === "All State" || selectedState !== "All State") && isActiveGraph) ? "radio-button" : ""
                                                 }
                                             >
-                                                {(selectedState !== "All State" && !isActiveGraph) || ((selectedState === "All State"  || selectedState !== "All State" ) && isActiveGraph) ? (
+                                                {(selectedState !== "All State" && !isActiveGraph) || ((selectedState === "All State" || selectedState !== "All State") && isActiveGraph) ? (
                                                     <>
                                                         <div className="box-radio">
                                                             <input
@@ -928,9 +950,9 @@ export default function TransitionRateReport() {
                         </div>
 
                         {
-                            selectedState !== "All State" && selectReportType === "ADP_Report"   ? (
+                            selectedState !== "All State" && selectReportType === "ADP_Report" ? (
                                 <TransitionRateCompare />
-                            ) : (selectedState !== "All State" && selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) &&   selectReportType === "ABP_Report" ? (
+                            ) : (selectedState !== "All State" && selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict) && selectReportType === "ABP_Report" ? (
                                 <TransitionBlockRateCompare />
                             ) : (
                                 ""

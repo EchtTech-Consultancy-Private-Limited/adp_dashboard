@@ -14,13 +14,13 @@ export default function TeacherTrainedCwsnScatterGraph() {
         const DistrictName = data.map((district) => district.lgd_district_name);
         const blockName = data.map((block) => block.lgd_block_name);
         const totalCwsnPercentData = data.map((district) =>
-            Number(parseFloat(district.swsn_teacher_percent).toFixed(2))
+            Number(parseFloat(district.total_school_cwsn).toFixed(2))
         );
         const totalCwsnTotalData = data.map((district) => district?.tot_school);
-        
+
         const dataPoints = totalCwsnPercentData.map((total, index) => ({
-            x: total,
-            y: totalCwsnTotalData[index],
+            x: totalCwsnTotalData[index],
+            y: total,
             name: selectReportType === "ADP_Report" ? DistrictName[index] : blockName[index]
         }));
         return { dataPoints };
@@ -32,7 +32,7 @@ export default function TeacherTrainedCwsnScatterGraph() {
         <div className="col-md-12">
             <div className="graph-card">
                 <div className="d-flex align-items-center justify-content-between">
-                    <h4 className='heading-sm'>{t('label_wise_teacher_trained_cwsn')} {selectReportType === "ADP_Report" ? t('district') : t('block')}</h4>
+                    <h4 className='heading-sm'>{t('label_wise_teacher_trained_cwsn')}</h4>
                 </div>
                 <div className="graph mt-2">
                     <HighchartsReact
@@ -41,7 +41,7 @@ export default function TeacherTrainedCwsnScatterGraph() {
                             chart: {
                                 type: 'scatter',
                                 marginTop: 50,
-                                height: 500,
+                                height: 490,
                                 zooming: {
                                     type: 'xy'
                                 }
@@ -52,7 +52,7 @@ export default function TeacherTrainedCwsnScatterGraph() {
                             },
                             xAxis: {
                                 title: {
-                                    text: t('swsn_teacher_percent_data'),
+                                    text: t('total_schools_data'),
                                     margin: 10,
                                     style: {
                                         color: '#000',
@@ -60,17 +60,18 @@ export default function TeacherTrainedCwsnScatterGraph() {
                                     }
                                 },
                                 labels: {
-                                    format: '{value} %'
+                                    format: '{value}'
                                 },
                                 startOnTick: true,
                                 endOnTick: true,
                                 showLastLabel: true,
                                 lineWidth: 1,
-                                lineColor: '#ddd'
+                                lineColor: '#ddd',
+                                min: 0 
                             },
                             yAxis: {
                                 title: {
-                                    text: t('total_schools_data'),
+                                    text: t('swsn_teacher_percent_data'),
                                     style: {
                                         color: '#000',
                                         fontWeight: 'bold'
@@ -81,7 +82,8 @@ export default function TeacherTrainedCwsnScatterGraph() {
                                 },
                                 gridLineWidth: 0,
                                 lineWidth: 1,
-                                lineColor: '#ddd'
+                                lineColor: '#ddd',
+                                min: 0 
                             },
                             legend: {
                                 enabled: false
@@ -118,7 +120,7 @@ export default function TeacherTrainedCwsnScatterGraph() {
                             },
                             tooltip: {
                                 formatter: function () {
-                                    return `<b>${selectReportType === "ADP_Report" ? "District's" : "Block's"}</b> :- <br/><b>${this.point.name}</b><br/>Total Schools: ${this.point.y}<br/>Percentage Schools with Teachers Trained for CWSN: ${this.point.x} %`;
+                                    return `<b>${selectReportType === "ADP_Report" ? "District's" : "Block's"}</b> :- <br/><b>${this.point.name}</b><br/>Total Schools: ${this.point.y}<br/>Number of Schools with Teachers Trained for CWSN: ${this.point.x}`;
                                 }
                             },
                             credits: {
@@ -126,12 +128,26 @@ export default function TeacherTrainedCwsnScatterGraph() {
                             },
                             series: [
                                 {
-                                    name: t('swsn_teacher_percent'),
+                                    name: t('swsn_teacher_number'),
                                     data: dataPoints,
                                     color: '#FFB74BF0',
                                     pointWidth: 20
                                 }
-                            ]
+                            ],
+                            exporting: {
+                                filename: t('label_wise_teacher_trained_cwsn'),
+                                csv: {
+                                  columnHeaderFormatter: function (item) {
+                                    if (
+                                      !item ||
+                                      item instanceof Highcharts.Axis
+                                    ) {
+                                      return t("category");
+                                    }
+                                    return item.name;
+                                  },
+                                },
+                              },
                         }}
                         immutable={true}
                     />
