@@ -229,7 +229,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
           <div className="graph-card-1">
             <div className="text-btn-d">
               <h2 className="heading-sm">
-                Year Wise Elementary Schools Data with PTR ≤ 30%
+                {t("year_wise_elementary_schools_data_with_ptr")}
               </h2>
             </div>
             <div className="graph">
@@ -288,13 +288,13 @@ export default function TeacherAndSchResourcesReportLineGraph() {
                   },
                   series: [
                     {
-                      name: "Elementary Schools with PTR ≤ 30%",
+                      name: t('elementary_schools_with_ptr'),
                       data: formateSeriesData,
                       color: "#E6694A",
                     },
                   ],
                   exporting: {
-                    filename: t("ptr_last_five_years_school_category"),
+                    filename: t("year_wise_elementary_schools_data_with_ptr"),
                     csv: {
                       columnHeaderFormatter: function (item) {
                         if (!item || item instanceof Highcharts.Axis) {

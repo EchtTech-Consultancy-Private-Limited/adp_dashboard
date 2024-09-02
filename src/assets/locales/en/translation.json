@@ -132,5 +132,8 @@
   "ptrLessThan30Percent": "%PTR < 30",
   "ptrLessThan30": "PTR < 30",
   "comparison_by_percentage_schools_cwsn_trained_teachers": "Comparison By Percentage of Schools with CWSN-Trained Teachers",
-   "percentage_schools_girls_toilets_40_1": "Percentage of Schools having girls toilets in the ratio of 40:1"
+   "percentage_schools_girls_toilets_40_1": "Percentage of Schools having girls toilets in the ratio of 40:1",
+    "year_wise_percentage_schools_girls_toilets": "Year Wise Percentage of Schools with Girls' Toilets at a 40:1",
+    "performance_of_districts_girls_toilets": "Performance of Districts By Percentage of Schools with Girls' Toilets at a 40:1",
+  "performance_of_blocks_girls_toilets": "Performance of Blocks By Percentage of Schools with Girls' Toilets at a 40:1"
 }

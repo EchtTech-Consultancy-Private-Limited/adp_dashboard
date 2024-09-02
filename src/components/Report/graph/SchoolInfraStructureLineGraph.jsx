@@ -204,7 +204,7 @@ export default function SchoolInfraStructureLineGraph() {
     },
     series: [
       {
-        name: "Percentage of schools with girls' toilets at a 40:1 ",
+        name: t('percentage_schools_girls_toilets_40_1'),
         data: formateSeriesData,
         color: "#E6694A",
         marker: {
@@ -213,7 +213,7 @@ export default function SchoolInfraStructureLineGraph() {
       },
     ],
     exporting: {
-      filename: t("Percentage of schools with girls' toilets at a 40:1 "),
+      filename: t('percentage_schools_girls_toilets_40_1'),
       csv: {
         columnHeaderFormatter: function (item) {
           if (!item || item instanceof Highcharts.Axis) {
@@ -232,7 +232,7 @@ export default function SchoolInfraStructureLineGraph() {
           <div className="graph-card-1">
             <div className="text-btn-d">
               <h2 className="heading-sm">
-                Year Wise Percentage of schools with girls' toilets at a 40:1 
+              {t('year_wise_percentage_schools_girls_toilets')}
               </h2>
             </div>
             <div className="graph">
