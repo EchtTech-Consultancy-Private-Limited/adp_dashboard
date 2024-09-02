@@ -154,8 +154,8 @@ export default function SchoolInfraStructureLineGraph() {
   const chartOptions = {
     chart: {
       type: "line",
-      marginTop: 70,
-      height:425,
+      marginTop: 50,
+      height:395,
     },
     title: {
       text: "",
@@ -190,8 +190,8 @@ export default function SchoolInfraStructureLineGraph() {
       layout: "horizontal",
       align: "center",
       verticalAlign: "bottom",
-      itemMarginTop: 10,
-      itemMarginBottom: 10,
+      itemMarginTop: 20,
+      itemMarginBottom: 0,
       symbolHeight: 12,
       symbolWidth: 8,
       symbolRadius: 10,
@@ -228,7 +228,7 @@ export default function SchoolInfraStructureLineGraph() {
     <div className="graph-box mt-0">
       <div className="row">
         <div className="col-md-12">
-          <div className="graph-card">
+          <div className="graph-card-1">
             <div className="text-btn-d">
               <h2 className="heading-sm">
                 Year Wise Percentage of schools with girls' toilets at a 40:1 

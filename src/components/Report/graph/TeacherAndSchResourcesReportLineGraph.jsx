@@ -149,75 +149,75 @@ export default function TeacherAndSchResourcesReportLineGraph() {
     return value;
   };
 
-  const chartOptions = {
-    chart: {
-      type: "line",
-      marginTop: 70,
-      height:430,
-    },
-    title: {
-      text: "",
-    },
-    xAxis: {
-      title: {
-        // text:t('elementary_schools_with_ptr'),
-        y: 50,
-      },
-      categories: categoriesYear,
-      gridLineWidth: 0,
-      lineWidth: 0,
-    },
-    yAxis: {
-      title: {
-        text: "",
-      },
-      gridLineWidth: 0,
-      lineWidth: 0,
-    },
-    plotOptions: {
-      line: {
-        dataLabels: {
-          enabled: true,
-          formatter: function () {
-            return percentageRenderer(this.y);
-          },
-        },
-      },
-    },
-    legend: {
-      layout: "vertical",
-      align: "center",
-      verticalAlign: "bottom",
-      itemMarginTop: 10,
-      itemMarginBottom: 10,
-      symbolHeight: 12,
-      symbolWidth: 8,
-      symbolRadius: 10,
-      squareSymbol: false,
-      enabled: true,
-    },
-    credits: {
-      enabled: false,
-    },
-    series: [
-      {
-        name: "Elementary Schools with PTR ≤ 30%",
-        data: formateSeriesData,
-        color: "#E6694A",
-      },
-    ],
-    exporting: {
-      filename: t("ptr_last_five_years_school_category"),
-      csv: {
-        columnHeaderFormatter: function (item) {
-          if (!item || item instanceof Highcharts.Axis) {
-            return t("category");
-          }
-          return item.name;
-        },
-      },
-    },
-  };
+  // const chartOptions = {
+  //   chart: {
+  //     type: "line",
+  //     marginTop: 70,
+  //     height:430,
+  //   },
+  //   title: {
+  //     text: "",
+  //   },
+  //   xAxis: {
+  //     title: {
+  //       // text:t('elementary_schools_with_ptr'),
+  //       y: 50,
+  //     },
+  //     categories: categoriesYear,
+  //     gridLineWidth: 0,
+  //     lineWidth: 0,
+  //   },
+  //   yAxis: {
+  //     title: {
+  //       text: "",
+  //     },
+  //     gridLineWidth: 0,
+  //     lineWidth: 0,
+  //   },
+  //   plotOptions: {
+  //     line: {
+  //       dataLabels: {
+  //         enabled: true,
+  //         formatter: function () {
+  //           return percentageRenderer(this.y);
+  //         },
+  //       },
+  //     },
+  //   },
+  //   legend: {
+  //     layout: "vertical",
+  //     align: "center",
+  //     verticalAlign: "bottom",
+  //     itemMarginTop: 10,
+  //     itemMarginBottom: 10,
+  //     symbolHeight: 12,
+  //     symbolWidth: 8,
+  //     symbolRadius: 10,
+  //     squareSymbol: false,
+  //     enabled: true,
+  //   },
+  //   credits: {
+  //     enabled: false,
+  //   },
+  //   series: [
+  //     {
+  //       name: "Elementary Schools with PTR ≤ 30%",
+  //       data: formateSeriesData,
+  //       color: "#E6694A",
+  //     },
+  //   ],
+  //   exporting: {
+  //     filename: t("ptr_last_five_years_school_category"),
+  //     csv: {
+  //       columnHeaderFormatter: function (item) {
+  //         if (!item || item instanceof Highcharts.Axis) {
+  //           return t("category");
+  //         }
+  //         return item.name;
+  //       },
+  //     },
+  //   },
+  // };
   
   
 
@@ -226,7 +226,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
      <div className="graph-box">
       <div className="row">
         <div className="col-md-12">
-          <div className="graph-card">
+          <div className="graph-card-1">
             <div className="text-btn-d">
               <h2 className="heading-sm">
                 Year Wise Elementary Schools Data with PTR ≤ 30%
@@ -235,7 +235,76 @@ export default function TeacherAndSchResourcesReportLineGraph() {
             <div className="graph">
               <HighchartsReact
                 highcharts={Highcharts}
-                options={chartOptions}
+                options={{
+                  chart: {
+                    type: "line",
+                    marginTop: 50,
+                    height:420,
+                  },
+                  title: {
+                    text: "",
+                  },
+                  xAxis: {
+                    title: {
+                      // text:t('elementary_schools_with_ptr'),
+                      y: 50,
+                    },
+                    categories: categoriesYear,
+                    gridLineWidth: 0,
+                    lineWidth: 0,
+                  },
+                  yAxis: {
+                    title: {
+                      text: "",
+                    },
+                    gridLineWidth: 0,
+                    lineWidth: 0,
+                  },
+                  legend: {
+                    layout: "vertical",
+                    align: "center",
+                    verticalAlign: "bottom",
+                    itemMarginTop: 20,
+                    itemMarginBottom: 0,
+                    symbolHeight: 12,
+                    symbolWidth: 8,
+                    symbolRadius: 10,
+                    squareSymbol: false,
+                    enabled: true,
+                  },
+                  plotOptions: {
+                    line: {
+                      dataLabels: {
+                        enabled: true,
+                        formatter: function () {
+                          return percentageRenderer(this.y);
+                        },
+                      },
+                    },
+                  },
+                 
+                  credits: {
+                    enabled: false,
+                  },
+                  series: [
+                    {
+                      name: "Elementary Schools with PTR ≤ 30%",
+                      data: formateSeriesData,
+                      color: "#E6694A",
+                    },
+                  ],
+                  exporting: {
+                    filename: t("ptr_last_five_years_school_category"),
+                    csv: {
+                      columnHeaderFormatter: function (item) {
+                        if (!item || item instanceof Highcharts.Axis) {
+                          return t("category");
+                        }
+                        return item.name;
+                      },
+                    },
+                  },
+                }}
                 immutable={true}
               />
             </div>

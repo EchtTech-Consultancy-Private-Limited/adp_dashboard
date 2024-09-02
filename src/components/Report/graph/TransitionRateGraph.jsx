@@ -125,7 +125,6 @@ export default function TransitionRateGraph() {
             <div className="col-md-6">
                 <TransitionRateGraphA />
 
-
                
 
             </div>
