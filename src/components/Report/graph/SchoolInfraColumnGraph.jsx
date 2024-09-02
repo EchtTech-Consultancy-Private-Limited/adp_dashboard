@@ -20,7 +20,7 @@ export default function SchoolInfraColumnGraph() {
           district.sch_having_toilet_40_percent +
           district.sch_having_toilet_40_percent,
       }))
-      .sort((a, b) => a.combinedScore - b.combinedScore);
+      .sort((a, b) => b.combinedScore - a.combinedScore);
 
   const TopDistrictsAndBlocksColumnGraph = combinedDataForColumnGraph(
     finalData
