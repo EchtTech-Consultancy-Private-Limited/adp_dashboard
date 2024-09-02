@@ -27,12 +27,12 @@ export default function SchoolInfraColumnGraph() {
   )?.slice(0, 10);
 
   const getColumnGraphData = (data) => {
-    const categories = data.map((district) =>
+    const categories = data?.map((district) =>
       selectReportType === "ADP_Report"
         ? district.lgd_district_name
         : district.lgd_block_name
     );
-    const sch_having_toilet_40_percent = data.map((district) =>
+    const sch_having_toilet_40_percent = data?.map((district) =>
       selectReportType === "ADP_Report"
         ? district.sch_having_toilet_40_percent
         : district.sch_having_toilet_40_percent
@@ -47,7 +47,7 @@ export default function SchoolInfraColumnGraph() {
 
   const formatedTopSchToiPer = topSchToiPer.map((num) => {
     const number = Number(num);
-    return isNaN(number) ? 0 : parseFloat(number.toFixed(2));
+    return isNaN(number) ? 0 : parseFloat(number?.toFixed(2));
   });
   const headingText =
     TopDistrictsAndBlocksColumnGraph.length < 10
