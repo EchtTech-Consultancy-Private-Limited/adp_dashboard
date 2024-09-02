@@ -651,9 +651,18 @@ export default function TeacherTrainedCwsnReport() {
     const handleOptionChange = (event) => {
         dispatch(setselectedOptionTop50(event.target.value));
     };
-    const toggleClass = (e) => {
-        dispatch(setIsActiveGraph(!isActiveGraph));
+    // const toggleClass = (e) => {
+    //     dispatch(setIsActiveGraph(!isActiveGraph));
+    //     dispatch(setselectedOptionTop50(""));
+    // };
+
+    const [isActive, setIsActive] = useState(false);
+    const toggleClass = (isGraph) => {
         dispatch(setselectedOptionTop50(""));
+        if (isGraph !== isActive) {
+            setIsActive(isGraph);
+            dispatch(setIsActiveGraph(!isActiveGraph));
+        }
     };
     return (
         <>
@@ -698,8 +707,8 @@ export default function TeacherTrainedCwsnReport() {
 
                                             </div>
                                             <div className="tab-box">
-                                                <button className={`tab-button  ${isActiveGraph ? '' : 'active'}`} onClick={toggleClass}><img src={table} alt="Table" /> <span>{t('tableView')}</span></button>
-                                                <button className={`tab-button  ${isActiveGraph ? 'active' : ''}`} onClick={toggleClass}><img src={chart} alt="chart" /> <span>{t('chartView')}</span></button>
+                                                <button className={`tab-button  ${isActiveGraph ? '' : 'active'}`} onClick={() => { toggleClass(false) }}><img src={table} alt="Table" /> <span>{t('tableView')}</span></button>
+                                                <button className={`tab-button  ${isActiveGraph ? 'active' : ''}`} onClick={() => { toggleClass(true) }}><img src={chart} alt="chart" /> <span>{t('chartView')}</span></button>
                                             </div>
                                         </div>
                                     </div>

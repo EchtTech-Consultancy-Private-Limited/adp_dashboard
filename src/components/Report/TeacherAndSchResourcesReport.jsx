@@ -760,11 +760,19 @@ export default function TeacherAndSchResourcesReport() {
 
     const handleOptionChange = (event) => {
         dispatch(setselectedOptionTop50(event.target.value));
+       
     };
-    const toggleClass = (e) => {
-        dispatch(setIsActiveGraph(!isActiveGraph))
+   
+  
+    const [isActive, setIsActive] = useState(false);
+    const toggleClass = (isGraph) => {
         dispatch(setselectedOptionTop50(""));
-    };
+        if (isGraph !== isActive) {
+            setIsActive(isGraph);
+            dispatch(setIsActiveGraph(!isActiveGraph))
+            
+        }
+     };
 
     return (
         <>
@@ -811,11 +819,11 @@ export default function TeacherAndSchResourcesReport() {
 
                                             </div>
                                             <div className="tab-box">
-                                                <button className={`tab-button  ${isActiveGraph ? '' : 'active'}`} onClick={toggleClass}>
+                                                <button className={`tab-button  ${isActiveGraph ? '' : 'active'}`} onClick={() => toggleClass(false)}>
                                                     <img src={table} alt="Table" />{" "}
                                                     <span>{t("tableView")}</span>
                                                 </button>
-                                                <button className={`tab-button  ${isActiveGraph ? 'active' : ''}`} onClick={toggleClass}>
+                                                <button className={`tab-button  ${isActiveGraph ? 'active' : ''}`} onClick={() => toggleClass(true)}>
                                                     <img src={chart} alt="chart" />{" "}
                                                     <span>{t("chartView")}</span>
                                                 </button>

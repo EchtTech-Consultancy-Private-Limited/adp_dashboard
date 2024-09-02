@@ -19,7 +19,6 @@ export const routes = (
         <Route exact path="/school-infrastructure" element={<SchoolInfraStructureReport />} />
         <Route exact path="/enrollment-retention" element={<EnrollmentAndRetentionReport />} />
         <Route exact path="/screen-reader-access" element={<ScreenReader/>} />
-
         <Route path="/*" element={<Navigate to="/" />} />
         {/* <Route path="/report" element={<TransitionRateReport/>} /> */}
     </Routes>
