@@ -170,6 +170,9 @@ export default function SchoolInfraStructureLineGraph() {
       lineWidth: 0,
     },
     yAxis: {
+      labels: {
+        format: '{value:,.0f}' // Display values with two decimal places
+      },
       title: {
         text: "",
       },
