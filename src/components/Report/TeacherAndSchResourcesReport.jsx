@@ -764,13 +764,13 @@ export default function TeacherAndSchResourcesReport() {
     };
    
   
-    const [isActive, setIsActive] = useState(false);
+   
     const toggleClass = (isGraph) => {
-        if (isGraph !== isActive) {
-            setIsActive(isGraph);
-            dispatch(setIsActiveGraph(!isActiveGraph));
+        if (isGraph !== false) {
+            dispatch(setIsActiveGraph(true));
         }
         else{
+            dispatch(setIsActiveGraph(false));
             dispatch(setselectedOptionTop50(""));
         }
     };
