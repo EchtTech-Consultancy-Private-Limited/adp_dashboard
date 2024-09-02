@@ -39,6 +39,7 @@ import schWithToiletRatioAdp2022 from "../../aspirational-reports-data/schWithTo
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 import useReportFilterData from "../../CustomHook/useReportFilterData";
 import SchoolInfraStructureLineGraph from "./graph/SchoolInfraStructureLineGraph";
+import SchoolInfraStructureTreeGraph from "./graph/SchoolInfraStructureTreeGraph";
 
 export default function SchoolInfraStructureReport() {
   const dispatch = useDispatch();
@@ -979,6 +980,7 @@ export default function SchoolInfraStructureReport() {
                     </div>
                     <div className={`graph-box  ${isActiveGraph ? '' : 'd-none'}`}>
                     <SchoolInfraStructureLineGraph />
+                    <SchoolInfraStructureTreeGraph />
                     </div>
                   </div>
                 </div>
