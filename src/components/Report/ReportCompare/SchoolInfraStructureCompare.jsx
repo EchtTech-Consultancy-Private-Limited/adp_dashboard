@@ -366,7 +366,6 @@ export default function SchoolInfraStructureCompare() {
             >
               <b>{t("selectOneMoreDistrict")}</b>
             </Card>) : (<div className="piechart-box row align-items-center">
-
               <HighchartsReact
                 highcharts={Highcharts}
                 options={{
@@ -389,13 +388,18 @@ export default function SchoolInfraStructureCompare() {
                   },
                   yAxis: {
                     allowDecimals: false,
-                    min: 0,
+                    min: 0, 
                     title: {
                       text: "",
                     },
+                    labels: {
+                      formatter: function () {
+                        return this.value.toFixed(2);
+                      },
+                    },
                   },
                   title: {
-                    text: ""
+                    text: "",
                   },
                   tooltip: {
                     headerFormat: "<b>{point.x}</b><br/>",
@@ -430,6 +434,7 @@ export default function SchoolInfraStructureCompare() {
                           return this.y.toLocaleString("en-IN");
                         },
                       },
+                      minPointLength: 5,
                     },
                   },
                   legend: {
@@ -445,42 +450,44 @@ export default function SchoolInfraStructureCompare() {
                   exports: {
                     enabled: false,
                   },
-                  series: [{
-                    color: "#17AFD2",
-                    name: t('Tot Coed & Girls Sch'),
-                    data: coedAndgirlSchoolData,
-                    maxPointWidth: 50,
-                  }, {
-                    color: "#6C6CB0",
-                    name: t('Tot Sch Fun girls toilets'),
-                    data: noSchHavingFunGirlsToiletData,
-                    maxPointWidth: 50,
-
-                  },
-                  {
-                    color: "#FFB74BF0",
-                    name: t('Per Sch Fun girls toilets'),
-                    data: schHavingFunGirlsToiletData,
-                    maxPointWidth: 50,
-                  },
-                  {
-                    color: "#0d266c",
-                    name: t('Tot Sch Fun girls toilets 40:1'),
-                    data: noSchHavingFunGirlsToiletRatioData,
-                    maxPointWidth: 50,
-                  }
-                    ,
-                  {
-                    color: "#A33C64",
-                    name: t('Per Sch Fun girls toilets 40:1'),
-                    data: SchHavingFunGirlsToiletRatioData,
-                    maxPointWidth: 50,
-                  }
-
+                  series: [
+                    {
+                      color: "#17AFD2",
+                      name: t('Tot Coed & Girls Sch'),
+                      data: coedAndgirlSchoolData,
+                      maxPointWidth: 50,
+                    },
+                    {
+                      color: "#6C6CB0",
+                      name: t('Tot Sch Fun girls toilets'),
+                      data: noSchHavingFunGirlsToiletData,
+                      maxPointWidth: 50,
+                    },
+                    {
+                      color: "#FFB74BF0",
+                      name: t('Per Sch Fun girls toilets'),
+                      data: schHavingFunGirlsToiletData,
+                      maxPointWidth: 50,
+                      minPointLength: 5, // Ensure small values are visible
+                    },
+                    {
+                      color: "#0d266c",
+                      name: t('Tot Sch Fun girls toilets 40:1'),
+                      data: noSchHavingFunGirlsToiletRatioData,
+                      maxPointWidth: 50,
+                    },
+                    {
+                      color: "#A33C64",
+                      name: t('Per Sch Fun girls toilets 40:1'),
+                      data: SchHavingFunGirlsToiletRatioData,
+                      maxPointWidth: 50,
+                    }
                   ]
                 }}
                 immutable={true}
               />
+
+
             </div>)}
 
           </div>

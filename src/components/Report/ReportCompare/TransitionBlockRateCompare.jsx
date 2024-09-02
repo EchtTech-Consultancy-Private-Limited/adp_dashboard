@@ -464,7 +464,7 @@ export default function TransitionBlockRateCompare() {
                       },
                     },
                     xAxis: {
-                      categories: selectedBlocks.map(
+                      categories: selectedBlocks?.map(
                         (district) => district.lgd_block_name
                       ),
                     },
