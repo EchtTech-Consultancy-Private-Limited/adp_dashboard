@@ -251,7 +251,7 @@ export default function SchoolInfraStructureTreeGraph() {
                     <div className="graph-card">
                       <div className="text-btn-d">
                       <h2 className="heading-sm">  
-                        {selectReportType === "ADP_Report" ? " Performance of Districts By Percentage of schools with girls' toilets at a 40:1"  : "Performance of Blocks By Percentage of schools with girls' toilets at a 40:1"}
+                        {selectReportType === "ADP_Report" ? t('performance_of_districts_girls_toilets') : t('performance_of_blocks_girls_toilets')}
                       </h2>                      
                       </div>
                       <div
