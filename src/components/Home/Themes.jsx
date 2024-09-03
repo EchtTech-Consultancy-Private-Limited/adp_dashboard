@@ -65,12 +65,10 @@ export default function Themes() {
     });
   }, []);
 
-  
-
-
+  let localhindi = localStorage.getItem('selectedLanguage');
 
   return (
-    <section className="themes ptb-70 position-relative">
+    <section className={`themes ptb-70 position-relative ${localhindi === "hi" ? "hindilang" : ""}`} id="themes">
       <div className="container ptb-70 position-relative">
         <div className="theme-border"></div>
         <div className="row position-relative z-2 pt-5 mt-3">
@@ -78,9 +76,9 @@ export default function Themes() {
           <div className="col-md-4">
             <div className="themes-text">
               <h3 className="heading-blue mb-3">
-                {t("socioEconomic")} 
+                {t("socioEconomic")}
               </h3>
-              
+
               <Link to="/transition-rate" className="btn-banner d-none-mobile">
                 {t("exploreCompositeScore")}{" "}
                 <span className="material-icons-round">arrow_forward</span>
@@ -309,13 +307,13 @@ export default function Themes() {
                     </div>
 
                     <div className="link-box">
-                      <Link  className="link">
+                      <Link className="link">
                         {t("seeADPReport")}
                         <span className="material-icons-round">
                           arrow_forward_ios
                         </span>
                       </Link>
-                      <Link  className="link">
+                      <Link className="link">
                         {t("seeABPReport")}
                         <span className="material-icons-round">
                           arrow_forward_ios

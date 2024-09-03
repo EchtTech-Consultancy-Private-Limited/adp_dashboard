@@ -79,13 +79,13 @@ export default function TeacherAndSchResourcesReport() {
     const savedReportName = localStorage.getItem("selectedReport");
     const report_name = savedReportName;
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
-    const isActiveGraph=useSelector((state)=>state.reportAdpAbpType.isActiveGraph)
+    const isActiveGraph = useSelector((state) => state.reportAdpAbpType.isActiveGraph)
 
     // const [data, setData] = useState([]);
     const [topPtrData, setTopPtrData] = useState([])
     const [top50Data, setTop50Data] = useState([])
-   
-    
+
+
     {/* Set Report Title Start*/ }
     const reportTitle = selectedOption === "Top_50_Schools"
         ? t('top_50_elementary_schools_with_ptr_30')
@@ -94,7 +94,7 @@ export default function TeacherAndSchResourcesReport() {
             : t("teacherSchoolResourcesReport")
     localStorage.setItem("selectedReport", reportTitle);
     localStorage.setItem("selectedReportValue", "Percentage of Elementary Schools Having PTR Less Than Equal to 30");
-    
+
     {/* Set Report Title End*/ }
     {/* Show top 100 Data start*/ }
     const combinedTopData = {
@@ -687,16 +687,16 @@ export default function TeacherAndSchResourcesReport() {
 
     const handleOptionChange = (event) => {
         dispatch(setselectedOptionTop50(event.target.value));
-       
+
     };
-   
-  
-   
+
+
+
     const toggleClass = (isGraph) => {
         if (isGraph !== false) {
             dispatch(setIsActiveGraph(true));
         }
-        else{
+        else {
             dispatch(setIsActiveGraph(false));
             dispatch(setselectedOptionTop50(""));
         }
@@ -761,7 +761,7 @@ export default function TeacherAndSchResourcesReport() {
                                     <div className="col-md-6">
 
                                         <div className="d-flex w-m-100 justify-content-end">
-                                            {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict && selectReportType !== "ABP_Report") && isActiveGraph === false? (
+                                            {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict && selectReportType !== "ABP_Report") && isActiveGraph === false ? (
                                                 <div className="radio-button w-auto">
                                                     <div className="box-radio me-4">
                                                         <input
@@ -819,7 +819,7 @@ export default function TeacherAndSchResourcesReport() {
 
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <div  className={`table-box mt-4  ${isActiveGraph ? 'd-none' : ''}`}>
+                                        <div className={`table-box mt-4  ${isActiveGraph ? 'd-none' : ''}`}>
                                             <div
                                                 id="content"
                                                 className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
@@ -841,14 +841,14 @@ export default function TeacherAndSchResourcesReport() {
                                             </div>
                                         </div>
 
-                                        <div className={`graph-box  ${isActiveGraph ? '' : 'd-none'}`}>
-                                       <div className="row">
-                                       
-                                        <TeacherAndSchoolgraphB/>
-                                          <TeacherAndSchResourcesColumnGraph/>
-                                      
-                                       
-                                       </div>
+                                        <div className={`graph-box mt-0  ${isActiveGraph ? '' : 'd-none'}`}>
+                                            <div className="row">
+
+                                                <TeacherAndSchoolgraphB />
+                                                <TeacherAndSchResourcesColumnGraph />
+
+
+                                            </div>
                                         </div>
 
 

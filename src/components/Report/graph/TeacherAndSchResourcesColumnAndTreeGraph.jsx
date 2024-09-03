@@ -419,7 +419,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                         }`}
                         onClick={handlePrevious}
                       >
-                        <span class="material-icons-round">expand_less</span>
+                        <span className="material-icons-round">expand_less</span>
                       </div>
 
                       <HighchartsReact
@@ -539,7 +539,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                         }`}
                         onClick={handleNext}
                       >
-                        <span class="material-icons-round">expand_more</span>
+                        <span className="material-icons-round">expand_more</span>
                       </div>
                     </div>
                   </div>

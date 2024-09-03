@@ -1543,7 +1543,13 @@ button.text-increment-btn {
         &.Langchange {
             width: 50px;
             padding-left: 4px;
+
+            &.Accessibility{
+                padding-left: 12px;
+                text-align: left;
+            }
         }
+
     }
 
 }
