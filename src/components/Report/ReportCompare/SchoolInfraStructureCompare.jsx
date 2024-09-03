@@ -146,14 +146,13 @@ export default function SchoolInfraStructureCompare() {
 
   const coedAndgirlSchoolData = selectedDistricts?.map(district => district?.tot_school_girl_co_ed);
 
-  const schHavingFunGirlsToiletData = selectedDistricts?.map(district => district?.functional_toilet_girls_percent);
+  const schHavingFunGirlsToiletData = selectedDistricts?.map(district =>parseFloat(district?.functional_toilet_girls_percent?.toFixed(2)) || 0);
+  const SchHavingFunGirlsToiletRatioData = selectedDistricts?.map(district =>parseFloat(district?.sch_having_toilet_40_percent?.toFixed(2)) || 0)
   const noSchHavingFunGirlsToiletData = selectedDistricts?.map(district => district?.total_no_of_fun_girls_toilet);
-  const SchHavingFunGirlsToiletRatioData = selectedDistricts?.map(district => district?.sch_having_toilet_40_percent);
   const noSchHavingFunGirlsToiletRatioData = selectedDistricts?.map(district => district?.toilet_40);
 
-  const handleOptionChange = (event) => {
-    dispatch(setselectedCompareOption(event.target.value));
-  };
+ 
+
   return (
     <>
       {!isActiveGraph ? (<div className="card-box">
@@ -468,7 +467,7 @@ export default function SchoolInfraStructureCompare() {
                       name: t('Per Sch Fun girls toilets'),
                       data: schHavingFunGirlsToiletData,
                       maxPointWidth: 50,
-                      minPointLength: 5, // Ensure small values are visible
+                      minPointLength: 5, 
                     },
                     {
                       color: "#0d266c",

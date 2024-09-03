@@ -3,7 +3,6 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-
 import useReportFilterData from "../../../CustomHook/useReportFilterData";
 
 export default function TeacherAndSchResourcesReportLineGraph() {
@@ -36,81 +35,6 @@ export default function TeacherAndSchResourcesReportLineGraph() {
   useEffect(() => {
     setCompinedData(combinedDatas);
   }, [finalData]);
-  // useEffect(() => {
-  //   let filteredData = combinedData;
-  //   if (selectedState && selectedState !== SelectState) {
-  //     filteredData = filteredData?.filter(
-  //       (item) => item.lgd_state_name === selectedState
-  //     );
-  //   }
-
-  //   if (
-  //     selectedDistrict &&
-  //     selectedDistrict !== AllDistrict &&
-  //     selectedDistrict !== SelectDistrict
-  //   ) {
-  //     filteredData = filteredData.filter(
-  //       (item) => item.lgd_district_name === selectedDistrict
-  //     );
-  //   }
-
-  //   if (
-  //     selectedBlock &&
-  //     selectedBlock !== AllBlock &&
-  //     selectedBlock !== SelectBlock
-  //   ) {
-  //     filteredData = filteredData?.filter(
-  //       (item) => item.lgd_block_name === selectedBlock
-  //     );
-  //   }
-  //   filteredData = filteredData?.map((item) => ({
-  //     ...item,
-  //     Location: getLocationName(item),
-  //   }));
-  //   setData(filteredData);
-
-  //   // dispatch(setUpdateStatus(false))
-  // }, [
-  //   selectedState,
-  //   selectedDistrict,
-  //   selectedBlock,
-  //   combinedData,
-  //   selectReportType,
-  // ]);
-  // const getLocationName = (item) => {
-  //   if (selectReportType === "ABP_Report") {
-  //     if (
-  //       selectedBlock &&
-  //       selectedBlock !== AllBlock &&
-  //       selectedBlock !== SelectBlock
-  //     ) {
-  //       return `${item.lgd_block_name}`;
-  //     } else if (
-  //       selectedDistrict &&
-  //       selectedDistrict !== AllDistrict &&
-  //       selectedDistrict !== SelectDistrict
-  //     ) {
-  //       return `${item.lgd_block_name}`;
-  //     } else if (selectedState && selectedState !== SelectState) {
-  //       return `${item.lgd_district_name}`;
-  //     } else if (selectedState === SelectState) {
-  //       return `${item.lgd_state_name}`;
-  //     }
-
-  //   } else if (selectReportType === "ADP_Report") {
-  //     if (selectedState && selectedState !== SelectState) {
-  //       return `${item.lgd_district_name}`;
-  //     } else if (
-  //       selectedState !== SelectState &&
-  //       selectedState !== AllDistrict
-  //     ) {
-  //       return `${item.lgd_district_name}`;
-  //     } else if (selectedState === SelectState) {
-  //       return `${item.lgd_state_name}`;
-  //     }
-  //   }
-  //   return "";
-  // };
 
   const data = useReportFilterData(combinedData);
 
@@ -218,100 +142,100 @@ export default function TeacherAndSchResourcesReportLineGraph() {
   //     },
   //   },
   // };
-  
-  
+
+
 
   return (
-   <div className="col-md-5">
-     <div className="graph-box">
-      <div className="row">
-        <div className="col-md-12">
-          <div className="graph-card-1">
-            <div className="text-btn-d">
-              <h2 className="heading-sm">
-                {t("year_wise_elementary_schools_data_with_ptr")}
-              </h2>
-            </div>
-            <div className="graph">
-              <HighchartsReact
-                highcharts={Highcharts}
-                options={{
-                  chart: {
-                    type: "line",
-                    marginTop: 50,
-                    height:420,
-                  },
-                  title: {
-                    text: "",
-                  },
-                  xAxis: {
-                    title: {
-                      // text:t('elementary_schools_with_ptr'),
-                      y: 50,
+    <div className="col-md-5">
+      <div className="graph-box">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="graph-card-1">
+              <div className="text-btn-d">
+                <h2 className="heading-sm">
+                  {t("year_wise_elementary_schools_data_with_ptr")}
+                </h2>
+              </div>
+              <div className="graph">
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  options={{
+                    chart: {
+                      type: "line",
+                      marginTop: 50,
+                      height: 425,
                     },
-                    categories: categoriesYear,
-                    gridLineWidth: 0,
-                    lineWidth: 0,
-                  },
-                  yAxis: {
                     title: {
                       text: "",
                     },
-                    gridLineWidth: 0,
-                    lineWidth: 0,
-                  },
-                  legend: {
-                    layout: "vertical",
-                    align: "center",
-                    verticalAlign: "bottom",
-                    itemMarginTop: 20,
-                    itemMarginBottom: 0,
-                    symbolHeight: 12,
-                    symbolWidth: 8,
-                    symbolRadius: 10,
-                    squareSymbol: false,
-                    enabled: true,
-                  },
-                  plotOptions: {
-                    line: {
-                      dataLabels: {
-                        enabled: true,
-                        formatter: function () {
-                          return percentageRenderer(this.y);
+                    xAxis: {
+                      title: {
+                        // text:t('elementary_schools_with_ptr'),
+                        y: 50,
+                      },
+                      categories: categoriesYear,
+                      gridLineWidth: 0,
+                      lineWidth: 0,
+                    },
+                    yAxis: {
+                      title: {
+                        text: "",
+                      },
+                      gridLineWidth: 0,
+                      lineWidth: 0,
+                    },
+                    legend: {
+                      layout: "vertical",
+                      align: "center",
+                      verticalAlign: "bottom",
+                      itemMarginTop: 20,
+                      itemMarginBottom: 0,
+                      symbolHeight: 12,
+                      symbolWidth: 8,
+                      symbolRadius: 10,
+                      squareSymbol: false,
+                      enabled: true,
+                    },
+                    plotOptions: {
+                      line: {
+                        dataLabels: {
+                          enabled: true,
+                          formatter: function () {
+                            return percentageRenderer(this.y);
+                          },
                         },
                       },
                     },
-                  },
-                 
-                  credits: {
-                    enabled: false,
-                  },
-                  series: [
-                    {
-                      name: t('elementary_schools_with_ptr'),
-                      data: formateSeriesData,
-                      color: "#E6694A",
+
+                    credits: {
+                      enabled: false,
                     },
-                  ],
-                  exporting: {
-                    filename: t("year_wise_elementary_schools_data_with_ptr"),
-                    csv: {
-                      columnHeaderFormatter: function (item) {
-                        if (!item || item instanceof Highcharts.Axis) {
-                          return t("category");
-                        }
-                        return item.name;
+                    series: [
+                      {
+                        name: t('elementary_schools_with_ptr'),
+                        data: formateSeriesData,
+                        color: "#E6694A",
+                      },
+                    ],
+                    exporting: {
+                      filename: t("year_wise_elementary_schools_data_with_ptr"),
+                      csv: {
+                        columnHeaderFormatter: function (item) {
+                          if (!item || item instanceof Highcharts.Axis) {
+                            return t("category");
+                          }
+                          return item.name;
+                        },
                       },
                     },
-                  },
-                }}
-                immutable={true}
-              />
+                  }}
+                  immutable={true}
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-   </div>
   );
 }
