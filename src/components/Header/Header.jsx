@@ -65,7 +65,19 @@ const Header = () => {
     localStorage.setItem("selectedLanguage", selectedLanguage);
     i18n.changeLanguage(selectedLanguage);
 
+    // const themeElement = document.getElementById("themes");
+    // if (themeElement) {
+    //   if (selectedLanguage === "hi") {
+    //     themeElement.classList.add("hindi");
+    //     localStorage.setItem("themeClass", "hindi");        
+    //   } else {
+    //     themeElement.classList.remove("hindi");
+    //     localStorage.removeItem("themeClass");
+    //   }
+    // }
   };
+
+
   useEffect(() => {
     const savedLanguage = localStorage.getItem("selectedLanguage");
     if (!savedLanguage) {
@@ -149,7 +161,7 @@ const Header = () => {
                   <ul className="mb-0">
                     <li>
                       <div className="theme-toggle">
-                        <label className="switch" title={toggleDarkMode? "Dark Mode":"Light Mode"}>
+                        <label className="switch" title={toggleDarkMode ? "Dark Mode" : "Light Mode"}>
                           <input
                             className="switch-input"
                             type="checkbox"
@@ -174,11 +186,9 @@ const Header = () => {
                     <li>
                       <div className="select-right">
                         <div className="select-wrap">
-                          <select
-                            className="form-select Langchange"
+                          <select className="form-select Langchange"
                             value={i18n.language}
-                            onChange={changeLanguage}
-                          >
+                            onChange={changeLanguage}>
                             <option value="en">Eng</option>
                             <option value="hi">हिन्दी</option>
                           </select>
@@ -190,11 +200,11 @@ const Header = () => {
                       <div>
                         <div className="select-right">
                           <select
-                         className="form-select Langchange"
+                            className="form-select Langchange Accessibility"
                             onChange={changeSizeByBtn}
-                            title="Accessibility Dropdown" 
+                            title="Accessibility Dropdown"
                           >
-                            <option value="average" title="Normal Font Size">{t("gradeA")}</option>
+                            <option value="average" title="Normal Font Size">{t("gradeA")}&nbsp;</option>
                             <option value="max" title="Increase Font Size">{t("gradeAPlus")}</option>
                             <option value="normal" title="Decrease Font Size">{t("gradeAMinus")}</option>
                           </select>
@@ -320,12 +330,12 @@ const Header = () => {
 
                       {/* <img src={search} alt="search"/> */}
 
-                      <div class={`input-box ${isShow ? "open" : ""}`}>
+                      <div className={`input-box ${isShow ? "open" : ""}`}>
                         <input type="text" placeholder="Search..." />
-                        <span class="search" onClick={handleShowsearch}>
-                          <span class="material-icons-round search-icon">search</span>
+                        <span className="search" onClick={handleShowsearch}>
+                          <span className="material-icons-round search-icon">search</span>
                         </span>
-                        <span class="material-icons-round close-icon" onClick={handleShowsearch}>close</span>
+                        <span className="material-icons-round close-icon" onClick={handleShowsearch}>close</span>
                       </div>
 
                       {/* <img src={search} alt="search" onClick={handleShowsearch} /> */}

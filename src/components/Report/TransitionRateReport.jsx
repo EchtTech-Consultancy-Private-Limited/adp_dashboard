@@ -122,99 +122,6 @@ export default function TransitionRateReport() {
 
     /*...............Take data report wise..............*/
 
-    // useEffect(() => {
-    //     let filteredData = aspirationalData;
-    //     if (selectedState && selectedState !== SelectState) {
-    //         filteredData = filteredData.filter(
-    //             (item) => item.lgd_state_name === selectedState
-    //         );
-    //     }
-
-    //     if (
-    //         selectedDistrict &&
-    //         selectedDistrict !== AllDistrict &&
-    //         selectedDistrict !== SelectDistrict
-    //     ) {
-    //         filteredData = filteredData.filter(
-    //             (item) => item.lgd_district_name === selectedDistrict
-    //         );
-    //     }
-
-    //     if (
-    //         selectedBlock &&
-    //         selectedBlock !== AllBlock &&
-    //         selectedBlock !== SelectBlock
-    //     ) {
-    //         filteredData = filteredData.filter(
-    //             (item) => item.lgd_block_name === selectedBlock
-    //         );
-    //     }
-    //     filteredData = filteredData.map((item) => ({
-    //         ...item,
-    //         Location: getLocationName(item),
-    //     }));
-    //     setData(filteredData);
-    //     setLoading(false);
-
-    //     // dispatch(setUpdateStatus(false))
-    // }, [
-    //     selectedState,
-    //     selectedDistrict,
-    //     selectedBlock,
-    //     aspirationalData,
-    //     selectReportType,
-    // ]);
-
-    // useEffect(() => {
-    //   if (selectedState) {
-    //     const filtered = aspirationalData
-    //       .filter((item) => item.lgd_state_name === selectedState)
-    //       .map((item) => ({
-    //         ...item,
-    //         lgd_block_name: item.lgd_block_name,
-    //         lgd_district_name: item.lgd_district_name,
-    //       }));
-    //     setFilteredData(filtered);
-    //   } else {
-    //     setFilteredData([]);
-    //   }
-    // }, [selectedState, aspirationalData]);
-
-    // const getLocationName = (item) => {
-    //     if (selectReportType === "ABP_Report") {
-    //         if (
-    //             selectedBlock &&
-    //             selectedBlock !== AllBlock &&
-    //             selectedBlock !== SelectBlock
-    //         ) {
-    //             return `${item.lgd_block_name}`;
-    //         } else if (
-    //             selectedDistrict &&
-    //             selectedDistrict !== AllDistrict &&
-    //             selectedDistrict !== SelectDistrict
-    //         ) {
-    //             return `${item.lgd_block_name}`;
-    //         } else if (selectedState && selectedState !== SelectState) {
-    //             return `${item.lgd_district_name}`;
-    //         } else if (selectedState === SelectState) {
-    //             return `${item.lgd_state_name}`;
-    //         }
-    //     } else if (selectReportType === "ADP_Report") {
-    //         if (selectedState && selectedState !== SelectState) {
-    //             return `${item.lgd_district_name}`;
-    //         } else if (
-    //             selectedState !== SelectState &&
-    //             selectedState !== AllDistrict
-    //         ) {
-    //             return `${item.lgd_district_name}`;
-    //         } else if (selectedState === SelectState) {
-    //             return `${item.lgd_state_name}`;
-    //         }
-    //     }
-    //     return "";
-    // };
-
-
     const data = useReportFilterData(aspirationalData);
 
     const percentageRenderer = (params) => {
@@ -776,13 +683,6 @@ export default function TransitionRateReport() {
         }
         document.getElementById("export_data").selectedIndex = 0;
     };
-
-    // const [isActive, setIsActive] = useState(false);
-    // const toggleClass = (e) => {
-
-    //     dispatch(setIsActiveGraph(!isActiveGraph));
-
-    // };
 
     const toggleClass = (isGraph) => {
         if (isGraph !== false) {

@@ -10,8 +10,6 @@ export default function SchoolInfraStructureLineGraph() {
   const { t } = useTranslation();
 
   const finalData = useSelector((state) => state?.reportAdpAbpType?.finalData);
-
-  console.log("finalData",finalData)
   const allYearsData = useSelector(
     (state) => state?.reportAdpAbpType?.allYearDataForGraph
   );
@@ -153,7 +151,7 @@ export default function SchoolInfraStructureLineGraph() {
     chart: {
       type: "line",
       marginTop: 50,
-      height:425,
+      height: 425,
     },
     title: {
       text: "",
@@ -169,7 +167,7 @@ export default function SchoolInfraStructureLineGraph() {
     },
     yAxis: {
       labels: {
-        format: '{value:,.0f}' // Display values with two decimal places
+        format: '{value:,.0f}'
       },
       title: {
         text: "",
@@ -232,7 +230,7 @@ export default function SchoolInfraStructureLineGraph() {
           <div className="graph-card-1">
             <div className="text-btn-d">
               <h2 className="heading-sm">
-              {t('year_wise_percentage_schools_girls_toilets')}
+                {t('year_wise_percentage_schools_girls_toilets')}
               </h2>
             </div>
             <div className="graph">
