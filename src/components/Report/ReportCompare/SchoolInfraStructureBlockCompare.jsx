@@ -130,9 +130,9 @@ export default function SchoolInfraStructureBlockCompare() {
   };
 
   const coedAndgirlSchoolData = selectedBlocks?.map(block => block?.tot_school_girl_co_ed);
-  const schHavingFunGirlsToiletData = selectedBlocks?.map(block => block?.functional_toilet_girls_percent);
+  const schHavingFunGirlsToiletData = selectedBlocks?.map(block => parseFloat(block?.functional_toilet_girls_percent?.toFixed(2)) || 0);
+  const SchHavingFunGirlsToiletRatioData = selectedBlocks?.map(block => parseFloat(block?.sch_having_toilet_40_percent?.toFixed(2)) || 0)
   const noSchHavingFunGirlsToiletData = selectedBlocks?.map(block => block?.total_no_of_fun_girls_toilet);
-  const SchHavingFunGirlsToiletRatioData = selectedBlocks?.map(block => block?.sch_having_toilet_40_percent);
   const noSchHavingFunGirlsToiletRatioData = selectedBlocks?.map(block => block?.toilet_40);
 
   const handleOptionChange = (event) => {
