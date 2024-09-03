@@ -332,7 +332,7 @@ export default function SchoolInfraStructureCompare() {
 
 
                     {[...Array(MAX_DISTRICTS)]?.map((_, index) => (
-                      <div key={index} class="width-20">
+                      <div key={index} className="width-20">
                         <Select
                           className="form-select bg-grey2"
                           onChange={(value) => handleDistrictChange(value, index)}
