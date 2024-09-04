@@ -365,7 +365,7 @@ export default function TeacherAndSchoolCompare() {
                     },
                   },
                   title: {
-                    text: ""
+                    text:t('comparisonByElementarySchoolsPTR30')
                   },
                   tooltip: {
                     headerFormat: "<b>{point.x}</b><br/>",
@@ -438,7 +438,18 @@ export default function TeacherAndSchoolCompare() {
                     },
   
   
-                  ]
+                  ],
+                  exporting: {
+                    filename:t('comparisonByElementarySchoolsPTR30'),
+                    csv: {
+                      columnHeaderFormatter: function (item) {
+                        if (!item || item instanceof Highcharts.Axis) {
+                          return t("category");
+                        }
+                        return item.name;
+                      },
+                    },
+                  },
                 }}
                 immutable={true}
               />

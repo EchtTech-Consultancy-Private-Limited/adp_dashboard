@@ -28,6 +28,10 @@ export default function TransitionRateGraph() {
 
     const { categories: topCategories, boysData: topBoysData, girlsData: topGirlsData } = getChartData(TopDistricts || []);
 
+    const headingText = TopDistricts.length < 10
+    ? `${t('performance_of')} ${selectReportType === "ADP_Report" ? t('district') : t('block')} ${t('by_transition_rate')}`
+    : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}  ${t('transition_rate')}`;
+
     const chartOptions = (categories, boysData, girlsData, title) => ({
         chart: {
             type: "bar",
@@ -63,7 +67,7 @@ export default function TransitionRateGraph() {
             gridLineWidth: 0,
         },
         title: {
-            text: title,
+            text: headingText,
         },
         tooltip: {
             valueSuffix: "%",
@@ -102,10 +106,19 @@ export default function TransitionRateGraph() {
             data: girlsData,
             pointWidth: 12,
         }],
+        exporting: {
+            filename: headingText,
+            csv: {
+              columnHeaderFormatter: function (item) {
+                if (!item || item instanceof Highcharts.Axis) {
+                  return t("category");
+                }
+                return item.name;
+              },
+            },
+          },
     });
-    const headingText = TopDistricts.length < 10
-        ? `${t('performance_of')} ${selectReportType === "ADP_Report" ? t('district') : t('block')} ${t('by_transition_rate')}`
-        : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}  ${t('transition_rate')}`;
+
 
     return (
         <div className="row">
@@ -124,9 +137,6 @@ export default function TransitionRateGraph() {
 
             <div className="col-md-6">
                 <TransitionRateGraphA />
-
-               
-
             </div>
         </div>
     );

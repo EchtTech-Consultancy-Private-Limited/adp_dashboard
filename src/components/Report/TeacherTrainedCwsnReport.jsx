@@ -6,7 +6,7 @@ import './report.scss'
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
+import "ag-grid-community/styles/ag-theme-quartz.css";
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from "react-i18next";
 import { jsPDF } from "jspdf";
@@ -764,7 +764,7 @@ export default function TeacherTrainedCwsnReport() {
                                 <div className="row">
                                     <div className="col-md-12">
                                         <div className={`table-box mt-4  ${isActiveGraph ? 'd-none' : ''}`}>
-                                            <div id="content" className="multi-header-table ag-theme-balham ag-theme-custom-height h-300"
+                                            <div id="content" className="multi-header-table ag-theme-quartz ag-theme-custom-height h-300"
                                                 style={{ width: "100%", height: 400 }} >
                                                 <AgGridReact
                                                     columnDefs={columns}

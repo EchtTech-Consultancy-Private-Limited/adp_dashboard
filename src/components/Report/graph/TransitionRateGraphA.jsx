@@ -77,15 +77,15 @@ export default function TransitionRateGraphA() {
                         options={{
                             chart: {
                                 type: 'scatter',
-                                marginTop: 20,
+                                marginTop: 50,
                                 height: 450,
                                 zooming: {
                                     type: 'xy'
                                 }
                             },
                             title: {
-                                text: '',
-                                align: 'left'
+                                text: t('label_wise_transition_rate'),
+                                align: 'middle'
                             },
                             xAxis: {
                                 title: {
@@ -159,7 +159,7 @@ export default function TransitionRateGraphA() {
                             },
                             tooltip: {
                                 formatter: function () {
-                                    return `<b>${selectReportType === "ADP_Report" ? "District's" : "Block's"}</b> :- <br/><b>${this.point.name}</b><br/>Total: ${this.point.x} % <br/> ${this.series.name}: ${this.point.y}`;
+                                    return `<b>${selectReportType === "ADP_Report" ? "District's" : "Block's"}</b> :- <br/><b>${this.point.name} </b><br/>Total: ${this.point.x} % <br/> ${this.series.name}: ${this.point.y}%`;
                                 }
                             },
                             credits: {
@@ -172,13 +172,21 @@ export default function TransitionRateGraphA() {
                                     color: selectedValue === 'Boys' ? '#FFB74BF0' : '#2B9C9F',
                                     pointWidth: 20
                                 }
-                            ]
+                            ],
+                            exporting: {
+                                filename:t('label_wise_transition_rate'),
+                                csv: {
+                                  columnHeaderFormatter: function (item) {
+                                    if (!item || item instanceof Highcharts.Axis) {
+                                      return t("category");
+                                    }
+                                    return item.name;
+                                  },
+                                },
+                              },
                         }}
                         immutable={true}
                     />
-
-
-                  
                 </div>
             </div>
         </div>

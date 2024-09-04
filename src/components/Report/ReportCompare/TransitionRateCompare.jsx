@@ -431,7 +431,7 @@ export default function TransitionRateCompare() {
                   },
                 },
                 title: {
-                  text: ""
+                  text: t("comparisonByTransitionRate")
                 },
                 tooltip: {
                   headerFormat: "<b>{point.x}</b><br/>",
@@ -504,7 +504,18 @@ export default function TransitionRateCompare() {
                 }
 
 
-                ]
+                ],
+                exporting: {
+                  filename:t("comparisonByTransitionRate"),
+                  csv: {
+                    columnHeaderFormatter: function (item) {
+                      if (!item || item instanceof Highcharts.Axis) {
+                        return t("category");
+                      }
+                      return item.name;
+                    },
+                  },
+                },
               }}
               immutable={true}
             />

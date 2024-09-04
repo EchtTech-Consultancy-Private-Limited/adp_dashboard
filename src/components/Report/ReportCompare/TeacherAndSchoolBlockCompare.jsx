@@ -316,19 +316,13 @@ export default function TeacherAndSchoolBlockCompare() {
         </div>
       </div>)
         : (
-
-
-
           <div className="col-md-12 graph-box">
             <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
               <div className="text-btn-d d-flex justify-content-between align-items-center">
                 <h2 className="heading-sm">
-                  Comparison By  Elementary Schools with PTR ≤ 30%
+                {t('comparisonByElementarySchoolsPTR30')}
                 </h2>
-
-
               </div>
-
               <div className="Comparison-box">
                 <div className="row align-items-center">
                   <div className="col-md-2 col-lg-2">
@@ -410,7 +404,7 @@ export default function TeacherAndSchoolBlockCompare() {
                         },
                       },
                       title: {
-                        text: "",
+                        text:t('comparisonByElementarySchoolsPTR30'),
                       },
                       tooltip: {
                         headerFormat: "<b>{point.x}</b><br/>",
@@ -485,6 +479,17 @@ export default function TeacherAndSchoolBlockCompare() {
 
                         },
                       ],
+                      exporting: {
+                        filename:t('comparisonByElementarySchoolsPTR30'),
+                        csv: {
+                          columnHeaderFormatter: function (item) {
+                            if (!item || item instanceof Highcharts.Axis) {
+                              return t("category");
+                            }
+                            return item.name;
+                          },
+                        },
+                      },
                     }}
                     immutable={true}
                   />
