@@ -75,10 +75,11 @@ export default function BannerReportFilter() {
     }
     setTimeout(()=>{
       dispatch(setLoading(false));
-     },[500])
+     },[300])
   };
 
   useEffect(() => {
+    dispatch(setLoading(true));
     if (aspirationalData.length > 0) {
       const structuredData = aspirationalData.reduce((acc, curr) => {
         const stateIndex = acc.findIndex((st) => st.lgd_state_id === curr.lgd_state_id);
@@ -139,6 +140,9 @@ export default function BannerReportFilter() {
         dispatch(setBlocks(updatedBlocks));
       }
     }
+    setTimeout(()=>{
+      dispatch(setLoading(false));
+     },[100])
   }, [aspirationalData, selectReportType, selectedState, selectedDistrict, dispatch]);
 
 
@@ -151,31 +155,19 @@ export default function BannerReportFilter() {
   };
 
   const handleStateChange = (value) => {
-    dispatch(setLoading(true));
     dispatch(selectState(value));
     dispatch(setselectedCompareDistricts([]));
     dispatch(setselectedCompareBlocks([]))
-    setTimeout(()=>{
-      dispatch(setLoading(false));
-     },[50])
   };
 
 
   const handleDistrictChange = (value) => {
-    dispatch(setLoading(true));
     dispatch(selectDistrict(value));
     dispatch(setselectedCompareBlocks([]));
-    setTimeout(()=>{
-      dispatch(setLoading(false));
-     },[50])
   };
 
   const handleBlockChange = (value) => {
-    dispatch(setLoading(true));
     dispatch(selectBlock(value));
-    setTimeout(()=>{
-      dispatch(setLoading(false));
-     },[50])
   };
 
   const handleYearChange = (value) => {

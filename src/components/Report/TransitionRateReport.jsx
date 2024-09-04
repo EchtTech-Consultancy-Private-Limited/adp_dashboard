@@ -691,13 +691,13 @@ export default function TransitionRateReport() {
             dispatch(setIsActiveGraph(true));
             setTimeout(() => {
                 dispatch(setLoading(false));
-            }, [500])
+            }, [200])
         }
         else {
             dispatch(setIsActiveGraph(false));
             setTimeout(() => {
                 dispatch(setLoading(false));
-            }, [500])
+            }, [200])
         }
     };
 
