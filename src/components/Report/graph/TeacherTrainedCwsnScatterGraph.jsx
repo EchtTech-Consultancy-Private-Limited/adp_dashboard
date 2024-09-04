@@ -47,7 +47,7 @@ export default function TeacherTrainedCwsnScatterGraph() {
                                 }
                             },
                             title: {
-                                text: '',
+                                text: t('label_wise_teacher_trained_cwsn'),
                                 align: 'left'
                             },
                             xAxis: {
