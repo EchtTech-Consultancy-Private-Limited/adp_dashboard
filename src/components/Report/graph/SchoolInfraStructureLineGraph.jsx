@@ -164,7 +164,7 @@ export default function SchoolInfraStructureLineGraph() {
       },
     },
     title: {
-      text:t('percentage_schools_girls_toilets_40_1'),
+      text:"",
       align: "left",
       style: {
       color: "#000000", 
@@ -244,11 +244,11 @@ export default function SchoolInfraStructureLineGraph() {
       <div className="row">
         <div className="col-md-12">
           <div className="graph-card-1">
-            {/* <div className="text-btn-d">
+            <div className="text-btn-d">
               <h2 className="heading-sm">
-                {t('year_wise_percentage_schools_girls_toilets')}
+                {t('percentage_schools_girls_toilets_40_1')}
               </h2>
-            </div> */}
+            </div>
             <div className="graph">
               <HighchartsReact
                 highcharts={Highcharts}
