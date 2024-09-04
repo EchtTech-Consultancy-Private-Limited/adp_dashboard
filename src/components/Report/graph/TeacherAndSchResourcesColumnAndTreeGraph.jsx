@@ -267,9 +267,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                     <div className="graph-card">
                       <div className="text-btn-d">
                         <h2 className="heading-sm"> 
-
                         {headingText}
-    
                         </h2>
                       </div>
                       <div className="graph mt-4">
@@ -309,7 +307,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                                   },
                                 },
                                 title: {
-                                  text: t(""),
+                                  text: headingText,
                                 },
                                 tooltip: {
                                   headerFormat: "<b>{point.x}</b><br/>",
@@ -434,6 +432,16 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                           chart: {
                             height: 500,
                             marginTop: 50,
+                            events: {
+                              beforePrint: function () {
+                                this.exportSVGElements[0].box.hide();
+                                this.exportSVGElements[1].hide();
+                              },
+                              afterPrint: function () {
+                                this.exportSVGElements[0].box.show();
+                                this.exportSVGElements[1].show();
+                              },
+                            },
                           },
                           navigation: {
                             buttonOptions: {

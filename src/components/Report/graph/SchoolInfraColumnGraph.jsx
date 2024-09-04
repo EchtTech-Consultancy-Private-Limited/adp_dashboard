@@ -98,7 +98,7 @@ export default function SchoolInfraColumnGraph() {
                     },
                   },
                   title: {
-                    text: t(""),
+                    text: headingText,
                   },
                   tooltip: {
                     headerFormat: "<b>{point.x}</b><br/>",
