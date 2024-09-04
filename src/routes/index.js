@@ -2,7 +2,6 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from '../pages/Home';
 import TransitionRateReport from '../components/Report/TransitionRateReport';
 import TeacherAndSchResourcesReport from '../components/Report/TeacherAndSchResourcesReport';
-
 import SchoolInfraStructureReport from '../components/Report/SchoolInfraStructureReport';
 import EnrollmentAndRetentionReport from '../components/Report/EnrollmentAndRetentionReport';
 import ScreenReader from '../pages/ScreenReader';

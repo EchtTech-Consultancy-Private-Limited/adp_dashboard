@@ -27,12 +27,8 @@ export default function TransitionRateCompare() {
   const selectedOption = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareOption
   );
-  // const selectedAdpAbpOption = useSelector(
-  //   (state) => state.reportAdpAbpType.updateReportType
-  // );
   const isActiveGraph = useSelector((state) => state.reportAdpAbpType.isActiveGraph)
   const MAX_DISTRICTS = 5;
-  // const states = useSelector((state) => state.locationAdp?.states);
   const districts = useSelector((state) => state.locationAdp?.districts);
   const selectedState = useSelector((state) => state.locationAdp?.selectedState);
 

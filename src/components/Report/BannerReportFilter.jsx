@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { selectBlock, selectDistrict, selectState, setBlocks, setDistricts, setStates } from '../../redux/slice/filterServicesSlice';
-import { setselectedCompareBlocks, setselectedCompareDistricts, setselectedOption, setselectedReport, setSelectedYear, setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTypeSlice';
+import { setselectedCompareBlocks, setselectedCompareDistricts, setselectedReport, setSelectedYear, setUpdateReportType } from '../../redux/slice/reportTypeSlice';
 import { Select } from 'antd';
-import { AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectKpi, SelectState } from '../../constant/Constant';
-import { selectComparisionDistrict } from '../../redux/slice/filterServicesComprisionSlice';
+import { AllDistrict, SelectBlock, SelectDistrict, SelectKpi, SelectState } from '../../constant/Constant';
 import { useTranslation } from "react-i18next";
 
 export default function BannerReportFilter() {
   const dispatch = useDispatch();
-  const location = useLocation();
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const savedReportName = localStorage.getItem('selectedReportValue');
   const states = useSelector((state) => state.locationAdp.states);
   const districts = useSelector((state) => state.locationAdp.districts);
@@ -25,7 +23,6 @@ export default function BannerReportFilter() {
   const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
   const [showBreadcomeAdpAbp, setShowBreadcomeAdpAbp] = useState();
   const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
-  const finalData = useSelector((state) => state.reportAdpAbpType.finalData)
   const disableSelectedState = selectedState === "All State";
   const disableSelectedDistrict = selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict;
 

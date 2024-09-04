@@ -3,7 +3,7 @@ import blank from '../../assets/images/no_found.svg'
 import { useTranslation } from "react-i18next";
 
 export default function BlankPage() {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     return (
         <div className="card-box">
             <div className="row">

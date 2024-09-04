@@ -11,7 +11,6 @@ import aspirationalAbpData2020 from "./aspirational-reports-data/aspirationalAbp
 import aspirationalAbpData2021 from "./aspirational-reports-data/aspirationalAbpData2021-22.json";
 import aspirationalAbpData2022 from "./aspirational-reports-data/aspirationalAbpData2022-23.json";
 import aspirationalAbpData2019 from "./aspirational-reports-data/aspirationalAbpData2019-20.json";
-import ptrLessThanAdp2022 from "./aspirational-reports-data/ptrLessThanAdp2022-2023.json";
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { setAllYearDataForGraph, setAspirationalAllData, setselectedDataAllYear } from './redux/slice/reportTypeSlice';
