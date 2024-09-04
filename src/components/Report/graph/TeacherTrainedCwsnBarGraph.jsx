@@ -49,6 +49,9 @@ export default function TeacherTrainedCwsnBarGraph() {
                 },
             },
         },
+        title: {
+            text: headingText,
+        },
         xAxis: {
             categories,
             title: {
@@ -67,9 +70,7 @@ export default function TeacherTrainedCwsnBarGraph() {
             },
             gridLineWidth: 0,
         },
-        title: {
-            text: title,
-        },
+       
         tooltip: {
             valueSuffix: "%",
         },

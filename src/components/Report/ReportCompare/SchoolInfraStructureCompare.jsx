@@ -398,7 +398,7 @@ export default function SchoolInfraStructureCompare() {
                     },
                   },
                   title: {
-                    text: "",
+                    text: t('comparisonBySchoolInfrastructure'),
                   },
                   tooltip: {
                     headerFormat: "<b>{point.x}</b><br/>",
@@ -481,7 +481,18 @@ export default function SchoolInfraStructureCompare() {
                       data: SchHavingFunGirlsToiletRatioData,
                       maxPointWidth: 50,
                     }
-                  ]
+                  ],
+                  exporting: {
+                    filename:t('comparisonBySchoolInfrastructure'),
+                    csv: {
+                      columnHeaderFormatter: function (item) {
+                        if (!item || item instanceof Highcharts.Axis) {
+                          return t("category");
+                        }
+                        return item.name;
+                      },
+                    },
+                  },
                 }}
                 immutable={true}
               />

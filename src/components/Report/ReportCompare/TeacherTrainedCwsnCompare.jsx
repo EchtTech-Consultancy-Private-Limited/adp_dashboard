@@ -370,7 +370,7 @@ percentageCwsnTrainedTeach.map((percentage, index) => (
                   },
                 },
                 title: {
-                  text: ""
+                  text:t("comparisonByStudentPerformance")
                 },
                 tooltip: {
                   headerFormat: "<b>{point.x}</b><br/>",
@@ -444,7 +444,18 @@ percentageCwsnTrainedTeach.map((percentage, index) => (
                   },
 
 
-                ]
+                ],
+                exporting: {
+                  filename:t("comparisonByStudentPerformance"),
+                  csv: {
+                    columnHeaderFormatter: function (item) {
+                      if (!item || item instanceof Highcharts.Axis) {
+                        return t("category");
+                      }
+                      return item.name;
+                    },
+                  },
+                },
               }}
               immutable={true}
             />
