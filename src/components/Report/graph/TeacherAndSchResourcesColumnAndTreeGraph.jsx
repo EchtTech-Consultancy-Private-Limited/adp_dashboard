@@ -28,10 +28,6 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
 
   const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
 
-  const { selectedState,} = useSelector(
-    (state) => state.locationAdp
-);
-
   const [chartHeight, setChartHeight] = useState(450);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [limit] = useState(5);

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Transition from "../../assets/images/Transition_Rate.png";
 import Teacher from "../../assets/images/Teacher_School.png";
@@ -11,31 +11,14 @@ import {
   setselectedReport,
   setUpdateReportType,
 } from "../../redux/slice/reportTypeSlice";
-import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json";
-import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
-import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
 import themesData from "../../aspirational-reports-data/themesData.json";
 import { useTranslation } from "react-i18next";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import AdpCountTotalAverage from "../../utils/AdpTotalAverage";
-import AbpCountTotalAverage from "../../utils/AbpTotalAverage";
 
 export default function Themes() {
-  const selectedYear = useSelector(
-    (state) => state.reportAdpAbpType.selectedYear
-  );
-  const selectedAdpAbpOption = useSelector(
-    (state) => state.reportAdpAbpType.updateReportType
-  );
-
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [aspirationalData, setAspirationalData] = useState({
-    ADP_Report: [],
-    ABP_Report: [],
-  });
-
   const handleTransitionClick = (reportType) => {
     dispatch(setUpdateReportType(reportType));
     dispatch(setselectedReport("Transition Rate"));

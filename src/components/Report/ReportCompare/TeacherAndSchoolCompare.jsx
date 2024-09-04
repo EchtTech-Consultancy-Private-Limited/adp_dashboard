@@ -1,15 +1,8 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectDistrict, selectState, setStates } from "../../../redux/slice/filterServicesComprisionSlice";
-import { setAspirationalAllData, setselectedCompareDistricts, setselectedCompareOption, setUpdateReportType } from "../../../redux/slice/reportTypeSlice";
-import aspirationalAbpData from "../../../aspirational-reports-data/aspirational.json";
-import aspirationalAdpData from "../../../aspirational-reports-data/aspirationalDistrict.json";
-import aspirationalAdpData2020 from "../../../aspirational-reports-data/aspirationalAdpData2020-21.json"
-// import aspirationalAbpData2021 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2021 from "../../../aspirational-reports-data/aspirationalAdpData2021-22.json";
-// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2022 from "../../../aspirational-reports-data/aspirationalAdpData2022-23.json";
+import {  setselectedCompareDistricts, setselectedCompareOption } from "../../../redux/slice/reportTypeSlice";
 import table from '../../../assets/images/table.svg'
 import card from '../../../assets/images/card-list.svg'
 import { Card, Select } from 'antd';
@@ -24,12 +17,9 @@ import HighchartsReact from "highcharts-react-official";
 export default function TeacherAndSchoolCompare() {
 
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
-  const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedCompareOption);
-  const selectedAdpAbpOption = useSelector((state) => state.reportAdpAbpType.updateReportType);
   const MAX_DISTRICTS = 5;
-  const states = useSelector((state) => state.locationAdp.states);
   const districts = useSelector((state) => state.locationAdp.districts);
   const selectedState = useSelector((state) => state.locationAdp.selectedState);
   const selectedDistricts = useSelector((state) => state.reportAdpAbpType.selectedCompareDistricts)

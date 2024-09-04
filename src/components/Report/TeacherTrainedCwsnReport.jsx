@@ -6,14 +6,14 @@ import './report.scss'
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-material.css";
+import "ag-grid-community/styles/ag-theme-balham.css";
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from "react-i18next";
 import { jsPDF } from "jspdf";
 import 'jspdf-autotable';
 import { GlobalLoading } from '../GlobalLoading/GlobalLoading'
 import { SetFinalData, setIsActiveGraph, setselectedOption, setselectedOptionTop50, SetSheetName } from '../../redux/slice/reportTypeSlice'
-import { AllBlock, AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
+import { AllBlock, AllDistrict, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
 import { ScrollToTopOnMount } from '../../Scroll/ScrollToTopOnMount'
 import StudentsPerformanceCompare from './ReportCompare/TeacherTrainedCwsnCompare'
 import StudentsPerformanceBlockCompare from './ReportCompare/TeacherTrainedCwsnBlockCompare'
@@ -29,7 +29,7 @@ import useReportFilterData from '../../CustomHook/useReportFilterData'
 
 export default function TeacherTrainedCwsnReport() {
     const dispatch = useDispatch()
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     // const [loading, setLoading] = useState(true);
     const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
     const [locationHeader, SetLocationHeader] = useState();
@@ -38,7 +38,6 @@ export default function TeacherTrainedCwsnReport() {
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOptionTop50);
     const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
-    const states = useSelector((state) => state.locationAdp.states);
     const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName);
     const [gridApi, setGridApi] = useState()
     const savedReportName = localStorage.getItem('selectedReport');
@@ -765,7 +764,7 @@ export default function TeacherTrainedCwsnReport() {
                                 <div className="row">
                                     <div className="col-md-12">
                                         <div className={`table-box mt-4  ${isActiveGraph ? 'd-none' : ''}`}>
-                                            <div id="content" className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
+                                            <div id="content" className="multi-header-table ag-theme-balham ag-theme-custom-height h-300"
                                                 style={{ width: "100%", height: 400 }} >
                                                 <AgGridReact
                                                     columnDefs={columns}
