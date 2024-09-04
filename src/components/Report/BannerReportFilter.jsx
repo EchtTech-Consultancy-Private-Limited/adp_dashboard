@@ -151,19 +151,31 @@ export default function BannerReportFilter() {
   };
 
   const handleStateChange = (value) => {
+    dispatch(setLoading(true));
     dispatch(selectState(value));
     dispatch(setselectedCompareDistricts([]));
     dispatch(setselectedCompareBlocks([]))
+    setTimeout(()=>{
+      dispatch(setLoading(false));
+     },[50])
   };
 
 
   const handleDistrictChange = (value) => {
+    dispatch(setLoading(true));
     dispatch(selectDistrict(value));
     dispatch(setselectedCompareBlocks([]));
+    setTimeout(()=>{
+      dispatch(setLoading(false));
+     },[50])
   };
 
   const handleBlockChange = (value) => {
+    dispatch(setLoading(true));
     dispatch(selectBlock(value));
+    setTimeout(()=>{
+      dispatch(setLoading(false));
+     },[50])
   };
 
   const handleYearChange = (value) => {

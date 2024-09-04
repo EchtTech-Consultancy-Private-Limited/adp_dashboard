@@ -259,7 +259,11 @@ export default function TransitionRateReport() {
     }, [selectedState, selectReportType]);
 
     const handleOptionChange = (event) => {
+        dispatch(setLoading(true));
         dispatch(setselectedOption(event.target.value));
+        setTimeout(()=>{
+            dispatch(setLoading(false));
+           },[200])
     };
 
     useEffect(() => {

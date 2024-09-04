@@ -6,6 +6,7 @@ import {
   setStates,
 } from "../../../redux/slice/filterServicesComprisionSlice";
 import {
+  setLoading,
   setselectedCompareDistricts,
   setselectedCompareOption,
 } from "../../../redux/slice/reportTypeSlice";
@@ -143,7 +144,11 @@ export default function TransitionRateCompare() {
 
   // Handle option change
   const handleOptionChange = (event) => {
+      dispatch(setLoading(true));
     dispatch(setselectedCompareOption(event.target.value));
+    setTimeout(()=>{
+      dispatch(setLoading(false));
+     },[200])
   };
 
 
