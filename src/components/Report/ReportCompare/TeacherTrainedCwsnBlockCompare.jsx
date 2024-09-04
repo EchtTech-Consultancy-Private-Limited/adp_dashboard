@@ -380,7 +380,7 @@ export default function StudentsPerformanceBlockCompare() {
                   },
                 },
                 title: {
-                  text: "",
+                  text:t('comparison_by_percentage_schools_cwsn_trained_teachers'),
                 },
                 tooltip: {
                   headerFormat: "<b>{point.x}</b><br/>",
