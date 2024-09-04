@@ -152,9 +152,25 @@ export default function SchoolInfraStructureLineGraph() {
       type: "line",
       marginTop: 50,
       height: 425,
+      events: {
+        beforePrint: function () {
+          this.exportSVGElements[0].box.hide();
+          this.exportSVGElements[1].hide();
+        },
+        afterPrint: function () {
+          this.exportSVGElements[0].box.show();
+          this.exportSVGElements[1].show();
+        },
+      },
     },
     title: {
-      text: "",
+      text:t('percentage_schools_girls_toilets_40_1'),
+      align: "left",
+      style: {
+      color: "#000000", 
+      fontWeight: "bold",
+      fontSize: "18.5px",
+    },
     },
     xAxis: {
       title: {
@@ -228,11 +244,11 @@ export default function SchoolInfraStructureLineGraph() {
       <div className="row">
         <div className="col-md-12">
           <div className="graph-card-1">
-            <div className="text-btn-d">
+            {/* <div className="text-btn-d">
               <h2 className="heading-sm">
                 {t('year_wise_percentage_schools_girls_toilets')}
               </h2>
-            </div>
+            </div> */}
             <div className="graph">
               <HighchartsReact
                 highcharts={Highcharts}

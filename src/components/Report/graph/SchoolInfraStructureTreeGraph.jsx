@@ -292,7 +292,7 @@ export default function SchoolInfraStructureTreeGraph() {
                         highcharts={Highcharts}
                         options={{
                           title: {
-                            text: selectReportType === "ADP_Report" ? t('performanceOfDistrictsByPTR30') : t('performanceOfBlocksByPTR30')
+                            text:selectReportType === "ADP_Report" ? t('performance_of_districts_girls_toilets') : t('performance_of_blocks_girls_toilets')
                           },
                           credits: {
                             enabled: false,
@@ -300,6 +300,16 @@ export default function SchoolInfraStructureTreeGraph() {
                           chart: {
                             height: 650,
                             marginTop: 50,
+                            events: {
+                              beforePrint: function () {
+                                this.exportSVGElements[0].box.hide();
+                                this.exportSVGElements[1].hide();
+                              },
+                              afterPrint: function () {
+                                this.exportSVGElements[0].box.show();
+                                this.exportSVGElements[1].show();
+                              },
+                            },
                           },
                           navigation: {
                             buttonOptions: {
@@ -366,7 +376,7 @@ export default function SchoolInfraStructureTreeGraph() {
                             },
                           ],
                           exporting: {
-                            filename: selectReportType === "ADP_Report" ? t('performanceOfDistrictsByPTR30') : t('performanceOfBlocksByPTR30'),
+                            filename: selectReportType === "ADP_Report" ? t('performance_of_districts_girls_toilets') : t('performance_of_blocks_girls_toilets'),
                             csv: {
                               columnHeaderFormatter: function (item) {
                                 if (!item || item instanceof Highcharts.Axis) {
