@@ -843,11 +843,8 @@ export default function TeacherAndSchResourcesReport() {
 
                                         <div className={`graph-box mt-0  ${isActiveGraph ? '' : 'd-none'}`}>
                                             <div className="row">
-
                                                 <TeacherAndSchoolgraphB />
                                                 <TeacherAndSchResourcesColumnGraph />
-
-
                                             </div>
                                         </div>
 
