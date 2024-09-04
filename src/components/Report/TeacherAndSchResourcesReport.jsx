@@ -689,14 +689,14 @@ export default function TeacherAndSchResourcesReport() {
             dispatch(setIsActiveGraph(true));
             setTimeout(() => {
                 dispatch(setLoading(false));
-            }, [500])
+            }, [200])
         }
         else {
             dispatch(setIsActiveGraph(false));
             dispatch(setselectedOptionTop50(""));
             setTimeout(() => {
                 dispatch(setLoading(false));
-            }, [500])
+            }, [200])
         }
     };
 

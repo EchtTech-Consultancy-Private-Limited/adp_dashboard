@@ -62,7 +62,7 @@ function App() {
     
    setTimeout(()=>{
     dispatch(setLoading(false));
-   },[500])
+   },[300])
   }, [selectReportType, selectedYear]);
 
   {/*Take all Year Data for show in Graph */}

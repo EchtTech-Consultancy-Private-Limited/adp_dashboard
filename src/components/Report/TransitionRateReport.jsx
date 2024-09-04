@@ -259,7 +259,11 @@ export default function TransitionRateReport() {
     }, [selectedState, selectReportType]);
 
     const handleOptionChange = (event) => {
+        dispatch(setLoading(true));
         dispatch(setselectedOption(event.target.value));
+        setTimeout(()=>{
+            dispatch(setLoading(false));
+           },[200])
     };
 
     useEffect(() => {
@@ -687,13 +691,13 @@ export default function TransitionRateReport() {
             dispatch(setIsActiveGraph(true));
             setTimeout(() => {
                 dispatch(setLoading(false));
-            }, [500])
+            }, [200])
         }
         else {
             dispatch(setIsActiveGraph(false));
             setTimeout(() => {
                 dispatch(setLoading(false));
-            }, [500])
+            }, [200])
         }
     };
 

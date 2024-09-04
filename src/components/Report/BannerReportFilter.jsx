@@ -75,10 +75,11 @@ export default function BannerReportFilter() {
     }
     setTimeout(()=>{
       dispatch(setLoading(false));
-     },[500])
+     },[300])
   };
 
   useEffect(() => {
+    dispatch(setLoading(true));
     if (aspirationalData.length > 0) {
       const structuredData = aspirationalData.reduce((acc, curr) => {
         const stateIndex = acc.findIndex((st) => st.lgd_state_id === curr.lgd_state_id);
@@ -139,7 +140,10 @@ export default function BannerReportFilter() {
         dispatch(setBlocks(updatedBlocks));
       }
     }
-  }, [aspirationalData, selectReportType, selectedState, selectedDistrict, dispatch]);
+    setTimeout(()=>{
+      dispatch(setLoading(false));
+     },[50])
+  }, [aspirationalData, selectReportType, selectedState, selectedDistrict,selectedBlock, dispatch]);
 
 
   const handleOptionChange = (event) => {
