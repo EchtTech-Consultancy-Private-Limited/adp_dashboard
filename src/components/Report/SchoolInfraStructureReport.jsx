@@ -18,7 +18,8 @@ import {
   setselectedOption,
   setselectedOptionTop50,
   SetSheetName,
-  setIsActiveGraph
+  setIsActiveGraph,
+  setLoading
 } from "../../redux/slice/reportTypeSlice";
 import {
   AllBlock,
@@ -520,7 +521,7 @@ export default function SchoolInfraStructureReport() {
           ).toFixed(2),
         });
       }
-
+      dispatch(setLoading(false));
       return acc;
     }, []);
   }, []);
@@ -758,13 +759,19 @@ export default function SchoolInfraStructureReport() {
   // };
 
   const toggleClass = (isGraph) => {
+    dispatch(setLoading(true));
     if (isGraph !== false) {
-
       dispatch(setIsActiveGraph(true));
+      setTimeout(() => {
+        dispatch(setLoading(false));
+      }, [500])
     }
     else {
       dispatch(setIsActiveGraph(false));
       dispatch(setselectedOptionTop50(""));
+      setTimeout(() => {
+        dispatch(setLoading(false));
+      }, [500])
     }
   };
 

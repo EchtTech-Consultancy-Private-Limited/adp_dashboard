@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { jsPDF } from "jspdf";
 import 'jspdf-autotable';
 import { GlobalLoading } from '../GlobalLoading/GlobalLoading'
-import { SetFinalData, setIsActiveGraph, setselectedOption, setselectedOptionTop50, SetSheetName } from '../../redux/slice/reportTypeSlice'
+import { SetFinalData, setIsActiveGraph, setLoading, setselectedOption, setselectedOptionTop50, SetSheetName } from '../../redux/slice/reportTypeSlice'
 import { AllBlock, AllDistrict, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
 import { ScrollToTopOnMount } from '../../Scroll/ScrollToTopOnMount'
 import StudentsPerformanceCompare from './ReportCompare/TeacherTrainedCwsnCompare'
@@ -212,7 +212,7 @@ export default function TeacherTrainedCwsnReport() {
     // };
 
 
-         const data= useReportFilterData(aspirationalData)
+    const data = useReportFilterData(aspirationalData)
 
     const percentageRenderer = (params) => {
         const value = params.value;
@@ -437,6 +437,7 @@ export default function TeacherTrainedCwsnReport() {
                     ),
                 });
             }
+            dispatch(setLoading(false));
             return acc;
         }, []);
     }, []);
@@ -657,15 +658,22 @@ export default function TeacherTrainedCwsnReport() {
 
 
     const toggleClass = (isGraph) => {
+        dispatch(setLoading(true));
         if (isGraph !== false) {
-            
             dispatch(setIsActiveGraph(true));
+            setTimeout(() => {
+                dispatch(setLoading(false));
+            }, [500])
         }
-        else{
+        else {
             dispatch(setIsActiveGraph(false));
             dispatch(setselectedOptionTop50(""));
+            setTimeout(() => {
+                dispatch(setLoading(false));
+            }, [500])
         }
     };
+
     return (
         <>
             <ScrollToTopOnMount />
