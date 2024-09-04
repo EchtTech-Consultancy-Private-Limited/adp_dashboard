@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectState,
@@ -8,10 +8,7 @@ import {
 import {
   setselectedCompareOption,
   setselectedCompareBlocks,
-  setAspirationalAllData,
 } from "../../../redux/slice/reportTypeSlice";
-import aspirationalAbpData from "../../../aspirational-reports-data/aspirational.json";
-import aspirationalAdpData from "../../../aspirational-reports-data/aspirationalDistrict.json";
 import table from "../../../assets/images/table.svg";
 import card from "../../../assets/images/card-list.svg";
 import { Card, Select } from "antd";
@@ -26,11 +23,8 @@ import HighchartsReact from "highcharts-react-official";
 export default function SchoolInfraStructureBlockCompare() {
 
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
-  const selectedAdpAbpOption = useSelector(
-    (state) => state.reportAdpAbpType.updateReportType
-  );
   const MAX_BLOCKS = 5;
   const blocks = useSelector((state) => state.locationAdp.blocks);
   const selectedYear = useSelector(

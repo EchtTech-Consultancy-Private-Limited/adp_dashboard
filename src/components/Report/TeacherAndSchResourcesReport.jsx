@@ -6,21 +6,17 @@ import "./report.scss";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-material.css";
-import { useSearchParams } from "react-router-dom";
+import "ag-grid-community/styles/ag-theme-balham.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import { GlobalLoading } from "../GlobalLoading/GlobalLoading";
 import {
-    setAspirationalAllData,
     SetFinalData,
-    setselectedDataAllYear,
     setselectedOption,
     setselectedOptionTop50,
     SetSheetName,
-
     setIsActiveGraph
 } from "../../redux/slice/reportTypeSlice";
 import {
@@ -44,10 +40,7 @@ import TeacherAndSchoolgraphB from "./graph/TeacherAndSchResourcesReportLineGrap
 import useReportFilterData from "../../CustomHook/useReportFilterData";
 export default function TeacherAndSchResourcesReport() {
     const dispatch = useDispatch();
-    const { t, i18n } = useTranslation();
-    const [queryParameters] = useSearchParams();
-    const id = queryParameters.get("id");
-    const type = queryParameters.get("type");
+    const { t } = useTranslation();
     // const [loading, setLoading] = useState(true);
 
     const loading = useSelector(
@@ -67,10 +60,6 @@ export default function TeacherAndSchResourcesReport() {
     const selectedOption = useSelector(
         (state) => state.reportAdpAbpType.selectedOptionTop50
     );
-    const updateLoading = useSelector(
-        (state) => state.reportAdpAbpType.loadingStatus
-    );
-    const states = useSelector((state) => state.locationAdp.states);
     const selectedYear = useSelector(
         (state) => state.reportAdpAbpType.selectedYear
     );
@@ -822,7 +811,7 @@ export default function TeacherAndSchResourcesReport() {
                                         <div className={`table-box mt-4  ${isActiveGraph ? 'd-none' : ''}`}>
                                             <div
                                                 id="content"
-                                                className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
+                                                className="multi-header-table ag-theme-balham ag-theme-custom-height  h-300"
                                                 style={{ width: "100%", height: 400 }}
                                             >
                                                 <AgGridReact

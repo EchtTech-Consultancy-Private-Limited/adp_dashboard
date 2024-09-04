@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectState,
@@ -8,10 +8,7 @@ import {
 import {
   setselectedCompareOption,
   setselectedCompareBlocks,
-  setAspirationalAllData,
 } from "../../../redux/slice/reportTypeSlice";
-import aspirationalAbpData from "../../../aspirational-reports-data/aspirational.json";
-import aspirationalAdpData from "../../../aspirational-reports-data/aspirationalDistrict.json";
 import table from "../../../assets/images/table.svg";
 import card from "../../../assets/images/card-list.svg";
 import { Card, Select } from "antd";
@@ -20,11 +17,11 @@ import BlankPage from "../BlankPage";
 import { ScrollToTopOnMount } from "../../../Scroll/ScrollToTopOnMount";
 import { useTranslation } from "react-i18next";
 import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer.jsx";
-import Highcharts, { color } from "highcharts";
+import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import "../graph/graph.scss";
 export default function TransitionBlockRateCompare() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const aspirationalData = useSelector(
@@ -33,23 +30,17 @@ export default function TransitionBlockRateCompare() {
   const selectedOption = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareOption
   );
-  const selectedAdpAbpOption = useSelector(
-    (state) => state.reportAdpAbpType.updateReportType
-  );
+  
   const isActiveGraph = useSelector(
     (state) => state.reportAdpAbpType.isActiveGraph
   );
   const MAX_BLOCKS = 5;
-  const states = useSelector((state) => state.locationAdp.states);
-  const districts = useSelector((state) => state.locationAdp.districts);
   const blocks = useSelector((state) => state.locationAdp.blocks);
   const selectedYear = useSelector(
     (state) => state.reportAdpAbpType?.selectedYear
   );
   const selectedState = useSelector((state) => state.locationAdp.selectedState);
-  const selectedDistricts = useSelector(
-    (state) => state.reportAdpAbpType.selectedCompareDistricts
-  );
+  
   const selectedBlocks = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareBlock
   );

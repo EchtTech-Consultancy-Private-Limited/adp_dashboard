@@ -2,7 +2,6 @@ import React from 'react'
 import { useState, useEffect } from "react";
 import "./header.scss";
 import ministry from '../../assets/images/education_ministry.svg';
-import search from '../../assets/images/search.png';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateToggleDark } from '../../redux/slice/darkLightModeSlice';

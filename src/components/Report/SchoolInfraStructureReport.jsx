@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import BannerReportFilter from "./BannerReportFilter";
-import download from "../../assets/images/download.svg";
 import table from "../../assets/images/table.svg";
 import chart from "../../assets/images/bar-chart.svg";
 import "./report.scss";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-material.css";
+import "ag-grid-community/styles/ag-theme-balham.css";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -44,16 +43,10 @@ import SchoolInfraColumnGraph from "./graph/SchoolInfraColumnGraph";
 
 export default function SchoolInfraStructureReport() {
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation();
-  const [queryParameters] = useSearchParams();
-  const id = queryParameters.get("id");
-  const type = queryParameters.get("type");
-  // const [loading, setLoading] = useState(true);
-
-
+  const { t } = useTranslation();
   const loading = useSelector(
     (state) => state.reportAdpAbpType.loading
-);
+  );
 
   const { selectedState, selectedDistrict, selectedBlock } = useSelector(
     (state) => state.locationAdp
@@ -72,8 +65,6 @@ export default function SchoolInfraStructureReport() {
   const selectedYear = useSelector(
     (state) => state.reportAdpAbpType.selectedYear
   );
-
-  const states = useSelector((state) => state.locationAdp.states);
   const sheetName = useSelector((state) => state.reportAdpAbpType.sheetName);
   const isActiveGraph = useSelector((state) => state.reportAdpAbpType.isActiveGraph)
 
@@ -207,7 +198,7 @@ export default function SchoolInfraStructureReport() {
     selectReportType,
   ]);
 
-  const data =useReportFilterData(aspirationalData)
+  const data = useReportFilterData(aspirationalData)
   const percentageRenderer = (params) => {
     const value = params.value;
     if (typeof value === "number") {
@@ -768,14 +759,14 @@ export default function SchoolInfraStructureReport() {
 
   const toggleClass = (isGraph) => {
     if (isGraph !== false) {
-        
-        dispatch(setIsActiveGraph(true));
+
+      dispatch(setIsActiveGraph(true));
     }
-    else{
-        dispatch(setIsActiveGraph(false));
-        dispatch(setselectedOptionTop50(""));
+    else {
+      dispatch(setIsActiveGraph(false));
+      dispatch(setselectedOptionTop50(""));
     }
-};
+  };
 
 
   return (
@@ -823,16 +814,16 @@ export default function SchoolInfraStructureReport() {
 
                       </div>
                       <div className="tab-box">
-                                                <button className={`tab-button  ${isActiveGraph ? '' : 'active'}`} onClick={() => { toggleClass(false) }}><img src={table} alt="Table" /> <span>{t('tableView')}</span></button>
-                                                <button className={`tab-button  ${isActiveGraph ? 'active' : ''}`} onClick={() => { toggleClass(true) }}><img src={chart} alt="chart" /> <span>{t('chartView')}</span></button>
-                                            </div>
+                        <button className={`tab-button  ${isActiveGraph ? '' : 'active'}`} onClick={() => { toggleClass(false) }}><img src={table} alt="Table" /> <span>{t('tableView')}</span></button>
+                        <button className={`tab-button  ${isActiveGraph ? 'active' : ''}`} onClick={() => { toggleClass(true) }}><img src={chart} alt="chart" /> <span>{t('chartView')}</span></button>
+                      </div>
                     </div>
                   </div>
 
 
                   <div className="col-md-6">
                     <div className="d-flex w-m-100 justify-content-end">
-                      {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict && selectReportType !== "ABP_Report"  && selectedDistrict !== AllDistrict ) && isActiveGraph ===false  ? (
+                      {selectedState !== SelectState && (selectedDistrict !== SelectDistrict && selectedDistrict !== AllDistrict && selectReportType !== "ABP_Report" && selectedDistrict !== AllDistrict) && isActiveGraph === false ? (
                         <div className="radio-button w-auto">
                           <div className="box-radio me-4">
                             <input
@@ -859,39 +850,39 @@ export default function SchoolInfraStructureReport() {
                       ) : (
                         ""
                       )}
-                 {isActiveGraph ===false ? (
-                      <div className="">
-                        {/* <img src={download} alt="download" /> */}
-                        <select
-                          id="export_data"
-                          className="form-select download-button"
-                          defaultValue={""}
-                          onChange={handleExportData}
-                        >
-                          <option className="option-hide">
-                            {" "}
-                            {t("downloadReport")} {selectedYear}
-                          </option>
-                          <option value="export_pdf">
-                            {t("downloadAsPdf")}
-                          </option>
-                          <option value="export_excel">
-                            {" "}
-                            {t("downloadAsExcel")}
-                          </option>
-                        </select>
-                      </div>
-): ("") }
+                      {isActiveGraph === false ? (
+                        <div className="">
+                          {/* <img src={download} alt="download" /> */}
+                          <select
+                            id="export_data"
+                            className="form-select download-button"
+                            defaultValue={""}
+                            onChange={handleExportData}
+                          >
+                            <option className="option-hide">
+                              {" "}
+                              {t("downloadReport")} {selectedYear}
+                            </option>
+                            <option value="export_pdf">
+                              {t("downloadAsPdf")}
+                            </option>
+                            <option value="export_excel">
+                              {" "}
+                              {t("downloadAsExcel")}
+                            </option>
+                          </select>
+                        </div>
+                      ) : ("")}
                     </div>
                   </div>
                 </div>
 
                 <div className="row">
                   <div className="col-md-12">
-                  <div className={`table-box mt-4  ${isActiveGraph ? 'd-none' : ''}`}>
-                  <div
+                    <div className={`table-box mt-4  ${isActiveGraph ? 'd-none' : ''}`}>
+                      <div
                         id="content"
-                        className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
+                        className="multi-header-table ag-theme-balham ag-theme-custom-height ag-theme-balham h-300"
                         style={{ width: "100%", height: 400 }}
                       >
                         <AgGridReact
@@ -909,17 +900,17 @@ export default function SchoolInfraStructureReport() {
                       </div>
                     </div>
                     <div className={`graph-box  ${isActiveGraph ? '' : 'd-none'}`}>
-                  <div className="row">
-                    <div className="col-md-5">
-                    <SchoolInfraStructureLineGraph />                    
-                    </div>
-                    <div className="col-md-7">
-                    <SchoolInfraColumnGraph/>
-                    </div>
-                    <div className="col-md-12">
-                    <SchoolInfraStructureTreeGraph/>
-                    </div>
-                  </div>
+                      <div className="row">
+                        <div className="col-md-5">
+                          <SchoolInfraStructureLineGraph />
+                        </div>
+                        <div className="col-md-7">
+                          <SchoolInfraColumnGraph />
+                        </div>
+                        <div className="col-md-12">
+                          <SchoolInfraStructureTreeGraph />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

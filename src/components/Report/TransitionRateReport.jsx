@@ -6,8 +6,7 @@ import "./report.scss";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-material.css";
-import { useSearchParams } from "react-router-dom";
+import "ag-grid-community/styles/ag-theme-balham.css";
 import { useDispatch, useSelector } from "react-redux";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
@@ -35,10 +34,7 @@ import TransitionRateGraph from "./graph/TransitionRateGraph";
 import useReportFilterData from "../../CustomHook/useReportFilterData";
 export default function TransitionRateReport() {
     const dispatch = useDispatch();
-    const { t, i18n } = useTranslation();
-    const [queryParameters] = useSearchParams();
-    const id = queryParameters.get("id");
-    const type = queryParameters.get("type");
+    const { t } = useTranslation();
     // const [loading, setLoading] = useState(true);
     localStorage.setItem("selectedReportValue", "Transition Rate");
     const { selectedState, selectedDistrict, selectedBlock } = useSelector(
@@ -55,7 +51,6 @@ export default function TransitionRateReport() {
     );
     const [locationHeader, SetLocationHeader] = useState();
     const [gridApi, setGridApi] = useState();
-    const states = useSelector((state) => state.locationAdp.districts);
     const selectReportType = useSelector(
         (state) => state.reportAdpAbpType.updateReportType
     );
@@ -831,7 +826,7 @@ export default function TransitionRateReport() {
                                     <div className="col-md-12">
                                         <div className={`table-box mt-4  ${isActiveGraph ? 'd-none' : ''}`}>
                                             <div id="content"
-                                                className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
+                                                className="multi-header-table ag-theme-balham ag-theme-custom-height "
                                                 style={{ width: "100%", height: 400 }}>
                                                 <AgGridReact
                                                     columnDefs={columns}

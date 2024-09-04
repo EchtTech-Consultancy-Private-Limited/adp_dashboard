@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectDistrict,
@@ -6,12 +6,9 @@ import {
   setStates,
 } from "../../../redux/slice/filterServicesComprisionSlice";
 import {
-  setAspirationalAllData,
   setselectedCompareDistricts,
   setselectedCompareOption,
 } from "../../../redux/slice/reportTypeSlice";
-import aspirationalAdpData from "../../../aspirational-reports-data/aspirationalDistrict.json";
-import aspirationalAdpData2022 from "../../../aspirational-reports-data/aspirationalAdpData2022-23.json";
 import table from "../../../assets/images/table.svg";
 import card from "../../../assets/images/card-list.svg";
 import { Card, Select } from "antd";
@@ -25,15 +22,8 @@ import HighchartsReact from "highcharts-react-official";
 export default function SchoolInfraStructureCompare() {
   const dispatch = useDispatch();
   const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
-  const selectedOption = useSelector(
-    (state) => state.reportAdpAbpType.selectedCompareOption
-  );
-  const selectedAdpAbpOption = useSelector(
-    (state) => state.reportAdpAbpType.updateReportType
-  );
   const isActiveGraph = useSelector((state) => state.reportAdpAbpType.isActiveGraph)
   const MAX_DISTRICTS = 5;
-  const states = useSelector((state) => state.locationAdp.states);
   const districts = useSelector((state) => state.locationAdp.districts);
   const selectedState = useSelector((state) => state.locationAdp.selectedState);
   const selectedDistricts = useSelector(
