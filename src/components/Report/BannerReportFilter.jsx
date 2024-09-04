@@ -142,8 +142,8 @@ export default function BannerReportFilter() {
     }
     setTimeout(()=>{
       dispatch(setLoading(false));
-     },[100])
-  }, [aspirationalData, selectReportType, selectedState, selectedDistrict, dispatch]);
+     },[50])
+  }, [aspirationalData, selectReportType, selectedState, selectedDistrict,selectedBlock, dispatch]);
 
 
   const handleOptionChange = (event) => {
