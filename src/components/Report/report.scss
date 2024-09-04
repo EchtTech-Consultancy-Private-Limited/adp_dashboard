@@ -806,7 +806,7 @@
 .ag-root-wrapper {
     &.ag-layout-normal {
         .ag-header {
-            height: 100px !important;
+            height: auto !important;
             min-height: 70px !important;
 
             .ag-header-row{
