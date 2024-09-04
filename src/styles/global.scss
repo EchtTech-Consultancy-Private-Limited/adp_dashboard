@@ -1646,8 +1646,11 @@ h4.brudcrumb_heading {
 .ag-header-cell-comp-wrapper .ag-header-cell-text {
     white-space: break-spaces;
 
-    @media (max-width: 1499px) and (min-width: 1024px) {
-        font-size: 11px;
+    @media (max-width: 1399px) and (min-width: 1024px) {
+        font-size: 10px;
+    }
+    @media (max-width: 1599px) and (min-width: 1400px) {
+        font-size: 12px;
     }
 
 }

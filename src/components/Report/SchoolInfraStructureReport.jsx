@@ -882,7 +882,7 @@ export default function SchoolInfraStructureReport() {
                     <div className={`table-box mt-4  ${isActiveGraph ? 'd-none' : ''}`}>
                       <div
                         id="content"
-                        className="multi-header-table ag-theme-balham ag-theme-custom-height ag-theme-balham h-300"
+                        className="multi-header-table ag-theme-balham ag-theme-custom-height fixed-header-height"
                         style={{ width: "100%", height: 400 }}
                       >
                         <AgGridReact
