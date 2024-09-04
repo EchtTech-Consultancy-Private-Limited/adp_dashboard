@@ -168,7 +168,7 @@ export default function TransitionRateCompare() {
 
   return (
     <>
-      {!isActiveGraph ? 
+      {!isActiveGraph ?  
       (<div className="card-box">
         <div className="row align-items-end">
           <div className="col-md-5">
@@ -183,7 +183,8 @@ export default function TransitionRateCompare() {
           </div>
           <div className="col-md-7">
             <div className="d-flex w-m-100">
-              <div className="radio-button">
+
+           {  selectedDistricts.length >= 2 ? <div className="radio-button">
                 <div className="box-radio">
                   <input
                     type="radio"
@@ -209,7 +210,9 @@ export default function TransitionRateCompare() {
                     {t("secondaryToHigherSecondary")}
                   </label>
                 </div>
-              </div>
+              </div> : <></>
+}
+
             </div>
           </div>
         </div>
@@ -280,7 +283,7 @@ export default function TransitionRateCompare() {
                       </Card>
                     ) : (
                       <>
-                        {!isActiveGraph ? (<div className="comp-card" key={index}>
+                        {!isActiveGraph   ? (<div className="comp-card" key={index}>
                           <div className="upper-card">
                             <div className="d-flex align-items-center justify-content-between w-100">
                               <div className="d-flex">
@@ -332,6 +335,7 @@ export default function TransitionRateCompare() {
                               </h6>
                             </div>
                           </div>
+                          
                         </div>) : (<div> Data is empty</div>)}
 
                       </>
@@ -346,7 +350,7 @@ export default function TransitionRateCompare() {
         </div>
       </div>) : (<div className="col-md-12 graph-box">
         <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
-          <div className="text-btn-d d-flex justify-content-between align-items-center">
+        {selectedDistricts.length >=2 ?  <div className="text-btn-d d-flex justify-content-between align-items-center">
             <h2 className="heading-sm">
             {t("comparisonByTransitionRate")}
             </h2>
@@ -361,7 +365,10 @@ export default function TransitionRateCompare() {
               </select>
             </div>
 
-          </div>
+          </div> : <></>
+}
+
+
 
           <div className="Comparison-box">
             <div className="row align-items-center">
