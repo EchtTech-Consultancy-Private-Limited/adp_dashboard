@@ -180,7 +180,8 @@ export default function TransitionBlockRateCompare() {
                 </div>
               </div>
             </div>
-            <div className="col-md-7">
+
+        {selectedBlocks.length>= 2 ?     <div className="col-md-7">
               <div className="d-flex w-m-100">
                 <div className="radio-button">
                   <div className="box-radio">
@@ -212,7 +213,9 @@ export default function TransitionBlockRateCompare() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> : <></>
+      }
+
           </div>
 
           <div className="row">
@@ -368,7 +371,7 @@ export default function TransitionBlockRateCompare() {
               {t("comparisonByTransitionRate")}
               </h2>
 
-              <div className="select-infra button-group-filter">
+           {selectedBlocks.length >=2 ?   <div className="select-infra button-group-filter">
                 <select
                   id="export_data"
                   className="form-select bg-grey2"
@@ -383,7 +386,8 @@ export default function TransitionBlockRateCompare() {
                   {t("secondaryToHigherSecondary")}
                   </option>
                 </select>
-              </div>
+              </div> :<></>
+}
             </div>
 
             <div className="Comparison-box">
