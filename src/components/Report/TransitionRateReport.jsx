@@ -15,7 +15,8 @@ import {
     SetFinalData,
     setselectedOption,
     SetSheetName,
-    setIsActiveGraph
+    setIsActiveGraph,
+    setLoading
 } from "../../redux/slice/reportTypeSlice";
 
 import {
@@ -680,12 +681,19 @@ export default function TransitionRateReport() {
     };
 
     const toggleClass = (isGraph) => {
+        dispatch(setLoading(true));
         if (isGraph !== false) {
 
             dispatch(setIsActiveGraph(true));
+            setTimeout(() => {
+                dispatch(setLoading(false));
+            }, [500])
         }
         else {
             dispatch(setIsActiveGraph(false));
+            setTimeout(() => {
+                dispatch(setLoading(false));
+            }, [500])
         }
     };
 

@@ -17,7 +17,8 @@ import {
     setselectedOption,
     setselectedOptionTop50,
     SetSheetName,
-    setIsActiveGraph
+    setIsActiveGraph,
+    setLoading
 } from "../../redux/slice/reportTypeSlice";
 import {
     AllBlock,
@@ -450,6 +451,7 @@ export default function TeacherAndSchResourcesReport() {
                     ),
                 });
             }
+            dispatch(setLoading(false));
             return acc;
         }, []);
     }, []);
@@ -682,12 +684,19 @@ export default function TeacherAndSchResourcesReport() {
 
 
     const toggleClass = (isGraph) => {
+        dispatch(setLoading(true));
         if (isGraph !== false) {
             dispatch(setIsActiveGraph(true));
+            setTimeout(() => {
+                dispatch(setLoading(false));
+            }, [500])
         }
         else {
             dispatch(setIsActiveGraph(false));
             dispatch(setselectedOptionTop50(""));
+            setTimeout(() => {
+                dispatch(setLoading(false));
+            }, [500])
         }
     };
 
@@ -823,6 +832,7 @@ export default function TeacherAndSchResourcesReport() {
                                                                 ? top50Data && top50Data.length > 0 ? top50Data : []
                                                                 : finalData && finalData.length > 0 ? finalData : []
                                                     }
+                                                   
                                                     defaultColDef={defColumnDefs}
                                                     onGridReady={onGridReady}
                                                 />

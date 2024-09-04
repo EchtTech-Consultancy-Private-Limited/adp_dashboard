@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { selectBlock, selectDistrict, selectState, setBlocks, setDistricts, setStates } from '../../redux/slice/filterServicesSlice';
-import { setselectedCompareBlocks, setselectedCompareDistricts, setselectedReport, setSelectedYear, setUpdateReportType } from '../../redux/slice/reportTypeSlice';
+import { setLoading, setselectedCompareBlocks, setselectedCompareDistricts, setselectedReport, setSelectedYear, setUpdateReportType } from '../../redux/slice/reportTypeSlice';
 import { Select } from 'antd';
 import { AllDistrict, SelectBlock, SelectDistrict, SelectKpi, SelectState } from '../../constant/Constant';
 import { useTranslation } from "react-i18next";
@@ -39,12 +39,7 @@ export default function BannerReportFilter() {
     }
   }, [selectReportType, selectedYear]);
 
-  // If data is not match then reset the State also
-  //   useEffect(()=>{
-  //     if(finalData.length===0){
-  //       dispatch(selectState(SelectState));
-  //  }
-  //   }, [finalData])
+
 
   useEffect(() => {
     const savedReportName = localStorage.getItem('selectedReportValue');
@@ -55,6 +50,7 @@ export default function BannerReportFilter() {
 
   const handleReportChange = (value) => {
     // dispatch(setUpdateReportType('ADP_Report'));
+    dispatch(setLoading(true));
     localStorage.setItem('selectedReport', value);
     dispatch(setselectedReport(value));
     switch (value) {
@@ -77,6 +73,9 @@ export default function BannerReportFilter() {
       default:
         navigate('/');
     }
+    setTimeout(()=>{
+      dispatch(setLoading(false));
+     },[500])
   };
 
   useEffect(() => {

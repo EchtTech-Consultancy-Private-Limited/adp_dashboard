@@ -13,7 +13,7 @@ import aspirationalAbpData2022 from "./aspirational-reports-data/aspirationalAbp
 import aspirationalAbpData2019 from "./aspirational-reports-data/aspirationalAbpData2019-20.json";
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { setAllYearDataForGraph, setAspirationalAllData, setselectedDataAllYear } from './redux/slice/reportTypeSlice';
+import { setAllYearDataForGraph, setAspirationalAllData, setLoading, setselectedDataAllYear } from './redux/slice/reportTypeSlice';
 import Header from './components/Header/Header';
 
 function App() {
@@ -53,11 +53,16 @@ function App() {
   };
 
   useEffect(() => {
+    dispatch(setLoading(true));
     const selectedData = combinedData[selectedYear][selectReportType];
     if (selectedData) {
       dispatch(setselectedDataAllYear(selectedData))
       dispatch(setAspirationalAllData(selectedData));
     }
+    
+   setTimeout(()=>{
+    dispatch(setLoading(false));
+   },[500])
   }, [selectReportType, selectedYear]);
 
   {/*Take all Year Data for show in Graph */}
