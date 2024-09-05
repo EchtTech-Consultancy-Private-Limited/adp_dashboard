@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { setAllYearDataForGraph, setAspirationalAllData, setLoading, setselectedDataAllYear } from './redux/slice/reportTypeSlice';
 import Header from './components/Header/Header';
+import ErrorBoundary from './errorBoundry/ErrorBoundary';
 
 function App() {
   const dispatch = useDispatch()
@@ -53,42 +54,65 @@ function App() {
   };
 
   useEffect(() => {
-    dispatch(setLoading(true));
-    const selectedData = combinedData[selectedYear][selectReportType];
-    if (selectedData) {
-      dispatch(setselectedDataAllYear(selectedData))
-      dispatch(setAspirationalAllData(selectedData));
-    }
-    
-   setTimeout(()=>{
-    dispatch(setLoading(false));
-   },[300])
-  }, [selectReportType, selectedYear]);
+    const loadData = async () => {
+      try {
+        dispatch(setLoading(true));
 
-  {/*Take all Year Data for show in Graph */}
-  useEffect(() => {
-    const years = ["2019-20", "2020-21", "2021-22", "2022-23"];
-    let allYearsData = [];
-  
-    years.forEach(year => {
-      const selectedData = combinedData[year][selectReportType];
-      if (selectedData) {
-        allYearsData.push({ year, data: selectedData });
+        const selectedData = combinedData[selectedYear]?.[selectReportType];
+        if (selectedData) {
+          dispatch(setselectedDataAllYear(selectedData));
+          dispatch(setAspirationalAllData(selectedData));
+        }
+        setTimeout(() => {
+          dispatch(setLoading(false));
+        }, 300);
+
+      } catch (error) {
+        console.error("Error loading selected data:", error);
+        dispatch(setLoading(false));
       }
-    });
-    if (allYearsData.length > 0) {
-      dispatch(setAllYearDataForGraph(allYearsData))
-    }
+    };
+
+    loadData();
   }, [selectReportType, selectedYear]);
 
- {/*...............Take data report and Year wise For All Reports End..............*/ }
+  {/* Take all Year Data for show in Graph */ }
+  useEffect(() => {
+    const loadAllYearsData = async () => {
+      try {
+        const years = ["2019-20", "2020-21", "2021-22", "2022-23"];
+        let allYearsData = [];
+
+        years.forEach(year => {
+          const selectedData = combinedData[year]?.[selectReportType];
+          if (selectedData) {
+            allYearsData.push({ year, data: selectedData });
+          }
+        });
+
+        if (allYearsData.length > 0) {
+          dispatch(setAllYearDataForGraph(allYearsData));
+        }
+      } catch (error) {
+        console.error("Error loading all years data for graph:", error);
+      }
+    };
+
+    loadAllYearsData();
+  }, [selectReportType, selectedYear]);
+
+
+
+  {/*...............Take data report and Year wise For All Reports End..............*/ }
 
   return (
     <div className="App">
       <HashRouter>
+      <ErrorBoundary>
         <Header />
         {routes}
         <Footer />
+        </ErrorBoundary>
       </HashRouter>
     </div>
   );
