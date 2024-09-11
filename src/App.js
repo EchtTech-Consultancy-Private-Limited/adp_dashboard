@@ -37,7 +37,6 @@ function App() {
   const previousYearData = useSelector(
     (state) => state.reportAdpAbpType.previousYearData
   );
-  console.log(selectReportType, "selectReportType");
   useEffect(() => {
     if (toggleDarkMode) {
       localStorage.setItem("dark-mode", "true");
@@ -86,7 +85,6 @@ function App() {
           parseInt(selectedYear.split("-")[1]) - 1
         }`;
         const previousYearData = combinedData[previousYear]?.[selectReportType];
-        console.log(previousYearData, "previousYearDatapreviousYearData");
         if (selectedData) {
           dispatch(setselectedDataAllYear(selectedData));
           dispatch(setAspirationalAllData(selectedData));

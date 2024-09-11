@@ -16,7 +16,6 @@ export function ArrowRenderer({ data, value }) {
     const previousYearDatas = useSelector(
         (state) => state.reportAdpAbpType.previousYearData
     );
-    console.log(previousYearDatas, "previousYearDatas");
 
     useEffect(() => {
         if (location.pathname === "/transition-rate") {
