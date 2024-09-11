@@ -537,8 +537,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                         immutable={true}
                       />
 
-                      <div
-                        className={`scroll-btn-graph ${
+                      <div className={`scroll-btn-graph ${
                           currentIndex >= 38 - limit ? "disabled" : ""
                         }`}
                         onClick={handleNext}
