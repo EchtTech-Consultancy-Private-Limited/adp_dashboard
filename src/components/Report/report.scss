@@ -792,7 +792,10 @@
     &.ag-layout-normal {
         .ag-header {           
             .ag-header-row{               
-                width: 100% !important;              
+                
+                @media screen and (min-width:767px) {
+                    width: 100% !important; 
+                }             
             }
             .ag-header-container{
                 width: 100% !important;
@@ -811,7 +814,9 @@
 
             .ag-header-row{
                 height: 70px !important;
-                width: 100% !important;
+                @media screen and (min-width:767px) {
+                    width: 100% !important; 
+                }
 
                 &.ag-header-row-column {
                     .ag-header-cell{

@@ -13,7 +13,7 @@ export default function SchoolInfraStructureLineGraph() {
   const allYearsData = useSelector(
     (state) => state?.reportAdpAbpType?.allYearDataForGraph
   );
-
+console.log(allYearsData, "allYearsData")
   const [combinedData, setCompinedData] = useState([]);
   // const [data, setData] = useState([])
   let combinedDatas;

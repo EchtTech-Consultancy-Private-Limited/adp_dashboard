@@ -141,6 +141,13 @@ export default function TransitionRateReport() {
             headerName: locationHeader,
             cellRenderer: ArrowRenderer,
             field: "Location",
+            filter: 'agTextColumnFilter',  // Enable text filter
+            filterParams: {
+                values: (params) => {
+                    const uniqueStates = [...new Set(finalData.map(data => data.lgd_state_name))];
+                    params.success(uniqueStates);
+                },
+            },
         },
 
         ...(selectReportType === "ABP_Report"
@@ -188,10 +195,24 @@ export default function TransitionRateReport() {
                         {
                             headerName: "State",
                             field: "lgd_state_name",
+                            filter: 'agTextColumnFilter',  // Enable text filter
+                            filterParams: {
+                                values: (params) => {
+                                    const uniqueStates = [...new Set(finalData.map(data => data.lgd_state_name))];
+                                    params.success(uniqueStates);
+                                },
+                            },
                         },
                         {
                             headerName: "District",
                             field: "lgd_district_name",
+                            filter: 'agTextColumnFilter',  // Enable text filter
+                            filterParams: {
+                                values: (params) => {
+                                    const uniqueStates = [...new Set(finalData.map(data => data.lgd_state_name))];
+                                    params.success(uniqueStates);
+                                },
+                            },
                             cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
                         },
 
@@ -263,7 +284,7 @@ export default function TransitionRateReport() {
         dispatch(setselectedOption(event.target.value));
         setTimeout(()=>{
             dispatch(setLoading(false));
-           },[200])
+           },[150])
     };
 
     useEffect(() => {
@@ -691,13 +712,13 @@ export default function TransitionRateReport() {
             dispatch(setIsActiveGraph(true));
             setTimeout(() => {
                 dispatch(setLoading(false));
-            }, [200])
+            }, [150])
         }
         else {
             dispatch(setIsActiveGraph(false));
             setTimeout(() => {
                 dispatch(setLoading(false));
-            }, [200])
+            }, [150])
         }
     };
 
@@ -843,6 +864,7 @@ export default function TransitionRateReport() {
                                                 <AgGridReact
                                                     columnDefs={columns}
                                                     rowData={finalData || finalData.length > 0 ? finalData : ""}
+                                                    immutableData={true}
                                                     defaultColDef={defColumnDefs}
                                                     onGridReady={onGridReady} />
                                             </div>

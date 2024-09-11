@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 class ErrorBoundary extends Component {
   constructor(props) {
-    console.log(props, "jdshdjsdhh")
     super(props);
     this.state = { hasError: false };
   }

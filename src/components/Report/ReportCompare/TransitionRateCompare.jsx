@@ -148,7 +148,7 @@ export default function TransitionRateCompare() {
     dispatch(setselectedCompareOption(event.target.value));
     setTimeout(()=>{
       dispatch(setLoading(false));
-     },[200])
+     },[150])
   };
 
 
