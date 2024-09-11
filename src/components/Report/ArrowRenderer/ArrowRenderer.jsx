@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
@@ -10,8 +9,14 @@ export function ArrowRenderer({ data, value }) {
     const selectedOption = useSelector(
         (state) => state.reportAdpAbpType.selectedOption
     );
-    const [arrowData, setArrowData] = useState([]);
-    const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
+    const selectReportType = useSelector(
+        (state) => state.reportAdpAbpType.updateReportType
+    );
+    const [arrowData, setArrowData] = useState(null);
+    const previousYearDatas = useSelector(
+        (state) => state.reportAdpAbpType.previousYearData
+    );
+
     useEffect(() => {
         if (location.pathname === "/transition-rate") {
             if (selectedOption === "upper_primary_to_secondary") {
@@ -32,84 +37,51 @@ export function ArrowRenderer({ data, value }) {
     }, [selectedOption, data, location]);
 
     const renderArrow = () => {
-  if(finalData || finalData.length>0){
-    if (location.pathname === "/transition-rate") {
-        if (selectedOption === "upper_primary_to_secondary") {
-            if (arrowData >= 70 && arrowData <= 100) {
-                return (
-                    <ArrowUpwardIcon
-                        style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-                    />
+        if (arrowData !== null && previousYearDatas?.length > 0) {
+            let previousYearValueObj;
+            if (selectReportType === "ADP_Report") {
+                previousYearValueObj = previousYearDatas.find(
+                    (item) => item.lgd_district_id === data.lgd_district_id
                 );
             } else {
-                return (
-                    <ArrowDownwardIcon
-                        style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-                    />
+                previousYearValueObj = previousYearDatas.find(
+                    (item) => item.lgd_block_id === data.lgd_block_id
                 );
             }
-        } else {
-            if (arrowData >= 40 && arrowData <= 100) {
-                return (
-                    <ArrowUpwardIcon
-                        style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-                    />
-                );
-            } else {
-                return (
-                    <ArrowDownwardIcon
-                        style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-                    />
-                );
+
+            if (previousYearValueObj) {
+                let previousYearValue;
+                if (location.pathname === "/transition-rate") {
+                    previousYearValue =
+                        selectedOption === "upper_primary_to_secondary"
+                            ? previousYearValueObj.upri_t
+                            : previousYearValueObj.sec_t;
+                } else if (location.pathname === "/teacher-and-school-resources") {
+                    previousYearValue = previousYearValueObj.ele_sch_percent;
+                } else if (
+                    location.pathname === "/teachers-trained-for-teaching-CWSN"
+                ) {
+                    previousYearValue = previousYearValueObj.swsn_teacher_percent;
+                } else if (location.pathname === "/school-infrastructure") {
+                    previousYearValue = previousYearValueObj.sch_having_toilet_40_percent;
+                }
+
+                if (arrowData > previousYearValue) {
+                    return (
+                        <ArrowUpwardIcon
+                            style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
+                        />
+                    );
+                } else if (arrowData < previousYearValue) {
+                    return (
+                        <ArrowDownwardIcon
+                            style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
+                        />
+                    );
+                }
             }
         }
-    }
-    if (location.pathname === "/teacher-and-school-resources") {
-        if (arrowData >= 40 && arrowData <= 100) {
-            return (
-                <ArrowUpwardIcon
-                    style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        } else {
-            return (
-                <ArrowDownwardIcon
-                    style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        }
-    }
-    if (location.pathname === "/teachers-trained-for-teaching-CWSN") {
-        if (arrowData >= 40 && arrowData <= 100) {
-            return (
-                <ArrowUpwardIcon
-                    style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        } else {
-            return (
-                <ArrowDownwardIcon
-                    style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        }
-    }
-    if (location.pathname === "/school-infrastructure") {
-        if (arrowData >= 40 && arrowData <= 100) {
-            return (
-                <ArrowUpwardIcon
-                    style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        } else {
-            return (
-                <ArrowDownwardIcon
-                    style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        }
-    }
-  }
+        return null;
     };
 
     return (

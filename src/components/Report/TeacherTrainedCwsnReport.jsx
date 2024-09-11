@@ -437,7 +437,6 @@ export default function TeacherTrainedCwsnReport() {
                     ),
                 });
             }
-            dispatch(setLoading(false));
             return acc;
         }, []);
     }, []);
@@ -663,14 +662,14 @@ export default function TeacherTrainedCwsnReport() {
             dispatch(setIsActiveGraph(true));
             setTimeout(() => {
                 dispatch(setLoading(false));
-            }, [200])
+            }, [150])
         }
         else {
             dispatch(setIsActiveGraph(false));
             dispatch(setselectedOptionTop50(""));
             setTimeout(() => {
                 dispatch(setLoading(false));
-            }, [200])
+            }, [150])
         }
     };
 
