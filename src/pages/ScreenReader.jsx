@@ -9,6 +9,9 @@ export default function ScreenReader() {
         title: '<strong>DISCLAIMER</strong>',
         html: 'You are being redirected to an external website. Please note that the Guidelines for Indian Government Websites cannot be held responsible for the content and privacy policies of external websites.',
         icon: 'warning',
+        showCancelButton: true,
+        cancelButtonColor: "#d33",
+        confirmButtonColor: "#239DA1",
         confirmButtonText: 'OK'
       }).then((result) => {
         if (result.isConfirmed) {

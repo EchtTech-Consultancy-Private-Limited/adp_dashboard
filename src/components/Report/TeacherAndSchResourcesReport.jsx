@@ -3,6 +3,7 @@ import BannerReportFilter from "./BannerReportFilter";
 import table from "../../assets/images/table.svg";
 import chart from "../../assets/images/bar-chart.svg";
 import "./report.scss";
+import Swal from 'sweetalert2';
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
@@ -668,14 +669,28 @@ export default function TeacherAndSchResourcesReport() {
     const handleExportData = (e) => {
         const { value } = e.target;
         if (value === "export_pdf") {
+           
             exportToPDF();
+            Swal.fire({
+                position: "bottom-left",
+                icon: "success",
+                title: `${report_name} Report PDF has been downloaded successfully!`,
+                showConfirmButton: false,
+                timer: 2000,
+              });
         }
         if (value === "export_excel") {
             exportToExcel();
+            Swal.fire({
+                position: "bottom-left",
+                icon: "success",
+                title: `${report_name} Report Excel has been downloaded successfully!`,
+                showConfirmButton: false,
+                timer: 2000,
+              });
         }
         document.getElementById("export_data").selectedIndex = 0;
     };
-
     const handleOptionChange = (event) => {
         dispatch(setselectedOptionTop50(event.target.value));
 
