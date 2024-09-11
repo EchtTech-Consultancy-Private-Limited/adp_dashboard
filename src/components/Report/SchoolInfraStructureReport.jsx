@@ -741,21 +741,21 @@ export default function SchoolInfraStructureReport() {
        
         exportToPDF();
         Swal.fire({
-            position: "bottom-left",
+            position: "center",
             icon: "success",
-            title: `${report_name} Report PDF has been downloaded successfully!`,
+            title: `Downloaded Successfully!`,
             showConfirmButton: false,
-            timer: 2000,
+            timer: 1500,
           });
     }
     if (value === "export_excel") {
         exportToExcel();
         Swal.fire({
-            position: "bottom-left",
+            position: "center",
             icon: "success",
-            title: `${report_name} Report Excel has been downloaded successfully!`,
+            title: `Downloaded Successfully!`,
             showConfirmButton: false,
-            timer: 2000,
+            timer: 1500,
           });
     }
     document.getElementById("export_data").selectedIndex = 0;
