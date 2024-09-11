@@ -575,7 +575,10 @@ export default function TransitionRateReport() {
         return rowsToExport;
     };
     const getDocument = (gridApi) => {
+       
         const headerRow = getHeaderToExport(gridApi);
+        const tableHeaders = headerRow.map((header) => header.headerName);
+        console.log(tableHeaders, "tableHeaders")
         const rows = getRowsToExport(gridApi);
         const date = new Date();
         const formattedDate = new Intl.DateTimeFormat("en-US", {
