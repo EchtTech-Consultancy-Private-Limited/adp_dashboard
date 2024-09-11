@@ -39,13 +39,35 @@ export default function TransitionRateGraph() {
             height: 500,
             events: {
                 beforePrint: function () {
+                    this.update({
+                        legend: {
+                            layout: "horizontal",
+                            align: "left",
+                            verticalAlign: "top",
+                            itemMarginTop: 20,
+                        },
+                        chart: {
+                            marginTop: 200,  // Increase marginTop for print
+                        }
+                    });
                     this.exportSVGElements[0].box.hide();
                     this.exportSVGElements[1].hide();
                 },
                 afterPrint: function () {
+                    this.update({
+                        legend: {
+                            layout: "horizontal",
+                            align: "left",
+                            verticalAlign: "top",
+                            itemMarginTop: 0,
+                        },
+                        chart: {
+                            marginTop: 50,
+                        }
+                    });
                     this.exportSVGElements[0].box.show();
                     this.exportSVGElements[1].show();
-                },
+                },               
             },
         },
         xAxis: {
@@ -108,6 +130,16 @@ export default function TransitionRateGraph() {
         }],
         exporting: {
             filename: headingText,
+            chartOptions: {
+                chart: {
+                    marginTop: 80, 
+                },
+                legend: {
+                    layout: "horizontal",
+                    align: "left",
+                    verticalAlign: "top",
+                },
+            },
             csv: {
               columnHeaderFormatter: function (item) {
                 if (!item || item instanceof Highcharts.Axis) {

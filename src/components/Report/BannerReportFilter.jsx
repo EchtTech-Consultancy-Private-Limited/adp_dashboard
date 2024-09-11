@@ -75,7 +75,7 @@ export default function BannerReportFilter() {
     }
     setTimeout(()=>{
       dispatch(setLoading(false));
-     },[300])
+     },[150])
   };
 
   useEffect(() => {

@@ -18,6 +18,7 @@ const reportTypeSlice = createSlice({
     handleExportData: null,
     aspirationalAllData: [],
     selectedDataAllYear: [],
+    previousYearData:[],
     finalData: [],
     currentPage: 1,
     isActiveGraph: false,
@@ -73,6 +74,9 @@ const reportTypeSlice = createSlice({
     setselectedDataAllYear(state, action) {
       state.selectedDataAllYear = action.payload;
     },
+    setPreviousYearData(state, action) {
+      state.previousYearData = action.payload;
+    },
     SetFinalData(state, action) {
       state.finalData = action.payload;
     },
@@ -93,5 +97,5 @@ const reportTypeSlice = createSlice({
   },
 })
 
-export const { setUpdateReportType, setUpdateStatus, setselectedOption, setselectedCompareOption, setselectedStateShow, setselectedReport, setselectedCompareDistricts, setselectedCompareBlocks, setSelectedYear, setgirdAPIForCommonData, SetSheetName, SethandleExportData, setAspirationalAllData, setselectedDataAllYear, SetFinalData, setCurrentPage, setIsActiveGraph, setselectedOptionTop50,setAllYearDataForGraph,setLoading } = reportTypeSlice.actions
+export const { setUpdateReportType, setUpdateStatus, setselectedOption, setselectedCompareOption, setselectedStateShow, setselectedReport, setselectedCompareDistricts, setselectedCompareBlocks, setSelectedYear, setgirdAPIForCommonData, SetSheetName, SethandleExportData, setAspirationalAllData, setselectedDataAllYear, SetFinalData, setCurrentPage, setIsActiveGraph, setselectedOptionTop50,setAllYearDataForGraph,setLoading,setPreviousYearData } = reportTypeSlice.actions
 export default reportTypeSlice.reducer

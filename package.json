@@ -25,6 +25,7 @@
     "highcharts-exporting": "^0.1.7",
     "highcharts-more": "^0.1.7",
     "highcharts-react-official": "^3.2.1",
+    "html2canvas": "^1.4.1",
     "i18next": "^23.12.1",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.2",
@@ -64,5 +65,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
