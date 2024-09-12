@@ -11,6 +11,8 @@ import "ag-grid-community/styles/ag-theme-balham.css";
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from "react-i18next";
 import { jsPDF } from "jspdf";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import 'jspdf-autotable';
 import { GlobalLoading } from '../GlobalLoading/GlobalLoading'
 import { SetFinalData, setIsActiveGraph, setLoading, setselectedOption, setselectedOptionTop50, SetSheetName } from '../../redux/slice/reportTypeSlice'
@@ -642,24 +644,20 @@ export default function TeacherTrainedCwsnReport() {
         const { value } = e.target;
         if (value === "export_pdf") {
            
-            exportToPDF();
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: `Downloaded Successfully!`,
-                showConfirmButton: false,
-                timer: 1500,
-              });
+            exportToPDF();     
+            toast.success("Downloaded Successfully!", { 
+                position: "bottom-left", 
+                autoClose: 1000, 
+                hideProgressBar: true 
+            });
         }
         if (value === "export_excel") {
-            exportToExcel();
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: `Downloaded Successfully!`,
-                showConfirmButton: false,
-                timer: 1500,
-              });
+            exportToExcel();   
+            toast.success("Downloaded Successfully!", { 
+                position: "bottom-left", 
+                autoClose: 1000, 
+                hideProgressBar: true 
+            });        
         }
         document.getElementById("export_data").selectedIndex = 0;
     };
