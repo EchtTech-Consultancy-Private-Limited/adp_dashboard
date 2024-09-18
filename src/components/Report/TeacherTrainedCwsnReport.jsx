@@ -24,7 +24,8 @@ import teacherTrainedCwsnAdp2022 from "../../aspirational-reports-data/teacherTr
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 import TeacherTrainedCwsnBarGraph from './graph/TeacherTrainedCwsnBarGraph'
 import useReportFilterData from '../../CustomHook/useReportFilterData'
-
+import satyamevaimg from "../../assets/images/satyameva-jayate-img.png";
+import udise from "../../assets/images/udiseplu.jpg";
 
 
 export default function TeacherTrainedCwsnReport() {
@@ -487,7 +488,7 @@ export default function TeacherTrainedCwsnReport() {
         const columns = gridApi.api.getAllDisplayedColumns();
         const headerCellSerialNumber = {
             text: "Serial Number",
-            headerName: "Serial Number",
+            headerName: "S.NO.",
             bold: true,
             margin: [0, 12, 0, 0],
         };
@@ -531,14 +532,17 @@ export default function TeacherTrainedCwsnReport() {
         const headerRow = getHeaderToExport(gridApi);
         const rows = getRowsToExport(gridApi);
         const date = new Date();
-        const formattedDate = new Intl.DateTimeFormat("en-US", {
-            year: "numeric",
-            month: "short",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true,
-        }).format(date);
+        const formattedDate = `${date.toLocaleDateString("en-GB", {
+            weekday: "long", // Full day name (e.g., Friday)
+          })}, ${date.toLocaleDateString("en-GB", {
+            day: "2-digit", // Day of the month (e.g., 13)
+            month: "long", // Full month name (e.g., September)
+            year: "numeric", // Full year (e.g., 2024)
+          })}, ${date.toLocaleTimeString("en-US", {
+            hour: "2-digit", // Hour (e.g., 10)
+            minute: "2-digit", // Minutes (e.g., 25)
+            hour12: true, // 12-hour format with AM/PM
+          })}`;
         const doc = new jsPDF({
             orientation: "portrait",
             unit: "in",
@@ -546,40 +550,203 @@ export default function TeacherTrainedCwsnReport() {
         });
         // Function to add header
         const addHeader = () => {
-            doc.setFontSize(25);
-            doc.setTextColor("blue");
-            doc.setFont("bold");
-            doc.text(sheetName, 0.6, 0.5);
+            doc.setFontSize(22);
+            doc.setTextColor("black");
+            doc.setFont("Helvetica", "bold");
+            // doc.text("UDISE+", 0.6, 1);
+      
+            // Add the header text
+            doc.text(
+                selectReportType === "ADP_Report" ? " Aspirational District Programme  " :
+                "Aspirational Block Programme",
+  
+              doc.internal.pageSize.width / 2,
+              0.7,
+              {
+                fontStyle: "bold",
+      
+                color: "black",
+                align: "center",
+              }
+            );
+            doc.setFont("Helvetica", "normal");
+      
+            doc.setFontSize(18);
+      
+            doc.text(
+              "Department of School Education & Literacy, Ministry of Education, Government of India",
+              doc.internal.pageSize.width / 2,
+              1.1,
+              {
+                // fontStyle: '',
+                color: "black",
+                align: "center",
+              }
+            );
+      
+            doc.setFont("Helvetica", "bold");
+      
+            doc.setTextColor("black");
             doc.setFontSize(20);
-            doc.setTextColor("blue");
-            doc.text(`Report Name: ${report_name}`, 0.6, 1.0);
-            doc.setFontSize(20);
-            doc.setTextColor("blue");
-            doc.text(`Report type : ${selectedState}`, 0.6, 1.5);
-            doc.setTextColor("blue");
-            doc.setFont("bold");
-            doc.text(`Report Year : ${selectedYear}`, doc.internal.pageSize.width - 2, 0.5, {
-                align: "right",
+      
+            doc.text(`${report_name}`, doc.internal.pageSize.width / 2, 1.5, {
+              fontSize: 12,
+              fontStyle: "bold",
+      
+              color: "black",
+              align: "center",
             });
-
+      
+            doc.setFont("Helvetica", "bold");
+      
+        
+      
+            doc.setFont("bold");
+      
+            doc.setTextColor("black");
             doc.setFontSize(20);
-            doc.text(`Report generated on: ${formattedDate}`, doc.internal.pageSize.width - 2, 1.5, { align: "right" });
-        };
+      
+            doc.text(
+              `Academic Year:${selectedYear}`,
+              doc.internal.pageSize.width / 2,
+              1.9,
+              {
+                fontSize: 12,
+                color: "black",
+                align: "center",
+              }
+            );
+      
+            let textContent = "";
 
+            if (
+              selectedDistrict === "Select District" &&
+              selectedState === "All State"
+            ) {
+              textContent = `National ${selectedState}`;
+            } else if (
+              selectedDistrict === "Select District" &&
+              selectedState !== "All State"
+            ) {
+              textContent = `State -(${selectedState})`;
+            }
+      
+            if (
+              selectedState !== "All State" &&
+              selectedDistrict === "All District"
+            ) {
+              textContent = `${selectedState}-${selectedDistrict}`;
+            } else if (
+              selectedState !== "All State" &&
+              selectedDistrict !== "Select District" &&
+              selectedDistrict !== "All District"
+            ) {
+              textContent = `District -${selectedDistrict}-(${selectedState})`;
+            }
+      
+            if (
+              selectedState !== "All State" &&
+              selectedDistrict !== "All District" &&
+              selectedBlock === "All Block"
+            ) {
+              textContent = `${selectedDistrict}-${selectedBlock}`;
+            } else if (
+              selectedState !== "All State" &&
+              selectedDistrict !== "All District" &&
+              selectedDistrict !== "Select District" &&
+              selectedBlock !== "Select Block" &&
+              selectedBlock !== "All Block"
+            ) {
+              textContent = `Block -${selectedBlock}-(${selectedDistrict} (${selectedState}))`;
+            }
+      
+            if (textContent) {
+              doc.text(textContent, doc.internal.pageSize.width / 2, 2.3, {
+                fontSize: 12,
+                color: "black",
+                align: "center",
+              });
+            }
+      
+      
+      
+            // Set the margin for the image from the left
+            const leftMargin = 0.1; // Margin from the left (in inches)
+            const topLeftX = leftMargin; // X position from the left including margin
+            const topLeftY = 0; // Y position from the top (in inches)
+            const imgWidth = 2; // Image width (in inches)
+            const imgHeight = 2; // Image height (in inches)
+      
+            doc.setFontSize(20);
+            doc.setTextColor("blue");
+      
+            // Add the satyameva image with the specified left margin
+            doc.addImage(
+              satyamevaimg,
+              "PNG",
+              topLeftX,
+              topLeftY,
+              imgWidth,
+              imgHeight
+            );
+      
+            doc.setTextColor("blue");
+            doc.setFont("bold");
+      
+            // Get page dimensions
+            const pageWidthE = doc.internal.pageSize.getWidth();
+            const pageHeightE = doc.internal.pageSize.getHeight();
+      
+            const imgWidthE = 2.8; // Image width (in inches)
+            const imgHeightE = 1.4; // Image height (in inches)
+            const marginRight = 0.7; // Right margin (in inches)
+      
+            // Calculate x position for top-right corner
+            const topRightX = pageWidthE - imgWidthE - marginRight;
+            const topRightY = 0.3; // Y position from the top (in inches)
+      
+            // Add the education image at the top-right corner
+            doc.addImage(
+              udise,
+              "JPG",
+              topRightX, // X position for top-right
+              topRightY, // Y position for top-right
+              imgWidthE,
+              imgHeightE
+            );
+      
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+      
+            // Example: Draw a rectangle around the whole page
+            // doc.setLineWidth(0.02); // Thicker border for the page
+            // doc.rect(0.1, 0.1, pageWidth - 0.2, pageHeight - 0.2); // x, y, width, height
+          };
         // Function to add footer
         const addFooter = () => {
             const pageCount = doc.internal.getNumberOfPages();
-            doc.setFontSize(10);
+            doc.setFontSize(20);
+            doc.setTextColor("black");
+      
             for (let i = 1; i <= pageCount; i++) {
-                doc.setPage(i);
-                doc.text(
-                    `Page ${i} of ${pageCount}`,
-                    doc.internal.pageSize.width - 1,
-                    doc.internal.pageSize.height - 0.5,
-                    { align: "right" }
-                );
+              doc.setPage(i);
+      
+              doc.text(
+                `Page ${i} of ${pageCount}`,
+                doc.internal.pageSize.width / 2,
+                // doc.internal.pageSize.width - 1,
+                doc.internal.pageSize.height - 0.2,
+                { align: "center", color: "black" }
+              );
+      
+              doc.text(
+                `Report generated on : ${formattedDate}`,
+                doc.internal.pageSize.width - 1,
+                doc.internal.pageSize.height - 0.2,
+                { fontSize: 12, align: "right", color: "black" }
+              );
             }
-        };
+          };
         const table = [];
         table.push(headerRow.map((cell) => cell.headerName));
         rows.forEach((row) => {
@@ -589,10 +756,43 @@ export default function TeacherTrainedCwsnReport() {
         doc.autoTable({
             head: [table[0]],
             body: table.slice(1),
-            startY: 2.2,
-            didDrawPage: addFooter,
-        });
-
+            theme: "grid",
+            startY: 2.7,
+            styles: {
+              cellPadding: 0.15, // Adjust cell padding if needed
+              lineColor: [0, 0, 0], // Set border color (black in this case)
+              lineWidth: 0.001, // Set border width
+              fillColor: [255, 255, 255], // Default background color (white)
+              textColor: [0, 0, 0],
+            },
+            headStyles: {
+              fontSize: 14, // Set the font size for the header row
+              fontStyle: "bold", // Make the header text bold (optional)
+              textColor: [0, 0, 0],
+              cellPadding: 0.2, // Set text color for the header row
+            },
+      
+            didParseCell: function (data) {
+              const headerRow = getHeaderToExport(gridApi); // Get the header row
+      
+              // Get the header text for this column
+              const columnHeaderText = headerRow[data.column.index]?.text;
+              console.log(columnHeaderText, "columnHeaderText");
+              // Check if the current column header is "Serial Number"
+              if (columnHeaderText === "Serial Number") {
+                data.cell.styles.halign = "center"; // Center-align the content for "Serial Number"
+              } else if (columnHeaderText === "RegionName") {
+                console.log(columnHeaderText, "columnHeaderText");
+                data.cell.styles.halign = "left"; // Center-align the content for "Serial Number"
+              } else {
+                console.log("columnHeaderText");
+                data.cell.styles.halign = "right";
+              }
+            },
+      
+            afterPageContent: addFooter,
+          });
+      
         const totalPages = doc.internal.getNumberOfPages();
         for (let i = 0; i < totalPages; i++) {
             doc.setPage(i + 1);
@@ -615,7 +815,7 @@ export default function TeacherTrainedCwsnReport() {
                 field: column.getColDef().field,
             }));
             columnHeaders.unshift({
-                headerName: "Serial Number",
+                headerName: "S.NO.",
                 field: "Serial Number",
             });
             gridApi.api.forEachNode((node, index) => {
