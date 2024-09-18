@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import "./graph.scss";
+import "./infra.css";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useSelector } from "react-redux";
@@ -71,7 +72,6 @@ export default function SchoolInfraStructureTreeGraph() {
       .sort((a, b) => a.combinedScore - b.combinedScore);
 
   const TopDistrictsBlocksTreeGraph = combinedDataForTreeGraph(finalData)?.slice(currentIndex, currentIndex + limit);
-
 
   // const limitedData = finalData.slice(currentIndex, currentIndex + limit);
 
@@ -225,7 +225,6 @@ export default function SchoolInfraStructureTreeGraph() {
       setCurrentIndex(currentIndex + limit);
     }
   };
-
   const handlePrevious = () => {
     // Ensure you do not go below 0
     if (currentIndex > 0) {
@@ -260,10 +259,6 @@ export default function SchoolInfraStructureTreeGraph() {
   };
 
   // *******end Tree graph********
-
-
-
-
   return (
     <section className="infrastructure-main-card p-0" id="content">
       <div className="">

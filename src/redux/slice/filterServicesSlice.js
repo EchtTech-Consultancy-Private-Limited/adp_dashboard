@@ -36,7 +36,11 @@ const filterServicesSlice = createSlice({
       state.blocks = state.districts.find(dist => dist.lgd_district_name === action.payload)?.blocks || []; 
     },
     selectBlock: (state, action) => {
+
       state.selectedBlock = action.payload;
+
+
+      console.log("block slice",action.payload)
     }
   }
 });
