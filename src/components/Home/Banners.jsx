@@ -7,7 +7,7 @@ import childimg from '../../assets/images/mobile-home.png'
 
 export default function Banners() {
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     AOS.init({

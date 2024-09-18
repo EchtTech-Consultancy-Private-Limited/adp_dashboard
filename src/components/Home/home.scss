@@ -289,6 +289,7 @@ img {
         }
     }
 
+   
     .themes-box-img {
         background: #fff;
         border-radius: 20px;
@@ -409,7 +410,9 @@ img {
             padding: 60px 18px;
             border-radius: 0px 0px 12px 12px;
             transition: all .5s ease-in-out;
-
+            @media (max-width: 767px) {
+                height: auto;
+            }
         }
 
         .content {
@@ -487,6 +490,21 @@ img {
         }
 
     }
+
+    &.hindilang{
+        .themes-box-img{
+
+            @media (min-width: 1599px) {
+            img.img-4 {
+                margin-top: -46px;
+            }
+            img.img-5 {
+                margin-top: -32px;
+            }
+        }
+        }
+    }
+
 }
 
 .d-none-desktop{

@@ -55,8 +55,11 @@ const useReportFilterData = (combinedData) => {
       Location: getLocationName(item),
     }));
     setData(filteredData);
-    dispatch(setLoading(false));
-   
+    // setTimeout(()=>{
+    //   dispatch(setLoading(false));
+    // },[1000])
+    
+    // dispatch(setLoading(false));
   
 
     // dispatch(setUpdateStatus(false))

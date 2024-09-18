@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { selectBlock, selectDistrict, selectState, setBlocks, setDistricts, setStates } from '../../redux/slice/filterServicesSlice';
-import { setselectedCompareBlocks, setselectedCompareDistricts, setselectedOption, setselectedReport, setSelectedYear, setUpdateReportType, setUpdateStatus } from '../../redux/slice/reportTypeSlice';
+import { setLoading, setselectedCompareBlocks, setselectedCompareDistricts, setselectedReport, setSelectedYear, setUpdateReportType } from '../../redux/slice/reportTypeSlice';
 import { Select } from 'antd';
-import { AllDistrict, intialYear, SelectBlock, SelectDistrict, selectedOptionConst, SelectKpi, SelectState } from '../../constant/Constant';
-import { selectComparisionDistrict } from '../../redux/slice/filterServicesComprisionSlice';
+import { AllDistrict, SelectBlock, SelectDistrict, SelectKpi, SelectState } from '../../constant/Constant';
 import { useTranslation } from "react-i18next";
 
 export default function BannerReportFilter() {
   const dispatch = useDispatch();
-  const location = useLocation();
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const savedReportName = localStorage.getItem('selectedReportValue');
   const states = useSelector((state) => state.locationAdp.states);
   const districts = useSelector((state) => state.locationAdp.districts);
@@ -25,7 +23,6 @@ export default function BannerReportFilter() {
   const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
   const [showBreadcomeAdpAbp, setShowBreadcomeAdpAbp] = useState();
   const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
-  const finalData = useSelector((state) => state.reportAdpAbpType.finalData)
   const disableSelectedState = selectedState === "All State";
   const disableSelectedDistrict = selectedDistrict === SelectDistrict || selectedDistrict === AllDistrict;
 
@@ -42,12 +39,7 @@ export default function BannerReportFilter() {
     }
   }, [selectReportType, selectedYear]);
 
-  // If data is not match then reset the State also
-  //   useEffect(()=>{
-  //     if(finalData.length===0){
-  //       dispatch(selectState(SelectState));
-  //  }
-  //   }, [finalData])
+
 
   useEffect(() => {
     const savedReportName = localStorage.getItem('selectedReportValue');
@@ -58,6 +50,7 @@ export default function BannerReportFilter() {
 
   const handleReportChange = (value) => {
     // dispatch(setUpdateReportType('ADP_Report'));
+    dispatch(setLoading(true));
     localStorage.setItem('selectedReport', value);
     dispatch(setselectedReport(value));
     switch (value) {
@@ -80,9 +73,13 @@ export default function BannerReportFilter() {
       default:
         navigate('/');
     }
+    setTimeout(()=>{
+      dispatch(setLoading(false));
+     },[150])
   };
 
   useEffect(() => {
+    dispatch(setLoading(true));
     if (aspirationalData.length > 0) {
       const structuredData = aspirationalData.reduce((acc, curr) => {
         const stateIndex = acc.findIndex((st) => st.lgd_state_id === curr.lgd_state_id);
@@ -143,7 +140,10 @@ export default function BannerReportFilter() {
         dispatch(setBlocks(updatedBlocks));
       }
     }
-  }, [aspirationalData, selectReportType, selectedState, selectedDistrict, dispatch]);
+    setTimeout(()=>{
+      dispatch(setLoading(false));
+     },[50])
+  }, [aspirationalData, selectReportType, selectedState, selectedDistrict,selectedBlock, dispatch]);
 
 
   const handleOptionChange = (event) => {

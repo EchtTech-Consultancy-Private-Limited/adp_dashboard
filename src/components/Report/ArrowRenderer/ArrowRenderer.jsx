@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
@@ -10,8 +9,14 @@ export function ArrowRenderer({ data, value }) {
     const selectedOption = useSelector(
         (state) => state.reportAdpAbpType.selectedOption
     );
-    const [arrowData, setArrowData] = useState([]);
-    const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
+    const selectReportType = useSelector(
+        (state) => state.reportAdpAbpType.updateReportType
+    );
+    const [arrowData, setArrowData] = useState(null);
+    const previousYearDatas = useSelector(
+        (state) => state.reportAdpAbpType?.previousYearData
+    );
+    const [previousYearsValue, setPreviousYearsValue] = useState()
     useEffect(() => {
         if (location.pathname === "/transition-rate") {
             if (selectedOption === "upper_primary_to_secondary") {
@@ -32,92 +37,87 @@ export function ArrowRenderer({ data, value }) {
     }, [selectedOption, data, location]);
 
     const renderArrow = () => {
-  if(finalData || finalData.length>0){
-    if (location.pathname === "/transition-rate") {
-        if (selectedOption === "upper_primary_to_secondary") {
-            if (arrowData >= 70 && arrowData <= 100) {
-                return (
-                    <ArrowUpwardIcon
-                        style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-                    />
+        if (arrowData !== null && previousYearDatas?.length > 0) {
+            let previousYearValueObj;
+            // Find the corresponding object for the previous year based on the report type
+            if (selectReportType === "ADP_Report") {
+                previousYearValueObj = previousYearDatas?.find(
+                    (item) => item?.lgd_district_id === data?.lgd_district_id
                 );
             } else {
-                return (
-                    <ArrowDownwardIcon
-                        style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-                    />
+                previousYearValueObj = previousYearDatas?.find(
+                    (item) => item?.lgd_block_id === data?.lgd_block_id
                 );
             }
-        } else {
-            if (arrowData >= 40 && arrowData <= 100) {
+            if (!previousYearValueObj) {
+                return null; 
+            }
+
+            let previousYearValue;
+            // Set the previous year value based on the pathname and selected option
+            if (location.pathname === "/transition-rate") {
+                previousYearValue =
+                    selectedOption === "upper_primary_to_secondary"
+                        ? previousYearValueObj?.upri_t
+                        : previousYearValueObj?.sec_t;
+            } else if (location.pathname === "/teacher-and-school-resources") {
+                previousYearValue = previousYearValueObj?.ele_sch_percent;
+            } else if (location.pathname === "/teachers-trained-for-teaching-CWSN") {
+                previousYearValue = previousYearValueObj?.swsn_teacher_percent;
+            } else if (location.pathname === "/school-infrastructure") {
+                previousYearValue = previousYearValueObj?.sch_having_toilet_40_percent;
+            }
+
+            // Handle the case where the previous year value is 0
+            if (previousYearValue === 0) {
+                if (arrowData > 0) {
+                    return (
+                        <>
+                            {`${value} (+∞%)`}
+                            <ArrowUpwardIcon style={{ color: "green", marginLeft: "5px", fontSize: "14px" }} />
+                        </>
+                    );
+                } else if (arrowData === 0) {
+                    return (
+                        <>
+                            {`${value} (0%)`}
+                        </>
+                    );
+                }
+            }
+            if (arrowData > previousYearValue) {
+                const percIncrement = ((arrowData - previousYearValue) * 100) / previousYearValue;
+                const valueWithPercIncrement = `${value} (+${percIncrement.toFixed(2)}%)`;
                 return (
-                    <ArrowUpwardIcon
-                        style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-                    />
+                    <>
+                        {valueWithPercIncrement}
+                        <ArrowUpwardIcon style={{ color: "green", marginLeft: "5px", fontSize: "14px" }} />
+                    </>
                 );
-            } else {
+            } else if (arrowData < previousYearValue) {
+                const percDecrement = ((previousYearValue - arrowData) * 100) / previousYearValue;
+                const valueWithPercDecrement = `${value} (-${percDecrement.toFixed(2)}%)`;
                 return (
-                    <ArrowDownwardIcon
-                        style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-                    />
+                    <>
+                        {valueWithPercDecrement}
+                        <ArrowDownwardIcon style={{ color: "red", marginLeft: "5px", fontSize: "14px" }} />
+                    </>
                 );
             }
         }
-    }
-    if (location.pathname === "/teacher-and-school-resources") {
-        if (arrowData >= 40 && arrowData <= 100) {
-            return (
-                <ArrowUpwardIcon
-                    style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        } else {
-            return (
-                <ArrowDownwardIcon
-                    style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        }
-    }
-    if (location.pathname === "/teachers-trained-for-teaching-CWSN") {
-        if (arrowData >= 40 && arrowData <= 100) {
-            return (
-                <ArrowUpwardIcon
-                    style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        } else {
-            return (
-                <ArrowDownwardIcon
-                    style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        }
-    }
-    if (location.pathname === "/school-infrastructure") {
-        if (arrowData >= 40 && arrowData <= 100) {
-            return (
-                <ArrowUpwardIcon
-                    style={{ color: "green", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        } else {
-            return (
-                <ArrowDownwardIcon
-                    style={{ color: "red", marginLeft: "5px", fontSize: "14px" }}
-                />
-            );
-        }
-    }
-  }
+
+        return <>{value}</>;
     };
+
+
 
     return (
         <span>
-            {value}
             {renderArrow()}
         </span>
     );
+
 }
 
 export default ArrowRenderer;
+

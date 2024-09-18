@@ -1,15 +1,27 @@
 import React from 'react';
-import Header from '../components/Header/Header';
-
+import Swal from 'sweetalert2';
 export default function ScreenReader() {
-   
+
+    const handleClick = (event, url) => {
+      event.preventDefault(); 
+      
+      Swal.fire({
+        title: '<strong>DISCLAIMER</strong>',
+        html: 'You are being redirected to an external website. Please note that the Guidelines for Indian Government Websites cannot be held responsible for the content and privacy policies of external websites.',
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonColor: "#d33",
+        confirmButtonColor: "#239DA1",
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.open(url, '_blank', 'noopener,noreferrer'); 
+        }
+      });
+    }
+    
     return (
         <>
-            {/* <section className='internal-banner-bg pb-4'>
-                <div className="container pb-2">
-                    <Header />
-                </div>
-            </section> */}
             <section className="bg-grey ptb-70" id='content'>
                 <div className="container">
                     <div className="row">
@@ -33,10 +45,10 @@ export default function ScreenReader() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <tr >
                                             <td>1</td>
                                             <td>Non Visual Desktop Access (NVDA)</td>
-                                            <td><a href="http://www.nvda-project.org/" target='_blank' title="External site that opens in a new window">http://www.nvda-project.org/</a>
+                                            <td ><a href="http://www.nvda-project.org/" target='_blank' rel="noopener noreferrer" title="External site that opens in a new window"  onClick={(e) => handleClick(e, 'http://www.nvda-project.org/')}>http://www.nvda-project.org/</a>
                                                 <br />
                                                 (External website that opens in a new window)
                                             </td>
@@ -46,7 +58,7 @@ export default function ScreenReader() {
                                             <td>2</td>
                                             <td>System Access To Go</td>
                                             <td>
-                                                <a href="http://www.satogo.com/" target="_blank" title="External site that opens in a new window">http://www.satogo.com/</a><br />(External website that opens in a new window)
+                                                <a href="http://www.satogo.com/" target="_blank" rel="noopener noreferrer" title="External site that opens in a new window" onClick={(e) => handleClick(e, 'http://www.satogo.com/')}>http://www.satogo.com/</a><br />(External website that opens in a new window)
                                             </td>
                                             <td>Free</td>
                                         </tr>
@@ -54,7 +66,7 @@ export default function ScreenReader() {
                                             <td>3</td>
                                             <td>Web Anywhere</td>
                                             <td>
-                                                <a href="http://webanywhere.cs.washington.edu/wa.php" target="_BLANK" title="External site that opens in a new window">http://webanywhere.cs.washington.edu/wa.php</a>
+                                                <a href="http://webanywhere.cs.washington.edu/wa.php" target="_BLANK" rel="noopener noreferrer" title="External site that opens in a new window" onClick={(e) => handleClick(e, 'http://webanywhere.cs.washington.edu/wa.php')}>http://webanywhere.cs.washington.edu/wa.php</a>
                                                 <br />(External website that opens in a new window)
                                             </td>
                                             <td>Free</td>
@@ -63,7 +75,7 @@ export default function ScreenReader() {
                                             <td>4</td>
                                             <td>Hal</td>
                                             <td>
-                                                <a href="http://www.yourdolphin.co.uk/productdetail.asp?id=5" target="_BLANK" title="External site that opens in a new window">http://www.yourdolphin.co.uk/productdetail.asp?id=5</a>
+                                                <a href="http://www.yourdolphin.co.uk/productdetail.asp?id=5" target="_BLANK" rel="noopener noreferrer" title="External site that opens in a new window" onClick={(e) => handleClick(e, 'http://www.yourdolphin.co.uk/productdetail.asp?id=5')}>http://www.yourdolphin.co.uk/productdetail.asp?id=5</a>
                                                 <br />(External website that opens in a new window)
                                             </td>
                                             <td>Commercial</td>

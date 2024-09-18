@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 export default function TransitionRateGraph() {
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
-    const { t} = useTranslation();
+    const { t } = useTranslation();
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
 
@@ -28,6 +28,10 @@ export default function TransitionRateGraph() {
 
     const { categories: topCategories, boysData: topBoysData, girlsData: topGirlsData } = getChartData(TopDistricts || []);
 
+    const headingText = TopDistricts.length < 10
+    ? `${t('performance_of')} ${selectReportType === "ADP_Report" ? t('district') : t('block')} ${t('by_transition_rate')}`
+    : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}  ${t('transition_rate')}`;
+
     const chartOptions = (categories, boysData, girlsData, title) => ({
         chart: {
             type: "bar",
@@ -35,13 +39,35 @@ export default function TransitionRateGraph() {
             height: 500,
             events: {
                 beforePrint: function () {
+                    this.update({
+                        legend: {
+                            layout: "horizontal",
+                            align: "left",
+                            verticalAlign: "top",
+                            itemMarginTop: 20,
+                        },
+                        chart: {
+                            marginTop: 200,  // Increase marginTop for print
+                        }
+                    });
                     this.exportSVGElements[0].box.hide();
                     this.exportSVGElements[1].hide();
                 },
                 afterPrint: function () {
+                    this.update({
+                        legend: {
+                            layout: "horizontal",
+                            align: "left",
+                            verticalAlign: "top",
+                            itemMarginTop: 0,
+                        },
+                        chart: {
+                            marginTop: 50,
+                        }
+                    });
                     this.exportSVGElements[0].box.show();
                     this.exportSVGElements[1].show();
-                },
+                },               
             },
         },
         xAxis: {
@@ -63,7 +89,7 @@ export default function TransitionRateGraph() {
             gridLineWidth: 0,
         },
         title: {
-            text: title,
+            text: headingText,
         },
         tooltip: {
             valueSuffix: "%",
@@ -102,16 +128,35 @@ export default function TransitionRateGraph() {
             data: girlsData,
             pointWidth: 12,
         }],
+        exporting: {
+            filename: headingText,
+            chartOptions: {
+                chart: {
+                    marginTop: 80, 
+                },
+                legend: {
+                    layout: "horizontal",
+                    align: "left",
+                    verticalAlign: "top",
+                },
+            },
+            csv: {
+              columnHeaderFormatter: function (item) {
+                if (!item || item instanceof Highcharts.Axis) {
+                  return t("category");
+                }
+                return item.name;
+              },
+            },
+          },
     });
-    const headingText = TopDistricts.length < 10
-    ? `${t('performance_of')} ${selectReportType === "ADP_Report" ? t('district') : t('block')} ${t('by_transition_rate')}`
-    : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}  ${t('transition_rate')}`;
+
 
     return (
         <div className="row">
             <div className="col-md-6">
                 <div className="graph-card">
-                <h4 className='heading-sm'>{headingText}</h4>
+                    <h4 className='heading-sm'>{headingText}</h4>
                     <div className='graph'>
                         <HighchartsReact
                             highcharts={Highcharts}
@@ -124,7 +169,6 @@ export default function TransitionRateGraph() {
 
             <div className="col-md-6">
                 <TransitionRateGraphA />
-
             </div>
         </div>
     );

@@ -28,10 +28,6 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
 
   const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
 
-  const { selectedState,} = useSelector(
-    (state) => state.locationAdp
-);
-
   const [chartHeight, setChartHeight] = useState(450);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [limit] = useState(5);
@@ -53,12 +49,12 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
   )?.slice(0, 10);
 
   const getColumnGraphData = (data) => {
-    const categories = data.map((district) =>
+    const categories = data?.map((district) =>
       selectReportType === "ADP_Report"
         ? district.lgd_district_name
         : district.lgd_block_name
     );
-    const elementry_sch_per = data.map((district) =>
+    const elementry_sch_per = data?.map((district) =>
       selectReportType === "ADP_Report"
         ? district.ele_sch_percent
         : district.ele_sch_percent
@@ -70,7 +66,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
   const { categories: topCategories, elementry_sch_per: topElementrySchPer } =
     getColumnGraphData(TopDistrictsAndBlocksColumnGraph || []);
 
-    const formatedTopElementrySchPer=topElementrySchPer.map(num=>parseFloat(num.toFixed(2)))
+    const formatedTopElementrySchPer=topElementrySchPer?.map(num=>parseFloat(num?.toFixed(2)))
 
 
   // *******end Column graph********
@@ -123,14 +119,14 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
       let total_sch_ele = {
         id: ++count,
         parent: item.lgd_district_name,
-        name: `Number of Elementary Schools : ${item.total_sch_ele.toFixed(2)}`,
+        name: `Number of Elementary Schools : ${typeof item.total_sch_ele === 'number' ? item.total_sch_ele.toFixed(2) : 'N/A'}`,
         value: item.total_sch_ele,
         color: getColorCode(item.total_sch_ele),
       };
       let u_ptr = {
         id: ++count,
         parent: item.lgd_district_name,
-        name: `Elementary Schools with PTR ≤ 30 : ${item.u_ptr.toFixed(2)}`,
+        name: `Elementary Schools with PTR ≤ 30 : ${typeof item.u_ptr === 'number' ? item.u_ptr.toFixed(2) : 'N/A'}`,
         value: item.u_ptr,
         color: getColorCode(item.u_ptr),
       };
@@ -139,7 +135,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
       let ele_sch_percent = {
         id: ++count,
         parent: item.lgd_district_name,
-        name: `Percentage of Elementary Schools with PTR ≤ 30% : ${item.ele_sch_percent.toFixed(2)}`,
+        name: `Percentage of Elementary Schools with PTR ≤ 30% :  ${typeof item.ele_sch_percent === 'number' ? item.ele_sch_percent.toFixed(2) : 'N/A'}`,
         value: item.ele_sch_percent,
         color: getColorCode(item.ele_sch_percent),
       };
@@ -161,7 +157,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
       let total_sch_ele = {
         id: ++count,
         parent: item.lgd_block_name,
-        name: `Number of Elementary Schools : ${item.total_sch_ele.toFixed(2)}`,
+        name: `Number of Elementary Schools :  ${typeof item.total_sch_ele === 'number' ? item.total_sch_ele.toFixed(2) : 'N/A'}`,
         value: item.total_sch_ele,
         color: getColorCode(item.total_sch_ele),
       };
@@ -169,7 +165,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
       let u_ptr = {
         id: ++count,
         parent: item.lgd_block_name,
-        name: `Elementary Schools with PTR ≤ 30 :  ${item.u_ptr.toFixed(2)}`,
+        name: `Elementary Schools with PTR ≤ 30 :   ${typeof item.u_ptr === 'number' ? item.u_ptr.toFixed(2) : 'N/A'}`,
         value: item.u_ptr,
         color: getColorCode(item.u_ptr),
       };
@@ -178,7 +174,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
       let ele_sch_percent = {
         id: ++count,
         parent: item.lgd_block_name,
-        name: `Percentage of Elementary Schools with PTR ≤ 30% :  ${item.ele_sch_percent.toFixed(2)}`,
+        name: `Percentage of Elementary Schools with PTR ≤ 30% : ${typeof item.ele_sch_percent === 'number' ? item.ele_sch_percent.toFixed(2) : 'N/A'}`,
         value: item.ele_sch_percent,
         color: getColorCode(item.ele_sch_percent),
       };
@@ -254,7 +250,9 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
   ? `${t('performance_of')} ${selectReportType === "ADP_Report" ? t('district') : t('block')} ${t('byElementarySchoolsWithPTR30')}`  
   : `${t('top_ten')} ${selectReportType === "ADP_Report" ? t('district') : t('block')}  ${t('byElementarySchoolsWithPTR30')}`;
   return (
-    <section className="infrastructure-main-card p-0" id="content">
+    <>
+   <div className="col-md-7">
+     <section className="infrastructure-main-card p-0">
       <div className="">
         <div className="container tab-for-graph">
           <div className="row align-items-center report-inner-tab">
@@ -265,9 +263,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                     <div className="graph-card">
                       <div className="text-btn-d">
                         <h2 className="heading-sm"> 
-
                         {headingText}
-    
                         </h2>
                       </div>
                       <div className="graph mt-4">
@@ -278,7 +274,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                               options={{
                                 chart: {
                                   type: "column",
-                                  // marginTop: 50,
+                                  marginTop: 50,
                                   events: {
                                     beforePrint: function () {
                                       this.exportSVGElements[0].box.hide();
@@ -293,6 +289,10 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
 
                                 xAxis: {
                                   categories: topCategories,
+                                  labels: {
+                                    rotation: -30,
+                                   
+                                }
                                 },
 
                                 yAxis: {
@@ -303,7 +303,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                                   },
                                 },
                                 title: {
-                                  text: t(""),
+                                  text: headingText,
                                 },
                                 tooltip: {
                                   headerFormat: "<b>{point.x}</b><br/>",
@@ -331,7 +331,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                                       },
                                       position: "top",
                                       formatter: function () {
-                                        return parseFloat(this.y).toFixed(2);
+                                        return parseFloat(this.y)?.toFixed(2);
                                       },
                                     },
                                   },
@@ -382,10 +382,26 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div>                 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+   </div>
 
-                  <div className="col-md-12 mt-4">
-                    <div className="graph-card mt-2">
+   <div className="col-md-12">
+   <section className="infrastructure-main-card p-0">
+      <div className="">
+        <div className="container tab-for-graph">
+          <div className="row align-items-center report-inner-tab">
+            <div className="col-md-12 col-lg-12 p-0">
+              <div className="graph-box">
+                <div className="row">                
+                  <div className="col-md-12">
+                    <div className="graph-card">
                       <div className="text-btn-d">
                       <h2 className="heading-sm">  
                         {selectReportType === "ADP_Report" ? t('performanceOfDistrictsByPTR30') : t('performanceOfBlocksByPTR30')}
@@ -397,7 +413,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                         }`}
                         onClick={handlePrevious}
                       >
-                        <span class="material-icons-round">expand_less</span>
+                        <span className="material-icons-round">expand_less</span>
                       </div>
 
                       <HighchartsReact
@@ -412,6 +428,16 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                           chart: {
                             height: 500,
                             marginTop: 50,
+                            events: {
+                              beforePrint: function () {
+                                this.exportSVGElements[0].box.hide();
+                                this.exportSVGElements[1].hide();
+                              },
+                              afterPrint: function () {
+                                this.exportSVGElements[0].box.show();
+                                this.exportSVGElements[1].show();
+                              },
+                            },
                           },
                           navigation: {
                             buttonOptions: {
@@ -511,13 +537,12 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                         immutable={true}
                       />
 
-                      <div
-                        className={`scroll-btn-graph ${
+                      <div className={`scroll-btn-graph ${
                           currentIndex >= 38 - limit ? "disabled" : ""
                         }`}
                         onClick={handleNext}
                       >
-                        <span class="material-icons-round">expand_more</span>
+                        <span className="material-icons-round">expand_more</span>
                       </div>
                     </div>
                   </div>
@@ -528,5 +553,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
         </div>
       </div>
     </section>
+   </div>
+   </>
   );
 }

@@ -6,6 +6,7 @@ import {
   setStates,
 } from "../../../redux/slice/filterServicesComprisionSlice";
 import {
+  setLoading,
   setselectedCompareDistricts,
   setselectedCompareOption,
 } from "../../../redux/slice/reportTypeSlice";
@@ -27,12 +28,8 @@ export default function TransitionRateCompare() {
   const selectedOption = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareOption
   );
-  // const selectedAdpAbpOption = useSelector(
-  //   (state) => state.reportAdpAbpType.updateReportType
-  // );
   const isActiveGraph = useSelector((state) => state.reportAdpAbpType.isActiveGraph)
   const MAX_DISTRICTS = 5;
-  // const states = useSelector((state) => state.locationAdp?.states);
   const districts = useSelector((state) => state.locationAdp?.districts);
   const selectedState = useSelector((state) => state.locationAdp?.selectedState);
 
@@ -147,7 +144,11 @@ export default function TransitionRateCompare() {
 
   // Handle option change
   const handleOptionChange = (event) => {
+      dispatch(setLoading(true));
     dispatch(setselectedCompareOption(event.target.value));
+    setTimeout(()=>{
+      dispatch(setLoading(false));
+     },[150])
   };
 
 
@@ -167,7 +168,7 @@ export default function TransitionRateCompare() {
 
   return (
     <>
-      {!isActiveGraph ? 
+      {!isActiveGraph ?  
       (<div className="card-box">
         <div className="row align-items-end">
           <div className="col-md-5">
@@ -182,7 +183,8 @@ export default function TransitionRateCompare() {
           </div>
           <div className="col-md-7">
             <div className="d-flex w-m-100">
-              <div className="radio-button">
+
+           {  selectedDistricts.length >= 2 ? <div className="radio-button">
                 <div className="box-radio">
                   <input
                     type="radio"
@@ -208,7 +210,9 @@ export default function TransitionRateCompare() {
                     {t("secondaryToHigherSecondary")}
                   </label>
                 </div>
-              </div>
+              </div> : <></>
+}
+
             </div>
           </div>
         </div>
@@ -279,7 +283,7 @@ export default function TransitionRateCompare() {
                       </Card>
                     ) : (
                       <>
-                        {!isActiveGraph ? (<div className="comp-card" key={index}>
+                        {!isActiveGraph   ? (<div className="comp-card" key={index}>
                           <div className="upper-card">
                             <div className="d-flex align-items-center justify-content-between w-100">
                               <div className="d-flex">
@@ -331,6 +335,7 @@ export default function TransitionRateCompare() {
                               </h6>
                             </div>
                           </div>
+                          
                         </div>) : (<div> Data is empty</div>)}
 
                       </>
@@ -345,7 +350,7 @@ export default function TransitionRateCompare() {
         </div>
       </div>) : (<div className="col-md-12 graph-box">
         <div className="impact-box-content-education bg-light-blue tab-sdb-blue graph-card text-left">
-          <div className="text-btn-d d-flex justify-content-between align-items-center">
+        {selectedDistricts.length >=2 ?  <div className="text-btn-d d-flex justify-content-between align-items-center">
             <h2 className="heading-sm">
             {t("comparisonByTransitionRate")}
             </h2>
@@ -360,7 +365,10 @@ export default function TransitionRateCompare() {
               </select>
             </div>
 
-          </div>
+          </div> : <></>
+}
+
+
 
           <div className="Comparison-box">
             <div className="row align-items-center">
@@ -372,7 +380,7 @@ export default function TransitionRateCompare() {
 
 
                   {[...Array(MAX_DISTRICTS)]?.map((_, index) => (
-                    <div key={index} class="width-20">
+                    <div key={index} className="width-20">
                       <Select
                         className="form-select bg-grey2"
                         onChange={(value) => handleDistrictChange(value, index)}
@@ -405,7 +413,7 @@ export default function TransitionRateCompare() {
             }}
           >
             <b>{t("selectOneMoreDistrict")}</b>
-          </Card>) : (<div className="piechart-box row align-items-center">
+          </Card>) : (<div className="row align-items-center">
 
             <HighchartsReact
               highcharts={Highcharts}
@@ -435,7 +443,7 @@ export default function TransitionRateCompare() {
                   },
                 },
                 title: {
-                  text: ""
+                  text: t("comparisonByTransitionRate")
                 },
                 tooltip: {
                   headerFormat: "<b>{point.x}</b><br/>",
@@ -508,7 +516,18 @@ export default function TransitionRateCompare() {
                 }
 
 
-                ]
+                ],
+                exporting: {
+                  filename:t("comparisonByTransitionRate"),
+                  csv: {
+                    columnHeaderFormatter: function (item) {
+                      if (!item || item instanceof Highcharts.Axis) {
+                        return t("category");
+                      }
+                      return item.name;
+                    },
+                  },
+                },
               }}
               immutable={true}
             />

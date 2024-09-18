@@ -1,15 +1,8 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectDistrict, selectState, setStates } from "../../../redux/slice/filterServicesComprisionSlice";
-import { setAspirationalAllData, setselectedCompareDistricts, setselectedCompareOption, setUpdateReportType } from "../../../redux/slice/reportTypeSlice";
-import aspirationalAbpData from "../../../aspirational-reports-data/aspirational.json";
-import aspirationalAdpData from "../../../aspirational-reports-data/aspirationalDistrict.json";
-import aspirationalAdpData2020 from "../../../aspirational-reports-data/aspirationalAdpData2020-21.json"
-// import aspirationalAbpData2021 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2021 from "../../../aspirational-reports-data/aspirationalAdpData2021-22.json";
-// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
-import aspirationalAdpData2022 from "../../../aspirational-reports-data/aspirationalAdpData2022-23.json";
+import {  setselectedCompareDistricts, setselectedCompareOption } from "../../../redux/slice/reportTypeSlice";
 import table from '../../../assets/images/table.svg'
 import card from '../../../assets/images/card-list.svg'
 import { Card, Select } from 'antd';
@@ -24,12 +17,9 @@ import HighchartsReact from "highcharts-react-official";
 export default function TeacherAndSchoolCompare() {
 
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
-  const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedCompareOption);
-  const selectedAdpAbpOption = useSelector((state) => state.reportAdpAbpType.updateReportType);
   const MAX_DISTRICTS = 5;
-  const states = useSelector((state) => state.locationAdp.states);
   const districts = useSelector((state) => state.locationAdp.districts);
   const selectedState = useSelector((state) => state.locationAdp.selectedState);
   const selectedDistricts = useSelector((state) => state.reportAdpAbpType.selectedCompareDistricts)
@@ -44,12 +34,6 @@ export default function TeacherAndSchoolCompare() {
   }, [dispatch]);
 
 
-  // useEffect(() => {
-  //   dispatch(setAspirationalAllData(aspirationalAdpData))
-  // }, [dispatch]);
-
-
-  // Initialize states and districts from JSON data
   useEffect(() => {
     const structuredData = aspirationalData.reduce((acc, curr) => {
       const stateIndex = acc?.findIndex(
@@ -306,16 +290,6 @@ export default function TeacherAndSchoolCompare() {
                 {/* {t("comparisonByTransitionRate")} */}
               </h2>
   
-              {/* <div className="select-infra button-group-filter">
-                <select id="export_data" className="form-select bg-grey2" defaultValue={"upper_primary_to_secondary"}
-                  value={selectedOption}
-                  onChange={handleOptionChange}
-                >
-                  <option value="upper_primary_to_secondary"> {t("upperPrimaryToSecondary")}</option>
-                  <option value="secondary_to_higher_secondary">  {t("secondaryToHigherSecondary")}</option>
-                </select>
-              </div> */}
-  
             </div>
   
             <div className="Comparison-box">
@@ -328,7 +302,7 @@ export default function TeacherAndSchoolCompare() {
   
   
                     {[...Array(MAX_DISTRICTS)]?.map((_, index) => (
-                      <div key={index} class="width-20">
+                      <div key={index} className="width-20">
                         <Select
                           className="form-select bg-grey2"
                           onChange={(value) => handleDistrictChange(value, index)}
@@ -361,7 +335,7 @@ export default function TeacherAndSchoolCompare() {
               }}
             >
               <b>{t("selectOneMoreDistrict")}</b>
-            </Card>) : (<div className="piechart-box row align-items-center">
+            </Card>) : (<div className="row align-items-center">
   
               <HighchartsReact
                 highcharts={Highcharts}
@@ -391,7 +365,7 @@ export default function TeacherAndSchoolCompare() {
                     },
                   },
                   title: {
-                    text: ""
+                    text:t('comparisonByElementarySchoolsPTR30')
                   },
                   tooltip: {
                     headerFormat: "<b>{point.x}</b><br/>",
@@ -464,7 +438,18 @@ export default function TeacherAndSchoolCompare() {
                     },
   
   
-                  ]
+                  ],
+                  exporting: {
+                    filename:t('comparisonByElementarySchoolsPTR30'),
+                    csv: {
+                      columnHeaderFormatter: function (item) {
+                        if (!item || item instanceof Highcharts.Axis) {
+                          return t("category");
+                        }
+                        return item.name;
+                      },
+                    },
+                  },
                 }}
                 immutable={true}
               />

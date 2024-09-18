@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectState,
@@ -8,10 +8,7 @@ import {
 import {
   setselectedCompareOption,
   setselectedCompareBlocks,
-  setAspirationalAllData,
 } from "../../../redux/slice/reportTypeSlice";
-import aspirationalAbpData from "../../../aspirational-reports-data/aspirational.json";
-import aspirationalAdpData from "../../../aspirational-reports-data/aspirationalDistrict.json";
 import table from "../../../assets/images/table.svg";
 import card from "../../../assets/images/card-list.svg";
 import { Card, Select } from "antd";
@@ -20,11 +17,11 @@ import BlankPage from "../BlankPage";
 import { ScrollToTopOnMount } from "../../../Scroll/ScrollToTopOnMount";
 import { useTranslation } from "react-i18next";
 import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer.jsx";
-import Highcharts, { color } from "highcharts";
+import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import "../graph/graph.scss";
 export default function TransitionBlockRateCompare() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const aspirationalData = useSelector(
@@ -33,23 +30,17 @@ export default function TransitionBlockRateCompare() {
   const selectedOption = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareOption
   );
-  const selectedAdpAbpOption = useSelector(
-    (state) => state.reportAdpAbpType.updateReportType
-  );
+  
   const isActiveGraph = useSelector(
     (state) => state.reportAdpAbpType.isActiveGraph
   );
   const MAX_BLOCKS = 5;
-  const states = useSelector((state) => state.locationAdp.states);
-  const districts = useSelector((state) => state.locationAdp.districts);
   const blocks = useSelector((state) => state.locationAdp.blocks);
   const selectedYear = useSelector(
     (state) => state.reportAdpAbpType?.selectedYear
   );
   const selectedState = useSelector((state) => state.locationAdp.selectedState);
-  const selectedDistricts = useSelector(
-    (state) => state.reportAdpAbpType.selectedCompareDistricts
-  );
+  
   const selectedBlocks = useSelector(
     (state) => state.reportAdpAbpType.selectedCompareBlock
   );
@@ -62,18 +53,6 @@ export default function TransitionBlockRateCompare() {
     resteData();
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   // dispatch(setUpdateReportType('ADP_Report'));
-  //   dispatch(setAspirationalAllData(aspirationalAdpData));
-  // }, [dispatch]);
-  // useEffect(() => {
-  //   if (selectedAdpAbpOption === "ADP_Report") {
-  //     dispatch(setAspirationalAllData(aspirationalAdpData));
-  //   } else {
-  //     dispatch(setAspirationalAllData(aspirationalAbpData));
-  //   }
-  // }, [selectedAdpAbpOption]);
-  // Initialize states and districts from JSON data
   useEffect(() => {
     const structuredData = aspirationalData?.reduce((acc, curr) => {
       const stateIndex = acc?.findIndex(
@@ -201,7 +180,8 @@ export default function TransitionBlockRateCompare() {
                 </div>
               </div>
             </div>
-            <div className="col-md-7">
+
+        {selectedBlocks.length>= 2 ?     <div className="col-md-7">
               <div className="d-flex w-m-100">
                 <div className="radio-button">
                   <div className="box-radio">
@@ -233,7 +213,9 @@ export default function TransitionBlockRateCompare() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> : <></>
+      }
+
           </div>
 
           <div className="row">
@@ -389,7 +371,7 @@ export default function TransitionBlockRateCompare() {
               {t("comparisonByTransitionRate")}
               </h2>
 
-              <div className="select-infra button-group-filter">
+           {selectedBlocks.length >=2 ?   <div className="select-infra button-group-filter">
                 <select
                   id="export_data"
                   className="form-select bg-grey2"
@@ -404,7 +386,8 @@ export default function TransitionBlockRateCompare() {
                   {t("secondaryToHigherSecondary")}
                   </option>
                 </select>
-              </div>
+              </div> :<></>
+}
             </div>
 
             <div className="Comparison-box">
@@ -457,7 +440,7 @@ export default function TransitionBlockRateCompare() {
                 <b>{t("selectOneMoreBlock")}</b>
               </Card>
             ) : (
-              <div className="piechart-box row align-items-center">
+              <div className="row align-items-center">
                 <HighchartsReact
                   highcharts={Highcharts}
                   options={{
@@ -476,7 +459,7 @@ export default function TransitionBlockRateCompare() {
                       },
                     },
                     xAxis: {
-                      categories: selectedBlocks.map(
+                      categories: selectedBlocks?.map(
                         (district) => district.lgd_block_name
                       ),
                     },
@@ -488,7 +471,7 @@ export default function TransitionBlockRateCompare() {
                       },
                     },
                     title: {
-                      text: "",
+                      text:t("comparisonByTransitionRate"),
                     },
                     tooltip: {
                       headerFormat: "<b>{point.x}</b><br/>",
@@ -562,6 +545,17 @@ export default function TransitionBlockRateCompare() {
 
                       },
                     ],
+                    exporting: {
+                      filename:t("comparisonByTransitionRate"),
+                      csv: {
+                        columnHeaderFormatter: function (item) {
+                          if (!item || item instanceof Highcharts.Axis) {
+                            return t("category");
+                          }
+                          return item.name;
+                        },
+                      },
+                    },
                   }}
                   immutable={true}
                 />

@@ -10,7 +10,6 @@ export default function TeacherTrainedCwsnBarGraph() {
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType);
     const { t } = useTranslation();
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
-    const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption);
     const combinedData = (data) => data?.map((district) => ({
         ...district,
         combinedScore: district.swsn_teacher_percent,
@@ -19,8 +18,8 @@ export default function TeacherTrainedCwsnBarGraph() {
     const TopDistricts = combinedData(finalData?.slice(0, 10));
 
     const getChartData = (data) => {
-        const categories = data.map((district) => selectReportType === "ADP_Report" ? district.lgd_district_name : district.lgd_block_name);
-        const cwsnData = data.map((district) =>  Number(parseFloat(district.swsn_teacher_percent).toFixed(2)));
+        const categories = data?.map((district) => selectReportType === "ADP_Report" ? district.lgd_district_name : district.lgd_block_name);
+        const cwsnData = data?.map((district) =>  Number(parseFloat(district.swsn_teacher_percent).toFixed(2)));
 
         return { categories, cwsnData };
     };
@@ -49,6 +48,9 @@ export default function TeacherTrainedCwsnBarGraph() {
                 },
             },
         },
+        title: {
+            text: headingText,
+        },
         xAxis: {
             categories,
             title: {
@@ -67,9 +69,7 @@ export default function TeacherTrainedCwsnBarGraph() {
             },
             gridLineWidth: 0,
         },
-        title: {
-            text: title,
-        },
+       
         tooltip: {
             valueSuffix: "%",
         },

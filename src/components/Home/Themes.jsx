@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Transition from "../../assets/images/Transition_Rate.png";
 import Teacher from "../../assets/images/Teacher_School.png";
@@ -11,31 +11,14 @@ import {
   setselectedReport,
   setUpdateReportType,
 } from "../../redux/slice/reportTypeSlice";
-import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json";
-import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
-import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
 import themesData from "../../aspirational-reports-data/themesData.json";
 import { useTranslation } from "react-i18next";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import AdpCountTotalAverage from "../../utils/AdpTotalAverage";
-import AbpCountTotalAverage from "../../utils/AbpTotalAverage";
 
 export default function Themes() {
-  const selectedYear = useSelector(
-    (state) => state.reportAdpAbpType.selectedYear
-  );
-  const selectedAdpAbpOption = useSelector(
-    (state) => state.reportAdpAbpType.updateReportType
-  );
-
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [aspirationalData, setAspirationalData] = useState({
-    ADP_Report: [],
-    ABP_Report: [],
-  });
-
   const handleTransitionClick = (reportType) => {
     dispatch(setUpdateReportType(reportType));
     dispatch(setselectedReport("Transition Rate"));
@@ -65,12 +48,10 @@ export default function Themes() {
     });
   }, []);
 
-  
-
-
+  let localhindi = localStorage.getItem('selectedLanguage');
 
   return (
-    <section className="themes ptb-70 position-relative">
+    <section className={`themes ptb-70 position-relative ${localhindi === "hi" ? "hindilang" : ""}`} id="themes">
       <div className="container ptb-70 position-relative">
         <div className="theme-border"></div>
         <div className="row position-relative z-2 pt-5 mt-3">
@@ -78,9 +59,9 @@ export default function Themes() {
           <div className="col-md-4">
             <div className="themes-text">
               <h3 className="heading-blue mb-3">
-                {t("socioEconomic")} 
+                {t("socioEconomic")}
               </h3>
-              
+
               <Link to="/transition-rate" className="btn-banner d-none-mobile">
                 {t("exploreCompositeScore")}{" "}
                 <span className="material-icons-round">arrow_forward</span>
@@ -309,13 +290,13 @@ export default function Themes() {
                     </div>
 
                     <div className="link-box">
-                      <Link  className="link">
+                      <Link className="link">
                         {t("seeADPReport")}
                         <span className="material-icons-round">
                           arrow_forward_ios
                         </span>
                       </Link>
-                      <Link  className="link">
+                      <Link className="link">
                         {t("seeABPReport")}
                         <span className="material-icons-round">
                           arrow_forward_ios

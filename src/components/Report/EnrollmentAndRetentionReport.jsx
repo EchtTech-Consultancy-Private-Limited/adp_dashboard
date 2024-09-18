@@ -1,22 +1,18 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import BannerReportFilter from './BannerReportFilter'
-import download from '../../assets/images/download.svg'
 import table from '../../assets/images/table.svg'
 import chart from '../../assets/images/bar-chart.svg'
-import './report.scss'
+import './report.scss';
+import Swal from 'sweetalert2';
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
-import { useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectBlock, selectDistrict, selectState } from '../../redux/slice/filterServicesSlice'
 import aspirationalAbpData from "../../aspirational-reports-data/aspirational.json";
-import aspirationalAdpData from "../../aspirational-reports-data/aspirationalDistrict.json";
 import aspirationalAdpData2020 from "../../aspirational-reports-data/aspirationalAdpData2020-21.json"
-// import aspirationalAbpData2021 from "../../aspirational-reports-data/aspirationalAbpData.json";
 import aspirationalAdpData2021 from "../../aspirational-reports-data/aspirationalAdpData2021-22.json";
-// import aspirationalAbpData2022 from "../../aspirational-reports-data/aspirationalAbpData.json";
 import aspirationalAdpData2022 from "../../aspirational-reports-data/aspirationalAdpData2022-23.json";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
@@ -24,7 +20,7 @@ import { useTranslation } from "react-i18next";
 import { jsPDF } from "jspdf";
 import 'jspdf-autotable';
 import { GlobalLoading } from '../GlobalLoading/GlobalLoading'
-import { setselectedOption, setUpdateStatus } from '../../redux/slice/reportTypeSlice'
+import { setselectedOption } from '../../redux/slice/reportTypeSlice'
 import BlankPage from './BlankPage'
 import { AllBlock, AllDistrict, SelectBlock, SelectDistrict, selectedOptionConst, SelectState } from '../../constant/Constant'
 
@@ -59,11 +55,7 @@ const ArrowRenderer = ({ data, value }) => {
 };
 export default function EnrollmentAndRetentionReport() {
     const dispatch = useDispatch()
-    const { t, i18n } = useTranslation();
-    const [queryParameters] = useSearchParams();
-    const id = queryParameters.get('id');
-    const type = queryParameters.get('type');
-    const [report, setReport] = useState(null);
+    const { t } = useTranslation();
     const [gridApi, setGridApi] = useState();
     const [loading, setLoading] = useState(true);
     const { selectedState, selectedDistrict, selectedBlock } = useSelector((state) => state.locationAdp);
@@ -71,8 +63,7 @@ export default function EnrollmentAndRetentionReport() {
     const [locationHeader, SetLocationHeader] = useState()
     const selectReportType = useSelector((state) => state.reportAdpAbpType.updateReportType)
     const selectedOption = useSelector((state) => state.reportAdpAbpType.selectedOption)
-    const updateLoading = useSelector((state) => state.reportAdpAbpType.loadingStatus)
-    const selectedYear= useSelector((state) => state.reportAdpAbpType.selectedYear);
+    const selectedYear = useSelector((state) => state.reportAdpAbpType.selectedYear);
     const savedReportName = localStorage.getItem('selectedReport');
     const report_name = savedReportName
     const [data, setData] = useState([]);
@@ -81,7 +72,7 @@ export default function EnrollmentAndRetentionReport() {
         dispatch(selectDistrict(SelectDistrict));
         dispatch(selectBlock(SelectBlock));
         dispatch(setselectedOption(selectedOptionConst));
-        
+
     }
     useEffect(() => {
         dispatchingData()
@@ -100,36 +91,27 @@ export default function EnrollmentAndRetentionReport() {
     }, [selectedState, SelectState, selectedDistrict, SelectDistrict])
 
     {/*...............Take data report wise..............*/ }
-    // useEffect(() => {
-    //     if (selectReportType === "ADP_Report") {
-    //         setAspirationalData(aspirationalAdpData)
-    //         dispatchingData()
-    //     }
-    //     else {
-    //         setAspirationalData(aspirationalAbpData)
-    //         dispatchingData()
-    //     }
-    // }, [selectReportType])
+
     const combinedData = {
         "2020-21": {
-          ADP_Report: aspirationalAdpData2020,
-           ABP_Report: aspirationalAbpData,
+            ADP_Report: aspirationalAdpData2020,
+            ABP_Report: aspirationalAbpData,
         },
         "2021-22": {
-          ADP_Report: aspirationalAdpData2021,
-           ABP_Report: aspirationalAbpData,
+            ADP_Report: aspirationalAdpData2021,
+            ABP_Report: aspirationalAbpData,
         },
         "2022-23": {
-          ADP_Report: aspirationalAdpData2022,
-          ABP_Report: aspirationalAbpData,
+            ADP_Report: aspirationalAdpData2022,
+            ABP_Report: aspirationalAbpData,
         },
-      };
-    
-      useEffect(() => {
+    };
+
+    useEffect(() => {
         // Update the state based on the selected options
         const selectedData = combinedData[selectedYear][selectReportType];
         setAspirationalData(selectedData);
-      }, [selectReportType, selectedYear]);
+    }, [selectReportType, selectedYear]);
     useEffect(() => {
         let filteredData = aspirationalData;
 
@@ -519,10 +501,26 @@ export default function EnrollmentAndRetentionReport() {
     const handleExportData = (e) => {
         const { value } = e.target;
         if (value === "export_pdf") {
+
             exportToPDF();
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: `Downloaded Successfully!`,
+                showConfirmButton: false,
+                timer: 1500,
+            });
         }
         if (value === "export_excel") {
             exportToExcel();
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: `Downloaded Successfully!`,
+                showConfirmButton: false,
+                timer: 1500,
+                
+            });
         }
         document.getElementById("export_data").selectedIndex = 0;
     };
@@ -531,14 +529,14 @@ export default function EnrollmentAndRetentionReport() {
     return (
         <section>
             <BannerReportFilter />
-           
+
             <div className="container">
                 <div className="row mt-3">
 
                     {selectedState !== SelectState ?
-                   
+
                         <div className="col-md-12">
-                              {loading && <GlobalLoading />}
+                            {loading && <GlobalLoading />}
                             <div className="card-box">
                                 <div className="row align-items-end">
                                     <div className="col-md-5">

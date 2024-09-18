@@ -1,26 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, {  useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectDistrict,
   selectState,
   setStates,
   selectBlock,
 } from "../../../redux/slice/filterServicesComprisionSlice.js";
 import {
-  setselectedCompareDistricts,
   setselectedCompareOption,
-  setUpdateReportType,
   setselectedCompareBlocks,
-  setAspirationalAllData,
 } from "../../../redux/slice/reportTypeSlice.js";
-import aspirationalAbpData from "../../../aspirational-reports-data/aspirational.json";
-import aspirationalAdpData from "../../../aspirational-reports-data/aspirationalDistrict.json";
 import table from "../../../assets/images/table.svg";
 import card from "../../../assets/images/card-list.svg";
 import { Card, Select } from "antd";
 import { SelectState } from "../../../constant/Constant.js";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BlankPage from "../BlankPage.jsx";
 import { ScrollToTopOnMount } from "../../../Scroll/ScrollToTopOnMount.jsx";
 import { useTranslation } from "react-i18next";
@@ -28,12 +20,10 @@ import { ArrowRenderer } from "../ArrowRenderer/ArrowRenderer.jsx";
 import Highcharts, { color } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 export default function StudentsPerformanceBlockCompare() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const aspirationalData = useSelector((state) => state.reportAdpAbpType.aspirationalAllData)
-  const selectedAdpAbpOption = useSelector(
-    (state) => state.reportAdpAbpType.updateReportType
-  );
+
   const MAX_BLOCKS = 5;
   const blocks = useSelector((state) => state.locationAdp.blocks);
   const selectedYear = useSelector(
@@ -56,18 +46,7 @@ export default function StudentsPerformanceBlockCompare() {
     resteData();
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   // dispatch(setUpdateReportType('ADP_Report'));
-  //   dispatch(setAspirationalAllData(aspirationalAdpData));
-  // }, [dispatch]);
-  // useEffect(() => {
-  //   if (selectedAdpAbpOption === "ADP_Report") {
-  //     dispatch(setAspirationalAllData(aspirationalAdpData));
-  //   } else {
-  //     dispatch(setAspirationalAllData(aspirationalAbpData));
-  //   }
-  // }, [selectedAdpAbpOption]);
-  // Initialize states and districts from JSON data
+
   useEffect(() => {
     const structuredData = aspirationalData?.reduce((acc, curr) => {
       const stateIndex = acc?.findIndex(
@@ -171,29 +150,6 @@ export default function StudentsPerformanceBlockCompare() {
           <div className="col-md-12">
             <div className="d-flex align-items-center">
               <div className="title-box">
-                {/* <h5 className='sub-title'>State :
-                                    <Select
-                                        className='state-select'
-                                        onChange={handleStateChange}
-                                        style={{ width: "50%" }}
-                                        placeholder="Select State"
-                                        mode="single"
-                                        showSearch
-                                        value={selectedState || SelectState}
-                                    >
-                                        <Select.Option key="Select State" value={SelectState}>
-                                            Select State
-                                        </Select.Option>
-                                        {states.map((state) => (
-                                            <Select.Option
-                                                key={state.lgd_state_id}
-                                                value={state.lgd_state_name}
-                                            >
-                                                {state.lgd_state_name}
-                                            </Select.Option>
-                                        ))}
-                                    </Select>
-                                </h5> */}
                 <h3 className="heading-sm">
                   {t("comparisonByStudentPerformance")}
                 </h3>
@@ -341,22 +297,6 @@ export default function StudentsPerformanceBlockCompare() {
           {t('comparison_by_percentage_schools_cwsn_trained_teachers')}
           </h2>
 
-          {/* <div className="select-infra button-group-filter">
-            <select
-              id="export_data"
-              className="form-select bg-grey2"
-              defaultValue={"upper_primary_to_secondary"}
-              value={selectedOption}
-              onChange={handleOptionChange}
-            >
-              <option value="upper_primary_to_secondary">
-              {t("upperPrimaryToSecondary")}
-              </option>
-              <option value="secondary_to_higher_secondary">
-              {t("secondaryToHigherSecondary")}
-              </option>
-            </select>
-          </div> */}
         </div>
 
         <div className="Comparison-box">
@@ -409,7 +349,7 @@ export default function StudentsPerformanceBlockCompare() {
             <b>{t("selectOneMoreBlock")}</b>
           </Card>
         ) : (
-          <div className="piechart-box row align-items-center">
+          <div className="row align-items-center">
             <HighchartsReact
               highcharts={Highcharts}
               options={{
@@ -440,7 +380,7 @@ export default function StudentsPerformanceBlockCompare() {
                   },
                 },
                 title: {
-                  text: "",
+                  text:t('comparison_by_percentage_schools_cwsn_trained_teachers'),
                 },
                 tooltip: {
                   headerFormat: "<b>{point.x}</b><br/>",

@@ -6,17 +6,19 @@ import "./report.scss";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-material.css";
-import { useSearchParams } from "react-router-dom";
+import "ag-grid-community/styles/ag-theme-balham.css";
 import { useDispatch, useSelector } from "react-redux";
 import { jsPDF } from "jspdf";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "jspdf-autotable";
 import { GlobalLoading } from "../GlobalLoading/GlobalLoading";
 import {
     SetFinalData,
     setselectedOption,
     SetSheetName,
-    setIsActiveGraph
+    setIsActiveGraph,
+    setLoading
 } from "../../redux/slice/reportTypeSlice";
 
 import {
@@ -33,12 +35,12 @@ import { useTranslation } from "react-i18next";
 import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 import TransitionRateGraph from "./graph/TransitionRateGraph";
 import useReportFilterData from "../../CustomHook/useReportFilterData";
+import satyamevaimg from "../../assets/images/satyameva-jayate-img.png";
+import udise from "../../assets/images/udiseplu.jpg";
+
 export default function TransitionRateReport() {
     const dispatch = useDispatch();
-    const { t, i18n } = useTranslation();
-    const [queryParameters] = useSearchParams();
-    const id = queryParameters.get("id");
-    const type = queryParameters.get("type");
+    const { t } = useTranslation();
     // const [loading, setLoading] = useState(true);
     localStorage.setItem("selectedReportValue", "Transition Rate");
     const { selectedState, selectedDistrict, selectedBlock } = useSelector(
@@ -55,7 +57,6 @@ export default function TransitionRateReport() {
     );
     const [locationHeader, SetLocationHeader] = useState();
     const [gridApi, setGridApi] = useState();
-    const states = useSelector((state) => state.locationAdp.districts);
     const selectReportType = useSelector(
         (state) => state.reportAdpAbpType.updateReportType
     );
@@ -122,99 +123,6 @@ export default function TransitionRateReport() {
 
     /*...............Take data report wise..............*/
 
-    // useEffect(() => {
-    //     let filteredData = aspirationalData;
-    //     if (selectedState && selectedState !== SelectState) {
-    //         filteredData = filteredData.filter(
-    //             (item) => item.lgd_state_name === selectedState
-    //         );
-    //     }
-
-    //     if (
-    //         selectedDistrict &&
-    //         selectedDistrict !== AllDistrict &&
-    //         selectedDistrict !== SelectDistrict
-    //     ) {
-    //         filteredData = filteredData.filter(
-    //             (item) => item.lgd_district_name === selectedDistrict
-    //         );
-    //     }
-
-    //     if (
-    //         selectedBlock &&
-    //         selectedBlock !== AllBlock &&
-    //         selectedBlock !== SelectBlock
-    //     ) {
-    //         filteredData = filteredData.filter(
-    //             (item) => item.lgd_block_name === selectedBlock
-    //         );
-    //     }
-    //     filteredData = filteredData.map((item) => ({
-    //         ...item,
-    //         Location: getLocationName(item),
-    //     }));
-    //     setData(filteredData);
-    //     setLoading(false);
-
-    //     // dispatch(setUpdateStatus(false))
-    // }, [
-    //     selectedState,
-    //     selectedDistrict,
-    //     selectedBlock,
-    //     aspirationalData,
-    //     selectReportType,
-    // ]);
-
-    // useEffect(() => {
-    //   if (selectedState) {
-    //     const filtered = aspirationalData
-    //       .filter((item) => item.lgd_state_name === selectedState)
-    //       .map((item) => ({
-    //         ...item,
-    //         lgd_block_name: item.lgd_block_name,
-    //         lgd_district_name: item.lgd_district_name,
-    //       }));
-    //     setFilteredData(filtered);
-    //   } else {
-    //     setFilteredData([]);
-    //   }
-    // }, [selectedState, aspirationalData]);
-
-    // const getLocationName = (item) => {
-    //     if (selectReportType === "ABP_Report") {
-    //         if (
-    //             selectedBlock &&
-    //             selectedBlock !== AllBlock &&
-    //             selectedBlock !== SelectBlock
-    //         ) {
-    //             return `${item.lgd_block_name}`;
-    //         } else if (
-    //             selectedDistrict &&
-    //             selectedDistrict !== AllDistrict &&
-    //             selectedDistrict !== SelectDistrict
-    //         ) {
-    //             return `${item.lgd_block_name}`;
-    //         } else if (selectedState && selectedState !== SelectState) {
-    //             return `${item.lgd_district_name}`;
-    //         } else if (selectedState === SelectState) {
-    //             return `${item.lgd_state_name}`;
-    //         }
-    //     } else if (selectReportType === "ADP_Report") {
-    //         if (selectedState && selectedState !== SelectState) {
-    //             return `${item.lgd_district_name}`;
-    //         } else if (
-    //             selectedState !== SelectState &&
-    //             selectedState !== AllDistrict
-    //         ) {
-    //             return `${item.lgd_district_name}`;
-    //         } else if (selectedState === SelectState) {
-    //             return `${item.lgd_state_name}`;
-    //         }
-    //     }
-    //     return "";
-    // };
-
-
     const data = useReportFilterData(aspirationalData);
 
     const percentageRenderer = (params) => {
@@ -238,6 +146,13 @@ export default function TransitionRateReport() {
             headerName: locationHeader,
             cellRenderer: ArrowRenderer,
             field: "Location",
+            filter: 'agTextColumnFilter',  // Enable text filter
+            filterParams: {
+                values: (params) => {
+                    const uniqueStates = [...new Set(finalData.map(data => data.lgd_state_name))];
+                    params.success(uniqueStates);
+                },
+            },
         },
 
         ...(selectReportType === "ABP_Report"
@@ -285,10 +200,24 @@ export default function TransitionRateReport() {
                         {
                             headerName: "State",
                             field: "lgd_state_name",
+                            filter: 'agTextColumnFilter',  // Enable text filter
+                            filterParams: {
+                                values: (params) => {
+                                    const uniqueStates = [...new Set(finalData.map(data => data.lgd_state_name))];
+                                    params.success(uniqueStates);
+                                },
+                            },
                         },
                         {
                             headerName: "District",
                             field: "lgd_district_name",
+                            filter: 'agTextColumnFilter',  // Enable text filter
+                            filterParams: {
+                                values: (params) => {
+                                    const uniqueStates = [...new Set(finalData.map(data => data.lgd_state_name))];
+                                    params.success(uniqueStates);
+                                },
+                            },
                             cellRenderer: selectReportType === "ADP_Report" ? ArrowRenderer : undefined,
                         },
 
@@ -356,7 +285,11 @@ export default function TransitionRateReport() {
     }, [selectedState, selectReportType]);
 
     const handleOptionChange = (event) => {
+        dispatch(setLoading(true));
         dispatch(setselectedOption(event.target.value));
+        setTimeout(()=>{
+            dispatch(setLoading(false));
+           },[150])
     };
 
     useEffect(() => {
@@ -611,7 +544,7 @@ export default function TransitionRateReport() {
         const columns = gridApi.api.getAllDisplayedColumns();
         const headerCellSerialNumber = {
             text: "Serial Number",
-            headerName: "Serial Number",
+            headerName: "S.NO.",
             bold: true,
             margin: [0, 12, 0, 0],
         };
@@ -647,17 +580,23 @@ export default function TransitionRateReport() {
         return rowsToExport;
     };
     const getDocument = (gridApi) => {
+       
         const headerRow = getHeaderToExport(gridApi);
+        const tableHeaders = headerRow.map((header) => header.headerName);
+        console.log(tableHeaders, "tableHeaders")
         const rows = getRowsToExport(gridApi);
         const date = new Date();
-        const formattedDate = new Intl.DateTimeFormat("en-US", {
-            year: "numeric",
-            month: "short",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true,
-        }).format(date);
+        const formattedDate = `${date.toLocaleDateString("en-GB", {
+          weekday: "long", // Full day name (e.g., Friday)
+        })}, ${date.toLocaleDateString("en-GB", {
+          day: "2-digit", // Day of the month (e.g., 13)
+          month: "long", // Full month name (e.g., September)
+          year: "numeric", // Full year (e.g., 2024)
+        })}, ${date.toLocaleTimeString("en-US", {
+          hour: "2-digit", // Hour (e.g., 10)
+          minute: "2-digit", // Minutes (e.g., 25)
+          hour12: true, // 12-hour format with AM/PM
+        })}`;
         const doc = new jsPDF({
             orientation: "portrait",
             unit: "in",
@@ -665,49 +604,203 @@ export default function TransitionRateReport() {
         });
         // Function to add header
         const addHeader = () => {
-            doc.setFontSize(25);
-            doc.setTextColor("blue");
-            doc.setFont("bold");
-            doc.text(sheetName, 0.6, 0.5);
-            doc.setFontSize(20);
-            doc.setTextColor("blue");
-            doc.text(`Report Name: ${report_name}`, 0.6, 1.0);
-            doc.setFontSize(20);
-            doc.setTextColor("blue");
-            doc.text(`Report type : ${selectedState}`, 0.6, 1.5);
-            doc.setTextColor("blue");
-            doc.setFont("bold");
-            doc.text(
-                `Report Year : ${selectedYear}`,
-                doc.internal.pageSize.width - 2,
-                0.5,
-                {
-                    align: "right",
-                }
-            );
+          doc.setFontSize(22);
+          doc.setTextColor("black");
+          doc.setFont("Helvetica", "bold");
+          // doc.text("UDISE+", 0.6, 1);
+    
+          // Add the header text
+          doc.text(
+              selectReportType === "ADP_Report" ? " Aspirational District Programme  " :
+              "Aspirational Block Programme",
 
-            doc.setFontSize(20);
-            doc.text(
-                `Report generated on: ${formattedDate}`,
-                doc.internal.pageSize.width - 2,
-                1.5,
-                { align: "right" }
-            );
+            doc.internal.pageSize.width / 2,
+            0.7,
+            {
+              fontStyle: "bold",
+    
+              color: "black",
+              align: "center",
+            }
+          );
+          doc.setFont("Helvetica", "normal");
+    
+          doc.setFontSize(18);
+    
+          doc.text(
+            "Department of School Education & Literacy, Ministry of Education, Government of India",
+            doc.internal.pageSize.width / 2,
+            1.1,
+            {
+              // fontStyle: '',
+              color: "black",
+              align: "center",
+            }
+          );
+    
+          doc.setFont("Helvetica", "bold");
+    
+          doc.setTextColor("black");
+          doc.setFontSize(20);
+    
+          doc.text(`${report_name}`, doc.internal.pageSize.width / 2, 1.5, {
+            fontSize: 12,
+            fontStyle: "bold",
+    
+            color: "black",
+            align: "center",
+          });
+    
+          doc.setFont("Helvetica", "bold");
+    
+      
+    
+          doc.setFont("bold");
+    
+          doc.setTextColor("black");
+          doc.setFontSize(20);
+    
+          doc.text(
+            `Academic Year:${selectedYear}`,
+            doc.internal.pageSize.width / 2,
+            1.9,
+            {
+              fontSize: 12,
+              color: "black",
+              align: "center",
+            }
+          );
+    
+          let textContent = "";
+
+          if (
+            selectedDistrict === "Select District" &&
+            selectedState === "All State"
+          ) {
+            textContent = `National ${selectedState}`;
+          } else if (
+            selectedDistrict === "Select District" &&
+            selectedState !== "All State"
+          ) {
+            textContent = `State -(${selectedState})`;
+          }
+    
+          if (
+            selectedState !== "All State" &&
+            selectedDistrict === "All District"
+          ) {
+            textContent = `${selectedState}-${selectedDistrict}`;
+          } else if (
+            selectedState !== "All State" &&
+            selectedDistrict !== "Select District" &&
+            selectedDistrict !== "All District"
+          ) {
+            textContent = `District -${selectedDistrict}-(${selectedState})`;
+          }
+    
+          if (
+            selectedState !== "All State" &&
+            selectedDistrict !== "All District" &&
+            selectedBlock === "All Block"
+          ) {
+            textContent = `${selectedDistrict}-${selectedBlock}`;
+          } else if (
+            selectedState !== "All State" &&
+            selectedDistrict !== "All District" &&
+            selectedDistrict !== "Select District" &&
+            selectedBlock !== "Select Block" &&
+            selectedBlock !== "All Block"
+          ) {
+            textContent = `Block -${selectedBlock}-(${selectedDistrict} (${selectedState}))`;
+          }
+    
+          if (textContent) {
+            doc.text(textContent, doc.internal.pageSize.width / 2, 2.3, {
+              fontSize: 12,
+              color: "black",
+              align: "center",
+            });
+          }
+    
+    
+    
+          // Set the margin for the image from the left
+          const leftMargin = 0.1; // Margin from the left (in inches)
+          const topLeftX = leftMargin; // X position from the left including margin
+          const topLeftY = 0; // Y position from the top (in inches)
+          const imgWidth = 2; // Image width (in inches)
+          const imgHeight = 2; // Image height (in inches)
+    
+          doc.setFontSize(20);
+          doc.setTextColor("blue");
+    
+          // Add the satyameva image with the specified left margin
+          doc.addImage(
+            satyamevaimg,
+            "PNG",
+            topLeftX,
+            topLeftY,
+            imgWidth,
+            imgHeight
+          );
+    
+          doc.setTextColor("blue");
+          doc.setFont("bold");
+    
+          // Get page dimensions
+          const pageWidthE = doc.internal.pageSize.getWidth();
+          const pageHeightE = doc.internal.pageSize.getHeight();
+    
+          const imgWidthE = 2.8; // Image width (in inches)
+          const imgHeightE = 1.4; // Image height (in inches)
+          const marginRight = 0.7; // Right margin (in inches)
+    
+          // Calculate x position for top-right corner
+          const topRightX = pageWidthE - imgWidthE - marginRight;
+          const topRightY = 0.3; // Y position from the top (in inches)
+    
+          // Add the education image at the top-right corner
+          doc.addImage(
+            udise,
+            "JPG",
+            topRightX, // X position for top-right
+            topRightY, // Y position for top-right
+            imgWidthE,
+            imgHeightE
+          );
+    
+          const pageWidth = doc.internal.pageSize.getWidth();
+          const pageHeight = doc.internal.pageSize.getHeight();
+    
+          // Example: Draw a rectangle around the whole page
+          // doc.setLineWidth(0.02); // Thicker border for the page
+          // doc.rect(0.1, 0.1, pageWidth - 0.2, pageHeight - 0.2); // x, y, width, height
         };
 
         // Function to add footer
         const addFooter = () => {
-            const pageCount = doc.internal.getNumberOfPages();
-            doc.setFontSize(10);
-            for (let i = 1; i <= pageCount; i++) {
-                doc.setPage(i);
-                doc.text(
-                    `Page ${i} of ${pageCount}`,
-                    doc.internal.pageSize.width - 1,
-                    doc.internal.pageSize.height - 0.5,
-                    { align: "right" }
-                );
-            }
+          const pageCount = doc.internal.getNumberOfPages();
+          doc.setFontSize(20);
+          doc.setTextColor("black");
+    
+          for (let i = 1; i <= pageCount; i++) {
+            doc.setPage(i);
+    
+            doc.text(
+              `Page ${i} of ${pageCount}`,
+              doc.internal.pageSize.width / 2,
+              // doc.internal.pageSize.width - 1,
+              doc.internal.pageSize.height - 0.2,
+              { align: "center", color: "black" }
+            );
+    
+            doc.text(
+              `Report generated on : ${formattedDate}`,
+              doc.internal.pageSize.width - 1,
+              doc.internal.pageSize.height - 0.2,
+              { fontSize: 12, align: "right", color: "black" }
+            );
+          }
         };
         const table = [];
         table.push(headerRow.map((cell) => cell.headerName));
@@ -716,12 +809,44 @@ export default function TransitionRateReport() {
         });
         addHeader();
         doc.autoTable({
-            head: [table[0]],
-            body: table.slice(1),
-            startY: 2.2,
-            didDrawPage: addFooter,
+          head: [table[0]],
+          body: table.slice(1),
+          theme: "grid",
+          startY: 2.7,
+          styles: {
+            cellPadding: 0.15, // Adjust cell padding if needed
+            lineColor: [0, 0, 0], // Set border color (black in this case)
+            lineWidth: 0.001, // Set border width
+            fillColor: [255, 255, 255], // Default background color (white)
+            textColor: [0, 0, 0],
+          },
+          headStyles: {
+            fontSize: 14, // Set the font size for the header row
+            fontStyle: "bold", // Make the header text bold (optional)
+            textColor: [0, 0, 0],
+            cellPadding: 0.2, // Set text color for the header row
+          },
+    
+          didParseCell: function (data) {
+            const headerRow = getHeaderToExport(gridApi); // Get the header row
+    
+            // Get the header text for this column
+            const columnHeaderText = headerRow[data.column.index]?.text;
+            console.log(columnHeaderText, "columnHeaderText");
+            // Check if the current column header is "Serial Number"
+            if (columnHeaderText === "Serial Number") {
+              data.cell.styles.halign = "center"; // Center-align the content for "Serial Number"
+            } else if (columnHeaderText === "RegionName") {
+              console.log(columnHeaderText, "columnHeaderText");
+              data.cell.styles.halign = "left"; // Center-align the content for "Serial Number"
+            } else {
+              console.log("columnHeaderText");
+              data.cell.styles.halign = "right";
+            }
+          },
+    
+          afterPageContent: addFooter,
         });
-
         const totalPages = doc.internal.getNumberOfPages();
         for (let i = 0; i < totalPages; i++) {
             doc.setPage(i + 1);
@@ -744,7 +869,7 @@ export default function TransitionRateReport() {
                 field: column.getColDef().field,
             }));
             columnHeaders.unshift({
-                headerName: "Serial Number",
+              headerName: "S.NO.",
                 field: "Serial Number",
             });
             gridApi.api.forEachNode((node, index) => {
@@ -769,28 +894,39 @@ export default function TransitionRateReport() {
     const handleExportData = (e) => {
         const { value } = e.target;
         if (value === "export_pdf") {
-            exportToPDF();
+           
+            exportToPDF();     
+            toast.success("Downloaded Successfully!", { 
+                position: "bottom-left", 
+                autoClose: 1000, 
+                hideProgressBar: true 
+            });
         }
         if (value === "export_excel") {
-            exportToExcel();
+            exportToExcel();   
+            toast.success("Downloaded Successfully!", { 
+                position: "bottom-left", 
+                autoClose: 1000, 
+                hideProgressBar: true 
+            });        
         }
         document.getElementById("export_data").selectedIndex = 0;
     };
 
-    // const [isActive, setIsActive] = useState(false);
-    // const toggleClass = (e) => {
-
-    //     dispatch(setIsActiveGraph(!isActiveGraph));
-
-    // };
-
     const toggleClass = (isGraph) => {
+        dispatch(setLoading(true));
         if (isGraph !== false) {
 
             dispatch(setIsActiveGraph(true));
+            setTimeout(() => {
+                dispatch(setLoading(false));
+            }, [150])
         }
         else {
             dispatch(setIsActiveGraph(false));
+            setTimeout(() => {
+                dispatch(setLoading(false));
+            }, [150])
         }
     };
 
@@ -931,11 +1067,12 @@ export default function TransitionRateReport() {
                                     <div className="col-md-12">
                                         <div className={`table-box mt-4  ${isActiveGraph ? 'd-none' : ''}`}>
                                             <div id="content"
-                                                className="multi-header-table ag-theme-material ag-theme-custom-height ag-theme-quartz h-300"
+                                                className="multi-header-table ag-theme-balham ag-theme-custom-height "
                                                 style={{ width: "100%", height: 400 }}>
                                                 <AgGridReact
                                                     columnDefs={columns}
                                                     rowData={finalData || finalData.length > 0 ? finalData : ""}
+                                                    immutableData={true}
                                                     defaultColDef={defColumnDefs}
                                                     onGridReady={onGridReady} />
                                             </div>
