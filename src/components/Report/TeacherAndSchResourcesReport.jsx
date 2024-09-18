@@ -3,10 +3,13 @@ import BannerReportFilter from "./BannerReportFilter";
 import table from "../../assets/images/table.svg";
 import chart from "../../assets/images/bar-chart.svg";
 import "./report.scss";
+import Swal from 'sweetalert2';
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-balham.css";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { jsPDF } from "jspdf";
@@ -859,14 +862,24 @@ export default function TeacherAndSchResourcesReport() {
     const handleExportData = (e) => {
         const { value } = e.target;
         if (value === "export_pdf") {
-            exportToPDF();
+           
+            exportToPDF();     
+            toast.success("Downloaded Successfully!", { 
+                position: "bottom-left", 
+                autoClose: 1000, 
+                hideProgressBar: true 
+            });
         }
         if (value === "export_excel") {
-            exportToExcel();
+            exportToExcel();   
+            toast.success("Downloaded Successfully!", { 
+                position: "bottom-left", 
+                autoClose: 1000, 
+                hideProgressBar: true 
+            });        
         }
         document.getElementById("export_data").selectedIndex = 0;
     };
-
     const handleOptionChange = (event) => {
         dispatch(setselectedOptionTop50(event.target.value));
 

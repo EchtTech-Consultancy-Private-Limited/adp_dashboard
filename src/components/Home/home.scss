@@ -410,7 +410,9 @@ img {
             padding: 60px 18px;
             border-radius: 0px 0px 12px 12px;
             transition: all .5s ease-in-out;
-
+            @media (max-width: 767px) {
+                height: auto;
+            }
         }
 
         .content {
