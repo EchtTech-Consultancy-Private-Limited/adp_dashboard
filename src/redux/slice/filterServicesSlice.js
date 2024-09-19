@@ -39,8 +39,6 @@ const filterServicesSlice = createSlice({
 
       state.selectedBlock = action.payload;
 
-
-      console.log("block slice",action.payload)
     }
   }
 });
