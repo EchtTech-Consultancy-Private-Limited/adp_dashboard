@@ -755,31 +755,7 @@ export default function TeacherAndSchResourcesReport() {
       const pageHeight = doc.internal.pageSize.getHeight();
     };
     // Function to add footer
-    const addFooter = () => {
-      const pageCount = doc.internal.getNumberOfPages();
-
-      doc.page = 1;
-
-      for (let i = 1; i <= pageCount; i++) {
-        doc.setPage(i);
-        doc.setFontSize(20);
-        doc.setTextColor("black");
-        doc.text(
-          `Page ${i} of ${doc.page++}`,
-          doc.internal.pageSize.width / 2,
-          // doc.internal.pageSize.width - 1,
-          doc.internal.pageSize.height - 0.2,
-          { align: "center", color: "black" }
-        );
-
-        doc.text(
-          `Report generated on : ${formattedDate}`,
-          doc.internal.pageSize.width - 1,
-          doc.internal.pageSize.height - 0.2,
-          { fontSize: 12, align: "right", color: "black" }
-        );
-      }
-    };
+    const addFooter = () => {};
     const table = [];
     table.push(headerRow.map((cell) => cell.headerName));
     rows.forEach((row) => {
@@ -810,15 +786,13 @@ export default function TeacherAndSchResourcesReport() {
 
         // Get the header text for this column
         const columnHeaderText = headerRow[data.column.index]?.text;
-        console.log(columnHeaderText, "columnHeaderText");
+
         // Check if the current column header is "Serial Number"
         if (columnHeaderText === "Serial Number") {
           data.cell.styles.halign = "center"; // Center-align the content for "Serial Number"
         } else if (columnHeaderText === "RegionName") {
-          console.log(columnHeaderText, "columnHeaderText");
           data.cell.styles.halign = "left"; // Center-align the content for "Serial Number"
         } else {
-          console.log("columnHeaderText");
           data.cell.styles.halign = "right";
         }
       },
@@ -827,6 +801,27 @@ export default function TeacherAndSchResourcesReport() {
     });
 
     const totalPages = doc.internal.getNumberOfPages();
+
+    doc.page = 1;
+    for (let i = 1; i <= totalPages; i++) {
+      doc.setPage(i);
+      doc.setFontSize(20);
+      doc.setTextColor("black");
+      doc.text(
+        `Page ${i} of ${totalPages}`,
+        doc.internal.pageSize.width / 2,
+        doc.internal.pageSize.height - 0.2,
+        { align: "center", color: "black" }
+      );
+
+      doc.text(
+        `Report generated on : ${formattedDate}`,
+        doc.internal.pageSize.width - 1,
+        doc.internal.pageSize.height - 0.2,
+        { fontSize: 12, align: "right", color: "black" }
+      );
+    }
+
     for (let i = 0; i < totalPages; i++) {
       doc.setPage(i + 1);
       doc.autoTable({
