@@ -904,9 +904,6 @@ export default function TransitionRateReport() {
     if (gridApi) {
       const allData = [];
       const visibleColumns = gridApi.api.getAllDisplayedColumns();
-
-      console.log("visibleColumns", visibleColumns);
-
       const columnHeaders = visibleColumns.map((column) => ({
         headerName: column.getColDef().headerName,
         field: column.getColDef().field,
