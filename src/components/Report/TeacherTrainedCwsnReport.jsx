@@ -26,6 +26,7 @@ import {
 import {
   AllBlock,
   AllDistrict,
+  generateTextContent,
   SelectBlock,
   SelectDistrict,
   selectedOptionConst,
@@ -42,7 +43,7 @@ import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 import TeacherTrainedCwsnBarGraph from "./graph/TeacherTrainedCwsnBarGraph";
 import useReportFilterData from "../../CustomHook/useReportFilterData";
 import satyamevaimg from "../../assets/images/satyameva-jayate-img.png";
-import udise from "../../assets/images/udiseplu.jpg";
+import udise from "../../assets/images/adp.jpg";
 
 export default function TeacherTrainedCwsnReport() {
   const dispatch = useDispatch();
@@ -692,50 +693,11 @@ export default function TeacherTrainedCwsnReport() {
           align: "center",
         }
       );
-
-      let textContent = `National ${selectedState}`;
-
-      if (
-        selectedDistrict === "Select District" &&
-        selectedState === "All State"
-      ) {
-        textContent = `National ${selectedState}`;
-      } else if (
-        selectedDistrict === "Select District" &&
-        selectedState !== "All State"
-      ) {
-        textContent = `State -(${selectedState})`;
-      }
-
-      if (
-        selectedState !== "All State" &&
-        selectedDistrict === "All District"
-      ) {
-        textContent = `${selectedState}-${selectedDistrict}`;
-      } else if (
-        selectedState !== "All State" &&
-        selectedDistrict !== "Select District" &&
-        selectedDistrict !== "All District"
-      ) {
-        textContent = `District -${selectedDistrict}-(${selectedState})`;
-      }
-
-      if (
-        selectedState !== "All State" &&
-        selectedDistrict !== "All District" &&
-        selectedBlock === "All Block"
-      ) {
-        textContent = `${selectedDistrict}-${selectedBlock}`;
-      } else if (
-        selectedState !== "All State" &&
-        selectedDistrict !== "All District" &&
-        selectedDistrict !== "Select District" &&
-        selectedBlock !== "Select Block" &&
-        selectedBlock !== "All Block"
-      ) {
-        textContent = `Block -${selectedBlock}-(${selectedDistrict} (${selectedState}))`;
-      }
-
+      const textContent = generateTextContent(
+        selectedState,
+        selectedDistrict,
+        selectedBlock,
+      );
       if (textContent) {
         doc.text(textContent, doc.internal.pageSize.width / 2, 2.3, {
           fontSize: 12,
@@ -771,9 +733,9 @@ export default function TeacherTrainedCwsnReport() {
       const pageWidthE = doc.internal.pageSize.getWidth();
       const pageHeightE = doc.internal.pageSize.getHeight();
 
-      const imgWidthE = 2.8; // Image width (in inches)
+      const imgWidthE = 4.0; // Image width (in inches)
       const imgHeightE = 1.4; // Image height (in inches)
-      const marginRight = 0.7; // Right margin (in inches)
+      const marginRight = 0; // Right margin (in inches)
 
       // Calculate x position for top-right corner
       const topRightX = pageWidthE - imgWidthE - marginRight;
