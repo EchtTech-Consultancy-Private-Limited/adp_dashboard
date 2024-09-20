@@ -120,7 +120,11 @@ export default function SchoolInfraStructureLineGraph() {
 
   const seriesData = categoriesYear?.map((year) => {
     const yearData = data?.filter((item) => item?.year === year);
-    const ptrLessThan = yearData?.map((countDis) => parseFloat(countDis?.sch_having_toilet_40_percent)?.toFixed(2))?.filter((val) => !isNaN(val));
+    const ptrLessThan = yearData
+      ?.map((countDis) =>
+        parseFloat(countDis?.sch_having_toilet_40_percent)?.toFixed(2)
+      )
+      ?.filter((val) => !isNaN(val));
 
     if (ptrLessThan.length === 0) {
       return 0;
@@ -133,7 +137,9 @@ export default function SchoolInfraStructureLineGraph() {
 
     return averagePtrLessThan;
   });
-  const formateSeriesData = seriesData?.map((num) => parseFloat(num?.toFixed(2)));
+  const formateSeriesData = seriesData?.map((num) =>
+    parseFloat(num?.toFixed(2))
+  );
 
   {
     /*Bind Data for All years Data Start*/
@@ -163,13 +169,13 @@ export default function SchoolInfraStructureLineGraph() {
       },
     },
     title: {
-      text:"",
+      text: "",
       align: "left",
       style: {
-      color: "#000000", 
-      fontWeight: "bold",
-      fontSize: "18.5px",
-    },
+        color: "#000000",
+        fontWeight: "bold",
+        fontSize: "18.5px",
+      },
     },
     xAxis: {
       title: {
@@ -182,7 +188,7 @@ export default function SchoolInfraStructureLineGraph() {
     },
     yAxis: {
       labels: {
-        format: '{value:,.0f}'
+        format: "{value:,.0f}",
       },
       title: {
         text: "",
@@ -217,7 +223,7 @@ export default function SchoolInfraStructureLineGraph() {
     },
     series: [
       {
-        name: t('percentage_schools_girls_toilets_40_1'),
+        name: t("percentage_schools_girls_toilets_40_1"),
         data: formateSeriesData,
         color: "#E6694A",
         marker: {
@@ -226,7 +232,7 @@ export default function SchoolInfraStructureLineGraph() {
       },
     ],
     exporting: {
-      filename: t('percentage_schools_girls_toilets_40_1'),
+      filename: t("percentage_schools_girls_toilets_40_1"),
       csv: {
         columnHeaderFormatter: function (item) {
           if (!item || item instanceof Highcharts.Axis) {
@@ -245,7 +251,7 @@ export default function SchoolInfraStructureLineGraph() {
           <div className="graph-card-1">
             <div className="text-btn-d">
               <h2 className="heading-sm">
-                {t('percentage_schools_girls_toilets_40_1')}
+                {t("percentage_schools_girls_toilets_40_1")}
               </h2>
             </div>
             <div className="graph">
