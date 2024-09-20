@@ -805,7 +805,7 @@ export default function TeacherAndSchResourcesReport() {
     doc.page = 1;
     for (let i = 1; i <= totalPages; i++) {
       doc.setPage(i);
-      doc.setFontSize(20);
+      doc.setFontSize(18);
       doc.setTextColor("black");
       doc.text(
         `Page ${i} of ${totalPages}`,
