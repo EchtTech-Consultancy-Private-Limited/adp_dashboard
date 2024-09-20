@@ -140,13 +140,13 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
+      <HashRouter>
         <ErrorBoundary>
           <Header />
           {routes}
           <Footer />
         </ErrorBoundary>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }
