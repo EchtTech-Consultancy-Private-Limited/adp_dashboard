@@ -850,13 +850,10 @@ export default function SchoolInfraStructureReport() {
 
       didParseCell: function (data) {
         const headerRow = getHeaderToExport(gridApi); // Get the header row
-
-        // Get the header text for this column
         const columnHeaderText = headerRow[data.column.index]?.text;
-        // Check if the current column header is "Serial Number"
         if (columnHeaderText === "Serial Number") {
           data.cell.styles.halign = "center"; // Center-align the content for "Serial Number"
-        } else if (columnHeaderText === "RegionName") {
+        } else if (columnHeaderText === "Lgd_state_name" || columnHeaderText === "Lgd_district_name" || columnHeaderText === "Lgd_block_name") {
           data.cell.styles.halign = "left"; // Center-align the content for "Serial Number"
         } else {
           data.cell.styles.halign = "right";
@@ -870,7 +867,8 @@ export default function SchoolInfraStructureReport() {
     doc.page = 1;
     for (let i = 1; i <= totalPages; i++) {
       doc.setPage(i);
-      doc.setFontSize(18);
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'normal');
       doc.setTextColor("black");
       doc.text(
         `Page ${i} of ${totalPages}`,
