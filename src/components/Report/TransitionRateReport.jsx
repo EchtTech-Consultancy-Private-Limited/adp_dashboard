@@ -870,13 +870,15 @@ export default function TransitionRateReport() {
 
       afterPageContent: addFooter,
     });
+
     const totalPages = doc.internal.getNumberOfPages();
 
     doc.page = 1;
     for (let i = 1; i <= totalPages; i++) {
       doc.setPage(i);
-      doc.setFontSize(20);
+      doc.setFontSize(18);
       doc.setTextColor("black");
+      // doc.setFont("Helvetica", "bold");
       doc.text(
         `Page ${i} of ${totalPages}`,
         doc.internal.pageSize.width / 2,
@@ -908,6 +910,9 @@ export default function TransitionRateReport() {
     if (gridApi) {
       const allData = [];
       const visibleColumns = gridApi.api.getAllDisplayedColumns();
+
+      console.log("visibleColumns", visibleColumns);
+
       const columnHeaders = visibleColumns.map((column) => ({
         headerName: column.getColDef().headerName,
         field: column.getColDef().field,
