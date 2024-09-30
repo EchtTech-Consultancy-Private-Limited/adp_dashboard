@@ -26,6 +26,7 @@ import {
 import {
   AllBlock,
   AllDistrict,
+  generateTextContent,
   SelectBlock,
   SelectDistrict,
   selectedOptionConst,
@@ -43,7 +44,7 @@ import TeacherAndSchResourcesColumnGraph from "./graph/TeacherAndSchResourcesCol
 import TeacherAndSchoolgraphB from "./graph/TeacherAndSchResourcesReportLineGraph";
 import useReportFilterData from "../../CustomHook/useReportFilterData";
 import satyamevaimg from "../../assets/images/satyameva-jayate-img.png";
-import udise from "../../assets/images/udiseplu.jpg";
+import udise from "../../assets/images/adp.jpg";
 
 export default function TeacherAndSchResourcesReport() {
   const dispatch = useDispatch();
@@ -655,49 +656,11 @@ export default function TeacherAndSchResourcesReport() {
           align: "center",
         }
       );
-      let textContent = `National ${selectedState}`;
-
-      if (
-        selectedDistrict === "Select District" &&
-        selectedState === "All State"
-      ) {
-        textContent = `National ${selectedState}`;
-      } else if (
-        selectedDistrict === "Select District" &&
-        selectedState !== "All State"
-      ) {
-        textContent = `State -(${selectedState})`;
-      }
-
-      if (
-        selectedState !== "All State" &&
-        selectedDistrict === "All District"
-      ) {
-        textContent = `${selectedState}-${selectedDistrict}`;
-      } else if (
-        selectedState !== "All State" &&
-        selectedDistrict !== "Select District" &&
-        selectedDistrict !== "All District"
-      ) {
-        textContent = `District -${selectedDistrict}-(${selectedState})`;
-      }
-
-      if (
-        selectedState !== "All State" &&
-        selectedDistrict !== "All District" &&
-        selectedBlock === "All Block"
-      ) {
-        textContent = `${selectedDistrict}-${selectedBlock}`;
-      } else if (
-        selectedState !== "All State" &&
-        selectedDistrict !== "All District" &&
-        selectedDistrict !== "Select District" &&
-        selectedBlock !== "Select Block" &&
-        selectedBlock !== "All Block"
-      ) {
-        textContent = `Block -${selectedBlock}-(${selectedDistrict} (${selectedState}))`;
-      }
-
+      const textContent = generateTextContent(
+        selectedState,
+        selectedDistrict,
+        selectedBlock,
+      );
       if (textContent) {
         doc.text(textContent, doc.internal.pageSize.width / 2, 2.3, {
           fontSize: 12,
@@ -733,9 +696,9 @@ export default function TeacherAndSchResourcesReport() {
       const pageWidthE = doc.internal.pageSize.getWidth();
       const pageHeightE = doc.internal.pageSize.getHeight();
 
-      const imgWidthE = 2.8; // Image width (in inches)
+      const imgWidthE = 4.0; // Image width (in inches)
       const imgHeightE = 1.4; // Image height (in inches)
-      const marginRight = 0.7; // Right margin (in inches)
+      const marginRight = 0; // Right margin (in inches)
 
       // Calculate x position for top-right corner
       const topRightX = pageWidthE - imgWidthE - marginRight;
@@ -783,14 +746,10 @@ export default function TeacherAndSchResourcesReport() {
 
       didParseCell: function (data) {
         const headerRow = getHeaderToExport(gridApi); // Get the header row
-
-        // Get the header text for this column
         const columnHeaderText = headerRow[data.column.index]?.text;
-
-        // Check if the current column header is "Serial Number"
         if (columnHeaderText === "Serial Number") {
           data.cell.styles.halign = "center"; // Center-align the content for "Serial Number"
-        } else if (columnHeaderText === "RegionName") {
+        } else if (columnHeaderText === "Lgd_state_name" || columnHeaderText === "Lgd_district_name" || columnHeaderText === "Lgd_block_name" ||  columnHeaderText === "School Name") {
           data.cell.styles.halign = "left"; // Center-align the content for "Serial Number"
         } else {
           data.cell.styles.halign = "right";
@@ -805,7 +764,8 @@ export default function TeacherAndSchResourcesReport() {
     doc.page = 1;
     for (let i = 1; i <= totalPages; i++) {
       doc.setPage(i);
-      doc.setFontSize(18);
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'normal');
       doc.setTextColor("black");
       doc.text(
         `Page ${i} of ${totalPages}`,

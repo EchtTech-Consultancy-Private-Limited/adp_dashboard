@@ -24,6 +24,7 @@ import {
 import {
   AllBlock,
   AllDistrict,
+  generateTextContent,
   SelectBlock,
   SelectDistrict,
   SelectState,
@@ -36,7 +37,7 @@ import { ArrowRenderer } from "./ArrowRenderer/ArrowRenderer";
 import TransitionRateGraph from "./graph/TransitionRateGraph";
 import useReportFilterData from "../../CustomHook/useReportFilterData";
 import satyamevaimg from "../../assets/images/satyameva-jayate-img.png";
-import udise from "../../assets/images/udiseplu.jpg";
+import udise from "../../assets/images/adp.jpg";
 
 export default function TransitionRateReport() {
   const dispatch = useDispatch();
@@ -163,11 +164,11 @@ export default function TransitionRateReport() {
 
     ...(selectReportType === "ABP_Report"
       ? [
-          {
-            headerName: "Block",
-            field: "lgd_block_name",
-          },
-        ]
+        {
+          headerName: "Block",
+          field: "lgd_block_name",
+        },
+      ]
       : []),
 
     {
@@ -234,12 +235,12 @@ export default function TransitionRateReport() {
 
             ...(selectReportType === "ABP_Report"
               ? [
-                  {
-                    headerName: "Block",
-                    field: "lgd_block_name",
-                    cellRenderer: ArrowRenderer,
-                  },
-                ]
+                {
+                  headerName: "Block",
+                  field: "lgd_block_name",
+                  cellRenderer: ArrowRenderer,
+                },
+              ]
               : []),
           ],
         },
@@ -316,30 +317,30 @@ export default function TransitionRateReport() {
           },
           ...(selectReportType === "ADP_Report"
             ? [
-                {
-                  headerName: "District",
-                  field: "lgd_district_name",
-                  cellRenderer:
-                    selectReportType === "ADP_Report"
-                      ? ArrowRenderer
-                      : undefined,
-                },
-              ]
+              {
+                headerName: "District",
+                field: "lgd_district_name",
+                cellRenderer:
+                  selectReportType === "ADP_Report"
+                    ? ArrowRenderer
+                    : undefined,
+              },
+            ]
             : []),
           ...(selectedState !== "All State" &&
-          selectReportType === "ABP_Report" &&
-          (selectedDistrict === SelectDistrict ||
-            selectedDistrict === AllDistrict)
+            selectReportType === "ABP_Report" &&
+            (selectedDistrict === SelectDistrict ||
+              selectedDistrict === AllDistrict)
             ? [
-                {
-                  headerName: "District",
-                  field: "lgd_district_name",
-                  cellRenderer:
-                    selectReportType === "ADP_Report"
-                      ? ArrowRenderer
-                      : undefined,
-                },
-              ]
+              {
+                headerName: "District",
+                field: "lgd_district_name",
+                cellRenderer:
+                  selectReportType === "ADP_Report"
+                    ? ArrowRenderer
+                    : undefined,
+              },
+            ]
             : []),
           //   {
           //     headerName: locationHeader,
@@ -349,12 +350,12 @@ export default function TransitionRateReport() {
 
           ...(selectReportType === "ABP_Report"
             ? [
-                {
-                  headerName: "Block",
-                  field: "lgd_block_name",
-                  cellRenderer: ArrowRenderer,
-                },
-              ]
+              {
+                headerName: "Block",
+                field: "lgd_block_name",
+                cellRenderer: ArrowRenderer,
+              },
+            ]
             : []),
           {
             headerName: "Boys",
@@ -387,30 +388,30 @@ export default function TransitionRateReport() {
 
           ...(selectReportType === "ADP_Report"
             ? [
-                {
-                  headerName: "District",
-                  field: "lgd_district_name",
-                  cellRenderer:
-                    selectReportType === "ADP_Report"
-                      ? ArrowRenderer
-                      : undefined,
-                },
-              ]
+              {
+                headerName: "District",
+                field: "lgd_district_name",
+                cellRenderer:
+                  selectReportType === "ADP_Report"
+                    ? ArrowRenderer
+                    : undefined,
+              },
+            ]
             : []),
           ...(selectedState !== "All State" &&
-          selectReportType === "ABP_Report" &&
-          (selectedDistrict === SelectDistrict ||
-            selectedDistrict === AllDistrict)
+            selectReportType === "ABP_Report" &&
+            (selectedDistrict === SelectDistrict ||
+              selectedDistrict === AllDistrict)
             ? [
-                {
-                  headerName: "District",
-                  field: "lgd_district_name",
-                  cellRenderer:
-                    selectReportType === "ADP_Report"
-                      ? ArrowRenderer
-                      : undefined,
-                },
-              ]
+              {
+                headerName: "District",
+                field: "lgd_district_name",
+                cellRenderer:
+                  selectReportType === "ADP_Report"
+                    ? ArrowRenderer
+                    : undefined,
+              },
+            ]
             : []),
           //   {
           //     headerName: locationHeader,
@@ -420,12 +421,12 @@ export default function TransitionRateReport() {
 
           ...(selectReportType === "ABP_Report"
             ? [
-                {
-                  headerName: "Block",
-                  field: "lgd_block_name",
-                  cellRenderer: ArrowRenderer,
-                },
-              ]
+              {
+                headerName: "Block",
+                field: "lgd_block_name",
+                cellRenderer: ArrowRenderer,
+              },
+            ]
             : []),
 
           {
@@ -690,49 +691,12 @@ export default function TransitionRateReport() {
           align: "center",
         }
       );
+      const textContent = generateTextContent(
+        selectedState,
+        selectedDistrict,
+        selectedBlock,
+      );
 
-      let textContent = `National ${selectedState}`;
-
-      if (
-        selectedDistrict === "Select District" &&
-        selectedState === "All State"
-      ) {
-        textContent = `National ${selectedState}`;
-      } else if (
-        selectedDistrict === "Select District" &&
-        selectedState !== "All State"
-      ) {
-        textContent = `State -(${selectedState})`;
-      }
-
-      if (
-        selectedState !== "All State" &&
-        selectedDistrict === "All District"
-      ) {
-        textContent = `${selectedState}-${selectedDistrict}`;
-      } else if (
-        selectedState !== "All State" &&
-        selectedDistrict !== "Select District" &&
-        selectedDistrict !== "All District"
-      ) {
-        textContent = `District -${selectedDistrict}-(${selectedState})`;
-      }
-
-      if (
-        selectedState !== "All State" &&
-        selectedDistrict !== "All District" &&
-        selectedBlock === "All Block"
-      ) {
-        textContent = `${selectedDistrict}-${selectedBlock}`;
-      } else if (
-        selectedState !== "All State" &&
-        selectedDistrict !== "All District" &&
-        selectedDistrict !== "Select District" &&
-        selectedBlock !== "Select Block" &&
-        selectedBlock !== "All Block"
-      ) {
-        textContent = `Block -${selectedBlock}-(${selectedDistrict} (${selectedState}))`;
-      }
 
       if (textContent) {
         doc.text(textContent, doc.internal.pageSize.width / 2, 2.3, {
@@ -762,16 +726,17 @@ export default function TransitionRateReport() {
         imgHeight
       );
 
-      doc.setTextColor("blue");
+      doc.setTextColor("#239da1");
       doc.setFont("bold");
 
       // Get page dimensions
       const pageWidthE = doc.internal.pageSize.getWidth();
       const pageHeightE = doc.internal.pageSize.getHeight();
 
-      const imgWidthE = 2.8; // Image width (in inches)
+      
+      const imgWidthE = 4.0; // Image width (in inches)
       const imgHeightE = 1.4; // Image height (in inches)
-      const marginRight = 0.7; // Right margin (in inches)
+      const marginRight = 0; // Right margin (in inches)
 
       // Calculate x position for top-right corner
       const topRightX = pageWidthE - imgWidthE - marginRight;
@@ -787,12 +752,10 @@ export default function TransitionRateReport() {
         imgHeightE
       );
 
-      const pageWidth = doc.internal.pageSize.getWidth();
-      const pageHeight = doc.internal.pageSize.getHeight();
     };
 
     // Function to add footer
-    const addFooter = () => {};
+    const addFooter = () => { };
     const table = [];
     table.push(headerRow.map((cell) => cell.headerName));
     rows.forEach((row) => {
@@ -800,13 +763,13 @@ export default function TransitionRateReport() {
     });
 
     const headers = [];
-
+    const headers1 = [];
     // First row: "Upper Primary to Secondary" and "Secondary to Higher Secondary" spanning 3 columns each
 
     headers.push([
       {
         content: "",
-        colSpan: 3,
+        colSpan: selectReportType === "ADP_Report" ? 3 : 4,
         styles: { halign: "center" },
       },
       {
@@ -820,21 +783,52 @@ export default function TransitionRateReport() {
         styles: { halign: "center" },
       },
     ]);
+    if (selectedState !== SelectState && selectedOption === "upper_primary_to_secondary") {
+      headers1.push([
+        {
+          content: "",
+          colSpan: selectReportType === "ADP_Report" ? 2 : 3,
+          styles: { halign: "center" },
+        },
+        {
+          content: "Upper Primary to Secondary",
+          colSpan: 3,
+          styles: { halign: "center" },
+        },
 
+      ]);
+    } else {
+      headers1.push([
+        {
+          content: "",
+          colSpan: selectReportType === "ADP_Report" ? 2 : 3,
+          styles: { halign: "center" },
+        },
+        {
+          content: "Secondary to Higher Secondary",
+          colSpan: 3,
+          styles: { halign: "center" },
+        },
+
+      ]);
+    }
     // Add empty cells to the start of secondRow
 
     const secondRow = [{ content: "", styles: { halign: "center" } }];
     table[0].forEach((header) => {
       secondRow.push({ content: header, styles: { halign: "center" } });
     });
-
     secondRow.shift();
+    if (selectedState !== SelectState) {
+      headers1.push(secondRow);
+    } else {
+      headers.push(secondRow);
+    }
 
-    headers.push(secondRow);
 
     addHeader();
     doc.autoTable({
-      head: selectedState === SelectState ? headers : [table[0]],
+      head: selectedState === SelectState ? headers : headers1,
       body: table.slice(1),
       theme: "grid",
       startY: 2.7,
@@ -857,11 +851,10 @@ export default function TransitionRateReport() {
 
         // Get the header text for this column
         const columnHeaderText = headerRow[data.column.index]?.text;
-
         // Check if the current column header is "Serial Number"
         if (columnHeaderText === "Serial Number") {
           data.cell.styles.halign = "center"; // Center-align the content for "Serial Number"
-        } else if (columnHeaderText === "RegionName") {
+        } else if (columnHeaderText === "Lgd_state_name" || columnHeaderText === "Lgd_district_name" || columnHeaderText === "Lgd_block_name") {
           data.cell.styles.halign = "left"; // Center-align the content for "Serial Number"
         } else {
           data.cell.styles.halign = "right";
@@ -876,7 +869,8 @@ export default function TransitionRateReport() {
     doc.page = 1;
     for (let i = 1; i <= totalPages; i++) {
       doc.setPage(i);
-      doc.setFontSize(18);
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'normal');
       doc.setTextColor("black");
       // doc.setFont("Helvetica", "bold");
       doc.text(
@@ -910,9 +904,6 @@ export default function TransitionRateReport() {
     if (gridApi) {
       const allData = [];
       const visibleColumns = gridApi.api.getAllDisplayedColumns();
-
-      console.log("visibleColumns", visibleColumns);
-
       const columnHeaders = visibleColumns.map((column) => ({
         headerName: column.getColDef().headerName,
         field: column.getColDef().field,
@@ -991,9 +982,9 @@ export default function TransitionRateReport() {
                   <div
                     className={
                       (selectedState !== "All State" && !isActiveGraph) ||
-                      ((selectedState === "All State" ||
-                        selectedState !== "All State") &&
-                        isActiveGraph)
+                        ((selectedState === "All State" ||
+                          selectedState !== "All State") &&
+                          isActiveGraph)
                         ? "col-md-5"
                         : "col-md-6"
                     }
@@ -1006,40 +997,38 @@ export default function TransitionRateReport() {
                               ? "All State"
                               : selectedDistrict !== SelectDistrict &&
                                 selectedDistrict !== AllDistrict
-                              ? `${selectedDistrict}`
-                              : selectedDistrict === AllDistrict
-                              ? `${selectedState} District's`
-                              : `${selectedState} District's`
+                                ? `${selectedDistrict}`
+                                : selectedDistrict === AllDistrict
+                                  ? `${selectedState} District's`
+                                  : `${selectedState} District's`
                             : selectReportType === "ABP_Report"
-                            ? selectedState === "All State"
-                              ? "All State"
-                              : selectedState !== SelectState
-                              ? selectedDistrict === SelectDistrict ||
-                                selectedDistrict === AllDistrict
-                                ? `${selectedState} District's`
-                                : selectedBlock !== SelectBlock &&
-                                  selectedBlock !== AllBlock
-                                ? `${selectedBlock}`
-                                : `${selectedDistrict} Block's`
-                              : selectedBlock
-                            : selectedBlock}
+                              ? selectedState === "All State"
+                                ? "All State"
+                                : selectedState !== SelectState
+                                  ? selectedDistrict === SelectDistrict ||
+                                    selectedDistrict === AllDistrict
+                                    ? `${selectedState} District's`
+                                    : selectedBlock !== SelectBlock &&
+                                      selectedBlock !== AllBlock
+                                      ? `${selectedBlock}`
+                                      : `${selectedDistrict} Block's`
+                                  : selectedBlock
+                              : selectedBlock}
                         </h5>
                         <h3 className="heading-sm">{t("transitionRate")}</h3>
                       </div>
                       <div className="tab-box">
                         <button
-                          className={`tab-button ${
-                            !isActiveGraph ? "active" : ""
-                          }`}
+                          className={`tab-button ${!isActiveGraph ? "active" : ""
+                            }`}
                           onClick={() => toggleClass(false)}
                         >
                           <img src={table} alt="Table" />
                           <span>{t("tableView")}</span>
                         </button>
                         <button
-                          className={`tab-button ${
-                            isActiveGraph ? "active" : ""
-                          }`}
+                          className={`tab-button ${isActiveGraph ? "active" : ""
+                            }`}
                           onClick={() => toggleClass(true)}
                         >
                           <img src={chart} alt="Chart" />
@@ -1051,9 +1040,9 @@ export default function TransitionRateReport() {
                   <div
                     className={
                       (selectedState !== "All State" && !isActiveGraph) ||
-                      ((selectedState === "All State" ||
-                        selectedState !== "All State") &&
-                        isActiveGraph)
+                        ((selectedState === "All State" ||
+                          selectedState !== "All State") &&
+                          isActiveGraph)
                         ? "col-md-7"
                         : "col-md-6"
                     }
@@ -1068,17 +1057,17 @@ export default function TransitionRateReport() {
                       <div
                         className={
                           (selectedState !== "All State" && !isActiveGraph) ||
-                          ((selectedState === "All State" ||
-                            selectedState !== "All State") &&
-                            isActiveGraph)
+                            ((selectedState === "All State" ||
+                              selectedState !== "All State") &&
+                              isActiveGraph)
                             ? "radio-button"
                             : ""
                         }
                       >
                         {(selectedState !== "All State" && !isActiveGraph) ||
-                        ((selectedState === "All State" ||
-                          selectedState !== "All State") &&
-                          isActiveGraph) ? (
+                          ((selectedState === "All State" ||
+                            selectedState !== "All State") &&
+                            isActiveGraph) ? (
                           <>
                             <div className="box-radio">
                               <input
@@ -1143,9 +1132,8 @@ export default function TransitionRateReport() {
                 <div className="row">
                   <div className="col-md-12">
                     <div
-                      className={`table-box mt-4  ${
-                        isActiveGraph ? "d-none" : ""
-                      }`}
+                      className={`table-box mt-4  ${isActiveGraph ? "d-none" : ""
+                        }`}
                     >
                       <div
                         id="content"
@@ -1175,7 +1163,7 @@ export default function TransitionRateReport() {
             </div>
 
             {selectedState !== "All State" &&
-            selectReportType === "ADP_Report" ? (
+              selectReportType === "ADP_Report" ? (
               <TransitionRateCompare />
             ) : selectedState !== "All State" &&
               selectedDistrict !== SelectDistrict &&
