@@ -816,7 +816,6 @@ export default function SchoolInfraStructureReport() {
         const headerRow = getHeaderToExport(gridApi); // Get the header row
         const columnHeaderText = headerRow[data.column.index]?.text;
            
-        console.log("columnHeaderText",columnHeaderText)
 
         if (columnHeaderText === "Serial Number") {
           data.cell.styles.halign = "center"; // Center-align the content for "Serial Number"

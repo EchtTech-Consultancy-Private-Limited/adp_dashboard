@@ -111,6 +111,7 @@
   "block": "Blocks",
   "label_wise_transition_rate": "Level Wise Transition Rate ",
   "label_wise_teacher_trained_cwsn": "Level Wise Schools with CWSN-Trained Teachers",
+  "number_of_schools_with_teachers_trained_for_CWSN":"Number of Schools with Teachers Trained for CWSN",
   "schools_with_CWSN_trained_teachers_of": "Schools with CWSN-Trained Teachers",
   "total_transition_rate": "Total Transition Rate",
   "add_district_to_compare": "Add District to Compare",

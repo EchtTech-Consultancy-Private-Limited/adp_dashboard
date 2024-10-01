@@ -152,9 +152,9 @@ export default function TeacherAndSchResourcesReportLineGraph() {
           <div className="col-md-12">
             <div className="graph-card-1">
               <div className="text-btn-d">
-                <h2 className="heading-sm">
+                {/* <h2 className="heading-sm">
                   {t("year_wise_elementary_schools_data_with_ptr")}
-                </h2>
+                </h2> */}
               </div>
               <div className="graph">
                 <HighchartsReact
@@ -167,39 +167,27 @@ export default function TeacherAndSchResourcesReportLineGraph() {
 
                       events: {
                         beforePrint: function () {
-                          // Show title before printing
-                          this.update({
-                            title: {
-                              text: t(
-                                "year_wise_elementary_schools_data_with_ptr"
-                              ), // Set title text before printing
-                              style: { display: "block" }, // Show the title
-                            },
-                          });
                           this.exportSVGElements[0].box.hide();
                           this.exportSVGElements[1].hide();
                         },
                         afterPrint: function () {
-                          // Hide title after printing
-                          this.update({
-                            title: {
-                              text: "", // Remove the title after printing
-                              style: { display: "none" }, // Hide the title
-                            },
-                          });
                           this.exportSVGElements[0].box.show();
                           this.exportSVGElements[1].show();
                         },
                       },
                     },
+
                     title: {
-                      text:"", // Use Highcharts title
+                      text: t("year_wise_elementary_schools_data_with_ptr"), // Use Highcharts title
                       align: "left",
                       style: {
                         color: "#000000",
-                        fontWeight: "bold",
+                        // fontWeight: "bold",
+                        fontSize: "18px",
+                        marginTop: 50,
                       },
                     },
+
                     xAxis: {
                       title: {
                         // text:t('elementary_schools_with_ptr'),
@@ -210,12 +198,16 @@ export default function TeacherAndSchResourcesReportLineGraph() {
                       lineWidth: 0,
                     },
                     yAxis: {
+                      allowDecimals: false,
+                      min: 0,
                       title: {
                         text: "",
                       },
-                      gridLineWidth: 0,
-                      lineWidth: 0,
                     },
+
+                    // title: {
+                    //   text: "headingText",
+                    // },
                     legend: {
                       layout: "vertical",
                       align: "center",
@@ -247,6 +239,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
                         name: t("elementary_schools_with_ptr"),
                         data: formateSeriesData,
                         color: "#E6694A",
+                        maxPointWidth: 50,
                       },
                     ],
                     exporting: {
@@ -259,10 +252,6 @@ export default function TeacherAndSchResourcesReportLineGraph() {
                           return item.name;
                         },
                       },
-
-                      url: 'https://export.highcharts.com/',
-                      // Your custom server URL if applicable
-                      fallbackToExportServer: true,  // Allow fallback to Highcharts server
                       enabled: true,
                     },
                   }}
