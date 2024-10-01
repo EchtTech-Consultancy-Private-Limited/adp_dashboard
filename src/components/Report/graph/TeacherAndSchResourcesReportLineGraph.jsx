@@ -60,7 +60,9 @@ export default function TeacherAndSchResourcesReportLineGraph() {
 
     return averagePtrLessThan;
   });
-  const formateSeriesData = seriesData.map((num) => parseFloat(num?.toFixed(2)));
+  const formateSeriesData = seriesData.map((num) =>
+    parseFloat(num?.toFixed(2))
+  );
 
   {
     /*Bind Data for All years Data Start*/
@@ -143,8 +145,6 @@ export default function TeacherAndSchResourcesReportLineGraph() {
   //   },
   // };
 
-
-
   return (
     <div className="col-md-5">
       <div className="graph-box">
@@ -164,16 +164,42 @@ export default function TeacherAndSchResourcesReportLineGraph() {
                       type: "line",
                       marginTop: 50,
                       height: 425,
+
+                      events: {
+                        beforePrint: function () {
+                          // Show title before printing
+                          this.update({
+                            title: {
+                              text: t(
+                                "year_wise_elementary_schools_data_with_ptr"
+                              ), // Set title text before printing
+                              style: { display: "block" }, // Show the title
+                            },
+                          });
+                          this.exportSVGElements[0].box.hide();
+                          this.exportSVGElements[1].hide();
+                        },
+                        afterPrint: function () {
+                          // Hide title after printing
+                          this.update({
+                            title: {
+                              text: "", // Remove the title after printing
+                              style: { display: "none" }, // Hide the title
+                            },
+                          });
+                          this.exportSVGElements[0].box.show();
+                          this.exportSVGElements[1].show();
+                        },
+                      },
                     },
                     title: {
-                      text: "", // Use Highcharts title
+                      text:"", // Use Highcharts title
                       align: "left",
                       style: {
-                        color: "#000000", 
+                        color: "#000000",
                         fontWeight: "bold",
-                        
                       },
-                      },
+                    },
                     xAxis: {
                       title: {
                         // text:t('elementary_schools_with_ptr'),
@@ -218,7 +244,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
                     },
                     series: [
                       {
-                        name: t('elementary_schools_with_ptr'),
+                        name: t("elementary_schools_with_ptr"),
                         data: formateSeriesData,
                         color: "#E6694A",
                       },
@@ -233,6 +259,11 @@ export default function TeacherAndSchResourcesReportLineGraph() {
                           return item.name;
                         },
                       },
+
+                      url: 'https://export.highcharts.com/',
+                      // Your custom server URL if applicable
+                      fallbackToExportServer: true,  // Allow fallback to Highcharts server
+                      enabled: true,
                     },
                   }}
                   immutable={true}

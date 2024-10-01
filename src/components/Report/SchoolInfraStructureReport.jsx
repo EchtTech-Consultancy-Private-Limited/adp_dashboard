@@ -90,7 +90,7 @@ export default function SchoolInfraStructureReport() {
   const [top50Data, setTop50Data] = useState([]);
   localStorage.setItem(
     "selectedReportValue",
-    "Percentange of Schools Having Adequate Functional Girls Toilets"
+    "Percentage of Schools Having Adequate Functional Girls Toilets"
   );
   {
     /* Set Report Title Start*/
