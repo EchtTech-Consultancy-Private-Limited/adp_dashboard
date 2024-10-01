@@ -786,7 +786,7 @@ export default function TeacherTrainedCwsnReport() {
         const columnHeaderText = headerRow[data.column.index]?.text;
         if (columnHeaderText === "Serial Number") {
           data.cell.styles.halign = "center"; // Center-align the content for "Serial Number"
-        } else if (columnHeaderText === "Lgd_state_name" || columnHeaderText === "Lgd_district_name" || columnHeaderText === "Lgd_block_name") {
+        } else if (columnHeaderText === "Lgd_state_name" || columnHeaderText === "Lgd_district_name" || columnHeaderText === "Lgd_block_name" ||  columnHeaderText === "School Name") {
           data.cell.styles.halign = "left"; // Center-align the content for "Serial Number"
         } else {
           data.cell.styles.halign = "right";

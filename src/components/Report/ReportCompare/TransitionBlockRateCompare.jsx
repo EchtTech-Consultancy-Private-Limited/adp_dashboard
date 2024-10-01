@@ -237,7 +237,7 @@ export default function TransitionBlockRateCompare() {
                             style={{ width: "100%" }}
                             placeholder={`${t("addBlock")} ${index + 1}`}
                             mode="single"
-                            showSearch
+                            showCONTACT US
                             value={
                               selectedBlocks[index]?.lgd_block_name ||
                               `${t("addBlock")}`
