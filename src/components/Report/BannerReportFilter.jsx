@@ -64,7 +64,7 @@ export default function BannerReportFilter() {
       case 'Percentage Schools with Teachers Trained for Teaching CWSN':
         navigate('/teachers-trained-for-teaching-CWSN');
         break;
-      case 'Percentange of Schools Having Adequate Functional Girls Toilets':
+      case 'Percentage of Schools Having Adequate Functional Girls Toilets':
         navigate('/school-infrastructure');
         break;
       case 'Enrollment and Retention':
@@ -277,7 +277,7 @@ export default function BannerReportFilter() {
                       <Select.Option key="Transition Rate" value="Transition Rate">Transition Rate</Select.Option>
                       <Select.Option key="Teacher and School Resources" value="Percentage of Elementary Schools Having PTR Less Than Equal to 30">Percentage of Elementary Schools Having PTR Less Than Equal to 30</Select.Option>
                       <Select.Option key="Teachers Trained For Teaching CWSN" value="Percentage Schools with Teachers Trained for Teaching CWSN">Percentage Schools with Teachers Trained for Teaching CWSN</Select.Option>
-                      <Select.Option key="School Infrastructure" value="Percentange of Schools Having Adequate Functional Girls Toilets">Percentange of Schools Having Adequate Functional Girls Toilets</Select.Option>
+                      <Select.Option key="School Infrastructure" value="Percentage of Schools Having Adequate Functional Girls Toilets">Percentage of Schools Having Adequate Functional Girls Toilets</Select.Option>
                       {/* <Select.Option key="Enrollment and Retention" value="Enrollment and Retention">Enrollment and Retention</Select.Option> */}
                     </Select>
                   </div>
