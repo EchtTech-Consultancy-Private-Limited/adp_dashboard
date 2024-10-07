@@ -269,7 +269,7 @@ export default function TransitionRateCompare() {
             <div className="col-md-12 mt-4">
               <div className="row">
                 {selectedDistricts && selectedDistricts?.map((district, index) => (
-                  <div
+                  <div key={index}
                     className={`col-sm-12 col-20 ${selectedDistricts.length === 1 ? "m-auto" : ""
                       }`}
                   >
@@ -304,7 +304,7 @@ export default function TransitionRateCompare() {
                               </div>
                               <div className="arrow-d">
                                 {" "}
-                                <ArrowRenderer data={district} />
+                                {/* <ArrowRenderer data={district} /> */}
                               </div>
                             </div>
                           </div>

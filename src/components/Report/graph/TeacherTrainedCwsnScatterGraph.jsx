@@ -117,10 +117,10 @@ export default function TeacherTrainedCwsnScatterGraph() {
                                         enabled: false
                                     }
                                 }
-                            },
+                            },                                                                                                                                                                                                                        
                             tooltip: {
                                 formatter: function () {
-                                    return `<b>${selectReportType === "ADP_Report" ? "District's" : "Block's"}</b> :- <br/><b>${this.point.name}</b><br/>Total Schools: ${this.point.y}<br/>Number of Schools with Teachers Trained for CWSN: ${this.point.x}`;
+                                    return `<b>${selectReportType === "ADP_Report" ? "District's" : "Block's"}</b> :- <br/><b>${this.point.name}</b><br/>Total Schools: ${this.point.y}<br/>${t(`number_of_schools_with_teachers_trained_for_CWSN`)}: ${this.point.x}`;
                                 }
                             },
                             credits: {
@@ -128,7 +128,7 @@ export default function TeacherTrainedCwsnScatterGraph() {
                             },
                             series: [
                                 {
-                                    name: t('swsn_teacher_number'),
+                                    name: t('cwsn_teacher_number'),
                                     data: dataPoints,
                                     color: '#FFB74BF0',
                                     pointWidth: 20
