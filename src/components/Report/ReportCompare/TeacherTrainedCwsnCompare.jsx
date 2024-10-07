@@ -247,7 +247,7 @@ percentageCwsnTrainedTeach.map((percentage, index) => (
                               </div>
                               <div className="arrow-d">
                                 {" "}
-                                <ArrowRenderer data={district} />
+                                {/* <ArrowRenderer data={district} /> */}
                               </div>
                             </div>
                           </div>

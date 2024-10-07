@@ -585,9 +585,9 @@ export default function TeacherAndSchResourcesReport() {
       hour12: true,
     })}`;
     const doc = new jsPDF({
-      orientation: "portrait",
-      unit: "in",
-      format: [20, 20],
+      orientation: "landscape", 
+      unit: "in",               
+      format: [12, 20],       
     });
     // Function to add header
     const addHeader = () => {
