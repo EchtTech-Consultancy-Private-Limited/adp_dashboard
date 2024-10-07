@@ -5,6 +5,7 @@ import chart from "../../assets/images/bar-chart.svg";
 import "./report.scss";
 import Swal from "sweetalert2";
 import { AgGridReact } from "ag-grid-react";
+import ExcelJS from "exceljs"; 
 import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-balham.css";
@@ -650,9 +651,9 @@ export default function SchoolInfraStructureReport() {
       hour12: true,
     })}`;
     const doc = new jsPDF({
-      orientation: "portrait",
-      unit: "in",
-      format: [20, 20],
+      orientation: "landscape", 
+      unit: "in",               
+      format: [12, 20],       
     });
     // Function to add header
     const addHeader = () => {
@@ -864,37 +865,78 @@ export default function SchoolInfraStructureReport() {
     const doc = getDocument(gridApi);
     doc.save(`${report_name}.pdf`);
   };
+ 
   const exportToExcel = () => {
     if (gridApi) {
-      const allData = [];
-      const visibleColumns = gridApi.api.getAllDisplayedColumns();
-      const columnHeaders = visibleColumns.map((column) => ({
-        headerName: column.getColDef().headerName,
-        field: column.getColDef().field,
-      }));
-      columnHeaders.unshift({
-        headerName: "S.NO.",
-        field: "Serial Number",
-      });
-      gridApi.api.forEachNode((node, index) => {
-        const data = node.data;
-        const rowDataWithSerial = { ...data, "Serial Number": index + 1 };
-        allData.push(rowDataWithSerial);
-      });
-      const columnKeys = columnHeaders.map((column) => column.field);
-      const columnNames = columnHeaders.map((column) => column.headerName);
-      gridApi.api.exportDataAsExcel({
-        processCellCallback: (params) => {
-          return params.value;
-        },
-        rowData: allData,
-        fileName: report_name,
-        sheetName: sheetName,
-        columnKeys: columnKeys,
-        columnNames: columnNames,
-      });
+        const allData = [];
+        const visibleColumns = gridApi.api.getAllDisplayedColumns();
+        const columnHeaders = visibleColumns.map((column) => ({
+            headerName: column.getColDef().headerName,
+            field: column.getColDef().field,
+        }));
+        gridApi.api.forEachNode((node) => {
+            const data = node.data;
+            const rowDataWithSerial = { ...data };
+            allData.push(rowDataWithSerial);
+        });
+
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet(sheetName);
+
+        const headerRow = worksheet.addRow(columnHeaders.map(col => col.headerName));
+        headerRow.height = 35;
+
+        headerRow.eachCell((cell) => {
+            cell.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: '2B9C9F' }, // Faded black background
+            };
+            cell.font = {
+                color: { argb: 'FFFFFF' }, // White font
+                bold: true,
+            };
+            cell.alignment = {
+                horizontal: 'center',
+                vertical: 'middle', // Center align
+            };
+        });
+
+        // Add data rows
+        allData.forEach(row => {
+            worksheet.addRow(columnHeaders.map(col => row[col.field]));
+        });
+
+        // Set dynamic column widths
+        columnHeaders.forEach((col, index) => {
+            let maxLength = col.headerName.length;
+
+            allData.forEach(row => {
+                const cellValue = row[col.field];
+                if (cellValue !== undefined && cellValue !== null) {
+                    const cellLength = String(cellValue).length;
+                    maxLength = Math.max(maxLength, cellLength);
+                }
+            });
+
+            worksheet.getColumn(index + 1).width = maxLength + 2; // Set column width with padding
+        });
+
+        // Export the Excel file
+        workbook.xlsx.writeBuffer().then((buffer) => {
+            const blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", report_name.endsWith('.xlsx') ? report_name : `${report_name}.xlsx`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
     }
-  };
+};
+
+  
   const handleExportData = (e) => {
     const { value } = e.target;
     if (value === "export_pdf") {

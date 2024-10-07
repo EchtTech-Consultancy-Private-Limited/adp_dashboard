@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "adp",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -20,6 +20,7 @@
     "axios": "^1.6.7",
     "bootstrap": "^5.3.3",
     "esri-loader": "^3.7.0",
+    "exceljs": "^4.4.0",
     "highcharts": "^11.4.8",
     "highcharts-exporting": "^0.1.7",
     "highcharts-more": "^0.1.7",

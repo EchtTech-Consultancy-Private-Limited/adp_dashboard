@@ -245,7 +245,7 @@ export default function SchoolInfraStructureBlockCompare() {
                               </div>
                               <div className="arrow-d">
                                 {" "}
-                                <ArrowRenderer data={block} />
+                                {/* <ArrowRenderer data={block} /> */}
                               </div>
                             </div>
                           </div>

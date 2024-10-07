@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import './graph.scss';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import Exporting from 'highcharts/modules/exporting';
 import { useSelector } from 'react-redux';
 import { useTranslation } from "react-i18next";
-
+Exporting(Highcharts);
 export default function TransitionRateGraphA() {
     const { t } = useTranslation();
     const finalData = useSelector((state) => state.reportAdpAbpType.finalData);
