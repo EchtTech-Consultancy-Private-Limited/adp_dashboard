@@ -192,6 +192,16 @@
         border: none !important;
     }
 
+
+    g.highcharts-axis.highcharts-xaxis text.highcharts-axis-title, g.highcharts-axis.highcharts-yaxis text.highcharts-axis-title {
+        fill: #fff !important;
+    }
+       
+   
+    
+    
+
+
     .graph-box .impact-box-content-education.bg-light-blue .highcharts-background{fill: transparent;}
 
     :where(.css-98ntnt).ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
