@@ -4,6 +4,7 @@ import table from "../../assets/images/table.svg";
 import chart from "../../assets/images/bar-chart.svg";
 import "./report.scss";
 import { AgGridReact } from "ag-grid-react";
+import ExcelJS from "exceljs";
 import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-balham.css";
@@ -620,9 +621,9 @@ export default function TransitionRateReport() {
       hour12: true,
     })}`;
     const doc = new jsPDF({
-      orientation: "portrait",
-      unit: "in",
-      format: [20, 20],
+      orientation: "landscape", 
+      unit: "in",               
+      format: [12, 20],       
     });
     // Function to add header
     const addHeader = () => {
