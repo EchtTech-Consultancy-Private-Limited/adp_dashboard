@@ -118,21 +118,9 @@ export default function StudentsPerformanceCompare() {
   const cwsnTrainedTeacher = selectedDistricts?.map(district => district?.total_school_cwsn);
 
 
-  // const percentageCwsnTrainedTeach = selectedDistricts?.map(district => Number(parseFloat(district?.swsn_teacher_percent).toFixed(2)));
+   const percentageCwsnTrainedTeach = selectedDistricts?.map(district => Number(parseFloat(district?.swsn_teacher_percent).toFixed(2)));
 
-const [data,setData]=useState([]);
 
-  const percentageCwsnTrainedTeach = selectedDistricts?.map(district => {
-    const percentage = parseFloat(district?.swsn_teacher_percent).toFixed(2);
-    return `${percentage}%`;
-});
-
-useEffect(()=>{
-percentageCwsnTrainedTeach.map((percentage, index) => (
-      setData(percentage)
-))
-
-},[percentageCwsnTrainedTeach])
 
   return (
     <>
