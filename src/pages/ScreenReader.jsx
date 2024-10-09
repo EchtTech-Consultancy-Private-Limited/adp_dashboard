@@ -1,6 +1,10 @@
 import React from 'react';
 import Swal from 'sweetalert2';
+import { useTranslation } from "react-i18next";
+
 export default function ScreenReader() {
+    const { t, i18n } = useTranslation();
+
 
     const handleClick = (event, url) => {
       event.preventDefault(); 
@@ -26,7 +30,7 @@ export default function ScreenReader() {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12 text-left">
-                            <h2 className="heading-sm">Screen Reader Access</h2>
+                            <h2 className="heading-sm">{t("screenReaderAccess")}</h2>
                             <p className="desc-black">
                                 The ADP Dashboard complies with Guidelines for Indian Government Websites and World Wide Web Consortium (W3C) Web Content Accessibility Guidelines (WCAG) 2.0 level A. This will enable people with visual impairments access the website using technologies, such as screen readers. The information of the website is accessible with different screen readers, such as JAWS, NVDA, SAFA, Supernova and Window-Eyes.
                             </p>
