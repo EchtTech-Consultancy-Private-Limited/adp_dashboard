@@ -354,7 +354,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                                   //   color: "#E6694A",
                                   // },
                                   {
-                                    name: t("Elementary Schools with PTR ≤ 30%"),
+                                    name: t("elementary_schools_with_ptr"),
                                     data: formatedTopElementrySchPer,
                                     color: "#BCE263",
                                     maxPointWidth: 50,
