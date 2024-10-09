@@ -82,7 +82,50 @@ export default function TransitionRateGraphA() {
                                 height: 450,
                                 zooming: {
                                     type: 'xy'
-                                }
+                                },
+
+                                events: {
+                                    beforePrint: function () {
+                                        this.update({
+                                            legend: {
+                                                layout: "horizontal",
+                                                align: "left",
+                                                verticalAlign: "top",
+                                                itemMarginTop: 20,
+                                            },
+                                            chart: {
+                                                marginTop: 200,  // Increase marginTop for print
+                                            }
+                                        });
+                                        this.exportSVGElements[0].box.hide();
+                                        this.exportSVGElements[1].hide();
+                                    },
+                                    afterPrint: function () {
+                                        this.update({
+                                            legend: {
+                                                layout: "horizontal",
+                                                align: "left",
+                                                verticalAlign: "top",
+                                                itemMarginTop: 0,
+                                            },
+                                            chart: {
+                                                marginTop: 50,
+                                            }
+                                        });
+                                        this.exportSVGElements[0].box.show();
+                                        this.exportSVGElements[1].show();
+                                    },               
+                                },
+
+
+
+
+
+
+
+
+
+
                             },
                             title: {
                                 text: t('label_wise_transition_rate'),
