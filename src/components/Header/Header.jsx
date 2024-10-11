@@ -321,7 +321,7 @@ const Header = () => {
                         <NavLink to="/insights">{t('insights')}</NavLink>
                       </li> */}
                         <li>
-                          <NavLink >{t("contactUs")}</NavLink>
+                          <NavLink to="/contact">{t("contactUs")}</NavLink>
                         </li>
                       </ul>
                     </div>
