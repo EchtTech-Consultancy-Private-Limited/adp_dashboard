@@ -123,6 +123,9 @@
     g.highcharts-legend-item text, .highcharts-axis-labels.highcharts-xaxis-labels text, g.highcharts-label.highcharts-data-label text, g.highcharts-axis-labels.highcharts-yaxis-labels text {
         fill: #fff !important;
     }
+
+    .text-dark-mode-black g.highcharts-label.highcharts-data-label text{fill:#000 !important;font-weight: 700 !important;}
+
     g.highcharts-label.highcharts-data-label text tspan.highcharts-text-outline{
         stroke: transparent;
     }
@@ -183,7 +186,7 @@
         }
      }
 
-    .footer .footer-bottom .visitor-counter span {
+    .footer .footer-bottom .visitor-counter span, .scroll-btn-graph span {
         color: #000 !important;
     }
 
@@ -197,7 +200,10 @@
         fill: #fff !important;
     }
        
-   
+    ul.highcharts-menu li.highcharts-menu-item {
+        color: #ffff00 !important;
+        background: #000 !important;
+    }
     
     
 

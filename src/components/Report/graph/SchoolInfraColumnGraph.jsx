@@ -64,7 +64,7 @@ export default function SchoolInfraColumnGraph() {
         </div>
         <div className="graph mt-4">
           <div className="row mt-0">
-            <div className="col-md-12">
+            <div className="col-md-12 text-dark-mode-black">
               <HighchartsReact
                 highcharts={Highcharts}
                 options={{

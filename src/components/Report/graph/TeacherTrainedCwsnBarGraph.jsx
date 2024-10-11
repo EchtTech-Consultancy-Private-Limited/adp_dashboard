@@ -35,7 +35,7 @@ export default function TeacherTrainedCwsnBarGraph() {
     const chartOptions = (categories, cwsnData, title) => ({
         chart: {
             type: "bar",
-            marginTop: 50,
+            marginTop: 70,
             height: 500,
             events: {
                 beforePrint: function () {
@@ -91,7 +91,7 @@ export default function TeacherTrainedCwsnBarGraph() {
             align: "left",
             verticalAlign: "top",
             itemMarginTop: 0,
-            itemMarginBottom: 50,
+            itemMarginTop: 20,
         },
         credits: {
             enabled: false,
