@@ -269,7 +269,7 @@ export default function SchoolInfraStructureTreeGraph() {
                 <div className="row">
 
                   <div className="col-md-12">
-                    <div className="graph-card">
+                    <div className="graph-card text-dark-mode-black">
                       <div className="text-btn-d">
                       <h2 className="heading-sm">  
                         {selectReportType === "ADP_Report" ? t('performance_of_districts_girls_toilets') : t('performance_of_blocks_girls_toilets')}
