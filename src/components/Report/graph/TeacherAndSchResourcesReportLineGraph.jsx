@@ -152,9 +152,9 @@ export default function TeacherAndSchResourcesReportLineGraph() {
           <div className="col-md-12">
             <div className="graph-card-1">
               <div className="text-btn-d">
-                {/* <h2 className="heading-sm">
+                <h2 className="heading-sm">
                   {t("year_wise_elementary_schools_data_with_ptr")}
-                </h2> */}
+                </h2>
               </div>
               <div className="graph">
                 <HighchartsReact
@@ -178,7 +178,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
                     },
 
                     title: {
-                      text: t("year_wise_elementary_schools_data_with_ptr"), // Use Highcharts title
+                      text: t(""), // Use Highcharts title
                       align: "left",
                       style: {
                         color: "#000000",

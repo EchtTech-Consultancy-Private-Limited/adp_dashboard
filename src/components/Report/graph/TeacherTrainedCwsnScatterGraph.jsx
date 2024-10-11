@@ -44,7 +44,23 @@ export default function TeacherTrainedCwsnScatterGraph() {
                                 height: 490,
                                 zooming: {
                                     type: 'xy'
-                                }
+                                },
+
+
+
+                                events: {
+                                    beforePrint: function () {
+                                      this.exportSVGElements[0].box.hide();
+                                      this.exportSVGElements[1].hide();
+                                    },
+                                    afterPrint: function () {
+                                      this.exportSVGElements[0].box.show();
+                                      this.exportSVGElements[1].show();
+                                    },
+                                  },
+
+
+
                             },
                             title: {
                                 text: t('label_wise_teacher_trained_cwsn'),
@@ -147,6 +163,8 @@ export default function TeacherTrainedCwsnScatterGraph() {
                                     return item.name;
                                   },
                                 },
+                                enabled: true,
+
                               },
                         }}
                         immutable={true}
