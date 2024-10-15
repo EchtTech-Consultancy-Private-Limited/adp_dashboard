@@ -156,25 +156,51 @@ export default function SchoolInfraStructureLineGraph() {
     chart: {
       type: "line",
       marginTop: 50,
-      height: 425,
+      height: 445,
+
       events: {
-        beforePrint: function () {
-          this.exportSVGElements[0].box.hide();
-          this.exportSVGElements[1].hide();
+        fullscreenOpen: function () {
+          this.setTitle({ text: "" }); // Hide title on fullscreen
         },
-        afterPrint: function () {
-          this.exportSVGElements[0].box.show();
-          this.exportSVGElements[1].show();
+        fullscreenClose: function () {
+          this.setTitle({
+            text: t("percentage_schools_girls_toilets_40_1"), // Restore title when exiting fullscreen
+            align: "left",
+            style: {
+              color: "#000000",
+              fontSize: "18px",
+              marginTop: 50,
+            },
+          });
         },
+
+
+       // Hide the context menu icon before printing starts
+       beforePrint: function () {
+        const button = this.exportSVGElements[0].element;
+        button.style.display = "none"; // Hide context menu icon
+      },
+
+      // Show the context menu icon after printing is done
+      afterPrint: function () {
+        const button = this.exportSVGElements[0].element;
+        button.style.display = "block"; // Restore context menu icon
+      },
+
+
+
+
+
       },
     },
+
     title: {
-      text: "",
+      text: t("percentage_schools_girls_toilets_40_1"),
       align: "left",
       style: {
         color: "#000000",
-        fontWeight: "bold",
-        fontSize: "18.5px",
+        // fontWeight: "bold",
+        fontSize: "18px",
       },
     },
     xAxis: {
@@ -241,6 +267,7 @@ export default function SchoolInfraStructureLineGraph() {
           return item.name;
         },
       },
+      enabled: true,
     },
   };
 
@@ -250,9 +277,9 @@ export default function SchoolInfraStructureLineGraph() {
         <div className="col-md-12">
           <div className="graph-card-1">
             <div className="text-btn-d">
-              <h2 className="heading-sm">
+              {/* <h2 className="heading-sm">
                 {t("percentage_schools_girls_toilets_40_1")}
-              </h2>
+              </h2> */}
             </div>
             <div className="graph">
               <HighchartsReact
