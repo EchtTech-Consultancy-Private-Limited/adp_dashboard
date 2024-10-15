@@ -268,7 +268,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
                       </div>
                       <div className="graph mt-4">
                         <div className="row mt-0">
-                          <div className="col-md-12">
+                          <div className="col-md-12 text-dark-mode-black">
                             <HighchartsReact
                               highcharts={Highcharts}
                               options={{
@@ -401,7 +401,7 @@ export default function TeacherAndSchResourcesColumnAndTreeGraph() {
               <div className="graph-box">
                 <div className="row">                
                   <div className="col-md-12">
-                    <div className="graph-card">
+                    <div className="graph-card text-dark-mode-black">
                       <div className="text-btn-d">
                       <h2 className="heading-sm">  
                         {selectReportType === "ADP_Report" ? t('performanceOfDistrictsByPTR30') : t('performanceOfBlocksByPTR30')}

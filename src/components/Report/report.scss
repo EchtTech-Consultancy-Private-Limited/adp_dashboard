@@ -797,9 +797,7 @@
                     width: 100% !important; 
                 }             
             }
-            .ag-header-container{
-                width: 100% !important;
-            }
+           
         }
 
     }
@@ -836,4 +834,14 @@
 
 .ag-root-wrapper.ag-layout-normal{
     border: none !important;
+}
+
+.highcharts-data-table{
+    table{
+        tr{
+            td{
+                padding-left: 0 !important;
+            }
+        }
+    }
 }
