@@ -153,7 +153,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
             <div className="graph-card-1">
               <div className="text-btn-d">
                 <h2 className="heading-sm">
-                  {/* {t("year_wise_elementary_schools_data_with_ptr")} */}
+  {/* {t("year_wise_elementary_schools_data_with_ptr")} */}
                 </h2>
               </div>
               <div className="graph">
