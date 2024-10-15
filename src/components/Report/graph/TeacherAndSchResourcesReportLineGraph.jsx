@@ -153,7 +153,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
             <div className="graph-card-1">
               <div className="text-btn-d">
                 <h2 className="heading-sm">
-                  {t("year_wise_elementary_schools_data_with_ptr")}
+  {/* {t("year_wise_elementary_schools_data_with_ptr")} */}
                 </h2>
               </div>
               <div className="graph">
@@ -163,34 +163,52 @@ export default function TeacherAndSchResourcesReportLineGraph() {
                     chart: {
                       type: "line",
                       marginTop: 50,
-                      height: 425,
+                      height: 445,
 
                       events: {
-                        beforePrint: function () {
-                          this.exportSVGElements[0].box.hide();
-                          this.exportSVGElements[1].hide();
+                        fullscreenOpen: function () {
+                          this.setTitle({ text: "" }); // Hide title on fullscreen
                         },
+                        fullscreenClose: function () {
+                          this.setTitle({
+                            text: t(
+                              "year_wise_elementary_schools_data_with_ptr"
+                            ), // Restore title when exiting fullscreen
+                            align: "left",
+                            style: {
+                              color: "#000000",
+                              fontSize: "18px",
+                              marginTop: 50,
+                            },
+                          });
+                        },
+                        // Hide the context menu icon before printing starts
+                        beforePrint: function () {
+                          const button = this.exportSVGElements[0].element;
+                          button.style.display = "none"; // Hide context menu icon
+                        },
+
+                        // Show the context menu icon after printing is done
                         afterPrint: function () {
-                          this.exportSVGElements[0].box.show();
-                          this.exportSVGElements[1].show();
+                          const button = this.exportSVGElements[0].element;
+                          button.style.display = "block"; // Restore context menu icon
                         },
                       },
                     },
 
                     title: {
-                      text: t(""), // Use Highcharts title
+                      text: t("year_wise_elementary_schools_data_with_ptr"),
                       align: "left",
                       style: {
                         color: "#000000",
-                        // fontWeight: "bold",
                         fontSize: "18px",
-                        marginTop: 50,
+                        //  marginTop: 10,
                       },
                     },
 
                     xAxis: {
                       title: {
-                        // text:t('elementary_schools_with_ptr'),
+                        text: t(""),
                         y: 50,
                       },
                       categories: categoriesYear,
@@ -252,7 +270,7 @@ export default function TeacherAndSchResourcesReportLineGraph() {
                           return item.name;
                         },
                       },
-                      enabled: true,
+                      // enabled: true,
                     },
                   }}
                   immutable={true}

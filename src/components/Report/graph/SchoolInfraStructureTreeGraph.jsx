@@ -138,11 +138,14 @@ export default function SchoolInfraStructureTreeGraph() {
 
 
   const formattedDataTreeGraphForBlocks = TopDistrictsBlocksTreeGraph?.map(
-    (item) => {
+    (item ,index) => {
       const getNumber = (value) => (typeof value === 'number' ? value : 0);
 
+      const blockId = `${item.lgd_block_name}_${index}`;
+
       let lgd_block_name = {
-        id: item.lgd_block_name,
+        id : blockId,
+        // id: item.lgd_block_name,
         parent: "INDIA",
         name: `${item.lgd_block_name} `,
         value: item.lgd_block_name,
@@ -151,7 +154,7 @@ export default function SchoolInfraStructureTreeGraph() {
 
       let tot_school_girl_co_ed = {
         id: ++count,
-        parent: item.lgd_block_name,
+        parent: blockId,
         name: `Total Coed and Girls Schools   : ${getNumber(item?.tot_school_girl_co_ed).toFixed(2)}`,
         value: getNumber(item.tot_school_girl_co_ed),
         color: getColorCode(item.tot_school_girl_co_ed),
@@ -159,7 +162,7 @@ export default function SchoolInfraStructureTreeGraph() {
 
       let total_no_of_fun_girls_toilet = {
         id: ++count,
-        parent: item.lgd_block_name,
+        parent: blockId,
         name: `Schools with functional girls' toilets : ${getNumber(item?.total_no_of_fun_girls_toilet).toFixed(2)}`,
         value: getNumber(item.total_no_of_fun_girls_toilet),
         color: getColorCode(item.total_no_of_fun_girls_toilet),
@@ -167,7 +170,7 @@ export default function SchoolInfraStructureTreeGraph() {
 
       let functional_toilet_girls_percent = {
         id: ++count,
-        parent: item.lgd_block_name,
+        parent: blockId,
         name: `Per schools with functional girls' toilets : ${getNumber(item?.functional_toilet_girls_percent).toFixed(2)} %`,
         value: getNumber(item.functional_toilet_girls_percent),
         color: getColorCode(item.functional_toilet_girls_percent),
@@ -175,7 +178,7 @@ export default function SchoolInfraStructureTreeGraph() {
 
       let toilet_40 = {
         id: ++count,
-        parent: item.lgd_block_name,
+        parent: blockId,
         name: `Schools with girls' toilets at 40:1  : ${getNumber(item?.toilet_40).toFixed(2)}`,
         value: getNumber(item.toilet_40),
         color: getColorCode(item.toilet_40),
@@ -183,7 +186,7 @@ export default function SchoolInfraStructureTreeGraph() {
 
       let sch_having_toilet_40_percent = {
         id: ++count,
-        parent: item.lgd_block_name,
+        parent: blockId,
         name: `Per of schools with girls' toilets at 40:1  : ${getNumber(item?.sch_having_toilet_40_percent).toFixed(2)} % `,
         value: getNumber(item.sch_having_toilet_40_percent),
         color: getColorCode(item.sch_having_toilet_40_percent),
@@ -257,6 +260,10 @@ export default function SchoolInfraStructureTreeGraph() {
     }
     setChartHeight(newHeight);
   };
+
+console.log("formattedDataTreeGraphForBlocks",formattedDataTreeGraphForBlocks)
+
+
 
   // *******end Tree graph********
   return (
