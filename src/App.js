@@ -108,9 +108,6 @@ function App() {
   }, [selectReportType, selectedYear, dispatch]);
 
 
-  console.log("selectedYear",selectedYear)
-
-
   {
     /* Take all Year Data for show in Graph */
   }
