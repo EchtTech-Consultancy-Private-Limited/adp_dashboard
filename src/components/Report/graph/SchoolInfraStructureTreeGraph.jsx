@@ -261,7 +261,7 @@ export default function SchoolInfraStructureTreeGraph() {
     setChartHeight(newHeight);
   };
 
-console.log("formattedDataTreeGraphForBlocks",formattedDataTreeGraphForBlocks)
+// console.log("formattedDataTreeGraphForBlocks",formattedDataTreeGraphForBlocks)
 
 
 

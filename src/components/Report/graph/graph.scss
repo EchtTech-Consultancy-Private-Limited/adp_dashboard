@@ -297,5 +297,13 @@
     g.highcharts-label.highcharts-data-label text tspan {
         stroke: transparent !important;
     }
+
+    .line-g-t .highcharts-title {
+        display: none;
+    }
+
+    .highcharts-data-table table tr td {
+        width: 60%;
+    }
 }
 
